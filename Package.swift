@@ -18,7 +18,8 @@ let openGraphTestTarget = Target.testTarget(
     ]
 )
 let openGraphCompatibilityTestTarget = Target.testTarget(
-    name: "OpenGraphCompatibilityTests"
+    name: "OpenGraphCompatibilityTests",
+    exclude: ["README.md"]
 )
 
 let package = Package(
@@ -66,13 +67,18 @@ package.targets.append(attributeGraphTarget)
 let compatibilityTest = ProcessInfo.processInfo.environment["OPENGRAPH_COMPATIBILITY_TEST"] != nil
 if compatibilityTest {
     openGraphCompatibilityTestTarget.dependencies.append("AttributeGraph")
+
     var swiftSettings: [SwiftSetting] = (openGraphCompatibilityTestTarget.swiftSettings ?? [])
     swiftSettings.append(.define("OPENGRAPH_COMPATIBILITY_TEST"))
     openGraphCompatibilityTestTarget.swiftSettings = swiftSettings
+
+    var linkerSettings = openGraphCompatibilityTestTarget.linkerSettings ?? []
+    linkerSettings.append(.unsafeFlags([systemFrameworkSearchFlag, "/System/Library/PrivateFrameworks/"], .when(platforms: [.macOS])))
+    linkerSettings.append(.linkedFramework("AttributeGraph", .when(platforms: [.macOS])))
+    openGraphCompatibilityTestTarget.linkerSettings = linkerSettings
 } else {
     openGraphCompatibilityTestTarget.dependencies.append("OpenGraph")
 }
-
 
 // Remove this when swift-testing is 1.0.0
 let useSwiftTesting = ProcessInfo.processInfo.environment["OPENGRAPH_USE_SWIFT_TESTING"] != nil

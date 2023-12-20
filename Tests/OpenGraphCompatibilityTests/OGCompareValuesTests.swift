@@ -1,5 +1,5 @@
 //
-//  AGCompareValuesTests.swift
+//  OGCompareValuesTests.swift
 //  
 //
 //  Created by Kyle on 2023/12/20.
@@ -12,7 +12,7 @@ import AttributeGraph
 import OpenGraph
 #endif
 
-final class AGCompareValuesTests: XCTestCase {
+final class OGCompareValuesTests: XCTestCase {
     override func setUp() async throws {
         #if !OPENGRAPH_COMPATIBILITY_TEST
         throw XCTSkip("OG implementation for compareValues is not ready")
