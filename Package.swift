@@ -71,14 +71,20 @@ func envEnable(_ key: String, default defaultValue: Bool = false) -> Bool {
 }
 
 #if canImport(Darwin)
-let attributeGraphProduct = Product.library(name: "AttributeGraph", targets: ["AttributeGraph"])
-let attributeGraphTarget = Target.binaryTarget(name: "AttributeGraph", path: "AG/AttributeGraph.xcframework")
-package.products.append(attributeGraphProduct)
-package.targets.append(attributeGraphTarget)
+// FIXME: Enable it by default will cause non-iOS/macOS Apple OS build fail currently. Add the corresponding framework to fix it.
+let attributeGraphCondition = envEnable("OPENGRAPH_ATTRIBUTEGRAPH", default: true)
+#else
+let attributeGraphCondition = envEnable("OPENGRAPH_ATTRIBUTEGRAPH")
 #endif
+if attributeGraphCondition {
+    let attributeGraphProduct = Product.library(name: "AttributeGraph", targets: ["AttributeGraph"])
+    let attributeGraphTarget = Target.binaryTarget(name: "AttributeGraph", path: "AG/AttributeGraph.xcframework")
+    package.products.append(attributeGraphProduct)
+    package.targets.append(attributeGraphTarget)
+}
 
 let compatibilityTestCondition = envEnable("OPENGRAPH_COMPATIBILITY_TEST")
-if compatibilityTestCondition {
+if compatibilityTestCondition && attributeGraphCondition {
     openGraphCompatibilityTestTarget.dependencies.append("AttributeGraph")
     var swiftSettings: [SwiftSetting] = (openGraphCompatibilityTestTarget.swiftSettings ?? [])
     swiftSettings.append(.define("OPENGRAPH_COMPATIBILITY_TEST"))
