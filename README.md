@@ -1,5 +1,7 @@
 # OpenGraph
 
+[![codecov](https://codecov.io/gh/OpenSwiftUIProject/OpenGraph/graph/badge.svg?token=W1KDSUMWJW)](https://codecov.io/gh/OpenSwiftUIProject/OpenGraph)
+
 OpenGraph is an open source implementation of Apple's AttributeGraph
 
 The project is for the following purposes:

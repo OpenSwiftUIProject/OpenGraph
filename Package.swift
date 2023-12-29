@@ -57,6 +57,19 @@ let package = Package(
     ]
 )
 
+func envEnable(_ key: String, default defaultValue: Bool = false) -> Bool {
+    guard let value = ProcessInfo.processInfo.environment[key] else {
+        return defaultValue
+    }
+    if value == "1" {
+        return true
+    } else if value == "0" {
+        return false
+    } else {
+        return defaultValue
+    }
+}
+
 #if canImport(Darwin)
 let attributeGraphProduct = Product.library(name: "AttributeGraph", targets: ["AttributeGraph"])
 let attributeGraphTarget = Target.binaryTarget(name: "AttributeGraph", path: "Sources/AttributeGraph.xcframework")
@@ -64,10 +77,9 @@ package.products.append(attributeGraphProduct)
 package.targets.append(attributeGraphTarget)
 #endif
 
-let compatibilityTest = ProcessInfo.processInfo.environment["OPENGRAPH_COMPATIBILITY_TEST"] != nil
-if compatibilityTest {
+let compatibilityTestCondition = envEnable("OPENGRAPH_COMPATIBILITY_TEST")
+if compatibilityTestCondition {
     openGraphCompatibilityTestTarget.dependencies.append("AttributeGraph")
-
     var swiftSettings: [SwiftSetting] = (openGraphCompatibilityTestTarget.swiftSettings ?? [])
     swiftSettings.append(.define("OPENGRAPH_COMPATIBILITY_TEST"))
     openGraphCompatibilityTestTarget.swiftSettings = swiftSettings
@@ -81,15 +93,15 @@ if compatibilityTest {
 }
 
 // Remove this when swift-testing is 1.0.0
-let useSwiftTesting = ProcessInfo.processInfo.environment["OPENGRAPH_USE_SWIFT_TESTING"] != nil
-if useSwiftTesting {
-    var swiftSettings: [SwiftSetting] = (openGraphTestTarget.swiftSettings ?? [])
-    swiftSettings.append(.define("OPENGRAPH_USE_SWIFT_TESTING"))
-    openGraphTestTarget.swiftSettings = swiftSettings
+let swiftTestingCondition = envEnable("OPENGRAPH_SWIFT_TESTING")
+if swiftTestingCondition {
     package.dependencies.append(
-        .package(url: "https://github.com/apple/swift-testing", from: "0.1.0")
+        .package(url: "https://github.com/apple/swift-testing", from: "0.2.0")
     )
     openGraphTestTarget.dependencies.append(
         .product(name: "Testing", package: "swift-testing")
     )
+    var swiftSettings: [SwiftSetting] = (openGraphTestTarget.swiftSettings ?? [])
+    swiftSettings.append(.define("OPENGRAPH_SWIFT_TESTING"))
+    openGraphTestTarget.swiftSettings = swiftSettings
 }
