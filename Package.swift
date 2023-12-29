@@ -72,12 +72,12 @@ func envEnable(_ key: String, default defaultValue: Bool = false) -> Bool {
 
 #if canImport(Darwin)
 let attributeGraphProduct = Product.library(name: "AttributeGraph", targets: ["AttributeGraph"])
-let attributeGraphTarget = Target.binaryTarget(name: "AttributeGraph", path: "Sources/AttributeGraph.xcframework")
+let attributeGraphTarget = Target.binaryTarget(name: "AttributeGraph", path: "AG/AttributeGraph.xcframework")
 package.products.append(attributeGraphProduct)
 package.targets.append(attributeGraphTarget)
 #endif
 
-let compatibilityTestCondition = envEnable("OPENGRAPH_COMPATIBILITY_TEST")
+let compatibilityTestCondition = envEnable("OPENGRAPH_COMPATIBILITY_TEST", default: true)
 if compatibilityTestCondition {
     openGraphCompatibilityTestTarget.dependencies.append("AttributeGraph")
     var swiftSettings: [SwiftSetting] = (openGraphCompatibilityTestTarget.swiftSettings ?? [])
