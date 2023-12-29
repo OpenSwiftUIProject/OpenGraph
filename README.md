@@ -1,8 +1,12 @@
 # OpenGraph
 
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FOpenSwiftUIProject%2FOpenGraph%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/OpenSwiftUIProject/OpenGraph)
+
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FOpenSwiftUIProject%2FOpenGraph%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/OpenSwiftUIProject/OpenGraph)
+
 [![codecov](https://codecov.io/gh/OpenSwiftUIProject/OpenGraph/graph/badge.svg?token=W1KDSUMWJW)](https://codecov.io/gh/OpenSwiftUIProject/OpenGraph)
 
-OpenGraph is an open source implementation of Apple's AttributeGraph
+OpenGraph is an open source implementation of Apple's Private framework - AttributeGraph
 
 | **CI Status** |
 |---|
