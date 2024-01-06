@@ -4,13 +4,8 @@
 import Foundation
 import PackageDescription
 
-let isXcodeEnv = ProcessInfo.processInfo.environment["__CFBundleIdentifier"] == "com.apple.dt.Xcode"
-// Xcode use clang as linker which supports "-iframework" while SwiftPM use swiftc as linker which supports "-Fsystem"
-let systemFrameworkSearchFlag = isXcodeEnv ? "-iframework" : "-Fsystem"
-
 // https://github.com/llvm/llvm-project/issues/48757
 let clangEnumFixSetting = CSetting.unsafeFlags(["-Wno-elaborated-enum-base"], .when(platforms: [.linux]))
-
 
 let openGraphShimsTarget = Target.target(
     name: "OpenGraphShims"
@@ -103,11 +98,6 @@ if compatibilityTestCondition && attributeGraphCondition {
     var swiftSettings: [SwiftSetting] = (openGraphCompatibilityTestTarget.swiftSettings ?? [])
     swiftSettings.append(.define("OPENGRAPH_COMPATIBILITY_TEST"))
     openGraphCompatibilityTestTarget.swiftSettings = swiftSettings
-
-    var linkerSettings = openGraphCompatibilityTestTarget.linkerSettings ?? []
-    linkerSettings.append(.unsafeFlags([systemFrameworkSearchFlag, "/System/Library/PrivateFrameworks/"], .when(platforms: [.macOS])))
-    linkerSettings.append(.linkedFramework("AttributeGraph", .when(platforms: [.macOS])))
-    openGraphCompatibilityTestTarget.linkerSettings = linkerSettings
 } else {
     openGraphCompatibilityTestTarget.dependencies.append("OpenGraph")
 }
