@@ -20,11 +20,12 @@
 		</dict>
 		<dict>
 			<key>LibraryIdentifier</key>
-			<string>ios-arm64e</string>
+			<string>ios-arm64-arm64e</string>
 			<key>LibraryPath</key>
 			<string>AttributeGraph.framework</string>
 			<key>SupportedArchitectures</key>
 			<array>
+				<string>arm64</string>
 				<string>arm64e</string>
 			</array>
 			<key>SupportedPlatform</key>
