@@ -11,6 +11,11 @@ let systemFrameworkSearchFlag = isXcodeEnv ? "-iframework" : "-Fsystem"
 // https://github.com/llvm/llvm-project/issues/48757
 let clangEnumFixSetting = CSetting.unsafeFlags(["-Wno-elaborated-enum-base"], .when(platforms: [.linux]))
 
+
+let openGraphShimsTarget = Target.target(
+    name: "OpenGraphShims"
+)
+
 let openGraphTestTarget = Target.testTarget(
     name: "OpenGraphTests",
     dependencies: [
@@ -33,6 +38,7 @@ let package = Package(
         .visionOS(.v1),
     ],
     products: [
+        .library(name: "OpenGraphShims", targets: ["OpenGraphShims"]),
         .library(name: "OpenGraph", targets: ["OpenGraph"]),
     ],
     dependencies: [
@@ -52,6 +58,7 @@ let package = Package(
             dependencies: ["_OpenGraph"],
             cSettings: [clangEnumFixSetting]
         ),
+        openGraphShimsTarget,
         openGraphTestTarget,
         openGraphCompatibilityTestTarget,
     ]
@@ -81,6 +88,13 @@ if attributeGraphCondition {
     let attributeGraphTarget = Target.binaryTarget(name: "AttributeGraph", path: "AG/AttributeGraph.xcframework")
     package.products.append(attributeGraphProduct)
     package.targets.append(attributeGraphTarget)
+    
+    var swiftSettings: [SwiftSetting] = (openGraphShimsTarget.swiftSettings ?? [])
+    swiftSettings.append(.define("OPENGRAPH_ATTRIBUTEGRAPH"))
+    openGraphShimsTarget.swiftSettings = swiftSettings
+    openGraphShimsTarget.dependencies.append("AttributeGraph")
+} else {
+    openGraphShimsTarget.dependencies.append("OpenGraph")
 }
 
 let compatibilityTestCondition = envEnable("OPENGRAPH_COMPATIBILITY_TEST")
