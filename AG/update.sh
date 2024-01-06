@@ -36,8 +36,9 @@ generate_swiftinterface x86_64-apple-ios-simulator x86_64-apple-ios11.0-simulato
 generate_swiftinterface arm64-apple-ios-simulator arm64-apple-ios11.0-simulator
 rm template.swiftinterface
 
-cp -rf ${AG_ROOT}/Sources/* ${xcframework_path}/ios-arm64e/${framework_name}/
-cd ${xcframework_path}/ios-arm64e/${swiftmodule_path}/
+cp -rf ${AG_ROOT}/Sources/* ${xcframework_path}/ios-arm64-arm64e/${framework_name}/
+cd ${xcframework_path}/ios-arm64-arm64e/${swiftmodule_path}/
+generate_swiftinterface arm64-apple-ios arm64e-apple-ios11.0 
 generate_swiftinterface arm64e-apple-ios arm64e-apple-ios11.0 
 rm template.swiftinterface
 
