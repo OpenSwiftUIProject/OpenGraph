@@ -72,8 +72,9 @@ func envEnable(_ key: String, default defaultValue: Bool = false) -> Bool {
     }
 }
 
-#if canImport(Darwin)
-// FIXME: Enable it by default will cause non-iOS/macOS Apple OS build fail currently. Add the corresponding framework to fix it.
+#if os(macOS)
+// FIXME: Enable it by default will cause non-iOS/macOS Apple OS build fail currently.
+// Add the corresponding tbd file and framework to fix it.
 let attributeGraphCondition = envEnable("OPENGRAPH_ATTRIBUTEGRAPH", default: true)
 #else
 let attributeGraphCondition = envEnable("OPENGRAPH_ATTRIBUTEGRAPH")
