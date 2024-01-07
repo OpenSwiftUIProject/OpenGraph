@@ -5,8 +5,8 @@
 //  Created by Kyle on 2023/12/20.
 //
 
-#ifndef AGComparisonMode_h
-#define AGComparisonMode_h
+#ifndef AGComparisonMode_hpp
+#define AGComparisonMode_hpp
 
 #include <CoreFoundation/CoreFoundation.h>
 
@@ -24,5 +24,5 @@ typedef CF_OPTIONS(uint32_t, AGComparisonOptions) {
     AGComparisonOptions_3 = AGComparisonOptions_1 | AGComparisonOptions_2,
 };
 
-#endif /* AGComparisonMode_h */
+#endif /* AGComparisonMode_hpp */
 

@@ -1,12 +1,12 @@
 //
-//  AGUniqueID.h
+//  AGUniqueID.hpp
 //  
 //
 //  Created by Kyle on 2023/10/9.
 //
 
-#ifndef AGUniqueID_h
-#define AGUniqueID_h
+#ifndef AGUniqueID_hpp
+#define AGUniqueID_hpp
 
 #include <CoreFoundation/CoreFoundation.h>
 typedef long long AGUniqueID;
@@ -16,4 +16,4 @@ CF_EXPORT
 AGUniqueID AGMakeUniqueID(void);
 CF_EXTERN_C_END
 
-#endif /* AGUniqueID_h */
+#endif /* AGUniqueID_hpp */

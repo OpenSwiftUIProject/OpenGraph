@@ -6,10 +6,10 @@
 #endif
 #endif
 
-#import "AGAttribute.h"
-#import "AGUniqueID.h"
-#import "AGComparisonMode.h"
-#import "AGCompareValues.h"
+#import "AGAttribute.hpp"
+#import "AGUniqueID.hpp"
+#import "AGComparisonMode.hpp"
+#import "AGCompareValues.hpp"
 
 FOUNDATION_EXPORT double AGAttributeVersionNumber;
 FOUNDATION_EXPORT const unsigned char AGAttributeVersionString[];
