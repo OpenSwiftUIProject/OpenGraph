@@ -64,3 +64,4 @@ extension AttributeGraph.Rule {
   }
 }
 public func compareValues<A>(_ lhs: A, _ rhs: A, mode: AGComparisonMode = ._3) -> Swift.Bool
+public func compareValues<A>(_ lhs: A, _ rhs: A, options: AGComparisonOptions) -> Swift.Bool
