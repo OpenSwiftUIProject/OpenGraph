@@ -1,3 +1,11 @@
+//
+//  OGCompareValues.swift
+//  OpenGraph
+//
+//  Created by Kyle on 2024/1/9.
+//  Lastest Version: iOS 15.5
+//  Status: Complete
+
 import _OpenGraph
 
 @_silgen_name("OGCompareValues")

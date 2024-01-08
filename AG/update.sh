@@ -30,20 +30,29 @@ generate_swiftinterface() {
   cat template.swiftinterface >> $name
 }
 
-cp -rf ${AG_ROOT}/Sources/* ${xcframework_path}/ios-arm64-x86_64-simulator/${framework_name}/
-cd ${xcframework_path}/ios-arm64-x86_64-simulator/${swiftmodule_path}/
+generate_framework() {
+    local frmework_name=$1
+
+    rm -rf ${xcframework_path}/${frmework_name}/${framework_name}/Headers
+    rm -rf ${xcframework_path}/${frmework_name}/${framework_name}/Modules
+
+    cp -rf ${AG_ROOT}/Sources/Headers ${xcframework_path}/${frmework_name}/${framework_name}/
+    cp -rf ${AG_ROOT}/Sources/Modules ${xcframework_path}/${frmework_name}/${framework_name}/
+
+    cd ${xcframework_path}/${frmework_name}/${swiftmodule_path}/
+}
+
+generate_framework ios-arm64-x86_64-simulator
 generate_swiftinterface x86_64-apple-ios-simulator x86_64-apple-ios11.0-simulator
 generate_swiftinterface arm64-apple-ios-simulator arm64-apple-ios11.0-simulator
 rm template.swiftinterface
 
-cp -rf ${AG_ROOT}/Sources/* ${xcframework_path}/ios-arm64-arm64e/${framework_name}/
-cd ${xcframework_path}/ios-arm64-arm64e/${swiftmodule_path}/
+generate_framework ios-arm64-arm64e
 generate_swiftinterface arm64-apple-ios arm64e-apple-ios11.0 
 generate_swiftinterface arm64e-apple-ios arm64e-apple-ios11.0 
 rm template.swiftinterface
 
-cp -rf ${AG_ROOT}/Sources/* ${xcframework_path}/macos-arm64e-arm64-x86_64/${framework_name}/
-cd ${xcframework_path}/macos-arm64e-arm64-x86_64/${swiftmodule_path}/
+generate_framework macos-arm64e-arm64-x86_64
 generate_swiftinterface x86_64-apple-macos x86_64-apple-macos12.0
 generate_swiftinterface arm64-apple-macos arm64-apple-macos12.0
 generate_swiftinterface arm64e-apple-macos arm64e-apple-macos12.0

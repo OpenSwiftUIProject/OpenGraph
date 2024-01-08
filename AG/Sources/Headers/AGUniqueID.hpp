@@ -13,6 +13,7 @@ typedef long long AGUniqueID;
 
 CF_EXTERN_C_BEGIN
 CF_EXPORT
+CF_REFINED_FOR_SWIFT
 AGUniqueID AGMakeUniqueID(void);
 CF_EXTERN_C_END
 

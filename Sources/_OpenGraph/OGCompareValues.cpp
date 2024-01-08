@@ -8,6 +8,6 @@
 #include "OGCompareValues.hpp"
 
 bool OGCompareValues(const void *lhs, const void *rhs, const void *type, const OGComparisonMode comparisonMode) {
-    // FIXME: Implement this function
+    // FIXME: Unimplemented
     return false;
 }

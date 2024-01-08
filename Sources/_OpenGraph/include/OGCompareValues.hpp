@@ -14,6 +14,7 @@
 
 OF_EXTERN_C_BEGIN
 OF_EXPORT
+OF_REFINED_FOR_SWIFT
 bool OGCompareValues(const void *lhs, const void *rhs, const void *type, const OGComparisonMode comparisonMode);
 OF_EXTERN_C_END
 

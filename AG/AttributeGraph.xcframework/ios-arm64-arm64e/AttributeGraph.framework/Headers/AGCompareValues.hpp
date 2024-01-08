@@ -14,6 +14,7 @@
 
 CF_EXTERN_C_BEGIN
 CF_EXPORT
+CF_REFINED_FOR_SWIFT
 bool AGCompareValues(const void *lhs, const void *rhs, const AGComparisonMode comparisonMode, const void *type);
 CF_EXTERN_C_END
 
