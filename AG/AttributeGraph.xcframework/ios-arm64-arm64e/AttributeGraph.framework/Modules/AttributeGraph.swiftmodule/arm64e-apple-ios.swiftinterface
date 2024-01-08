@@ -63,5 +63,20 @@ extension AttributeGraph.Rule {
     get
   }
 }
+
+// MARK: - AGCompareValues
+
 public func compareValues<A>(_ lhs: A, _ rhs: A, mode: AGComparisonMode = ._3) -> Swift.Bool
 public func compareValues<A>(_ lhs: A, _ rhs: A, options: AGComparisonOptions) -> Swift.Bool
+
+// MARK: - AGUniqueID
+
+@_silgen_name("AGMakeUniqueID")
+public func makeUniqueID() -> AGUniqueID
+
+// MARK: - AGTypeID
+
+extension AGTypeID {
+	public init(_ type: Any.Type)
+	public var type: Any.Type { get }
+}

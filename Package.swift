@@ -56,7 +56,8 @@ let package = Package(
         openGraphShimsTarget,
         openGraphTestTarget,
         openGraphCompatibilityTestTarget,
-    ]
+    ],
+    cxxLanguageStandard: .cxx98
 )
 
 func envEnable(_ key: String, default defaultValue: Bool = false) -> Bool {

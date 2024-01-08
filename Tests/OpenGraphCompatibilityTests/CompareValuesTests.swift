@@ -15,7 +15,7 @@ import OpenGraph
 final class OGCompareValuesTests: XCTestCase {
     override func setUp() async throws {
         #if !OPENGRAPH_COMPATIBILITY_TEST
-        throw XCTSkip("OG implementation for compareValues is not ready")
+        throw XCTSkip("OGCompareValues is not implemented")
         #endif
     }
 

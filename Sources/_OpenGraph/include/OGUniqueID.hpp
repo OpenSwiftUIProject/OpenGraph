@@ -13,6 +13,7 @@ typedef long long OGUniqueID;
 
 OF_EXTERN_C_BEGIN
 OF_EXPORT
+OF_REFINED_FOR_SWIFT
 OGUniqueID OGMakeUniqueID(void);
 OF_EXTERN_C_END
 

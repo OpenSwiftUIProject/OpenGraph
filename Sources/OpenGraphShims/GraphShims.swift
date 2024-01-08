@@ -9,16 +9,8 @@
 @_exported import AttributeGraph
 public typealias OGAttribute = AGAttribute
 public typealias OGUniqueID = AGUniqueID
+public typealias OGSwiftMetadata = AGSwiftMetadata
+public typealias OGTypeID = AGTypeID
 #else
 @_exported import OpenGraph
 #endif
-
-@_transparent
-@inline(__always)
-public func makeUniqueID() -> OGUniqueID {
-    #if OPENGRAPH_ATTRIBUTEGRAPH
-    AGMakeUniqueID()
-    #else
-    OGMakeUniqueID()
-    #endif
-}
