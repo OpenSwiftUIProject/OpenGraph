@@ -1,11 +1,11 @@
 //
-//  DebugServer.mm
+//  og-debug-server.mm
 //  OpenGraph
 //
 //  Created by Kyle on 2024/1/11.
 //  Audited for 2021 Release
 
-#include "DebugServer.hpp"
+#include "og-debug-server.hpp"
 #if TARGET_OS_DARWIN
 
 #include "OGLog.hpp"
@@ -50,7 +50,7 @@ OG::DebugServer::DebugServer(unsigned int p) {
         perror("OGDebugServer: socket");
         return;
     }
-    fcntl(fd, F_SETFD);
+    fcntl(fd, F_SETFD, O_WRONLY);
     
     const int value = 1;
     setsockopt(fd, SOL_SOCKET, SO_NOSIGPIPE, &value, 4);
@@ -136,7 +136,19 @@ void OG::DebugServer::run(int descriptor) {
     // TODO
 }
 
-void OG::DebugServer::accept_handler(void * _Nullable context) {
+void OG::DebugServer::accept_handler(void *_Nullable context) {
+    DebugServer *server = (DebugServer *)context;
+    sockaddr address;
+    socklen_t address_len = 16;
+    
+    int descriptor = accept(server->fd, &address, &address_len);
+    if (descriptor) {
+        perror("OGDebugServer: accept");
+        return;
+    }
+    fcntl(server->fd, F_SETFD, O_WRONLY);
+    
+    Connection *connection = new Connection(server, descriptor);
     // TODO
 }
 
@@ -179,7 +191,7 @@ OG::DebugServer::Connection::~Connection() {
     close(descriptor);
 }
 
-void OG::DebugServer::Connection::handler(void * _Nullable context) {
+void OG::DebugServer::Connection::handler(void *_Nullable context) {
     // TODO
 }
 

@@ -1,12 +1,12 @@
 //
-//  DebugServer.hpp
-//  
+//  og-debug-server.hpp
+//
 //
 //  Created by Kyle on 2024/1/11.
 //  Audited for 2021 Release
 
-#ifndef DebugServer_hpp
-#define DebugServer_hpp
+#ifndef og_debug_server_hpp
+#define og_debug_server_hpp
 
 #include <OpenFoundation/OpenFoundation.h>
 #if TARGET_OS_DARWIN
@@ -25,15 +25,16 @@ private:
     _Nullable dispatch_source_t source;
     _Nullable dispatch_source_t unknown;
 public:
-    static DebugServer* _Nullable _shared_server;
-    static DebugServer* _Nullable start(unsigned int port);
+    static DebugServer *_Nullable _shared_server;
+    static DebugServer *_Nullable start(unsigned int port);
     static void stop();
     DebugServer(unsigned int port);
     ~DebugServer();
     void run(int descriptor);
-    static void accept_handler(void * _Nullable context);
+    static void accept_handler(void *_Nullable context);
     CFURLRef _Nullable copy_url() const;
     void shutdown();
+    
     
     class Connection {
     private:
@@ -43,7 +44,7 @@ public:
     public:
         Connection(DebugServer *server,int descriptor);
         ~Connection();
-        static void handler(void * _Nullable context); // TODO
+        static void handler(void *_Nullable context); // TODO
     };
 };
 }
@@ -65,5 +66,4 @@ OF_EXTERN_C_END
 OF_ASSUME_NONNULL_END
 
 #endif /* TARGET_OS_DARWIN */
-#endif /* DebugServer_hpp */
-
+#endif /* og_debug_server_ hpp */
