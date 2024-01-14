@@ -57,7 +57,7 @@ let package = Package(
         openGraphTestTarget,
         openGraphCompatibilityTestTarget,
     ],
-    cxxLanguageStandard: .cxx98
+    cxxLanguageStandard: .cxx11
 )
 
 func envEnable(_ key: String, default defaultValue: Bool = false) -> Bool {
