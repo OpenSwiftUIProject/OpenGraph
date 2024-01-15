@@ -9,11 +9,16 @@
 #if TARGET_OS_DARWIN
 
 #include "OGLog.hpp"
+#include "Utils.hpp"
 #include <iostream>
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <ifaddrs.h>
 #include <CoreFoundation/CoreFoundation.h>
+#include <errno.h>
+#include <assert.h>
+
+// MARK: DebugServer Implementation
 
 OG::DebugServer* _Nullable OG::DebugServer::_shared_server = nullptr;
 
@@ -113,7 +118,7 @@ OG::DebugServer::DebugServer(unsigned int p) {
         }
     }
     if (listen(fd, 5)) {
-        perror("AGDebugServer: listen");
+        perror("OGDebugServer: listen");
         shutdown();
         return;
     }
@@ -176,6 +181,55 @@ void OG::DebugServer::shutdown() {
     }
 }
 
+// MARK: Blocking operation
+
+namespace OG {
+namespace {
+bool blocking_read(int descriptor, void *buf, unsigned long count) {
+    ssize_t offset = 0;
+    while (offset < count) {
+        ssize_t read_count = read(descriptor, (void *)((char *)buf+offset), count+offset);
+        if (read_count == 0) {
+            return false;
+        } else if (read_count < 0) {
+            if (errno != EINTR) {
+                if (errno != EAGAIN && errno != EWOULDBLOCK) {
+                    perror("OGDebugServer: read");
+                    return false;
+                }
+                assert("errno != EAGAIN && errno != EWOULDBLOCK");
+            }
+        } else {
+            offset += read_count;
+        }
+    }
+    return true;
+}
+bool blocking_write(int descriptor, void *buf, unsigned long count) {
+    ssize_t offset = 0;
+    while (offset < count) {
+        ssize_t write_count = write(descriptor, (void *)((char *)buf+offset), count+offset);
+        if (write_count == 0) {
+            return false;
+        } else if (write_count < 0) {
+            if (errno != EINTR) {
+                if (errno != EAGAIN && errno != EWOULDBLOCK) {
+                    perror("OGDebugServer: write");
+                    return false;
+                }
+                assert("errno != EAGAIN && errno != EWOULDBLOCK");
+            }
+        } else {
+            offset += write_count;
+        }
+    }
+    return true;
+}
+}
+}
+
+// MARK: Connection Implementation
+
 OG::DebugServer::Connection::Connection(DebugServer *s,int d) {
     server = s;
     descriptor = d;
@@ -194,7 +248,6 @@ OG::DebugServer::Connection::~Connection() {
 void OG::DebugServer::Connection::handler(void *_Nullable context) {
     // TODO
 }
-
 
 // MARK: - Exported C functions
 
