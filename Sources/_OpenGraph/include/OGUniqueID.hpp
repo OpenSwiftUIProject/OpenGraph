@@ -8,13 +8,13 @@
 #ifndef OGMakeUniqueID_hpp
 #define OGMakeUniqueID_hpp
 
-#include <OpenFoundation/OpenFoundation.h>
+#include "OGBase.hpp"
 typedef long long OGUniqueID;
 
-OF_EXTERN_C_BEGIN
-OF_EXPORT
-OF_REFINED_FOR_SWIFT
+OG_EXTERN_C_BEGIN
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
 OGUniqueID OGMakeUniqueID(void);
-OF_EXTERN_C_END
+OG_EXTERN_C_END
 
 #endif /* OGMakeUniqueID_hpp */

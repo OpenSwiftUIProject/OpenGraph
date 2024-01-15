@@ -8,7 +8,7 @@
 #ifndef OGTypeID_hpp
 #define OGTypeID_hpp
 
-#include <OpenFoundation/OpenFoundation.h>
+#include "OGBase.hpp"
 #include "OGSwiftMetadata.hpp"
 
 typedef const OGSwiftMetadata *OGTypeID __attribute__((swift_wrapper(struct)));

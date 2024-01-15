@@ -8,7 +8,7 @@
 #ifndef OGTypeGetKind_hpp
 #define OGTypeGetKind_hpp
 
-#include <OpenFoundation/OpenFoundation.h>
+#include "OGBase.hpp"
 #include "OGTypeID.hpp"
 
 typedef enum __attribute__((enum_extensibility(open))) OGTypeKind: uint32_t {
@@ -23,10 +23,10 @@ typedef enum __attribute__((enum_extensibility(open))) OGTypeKind: uint32_t {
     OGTypeKindMetatype,
 } OGTypeKind;
 
-OF_EXTERN_C_BEGIN
-OF_EXPORT
-OF_REFINED_FOR_SWIFT
-OGTypeKind OGTypeGetKind(OGTypeID typeID) OF_SWIFT_NAME(getter:OGTypeID.kind(self:));
-OF_EXTERN_C_END
+OG_EXTERN_C_BEGIN
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+OGTypeKind OGTypeGetKind(OGTypeID typeID) OG_SWIFT_NAME(getter:OGTypeID.kind(self:));
+OG_EXTERN_C_END
 
 #endif /* OGTypeKind_hpp */

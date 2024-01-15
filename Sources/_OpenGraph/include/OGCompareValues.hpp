@@ -8,14 +8,14 @@
 #ifndef OGCompareValues_hpp
 #define OGCompareValues_hpp
 
-#include <OpenFoundation/OpenFoundation.h>
+#include "OGBase.hpp"
 #include "OGComparisonMode.hpp"
 #include <stdbool.h>
 
-OF_EXTERN_C_BEGIN
-OF_EXPORT
-OF_REFINED_FOR_SWIFT
+OG_EXTERN_C_BEGIN
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
 bool OGCompareValues(const void *lhs, const void *rhs, const void *type, const OGComparisonMode comparisonMode);
-OF_EXTERN_C_END
+OG_EXTERN_C_END
 
 #endif /* OGCompareValues_hpp */

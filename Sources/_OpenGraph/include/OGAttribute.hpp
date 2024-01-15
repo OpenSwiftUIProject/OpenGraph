@@ -8,7 +8,7 @@
 #ifndef OGAttribute_hpp
 #define OGAttribute_hpp
 
-#include <OpenFoundation/OpenFoundation.h>
+#include "OGBase.hpp"
 
 typedef uint32_t OGAttribute __attribute((swift_newtype(struct)));
 
