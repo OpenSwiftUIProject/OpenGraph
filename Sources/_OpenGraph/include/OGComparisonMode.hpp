@@ -8,16 +8,16 @@
 #ifndef OGComparisonMode_hpp
 #define OGComparisonMode_hpp
 
-#include <OpenFoundation/OpenFoundation.h>
+#include "OGBase.hpp"
 
-typedef OF_OPTIONS(uint32_t, OGComparisonMode) {
+typedef OG_OPTIONS(uint32_t, OGComparisonMode) {
     OGComparisonMode_0 = 0,
     OGComparisonMode_1 = 1 << 0,
     OGComparisonMode_2 = 1 << 1,
     OGComparisonMode_3 = OGComparisonMode_1 | OGComparisonMode_2,
 };
 
-typedef OF_OPTIONS(uint32_t, OGComparisonOptions) {
+typedef OG_OPTIONS(uint32_t, OGComparisonOptions) {
     OGComparisonOptions_0 = 0,
     OGComparisonOptions_1 = 1 << 0,
     OGComparisonOptions_2 = 1 << 1,

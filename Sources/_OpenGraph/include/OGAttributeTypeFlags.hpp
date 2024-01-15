@@ -8,9 +8,9 @@
 #ifndef OGAttributeTypeFlags_hpp
 #define OGAttributeTypeFlags_hpp
 
-#include <OpenFoundation/OpenFoundation.h>
+#include "OGBase.hpp"
 
-typedef OF_OPTIONS(uint32_t, OGAttributeTypeFlags) {
+typedef OG_OPTIONS(uint32_t, OGAttributeTypeFlags) {
     OGAttributeTypeFlags_0 = 0,
     OGAttributeTypeFlags_8 = 1 << 3,
 };
