@@ -38,7 +38,6 @@ void precondition_failure(const char *format, ...) {
         free(s);
     }
     abort();
-    return;
 }
 
 void non_fatal_precondition_failure(const char *format, ...) {

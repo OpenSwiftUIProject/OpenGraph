@@ -16,7 +16,7 @@ namespace OG {
 os_log_t misc_log();
 os_log_t error_log();
 
-void precondition_failure(const char *format, ...);
+void precondition_failure(const char *format, ...) __cold __dead2;
 void non_fatal_precondition_failure(const char *format, ...);
 }
 #endif /* TARGET_OS_DARWIN */
