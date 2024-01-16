@@ -14,6 +14,7 @@
 char* error_message = nullptr;
 
 namespace OG {
+#if TARGET_OS_DARWIN
 os_log_t misc_log() {
     static os_log_t log = os_log_create("org.openswiftuiproject.opengraph", "misc");
     return log;
@@ -22,6 +23,8 @@ os_log_t error_log() {
     static os_log_t log = os_log_create("org.openswiftuiproject.opengraph", "error");
     return log;
 }
+#endif /* TARGET_OS_DARWIN */
+
 void precondition_failure(const char *format, ...) {
     char* s = nullptr;
     va_list va;
@@ -29,7 +32,9 @@ void precondition_failure(const char *format, ...) {
     vasprintf(&s, format, va);
     va_end(va);
     if (s != nullptr) {
+        #if TARGET_OS_DARWIN
         os_log_error(error_log(), "precondition failure: %s", s);
+        #endif /* TARGET_OS_DARWIN */
         // 2023 release addition
         // OG::Graph::trace_assertion_failure(true, "precondition failure: %s", s)
         if (error_message == nullptr) {
@@ -47,7 +52,9 @@ void non_fatal_precondition_failure(const char *format, ...) {
     vasprintf(&s, format, va);
     va_end(va);
     if (s != nullptr) {
+        #if TARGET_OS_DARWIN
         os_log_fault(error_log(), "precondition failure: %s", s);
+        #endif /* TARGET_OS_DARWIN */
         free(s);
     }
     return;

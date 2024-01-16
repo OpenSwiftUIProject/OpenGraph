@@ -1,14 +1,17 @@
 //
-//  Utils.cpp
+//  realloc_vector.cpp
 //  
 //
-//  Created by Kyle on 2024/1/15.
+//  Created by Kyle on 2024/1/17.
 //
 
-#include "Utils.hpp"
-#include "OGLog.hpp"
-#include <vector>
+#include "realloc_vector.hpp"
+#include "../Debug/OGLog.hpp"
+#if TARGET_OS_DARWIN
 #include <malloc/malloc.h>
+#else
+#include <malloc.h>
+#endif /* TARGET_OS_DARWIN */
 
 template <typename T, size_t Alignment>
 void *_Nullable OG::details::realloc_vector(void* ptr, T& size, T new_size) {

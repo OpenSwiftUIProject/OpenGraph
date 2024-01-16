@@ -8,22 +8,37 @@
 #ifndef og_debug_server_hpp
 #define og_debug_server_hpp
 
-#include <OpenFoundation/OpenFoundation.h>
+#include "OGBase.hpp"
 #if TARGET_OS_DARWIN
-#include <CoreFoundation/CoreFoundation.h>
+#include "../Util/vector.hpp"
 #include <dispatch/dispatch.h>
+#include <memory>
 
-OF_ASSUME_NONNULL_BEGIN
+OG_ASSUME_NONNULL_BEGIN
 
 namespace OG {
+class OGDebugServerMessageHeader {
+    
+};
 class DebugServer {
+    class Connection {
+    private:
+        DebugServer *server;
+        int descriptor;
+        dispatch_source_t source;
+    public:
+        Connection(DebugServer *server,int descriptor);
+        ~Connection();
+        static void handler(void *_Nullable context); // TODO
+        friend class DebugServer;
+    };
 private:
     int32_t fd;
     uint32_t ip;
     uint32_t port;
     uint32_t token;
     _Nullable dispatch_source_t source;
-    _Nullable dispatch_source_t unknown;
+    OG::vector<std::unique_ptr<Connection>, 0, unsigned long> connections;
 public:
     static DebugServer *_Nullable _shared_server;
     static DebugServer *_Nullable start(unsigned int port);
@@ -35,35 +50,26 @@ public:
     CFURLRef _Nullable copy_url() const;
     void shutdown();
     
-    
-    class Connection {
-    private:
-        DebugServer *server;
-        int descriptor;
-        dispatch_source_t source;
-    public:
-        Connection(DebugServer *server,int descriptor);
-        ~Connection();
-        static void handler(void *_Nullable context); // TODO
-    };
+    __CFData *_Nullable receive(Connection *connection, OGDebugServerMessageHeader &header, __CFData *data);
+    void close_connection(Connection *connection);
 };
 }
 
 
 // MARK: - Exported C functions
 
-OF_EXTERN_C_BEGIN
-OF_EXPORT
+OG_EXTERN_C_BEGIN
+OG_EXPORT
 OG::DebugServer* _Nullable OGDebugServerStart(unsigned int port);
-OF_EXPORT
+OG_EXPORT
 void OGDebugServerStop();
-OF_EXPORT
+OG_EXPORT
 CFURLRef _Nullable OGDebugServerCopyURL();
-OF_EXPORT
-void OGDebugServerRun(int descriptor);
-OF_EXTERN_C_END
+OG_EXPORT
+void OGDebugServerRun(int timeout);
+OG_EXTERN_C_END
 
-OF_ASSUME_NONNULL_END
+OG_ASSUME_NONNULL_END
 
 #endif /* TARGET_OS_DARWIN */
 #endif /* og_debug_server_ hpp */

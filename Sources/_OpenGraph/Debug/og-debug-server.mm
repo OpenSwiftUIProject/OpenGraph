@@ -9,14 +9,15 @@
 #if TARGET_OS_DARWIN
 
 #include "OGLog.hpp"
-#include "Utils.hpp"
 #include <iostream>
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <ifaddrs.h>
 #include <CoreFoundation/CoreFoundation.h>
+#include <Foundation/NSJSONSerialization.h>
 #include <errno.h>
 #include <assert.h>
+#include <sys/_types/_fd_def.h>
 
 // MARK: DebugServer Implementation
 
@@ -48,8 +49,8 @@ OG::DebugServer::DebugServer(unsigned int p) {
     port = 0;
     token = arc4random();
     source = nullptr;
-    unknown = nullptr;
-
+    connections = OG::vector<std::unique_ptr<Connection>, 0, unsigned long>();
+    
     fd = socket(AF_INET, SOCK_STREAM, 0x0);
     if (fd < 0) {
         perror("OGDebugServer: socket");
@@ -133,12 +134,19 @@ OG::DebugServer::DebugServer(unsigned int p) {
     fprintf(stderr, "debug server graph://%s:%d/?token=%u\\n", address, port, token);
 }
 
-OG::DebugServer::~DebugServer() {
-    // TODO
-}
+OG::DebugServer::~DebugServer() {}
 
-void OG::DebugServer::run(int descriptor) {
-    // TODO
+void OG::DebugServer::run(int timeout) {
+    fd_set set = {};
+    __darwin_fd_set(fd, &set);
+    
+    int descriptor = fd;
+//    if (count != 0) {
+//        __darwin_fd_set(connections[0]->descriptor, &set);
+//    }
+    
+    timeval tv = timeval { timeout, 0 };
+    select(descriptor+1, nullptr, &set, nullptr, &tv);
 }
 
 void OG::DebugServer::accept_handler(void *_Nullable context) {
@@ -152,9 +160,7 @@ void OG::DebugServer::accept_handler(void *_Nullable context) {
         return;
     }
     fcntl(server->fd, F_SETFD, O_WRONLY);
-    
-    Connection *connection = new Connection(server, descriptor);
-    // TODO
+    server->connections.push_back(std::unique_ptr<Connection>(new Connection(server, descriptor)));
 }
 
 CFURLRef _Nullable OG::DebugServer::copy_url() const {
@@ -178,6 +184,22 @@ void OG::DebugServer::shutdown() {
     if (fd >= 0) {
         close(fd);
         fd = -1;
+    }
+}
+
+__CFData *_Nullable OG::DebugServer::receive(Connection *connection, OGDebugServerMessageHeader &header, __CFData *data) {
+    id jsonObject = [NSJSONSerialization JSONObjectWithData:(__bridge NSData *)data options:0 error:NULL];
+    // TODO
+    return nullptr;
+}
+
+void OG::DebugServer::close_connection(OG::DebugServer::Connection *connection) {
+    auto it = connections.begin();
+    for (; it != connections.end(); it++) {
+        if (it->get() == connection) {
+            connections.pop_back();
+            return;
+        }
     }
 }
 
@@ -246,7 +268,35 @@ OG::DebugServer::Connection::~Connection() {
 }
 
 void OG::DebugServer::Connection::handler(void *_Nullable context) {
-    // TODO
+    Connection *connection = (Connection *)context;
+    char buf[16] = {};
+    if (blocking_read(connection->descriptor, &buf, 16)) {
+        uint32_t token = 0;
+        for (int i = 0; i < 4; i++) {
+            token += buf[i] << (i * 8);
+            buf[12+i] = 0;
+        }
+        if (token == connection->server->token) {
+            CFIndex length = 0;
+            for (int i = 0; i < 4; i++) {
+                length += buf[8+i] << (i * 8);
+            }
+            CFMutableDataRef data = CFDataCreateMutable(kCFAllocatorDefault, length);
+            if (data) {
+                CFDataSetLength(data, length);
+                void *dataPtr = CFDataGetMutableBytePtr(data);
+                if (blocking_read(connection->descriptor, dataPtr, length)) {
+                    __CFData *receive_data = connection->server->receive(connection, (OGDebugServerMessageHeader &)buf, data);
+                    if (receive_data) {
+                        // TODO
+                        // block_write
+                    }
+                }
+            }
+        }
+    }
+    connection->server->close_connection(connection);
+    return;
 }
 
 // MARK: - Exported C functions
@@ -266,11 +316,11 @@ CFURLRef _Nullable OGDebugServerCopyURL() {
     return OG::DebugServer::_shared_server->copy_url();
 }
 
-void OGDebugServerRun(int descriptor) {
+void OGDebugServerRun(int timeout) {
     if (OG::DebugServer::_shared_server == nullptr) {
         return;
     }
-    OG::DebugServer::_shared_server->run(descriptor);
+    OG::DebugServer::_shared_server->run(timeout);
 }
 
 #endif /* TARGET_OS_DARWIN */
