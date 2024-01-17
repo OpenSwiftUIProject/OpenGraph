@@ -46,168 +46,168 @@ public:
 private:
     iterator_type __i_;
 public:
-    _LIBCPP_CONSTEXPR_SINCE_CXX14 __wrap_iter() _NOEXCEPT
+    OG_CONSTEXPR __wrap_iter() OG_NOEXCEPT
                 : __i_()
     {
     }
-    template <class _Up> _LIBCPP_CONSTEXPR_SINCE_CXX14
+    template <class _Up> OG_CONSTEXPR
         __wrap_iter(const __wrap_iter<_Up>& __u,
-            typename std::enable_if<std::is_convertible<_Up, iterator_type>::value>::type* = nullptr) _NOEXCEPT
+            typename std::enable_if<std::is_convertible<_Up, iterator_type>::value>::type* = nullptr) OG_NOEXCEPT
             : __i_(__u.base())
     {
     }
-    _LIBCPP_CONSTEXPR_SINCE_CXX14 reference operator*() const _NOEXCEPT
+    OG_CONSTEXPR reference operator*() const OG_NOEXCEPT
     {
         return *__i_;
     }
-    _LIBCPP_CONSTEXPR_SINCE_CXX14 pointer operator->() const _NOEXCEPT
+    OG_CONSTEXPR pointer operator->() const OG_NOEXCEPT
     {
-        return _VSTD::__to_address(__i_);
+        return std::__to_address(__i_);
     }
-    _LIBCPP_CONSTEXPR_SINCE_CXX14 __wrap_iter& operator++() _NOEXCEPT
+    OG_CONSTEXPR __wrap_iter& operator++() OG_NOEXCEPT
     {
         ++__i_;
         return *this;
     }
-    _LIBCPP_CONSTEXPR_SINCE_CXX14 __wrap_iter  operator++(int) _NOEXCEPT
+    OG_CONSTEXPR __wrap_iter  operator++(int) OG_NOEXCEPT
         {__wrap_iter __tmp(*this); ++(*this); return __tmp;}
 
-    _LIBCPP_CONSTEXPR_SINCE_CXX14 __wrap_iter& operator--() _NOEXCEPT
+    OG_CONSTEXPR __wrap_iter& operator--() OG_NOEXCEPT
     {
         --__i_;
         return *this;
     }
-    _LIBCPP_CONSTEXPR_SINCE_CXX14 __wrap_iter  operator--(int) _NOEXCEPT
+    OG_CONSTEXPR __wrap_iter  operator--(int) OG_NOEXCEPT
         {__wrap_iter __tmp(*this); --(*this); return __tmp;}
-    _LIBCPP_CONSTEXPR_SINCE_CXX14 __wrap_iter  operator+ (difference_type __n) const _NOEXCEPT
+    OG_CONSTEXPR __wrap_iter  operator+ (difference_type __n) const OG_NOEXCEPT
         {__wrap_iter __w(*this); __w += __n; return __w;}
-    _LIBCPP_CONSTEXPR_SINCE_CXX14 __wrap_iter& operator+=(difference_type __n) _NOEXCEPT
+    OG_CONSTEXPR __wrap_iter& operator+=(difference_type __n) OG_NOEXCEPT
     {
         __i_ += __n;
         return *this;
     }
-    _LIBCPP_CONSTEXPR_SINCE_CXX14 __wrap_iter  operator- (difference_type __n) const _NOEXCEPT
+    OG_CONSTEXPR __wrap_iter  operator- (difference_type __n) const OG_NOEXCEPT
         {return *this + (-__n);}
-    _LIBCPP_CONSTEXPR_SINCE_CXX14 __wrap_iter& operator-=(difference_type __n) _NOEXCEPT
+    OG_CONSTEXPR __wrap_iter& operator-=(difference_type __n) OG_NOEXCEPT
         {*this += -__n; return *this;}
-    _LIBCPP_CONSTEXPR_SINCE_CXX14 reference    operator[](difference_type __n) const _NOEXCEPT
+    OG_CONSTEXPR reference    operator[](difference_type __n) const OG_NOEXCEPT
     {
         return __i_[__n];
     }
 
-    _LIBCPP_CONSTEXPR_SINCE_CXX14 iterator_type base() const _NOEXCEPT {return __i_;}
+    OG_CONSTEXPR iterator_type base() const OG_NOEXCEPT {return __i_;}
 
 private:
-    _LIBCPP_CONSTEXPR_SINCE_CXX14
-    explicit __wrap_iter(iterator_type __x) _NOEXCEPT : __i_(__x)
+    OG_CONSTEXPR
+    explicit __wrap_iter(iterator_type __x) OG_NOEXCEPT : __i_(__x)
     {
     }
 
     template <class _Up> friend class __wrap_iter;
     template <typename ValueType, uint32_t stack_buffer_size, typename SizeType>
-    friend class _LIBCPP_TEMPLATE_VIS OG::vector;
+    friend class OG::vector;
 };
 
 template <class _Iter1>
-_LIBCPP_CONSTEXPR
-bool operator==(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter1>& __y) _NOEXCEPT
+OG_CONSTEXPR
+bool operator==(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter1>& __y) OG_NOEXCEPT
 {
     return __x.base() == __y.base();
 }
 
 template <class _Iter1, class _Iter2>
-_LIBCPP_CONSTEXPR
-bool operator==(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter2>& __y) _NOEXCEPT
+OG_CONSTEXPR
+bool operator==(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter2>& __y) OG_NOEXCEPT
 {
     return __x.base() == __y.base();
 }
 
 template <class _Iter1>
-_LIBCPP_CONSTEXPR_SINCE_CXX14
-bool operator<(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter1>& __y) _NOEXCEPT
+OG_CONSTEXPR
+bool operator<(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter1>& __y) OG_NOEXCEPT
 {
     return __x.base() < __y.base();
 }
 
 template <class _Iter1, class _Iter2>
-_LIBCPP_CONSTEXPR_SINCE_CXX14
-bool operator<(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter2>& __y) _NOEXCEPT
+OG_CONSTEXPR
+bool operator<(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter2>& __y) OG_NOEXCEPT
 {
     return __x.base() < __y.base();
 }
 
 template <class _Iter1>
-_LIBCPP_CONSTEXPR
-bool operator!=(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter1>& __y) _NOEXCEPT
+OG_CONSTEXPR
+bool operator!=(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter1>& __y) OG_NOEXCEPT
 {
     return !(__x == __y);
 }
 
 template <class _Iter1, class _Iter2>
-_LIBCPP_CONSTEXPR
-bool operator!=(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter2>& __y) _NOEXCEPT
+OG_CONSTEXPR
+bool operator!=(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter2>& __y) OG_NOEXCEPT
 {
     return !(__x == __y);
 }
 
 template <class _Iter1>
-_LIBCPP_CONSTEXPR
-bool operator>(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter1>& __y) _NOEXCEPT
+OG_CONSTEXPR
+bool operator>(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter1>& __y) OG_NOEXCEPT
 {
     return __y < __x;
 }
 
 template <class _Iter1, class _Iter2>
-_LIBCPP_CONSTEXPR
-bool operator>(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter2>& __y) _NOEXCEPT
+OG_CONSTEXPR
+bool operator>(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter2>& __y) OG_NOEXCEPT
 {
     return __y < __x;
 }
 
 template <class _Iter1>
-_LIBCPP_CONSTEXPR
-bool operator>=(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter1>& __y) _NOEXCEPT
+OG_CONSTEXPR
+bool operator>=(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter1>& __y) OG_NOEXCEPT
 {
     return !(__x < __y);
 }
 
 template <class _Iter1, class _Iter2>
-_LIBCPP_CONSTEXPR
-bool operator>=(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter2>& __y) _NOEXCEPT
+OG_CONSTEXPR
+bool operator>=(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter2>& __y) OG_NOEXCEPT
 {
     return !(__x < __y);
 }
 
 template <class _Iter1>
-_LIBCPP_CONSTEXPR
-bool operator<=(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter1>& __y) _NOEXCEPT
+OG_CONSTEXPR
+bool operator<=(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter1>& __y) OG_NOEXCEPT
 {
     return !(__y < __x);
 }
 
 template <class _Iter1, class _Iter2>
-_LIBCPP_CONSTEXPR
-bool operator<=(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter2>& __y) _NOEXCEPT
+OG_CONSTEXPR
+bool operator<=(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter2>& __y) OG_NOEXCEPT
 {
     return !(__y < __x);
 }
 
 template <class _Iter1, class _Iter2>
-_LIBCPP_CONSTEXPR_SINCE_CXX14
+OG_CONSTEXPR
 #ifndef _LIBCPP_CXX03_LANG
-auto operator-(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter2>& __y) _NOEXCEPT
+auto operator-(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter2>& __y) OG_NOEXCEPT
     -> decltype(__x.base() - __y.base())
 #else
 typename __wrap_iter<_Iter1>::difference_type
-operator-(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter2>& __y) _NOEXCEPT
+operator-(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter2>& __y) OG_NOEXCEPT
 #endif // C++03
 {
     return __x.base() - __y.base();
 }
 
 template <class _Iter1>
-_LIBCPP_CONSTEXPR_SINCE_CXX14
-__wrap_iter<_Iter1> operator+(typename __wrap_iter<_Iter1>::difference_type __n, __wrap_iter<_Iter1> __x) _NOEXCEPT
+OG_CONSTEXPR
+__wrap_iter<_Iter1> operator+(typename __wrap_iter<_Iter1>::difference_type __n, __wrap_iter<_Iter1> __x) OG_NOEXCEPT
 {
     __x += __n;
     return __x;
@@ -217,15 +217,15 @@ __wrap_iter<_Iter1> operator+(typename __wrap_iter<_Iter1>::difference_type __n,
 
 namespace std {
 template <class _It>
-struct _LIBCPP_TEMPLATE_VIS std::pointer_traits<OG::details::__wrap_iter<_It> >
+struct std::pointer_traits<OG::details::__wrap_iter<_It> >
 {
     typedef OG::details::__wrap_iter<_It> pointer;
     typedef typename pointer_traits<_It>::element_type element_type;
     typedef typename pointer_traits<_It>::difference_type difference_type;
 
-    _LIBCPP_CONSTEXPR
-    static element_type *to_address(pointer __w) _NOEXCEPT {
-        return _VSTD::__to_address(__w.base());
+    OG_CONSTEXPR
+    static element_type *to_address(pointer __w) OG_NOEXCEPT {
+        return std::__to_address(__w.base());
     }
 };
 } /* std */

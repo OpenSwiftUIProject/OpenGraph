@@ -35,16 +35,15 @@ public:
     typedef std::reverse_iterator<iterator>                 reverse_iterator;
     typedef std::reverse_iterator<const_iterator>           const_reverse_iterator;
     
-    constexpr void push_back(const_reference __x);
-    constexpr void push_back(value_type&& __x);
-    constexpr void pop_back();
+    OG_CONSTEXPR void push_back(const_reference __x);
+    OG_CONSTEXPR void push_back(value_type&& __x);
+    OG_CONSTEXPR void pop_back();
     
-    constexpr const_iterator begin() const noexcept;
-    constexpr const_iterator end() const noexcept;
-    
+    OG_CONSTEXPR const_iterator begin() const OG_NOEXCEPT;
+    OG_CONSTEXPR const_iterator end() const OG_NOEXCEPT;
 private:
     // TODO
-    static constexpr size_type stack_buffer_byte_size = 0;
+    static OG_CONSTEXPR size_type stack_buffer_byte_size = 0;
     
     uint8_t _stack_buffer[stack_buffer_byte_size] = {0};
     pointer _buffer;
@@ -52,6 +51,42 @@ private:
     size_type _capacity = 0;
 };
 
+template <class _Tp, uint32_t size, class _SizeType>
+OG_CONSTEXPR OG_INLINE void
+OG::vector<_Tp, size, _SizeType>::push_back(const_reference __x)
+{
+    // TODO
+}
+
+template <class _Tp, uint32_t size, class _SizeType>
+OG_CONSTEXPR OG_INLINE void
+OG::vector<_Tp, size, _SizeType>::push_back(value_type&& __x)
+{
+    // TODO
+}
+
+template <class _Tp, uint32_t size, class _SizeType>
+OG_CONSTEXPR OG_INLINE void
+OG::vector<_Tp, size, _SizeType>::pop_back()
+{
+    // TODO
+}
+
+template <class _Tp, uint32_t size, class _SizeType>
+OG_CONSTEXPR OG_INLINE
+typename OG::vector<_Tp, size, _SizeType>::const_iterator OG::vector<_Tp, size, _SizeType>::begin() const OG_NOEXCEPT
+{
+    // TODO
+}
+
+template <class _Tp, uint32_t size, class _SizeType>
+OG_CONSTEXPR OG_INLINE
+typename OG::vector<_Tp, size, _SizeType>::const_iterator OG::vector<_Tp, size, _SizeType>::end() const OG_NOEXCEPT
+{
+    // TODO
+}
+
+// MARK: size = 0
 
 template <class _Tp, class _SizeType>
 class vector<_Tp, 0, _SizeType> final {
@@ -73,16 +108,52 @@ public:
     typedef std::reverse_iterator<iterator>                 reverse_iterator;
     typedef std::reverse_iterator<const_iterator>           const_reverse_iterator;
     
-    constexpr void push_back(const_reference __x);
-    constexpr void push_back(value_type&& __x);
-    constexpr void pop_back();
+    OG_CONSTEXPR void push_back(const_reference __x);
+    OG_CONSTEXPR void push_back(value_type&& __x);
+    OG_CONSTEXPR void pop_back();
     
-    constexpr const_iterator begin() const noexcept;
-    constexpr const_iterator end() const noexcept;
+    OG_CONSTEXPR const_iterator begin() const OG_NOEXCEPT;
+    OG_CONSTEXPR const_iterator end() const OG_NOEXCEPT;
 private:
     pointer _buffer = nullptr;
     size_type _count = 0;
     size_type _capacity = 0;
 };
+
+template <class _Tp, class _SizeType>
+OG_CONSTEXPR OG_INLINE void
+OG::vector<_Tp, 0, _SizeType>::push_back(const_reference __x)
+{
+    // TODO
+}
+
+template <class _Tp, class _SizeType>
+OG_CONSTEXPR OG_INLINE void
+OG::vector<_Tp, 0, _SizeType>::push_back(value_type&& __x)
+{
+    // TODO
+}
+
+template <class _Tp, class _SizeType>
+OG_CONSTEXPR OG_INLINE void
+OG::vector<_Tp, 0, _SizeType>::pop_back()
+{
+    // TODO
+}
+
+template <class _Tp, class _SizeType>
+OG_CONSTEXPR OG_INLINE
+typename OG::vector<_Tp, 0, _SizeType>::const_iterator OG::vector<_Tp, 0, _SizeType>::begin() const OG_NOEXCEPT
+{
+    // TODO
+}
+
+template <class _Tp, class _SizeType>
+OG_CONSTEXPR OG_INLINE
+typename OG::vector<_Tp, 0, _SizeType>::const_iterator OG::vector<_Tp, 0, _SizeType>::end() const OG_NOEXCEPT
+{
+    // TODO
+}
+
 }
 #endif /* vector_hpp */

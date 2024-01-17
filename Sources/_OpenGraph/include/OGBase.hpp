@@ -21,6 +21,24 @@
 #endif
 #define __dead2         __attribute__((__noreturn__))
 
+#if defined(__cplusplus)
+#define OG_NOEXCEPT noexcept
+#else
+#define OG_NOEXCEPT
+#endif
+
+#if defined(__cplusplus)
+#define OG_INLINE inline
+#else
+#define OG_INLINE
+#endif
+
+#if defined(__cplusplus)
+#define OG_CONSTEXPR constexpr
+#else
+#define OG_CONSTEXPR
+#endif
+
 #ifdef __APPLE__
 #include <CoreFoundation/CoreFoundation.h>
 #include <TargetConditionals.h>
@@ -33,7 +51,6 @@
 #define OG_EXPORT CF_EXPORT
 #define OG_REFINED_FOR_SWIFT CF_REFINED_FOR_SWIFT
 #define OG_SWIFT_NAME CF_SWIFT_NAME
-
 #else
 #include <OpenFoundation/OpenFoundation.h>
 #define OG_OPTIONS OF_OPTIONS

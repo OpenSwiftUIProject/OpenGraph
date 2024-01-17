@@ -5,7 +5,10 @@
 //  Created by Kyle on 2024/1/15.
 //
 
+#if canImport(Darwin)
 import XCTest
+import Foundation
+import CoreFoundation
 
 #if OPENGRAPH_COMPATIBILITY_TEST
 import AttributeGraph
@@ -17,6 +20,7 @@ private func debugServerStart(_ port: UInt) -> UnsafeRawPointer?
 private func debugServerCopyURL() -> CFURL?
 #else
 import OpenGraph
+import _OpenGraph
 @_silgen_name("OGDebugServerStart")
 @inline(__always)
 private func debugServerStart(_ port: UInt) -> UnsafeRawPointer?
@@ -36,8 +40,11 @@ final class DebugServerTests: XCTestCase {
         throw XCTSkip("Skip on AG due to internal_diagnostics")
         #else
         _ = try XCTUnwrap(debugServerStart(10089))
-        let url = try XCTUnwrap(debugServerCopyURL()) as URL
-        XCTAssertTrue(url.absoluteString.hasPrefix("graph://"))
+        
+        let url = try XCTUnwrap(debugServerCopyURL())
+        let urlString = (url as URL).absoluteString
+        XCTAssertTrue(urlString.hasPrefix("graph://"))
         #endif
     }
 }
+#endif
