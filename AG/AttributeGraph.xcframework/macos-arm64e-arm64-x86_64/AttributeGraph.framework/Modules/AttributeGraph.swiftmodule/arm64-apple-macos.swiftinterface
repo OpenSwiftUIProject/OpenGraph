@@ -80,3 +80,9 @@ extension AGTypeID {
 	public init(_ type: Any.Type)
 	public var type: Any.Type { get }
 }
+
+// MARK: - AGGraph C functions
+
+@_silgen_name("AGGraphArchiveJSON")
+@inline(__always)
+public func graphArchiveJSON(_ name: UnsafePointer<Int8>)
