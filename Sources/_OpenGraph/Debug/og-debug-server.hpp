@@ -33,7 +33,7 @@ class DebugServer {
         friend class DebugServer;
     };
 private:
-    int32_t fd;
+    int32_t sockfd;
     uint32_t ip;
     uint32_t port;
     uint32_t token;

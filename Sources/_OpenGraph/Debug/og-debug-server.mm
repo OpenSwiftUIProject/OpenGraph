@@ -11,13 +11,14 @@
 #include "OGLog.hpp"
 #include <iostream>
 #include <sys/socket.h>
+#include <sys/select.h>
+#include <sys/fcntl.h>
 #include <arpa/inet.h>
 #include <ifaddrs.h>
 #include <CoreFoundation/CoreFoundation.h>
 #include <Foundation/NSJSONSerialization.h>
 #include <errno.h>
 #include <assert.h>
-#include <sys/_types/_fd_def.h>
 
 // MARK: DebugServer Implementation
 
@@ -44,71 +45,51 @@ void OG::DebugServer::stop() {
 }
 
 OG::DebugServer::DebugServer(unsigned int p) {
-    fd = -1;
+    sockfd = -1;
     ip = 0;
     port = 0;
     token = arc4random();
     source = nullptr;
     connections = OG::vector<std::unique_ptr<Connection>, 0, unsigned long>();
     
-    fd = socket(AF_INET, SOCK_STREAM, 0x0);
-    if (fd < 0) {
+    sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    if (sockfd < 0) {
         perror("OGDebugServer: socket");
         return;
     }
-    fcntl(fd, F_SETFD, O_WRONLY);
+    fcntl(sockfd, F_SETFD, O_WRONLY);
     
     const int value = 1;
-    setsockopt(fd, SOL_SOCKET, SO_NOSIGPIPE, &value, 4);
+    setsockopt(sockfd, SOL_SOCKET, SO_NOSIGPIPE, &value, 4);
+    // Checked ⬆️
     
-    sockaddr addr = sockaddr();
-    addr.sa_family = AF_INET;
-    addr.sa_data[0] = 0;
-    addr.sa_data[1] = 0;
-    u_int32_t sa_data = ((p & 2) == 0) ? htonl(INADDR_LOOPBACK) : 0;
-    for (int i = 0; i < 4; i++) {
-        addr.sa_data[2+i] = sa_data >> (i * 8);
-    }
-    
-    if (bind(fd, &addr, 16)) {
+    sockaddr_in addr = sockaddr_in();
+    addr.sin_family = AF_INET;
+    addr.sin_port = 0;
+    addr.sin_addr.s_addr = ((p & 2) == 0) ? htonl(INADDR_LOOPBACK) : 0;
+
+    socklen_t slen = sizeof(sockaddr_in);
+    if (bind(sockfd, (const sockaddr *)&addr, slen)) {
         perror("OGDebugServer: bind");
         shutdown();
         return;
     }
-    
-    socklen_t length = 16;
-    if (getsockname(fd, &addr, &length)) {
+    if (getsockname(sockfd, (sockaddr *)&addr, &slen)) {
         perror("OGDebugServer: getsockname");
         shutdown();
         return;
     }
-    
-    u_int32_t ip_data = 0;
-    for (int i = 0; i < 4; i++) {
-        ip_data += addr.sa_data[2+i] << (i * 8);
-    }
-    ip_data = ntohl(ip_data);
-    ip = ip_data;
-    
-    u_int32_t port_data = 0;
-    for (int i = 0; i < 2; i++) {
-        port_data += addr.sa_data[i] << (i * 8);
-    }
-    port_data = ntohl(port_data);
-    port = port_data >> 16;
-    
+
+    ip = ntohl(addr.sin_addr.s_addr);
+    port = ntohl(addr.sin_port) >> 16;
     if (p & 2) {
         ifaddrs *iaddrs = nullptr;
         if (getifaddrs(&iaddrs) == 0) {
             ifaddrs *current_iaddrs = iaddrs;
             while (current_iaddrs != nullptr) {
-                auto *ifa_addr = current_iaddrs->ifa_addr;
-                if (ifa_addr != nullptr && ifa_addr->sa_family == AF_INET) {
-                    u_int32_t ip_data = 0;
-                    for (int i = 0; i < 4; i++) {
-                        ip_data += ifa_addr->sa_data[2+i] << (i * 8);
-                    }
-                    ip_data = ntohl(ip_data);
+                sockaddr_in *ifa_addr = (sockaddr_in *)current_iaddrs->ifa_addr;
+                if (ifa_addr != nullptr && ifa_addr->sin_family == AF_INET) {
+                    uint32_t ip_data = ntohl(ifa_addr->sin_addr.s_addr);
                     if (ip_data != INADDR_LOOPBACK) {
                         ip = ip_data;
                     }
@@ -118,18 +99,18 @@ OG::DebugServer::DebugServer(unsigned int p) {
             freeifaddrs(iaddrs);
         }
     }
-    if (listen(fd, 5)) {
+    int max_connection_count = 5;
+    if (listen(sockfd, max_connection_count)) {
         perror("OGDebugServer: listen");
         shutdown();
         return;
     }
-    source = dispatch_source_create(DISPATCH_SOURCE_TYPE_READ, fd, 0, dispatch_get_main_queue());
+    source = dispatch_source_create(DISPATCH_SOURCE_TYPE_READ, sockfd, 0, dispatch_get_main_queue());
     dispatch_set_context(source, this);
     dispatch_source_set_event_handler_f(source, &accept_handler);
     dispatch_resume(source);
-    
     char address[32] = {0};
-    inet_ntop(AF_INET, (void *)(&addr.sa_data[2]), address, 32);
+    inet_ntop(AF_INET, (const void *)(&addr.sin_addr.s_addr), address, 32);
     os_log_info(misc_log(), "debug server graph://%s:%d/?token=%u", address, port, token);
     fprintf(stderr, "debug server graph://%s:%d/?token=%u\\n", address, port, token);
 }
@@ -138,9 +119,9 @@ OG::DebugServer::~DebugServer() {}
 
 void OG::DebugServer::run(int timeout) {
     fd_set set = {};
-    __darwin_fd_set(fd, &set);
+    __darwin_fd_set(sockfd, &set);
     
-    int descriptor = fd;
+    int descriptor = sockfd;
 //    if (count != 0) {
 //        __darwin_fd_set(connections[0]->descriptor, &set);
 //    }
@@ -154,17 +135,17 @@ void OG::DebugServer::accept_handler(void *_Nullable context) {
     sockaddr address;
     socklen_t address_len = 16;
     
-    int descriptor = accept(server->fd, &address, &address_len);
+    int descriptor = accept(server->sockfd, &address, &address_len);
     if (descriptor) {
         perror("OGDebugServer: accept");
         return;
     }
-    fcntl(server->fd, F_SETFD, O_WRONLY);
+    fcntl(server->sockfd, F_SETFD, O_WRONLY);
     server->connections.push_back(std::unique_ptr<Connection>(new Connection(server, descriptor)));
 }
 
 CFURLRef _Nullable OG::DebugServer::copy_url() const {
-    if (fd < 0) {
+    if (sockfd < 0) {
         return nullptr;
     }
     uint32_t converted_ip = htonl(ip);
@@ -181,9 +162,9 @@ void OG::DebugServer::shutdown() {
         dispatch_set_context(source, nullptr);
         source = nullptr;
     }
-    if (fd >= 0) {
-        close(fd);
-        fd = -1;
+    if (sockfd >= 0) {
+        close(sockfd);
+        sockfd = -1;
     }
 }
 
