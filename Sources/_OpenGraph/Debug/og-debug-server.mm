@@ -311,6 +311,7 @@ void OG::DebugServer::Connection::handler(void *_Nullable context) {
                     CFDataRef receive_data = connection->server->receive(connection, *header, data);
                     if (receive_data) {
                         CFIndex receive_length = CFDataGetLength(receive_data);
+                        header->length = (uint32_t)receive_length;
                         if ((receive_length >> 32) == 0) {
                             if(blocking_write(connection->sockfd, buf, 16)) {
                                 const UInt8 *received_data_ptr = CFDataGetBytePtr(receive_data);
