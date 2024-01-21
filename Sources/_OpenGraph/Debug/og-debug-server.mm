@@ -130,19 +130,23 @@ OG::DebugServer::DebugServer(unsigned int mode) {
 OG::DebugServer::~DebugServer() {}
 
 void OG::DebugServer::run(int timeout) {
-    fd_set set = {};
-    __darwin_fd_set(sockfd, &set);
+    bool accepted_connection = false;
     
-    int descriptor = sockfd;
-//    if (count != 0) {
-//        __darwin_fd_set(connections[0]->descriptor, &set);
-//    }
-//    FD_ZERO();
-//    FD_SET();
-    timeval tv = timeval { timeout, 0 };
-    select(descriptor+1, nullptr, &set, nullptr, &tv);
-    int a = errno;
-    std::cout << a;
+    while (true) {
+        fd_set writefds;
+        FD_ZERO(&writefds);
+        FD_SET(sockfd, &writefds);
+        timeval tv = timeval { timeout, 0 };
+        
+        if (select(sockfd+1, nullptr, &writefds, nullptr, &tv) <= 0) {
+            if (errno == EAGAIN) {
+                continue;
+            } else {
+                perror("OGDebugServer: select");
+                return;
+            }
+        }
+    }
 }
 
 void OG::DebugServer::accept_handler(void *_Nullable context) {
@@ -183,7 +187,7 @@ void OG::DebugServer::shutdown() {
     }
 }
 
-__CFData *_Nullable OG::DebugServer::receive(Connection *connection, OGDebugServerMessageHeader &header, __CFData *data) {
+CFDataRef _Nullable OG::DebugServer::receive(Connection *connection, OGDebugServerMessageHeader &header, CFDataRef data) {
     id jsonObject = [NSJSONSerialization JSONObjectWithData:(__bridge NSData *)data options:0 error:NULL];
     // TODO
     return nullptr;
@@ -223,6 +227,7 @@ bool blocking_read(int descriptor, void *buf, unsigned long count) {
     }
     return true;
 }
+
 bool blocking_write(int descriptor, void *buf, unsigned long count) {
     ssize_t offset = 0;
     while (offset < count) {
@@ -243,8 +248,8 @@ bool blocking_write(int descriptor, void *buf, unsigned long count) {
     }
     return true;
 }
-}
-}
+} /* anonymous namespace */
+} /* OG */
 
 // MARK: Connection Implementation
 
@@ -267,31 +272,34 @@ void OG::DebugServer::Connection::handler(void *_Nullable context) {
     Connection *connection = (Connection *)context;
     char buf[16] = {};
     if (blocking_read(connection->descriptor, &buf, 16)) {
-        uint32_t token = 0;
-        for (int i = 0; i < 4; i++) {
-            token += buf[i] << (i * 8);
-            buf[12+i] = 0;
-        }
-        if (token == connection->server->token) {
-            CFIndex length = 0;
-            for (int i = 0; i < 4; i++) {
-                length += buf[8+i] << (i * 8);
-            }
+        OGDebugServerMessageHeader *header = (OGDebugServerMessageHeader *)buf;
+        header->unknown2 = 0;
+        if (header->token == connection->server->token) {
+            CFIndex length = header->length;
             CFMutableDataRef data = CFDataCreateMutable(kCFAllocatorDefault, length);
             if (data) {
                 CFDataSetLength(data, length);
-                void *dataPtr = CFDataGetMutableBytePtr(data);
-                if (blocking_read(connection->descriptor, dataPtr, length)) {
-                    __CFData *receive_data = connection->server->receive(connection, (OGDebugServerMessageHeader &)buf, data);
+                UInt8 *data_ptr = CFDataGetMutableBytePtr(data);
+                if (blocking_read(connection->descriptor, (void *)data_ptr, length)) {
+                    CFDataRef receive_data = connection->server->receive(connection, *header, data);
                     if (receive_data) {
-                        // TODO
-                        // block_write
+                        CFIndex receive_length = CFDataGetLength(receive_data);
+                        if ((receive_length >> 32) == 0) {
+                            if(blocking_write(connection->descriptor, buf, 16)) {
+                                const UInt8 *received_data_ptr = CFDataGetBytePtr(receive_data);
+                                if(blocking_write(connection->descriptor, (void *)received_data_ptr, receive_length)) {
+                                    connection = nullptr;
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
     }
-    connection->server->close_connection(connection);
+    if (connection) {
+        connection->server->close_connection(connection);
+    }
     return;
 }
 
