@@ -60,7 +60,7 @@ public:
 
 OG_EXTERN_C_BEGIN
 OG_EXPORT
-OG::DebugServer* _Nullable OGDebugServerStart(unsigned int port);
+OG::DebugServer* _Nullable OGDebugServerStart(unsigned int mode);
 OG_EXPORT
 void OGDebugServerStop();
 OG_EXPORT
