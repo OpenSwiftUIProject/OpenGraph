@@ -77,11 +77,11 @@ extension AGTypeID {
 	public var type: Any.Type { get }
 }
 
-// MARK: - DebugServer
+// MARK: - DebugServer C functions
 
 @_silgen_name("AGDebugServerStart")
 @inline(__always)
-public func debugServerStart(_ port: UInt) -> UnsafeRawPointer?
+public func debugServerStart(_ mode: UInt) -> UnsafeRawPointer?
 
 @_silgen_name("AGDebugServerStop")
 @inline(__always)
@@ -95,9 +95,20 @@ public func debugServerCopyURL() -> CFURL?
 @inline(__always)
 public func debugServerRun(_ timeout: Int)
 
-
 // MARK: - AGGraph C functions
 
 @_silgen_name("AGGraphArchiveJSON")
 @inline(__always)
 public func graphArchiveJSON(_ name: UnsafePointer<Int8>)
+
+@_silgen_name("AGGraphCreate")
+@inline(__always)
+public func graphCreate() -> UnsafeRawPointer?
+
+@_silgen_name("AGGraphCreateShared")
+@inline(__always)
+public func graphCreateShared(_: UnsafeRawPointer?) -> UnsafeRawPointer?
+
+@_silgen_name("AGGraphDescription")
+@inline(__always)
+public func graphDescription(_ graph: UnsafeRawPointer? = nil, options: NSDictionary) -> UnsafeRawPointer?

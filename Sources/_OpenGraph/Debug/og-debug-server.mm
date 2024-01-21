@@ -201,9 +201,9 @@ CFDataRef _Nullable OG::DebugServer::receive(Connection *, OGDebugServerMessageH
             if ([command isEqualTo:@"graph/description"]) {
                 NSMutableDictionary *mutableDic = [NSMutableDictionary dictionaryWithDictionary:dic];
                 mutableDic[(__bridge NSString *)OGDescriptionFormat] = @"graph/dict";
-                CFDataRef description = OG::Graph::description(nullptr, mutableDic);
+                CFTypeRef description = OG::Graph::description(nullptr, mutableDic);
                 if (description) {
-                    NSData *descriptionData = [NSJSONSerialization dataWithJSONObject:(__bridge NSData *)description options:0 error:NULL];
+                    NSData *descriptionData = [NSJSONSerialization dataWithJSONObject:(__bridge id)description options:0 error:NULL];
                     return (__bridge CFDataRef)descriptionData;
                 }
             } else if ([command isEqualTo:@"profiler/start"]) {

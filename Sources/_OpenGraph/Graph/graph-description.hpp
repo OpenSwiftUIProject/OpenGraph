@@ -13,14 +13,8 @@
 
 #if TARGET_OS_DARWIN
 OG_EXTERN_C_BEGIN
-
 OG_EXPORT
 CFStringRef OGDescriptionFormat;
-
-OG_EXPORT
-OG_REFINED_FOR_SWIFT
-void OGGraphArchiveJSON(char const* name);
-
 OG_EXTERN_C_END
 
 #endif /* TARGET_OS_DARWIN */

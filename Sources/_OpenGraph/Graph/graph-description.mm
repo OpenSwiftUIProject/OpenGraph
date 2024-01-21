@@ -11,12 +11,10 @@
 #if TARGET_OS_DARWIN
 CFStringRef OGDescriptionFormat = CFSTR("format");
 
-void OGGraphArchiveJSON(char const* name) {
+CFTypeRef OG::Graph::description(const Graph *graph, NSDictionary* dic) {
     // TODO
-}
-
-CFDataRef OG::Graph::description(const Graph *graph, NSDictionary* dic) {
-    // TODO
+    // For "format": "graph/dict" - NSMutableDictionray
+    // For "format": "graph/dot" - NSMutableString
     return NULL;
 }
 #endif /* TARGET_OS_DARWIN */
