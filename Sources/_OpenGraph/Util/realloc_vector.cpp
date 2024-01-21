@@ -6,7 +6,8 @@
 //
 
 #include "realloc_vector.hpp"
-#include "../Debug/OGLog.hpp"
+#include "assert.hpp"
+
 #if TARGET_OS_DARWIN
 #include <malloc/malloc.h>
 #else

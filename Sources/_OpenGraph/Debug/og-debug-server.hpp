@@ -17,23 +17,26 @@
 OG_ASSUME_NONNULL_BEGIN
 
 namespace OG {
-class OGDebugServerMessageHeader {
-    
+struct OGDebugServerMessageHeader {
+    uint32_t token;
+    uint32_t unknown;
+    uint32_t length;
+    uint32_t unknown2;
 };
 class DebugServer {
     class Connection {
     private:
         DebugServer *server;
-        int descriptor;
+        int sockfd;
         dispatch_source_t source;
     public:
         Connection(DebugServer *server,int descriptor);
         ~Connection();
-        static void handler(void *_Nullable context); // TODO
+        static void handler(void *_Nullable context);
         friend class DebugServer;
     };
 private:
-    int32_t fd;
+    int32_t sockfd;
     uint32_t ip;
     uint32_t port;
     uint32_t token;
@@ -49,18 +52,16 @@ public:
     static void accept_handler(void *_Nullable context);
     CFURLRef _Nullable copy_url() const;
     void shutdown();
-    
-    __CFData *_Nullable receive(Connection *connection, OGDebugServerMessageHeader &header, __CFData *data);
+    CFDataRef _Nullable receive(Connection *connection, OGDebugServerMessageHeader &header, CFDataRef data);
     void close_connection(Connection *connection);
 };
-}
-
+} /* OG */
 
 // MARK: - Exported C functions
 
 OG_EXTERN_C_BEGIN
 OG_EXPORT
-OG::DebugServer* _Nullable OGDebugServerStart(unsigned int port);
+OG::DebugServer* _Nullable OGDebugServerStart(unsigned int mode);
 OG_EXPORT
 void OGDebugServerStop();
 OG_EXPORT

@@ -30,4 +30,52 @@ final class GraphTests: XCTestCase {
         throw XCTSkip("Not implemented on OG")
         #endif
     }
+    
+    func testGraphCreate() throws {
+        #if OPENGRAPH_COMPATIBILITY_TEST
+        let graph = graphCreate()
+        XCTAssertNotNil(graph)
+        #else
+        throw XCTSkip("Not implemented on OG")
+        #endif
+    }
+    
+    func testGraphCreateShared() throws {
+        #if OPENGRAPH_COMPATIBILITY_TEST
+        let graph = graphCreateShared(nil)
+        XCTAssertNotNil(graph)
+        #else
+        throw XCTSkip("Not implemented on OG")
+        #endif
+    }
+    
+    func testGraphDescriptionDict() throws {
+        #if OPENGRAPH_COMPATIBILITY_TEST
+        let description = try XCTUnwrap(graphDescription(options: ["format": "graph/dict"] as NSDictionary))
+        let dic = Unmanaged<NSDictionary>.fromOpaque(description).takeUnretainedValue()
+        XCTAssertEqual(dic["version"] as? UInt32, 2)
+        XCTAssertEqual((dic["graphs"] as? NSArray)?.count, 0)
+        #else
+        throw XCTSkip("Not implemented on OG")
+        #endif
+    }
+    
+    func testGraphDescriptionDot() throws {
+        #if OPENGRAPH_COMPATIBILITY_TEST
+        let options = NSMutableDictionary()
+        options["format"] = "graph/dot"
+        XCTAssertNil(graphDescription(options: options))
+        let graph = graphCreate()
+        let description = try XCTUnwrap(graphDescription(graph, options: options))
+        let dotGraph = Unmanaged<NSString>.fromOpaque(description).takeUnretainedValue() as String
+        let expectedEmptyDotGraph = #"""
+        digraph {
+        }
+        
+        """#
+        XCTAssertEqual(dotGraph, expectedEmptyDotGraph)
+        #else
+        throw XCTSkip("Not implemented on OG")
+        #endif
+    }
 }

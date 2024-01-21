@@ -14,7 +14,7 @@ import OpenGraph
 
 final class UniqueIDTests: XCTestCase {
     func testUniqueID() throws {
-        XCTAssertEqual(makeUniqueID(), 1)
-        XCTAssertEqual(makeUniqueID(), 2)
+        let initialID = makeUniqueID()
+        XCTAssertEqual(makeUniqueID(), initialID + 1)
     }
 }

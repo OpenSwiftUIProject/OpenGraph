@@ -2,7 +2,14 @@ import _OpenGraph
 
 @propertyWrapper
 public struct Attribute<Value> {
+    #if canImport(Darwin)
+    // FIXME: Linux compiler will crash here
     var identifier: OGAttribute
+    #endif
+    
+    public init() {
+        fatalError("TODO")
+    }
 
     public var wrappedValue: Value { fatalError() }
 
