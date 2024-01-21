@@ -27,7 +27,7 @@ class DebugServer {
     class Connection {
     private:
         DebugServer *server;
-        int descriptor;
+        int sockfd;
         dispatch_source_t source;
     public:
         Connection(DebugServer *server,int descriptor);
@@ -56,7 +56,6 @@ public:
     void close_connection(Connection *connection);
 };
 } /* OG */
-
 
 // MARK: - Exported C functions
 

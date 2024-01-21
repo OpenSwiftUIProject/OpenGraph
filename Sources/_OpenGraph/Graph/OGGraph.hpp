@@ -9,11 +9,18 @@
 #define OGGraph_hpp
 
 #include "OGBase.hpp"
+#if TARGET_OS_DARWIN && __OBJC__
+@class NSDictionary;
+#endif /* TARGET_OS_DARWIN */
 
-OG_EXTERN_C_BEGIN
-OG_EXPORT
-OG_REFINED_FOR_SWIFT
-void OGGraphArchiveJSON(char const* name);
-OG_EXTERN_C_END
+namespace OG {
+class Graph {
+    // TODO
+public:
+    #if TARGET_OS_DARWIN && __OBJC__
+    static CFDataRef description(const Graph * graph, NSDictionary* dic);
+    #endif /* TARGET_OS_DARWIN */
+}; /* Graph */
+} /* OG */
 
 #endif /* OGGraph_hpp */

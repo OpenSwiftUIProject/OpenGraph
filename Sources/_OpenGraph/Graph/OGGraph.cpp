@@ -6,7 +6,3 @@
 //
 
 #include "OGGraph.hpp"
-
-void OGGraphArchiveJSON(char const* name) {
-    // TODO
-}

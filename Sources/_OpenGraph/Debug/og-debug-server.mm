@@ -9,14 +9,14 @@
 #if TARGET_OS_DARWIN
 
 #include "OGLog.hpp"
+#include "../Graph/graph-description.hpp"
 #include <iostream>
 #include <sys/socket.h>
 #include <sys/select.h>
 #include <sys/fcntl.h>
 #include <arpa/inet.h>
 #include <ifaddrs.h>
-#include <CoreFoundation/CoreFoundation.h>
-#include <Foundation/NSJSONSerialization.h>
+#include <Foundation/Foundation.h>
 #include <errno.h>
 #include <assert.h>
 
@@ -127,8 +127,10 @@ OG::DebugServer::DebugServer(unsigned int mode) {
     fprintf(stderr, "debug server graph://%s:%d/?token=%u\\n", address, port, token);
 }
 
+// TODO: To be implemented
 OG::DebugServer::~DebugServer() {}
 
+// TODO: select will fail here
 void OG::DebugServer::run(int timeout) {
     bool accepted_connection = false;
     
@@ -154,13 +156,13 @@ void OG::DebugServer::accept_handler(void *_Nullable context) {
     sockaddr address;
     socklen_t address_len = 16;
     
-    int descriptor = accept(server->sockfd, &address, &address_len);
-    if (descriptor) {
+    int sockfd = accept(server->sockfd, &address, &address_len);
+    if (sockfd) {
         perror("OGDebugServer: accept");
         return;
     }
     fcntl(server->sockfd, F_SETFD, O_WRONLY);
-    server->connections.push_back(std::unique_ptr<Connection>(new Connection(server, descriptor)));
+    server->connections.push_back(std::unique_ptr<Connection>(new Connection(server, sockfd)));
 }
 
 CFURLRef _Nullable OG::DebugServer::copy_url() const {
@@ -187,10 +189,33 @@ void OG::DebugServer::shutdown() {
     }
 }
 
-CFDataRef _Nullable OG::DebugServer::receive(Connection *connection, OGDebugServerMessageHeader &header, CFDataRef data) {
-    id jsonObject = [NSJSONSerialization JSONObjectWithData:(__bridge NSData *)data options:0 error:NULL];
-    // TODO
-    return nullptr;
+// TODO: part implemented
+CFDataRef _Nullable OG::DebugServer::receive(Connection *, OGDebugServerMessageHeader &, CFDataRef data) {
+    @autoreleasepool {
+        id object = [NSJSONSerialization JSONObjectWithData:(__bridge NSData *)data options:0 error:NULL];
+        if (object && [object isKindOfClass:NSDictionary.class]) {
+            NSDictionary *dic = (NSDictionary *)object;
+            id command = dic[@"command"];
+            if ([command isEqualTo:@"graph/description"]) {
+                NSMutableDictionary *mutableDic = [NSMutableDictionary dictionaryWithDictionary:dic];
+                mutableDic[(__bridge NSString *)OGDescriptionFormat] = @"graph/dict";
+                CFDataRef description = OG::Graph::description(nullptr, mutableDic);
+                if (description) {
+                    NSData *descriptionData = [NSJSONSerialization dataWithJSONObject:(__bridge NSData *)description options:0 error:NULL];
+                    return (__bridge CFDataRef)descriptionData;
+                }
+            } else if ([command isEqualTo:@"profiler/start"]) {
+                // TODO
+            } else if ([command isEqualTo:@"profiler/stop"]) {
+                // TODO
+            } else if ([command isEqualTo:@"profiler/reset"]) {
+                // TODO
+            } else if ([command isEqualTo:@"profiler/mark"]) {
+                // TODO
+            }
+        }
+        return nullptr;
+    }
 }
 
 void OG::DebugServer::close_connection(OG::DebugServer::Connection *connection) {
@@ -255,8 +280,8 @@ bool blocking_write(int descriptor, void *buf, unsigned long count) {
 
 OG::DebugServer::Connection::Connection(DebugServer *s,int d) {
     server = s;
-    descriptor = d;
-    source = dispatch_source_create(DISPATCH_SOURCE_TYPE_READ, descriptor, 0, dispatch_get_main_queue());
+    sockfd = d;
+    source = dispatch_source_create(DISPATCH_SOURCE_TYPE_READ, sockfd, 0, dispatch_get_main_queue());
     dispatch_set_context(source, this);
     dispatch_source_set_event_handler_f(source, &handler);
     dispatch_resume(source);
@@ -265,13 +290,13 @@ OG::DebugServer::Connection::Connection(DebugServer *s,int d) {
 OG::DebugServer::Connection::~Connection() {
     dispatch_source_set_event_handler_f(source, nullptr);
     dispatch_set_context(source, nullptr);
-    close(descriptor);
+    close(sockfd);
 }
 
 void OG::DebugServer::Connection::handler(void *_Nullable context) {
     Connection *connection = (Connection *)context;
     char buf[16] = {};
-    if (blocking_read(connection->descriptor, &buf, 16)) {
+    if (blocking_read(connection->sockfd, &buf, 16)) {
         OGDebugServerMessageHeader *header = (OGDebugServerMessageHeader *)buf;
         header->unknown2 = 0;
         if (header->token == connection->server->token) {
@@ -280,14 +305,14 @@ void OG::DebugServer::Connection::handler(void *_Nullable context) {
             if (data) {
                 CFDataSetLength(data, length);
                 UInt8 *data_ptr = CFDataGetMutableBytePtr(data);
-                if (blocking_read(connection->descriptor, (void *)data_ptr, length)) {
+                if (blocking_read(connection->sockfd, (void *)data_ptr, length)) {
                     CFDataRef receive_data = connection->server->receive(connection, *header, data);
                     if (receive_data) {
                         CFIndex receive_length = CFDataGetLength(receive_data);
                         if ((receive_length >> 32) == 0) {
-                            if(blocking_write(connection->descriptor, buf, 16)) {
+                            if(blocking_write(connection->sockfd, buf, 16)) {
                                 const UInt8 *received_data_ptr = CFDataGetBytePtr(receive_data);
-                                if(blocking_write(connection->descriptor, (void *)received_data_ptr, receive_length)) {
+                                if(blocking_write(connection->sockfd, (void *)received_data_ptr, receive_length)) {
                                     connection = nullptr;
                                 }
                             }
