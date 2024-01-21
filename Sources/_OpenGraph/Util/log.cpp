@@ -11,11 +11,11 @@
 
 namespace OG {
 os_log_t misc_log() {
-    static os_log_t log = os_log_create("org.openswiftuiproject.opengraph", "misc");
+    static os_log_t log = os_log_create("org.OpenSwiftUIProject.OpenGraph", "misc");
     return log;
 }
 os_log_t error_log() {
-    static os_log_t log = os_log_create("org.openswiftuiproject.opengraph", "error");
+    static os_log_t log = os_log_create("org.OpenSwiftUIProject.OpenGraph", "error");
     return log;
 }
 } /* OG */
