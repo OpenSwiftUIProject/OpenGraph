@@ -8,6 +8,9 @@
 #include "assert.hpp"
 #include "log.hpp"
 
+#include <stdio.h>
+#include <stdlib.h>
+
 char* error_message = nullptr;
 
 namespace OG {

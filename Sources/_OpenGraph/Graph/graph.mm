@@ -8,7 +8,9 @@
 #include "graph.hpp"
 #include "../Util/assert.hpp"
 
+#if TARGET_OS_DARWIN
 #include <Foundation/Foundation.h>
+#endif
 
 OG::Graph* OGGraphCreate() {
     return OGGraphCreateShared(nullptr);

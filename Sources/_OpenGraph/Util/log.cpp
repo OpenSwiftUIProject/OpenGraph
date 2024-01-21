@@ -8,8 +8,6 @@
 #include "log.hpp"
 
 #if TARGET_OS_DARWIN
-#include <stdio.h>
-#include <stdlib.h>
 
 namespace OG {
 os_log_t misc_log() {
