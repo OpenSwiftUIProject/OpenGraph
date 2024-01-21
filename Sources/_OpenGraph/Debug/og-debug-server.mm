@@ -8,8 +8,10 @@
 #include "og-debug-server.hpp"
 #if TARGET_OS_DARWIN
 
-#include "OGLog.hpp"
+#include "../Util/log.hpp"
+#include "../Util/assert.hpp"
 #include "../Graph/graph-description.hpp"
+
 #include <iostream>
 #include <sys/socket.h>
 #include <sys/select.h>

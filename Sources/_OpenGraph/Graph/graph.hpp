@@ -1,12 +1,12 @@
 //
-//  OGGraph.hpp
-//  
+//  graph.hpp
+//
 //
 //  Created by Kyle on 2024/1/18.
 //
 
-#ifndef OGGraph_hpp
-#define OGGraph_hpp
+#ifndef graph_hpp
+#define graph_hpp
 
 #include "OGBase.hpp"
 #if TARGET_OS_DARWIN && __OBJC__
@@ -23,4 +23,4 @@ public:
 }; /* Graph */
 } /* OG */
 
-#endif /* OGGraph_hpp */
+#endif /* graph_hpp */

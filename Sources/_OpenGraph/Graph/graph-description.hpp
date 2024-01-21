@@ -9,7 +9,7 @@
 #define graph_description_hpp
 
 #include "OGBase.hpp"
-#include "OGGraph.hpp"
+#include "graph.hpp"
 
 #if TARGET_OS_DARWIN
 OG_EXTERN_C_BEGIN
