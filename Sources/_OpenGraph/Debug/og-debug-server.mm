@@ -197,8 +197,8 @@ CFDataRef _Nullable OG::DebugServer::receive(Connection *, OGDebugServerMessageH
         id object = [NSJSONSerialization JSONObjectWithData:(__bridge NSData *)data options:0 error:NULL];
         if (object && [object isKindOfClass:NSDictionary.class]) {
             NSDictionary *dic = (NSDictionary *)object;
-            id command = dic[@"command"];
-            if ([command isEqualTo:@"graph/description"]) {
+            NSString *command = dic[@"command"];
+            if ([command isEqual:@"graph/description"]) {
                 NSMutableDictionary *mutableDic = [NSMutableDictionary dictionaryWithDictionary:dic];
                 mutableDic[(__bridge NSString *)OGDescriptionFormat] = @"graph/dict";
                 CFTypeRef description = OG::Graph::description(nullptr, mutableDic);
@@ -206,13 +206,13 @@ CFDataRef _Nullable OG::DebugServer::receive(Connection *, OGDebugServerMessageH
                     NSData *descriptionData = [NSJSONSerialization dataWithJSONObject:(__bridge id)description options:0 error:NULL];
                     return (__bridge CFDataRef)descriptionData;
                 }
-            } else if ([command isEqualTo:@"profiler/start"]) {
+            } else if ([command isEqual:@"profiler/start"]) {
                 // TODO
-            } else if ([command isEqualTo:@"profiler/stop"]) {
+            } else if ([command isEqual:@"profiler/stop"]) {
                 // TODO
-            } else if ([command isEqualTo:@"profiler/reset"]) {
+            } else if ([command isEqual:@"profiler/reset"]) {
                 // TODO
-            } else if ([command isEqualTo:@"profiler/mark"]) {
+            } else if ([command isEqual:@"profiler/mark"]) {
                 // TODO
             }
         }
