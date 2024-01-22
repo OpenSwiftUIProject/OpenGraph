@@ -24,7 +24,16 @@ jobs:
           xcode-version: ${{ matrix.xcode-version }}
       - name: Swift version
         run: swift --version
-      - name: Build and run tests in debug mode with coverage
+      - name: Build in debug mode on iOS
+        run: |
+          xcodebuild build \
+            -scheme OpenGraph-Package \
+            -configuration Debug \
+            -destination "platform=iOS" \
+            -enableCodeCoverage=YES \
+            -derivedDataPath .build-debug \
+            OTHER_SWIFT_FLAGS="-warnings-as-errors"
+      - name: Build and run tests in debug mode with coverage on iOS Simulator
         run: |
           xcodebuild test \
             -scheme OpenGraph-Package \
