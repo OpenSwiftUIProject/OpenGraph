@@ -1,6 +1,15 @@
 {
   "pins" : [
     {
+      "identity" : "iosboostframework",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Cogosense/iOSBoostFramework",
+      "state" : {
+        "revision" : "20702879518cc0a5d543754d3a8fd25da109daa5",
+        "version" : "1.81.2"
+      }
+    },
+    {
       "identity" : "openfoundation",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/OpenSwiftUIProject/OpenFoundation",

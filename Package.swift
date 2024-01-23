@@ -38,6 +38,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/OpenSwiftUIProject/OpenFoundation", from: "0.0.1"),
+        .package(url: "https://github.com/Cogosense/iOSBoostFramework", from: "1.81.2"),
     ],
     targets: [
         // FIXME: Merge into one target
@@ -45,7 +46,10 @@ let package = Package(
         // The SwiftPM support for such usage is still in progress.
         .target(
             name: "_OpenGraph",
-            dependencies: [.product(name: "OpenFoundation", package: "OpenFoundation")],
+            dependencies: [
+                .product(name: "OpenFoundation", package: "OpenFoundation"),
+                .product(name: "boost", package: "iOSBoostFramework", condition: .when(platforms: [.macOS, .iOS])),
+            ],
             cSettings: [clangEnumFixSetting]
         ),
         .target(
