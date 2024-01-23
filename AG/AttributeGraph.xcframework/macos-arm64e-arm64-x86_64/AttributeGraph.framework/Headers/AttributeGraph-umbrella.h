@@ -12,6 +12,7 @@
 #include "AGSwiftMetadata.hpp"
 #include "AGTypeApplyField.hpp"
 #include "AGTypeApplyOptions.hpp"
+#include "AGTypeDescription.hpp"
 #include "AGTypeID.hpp"
 #include "AGTypeKind.hpp"
 #include "AGUniqueID.hpp"

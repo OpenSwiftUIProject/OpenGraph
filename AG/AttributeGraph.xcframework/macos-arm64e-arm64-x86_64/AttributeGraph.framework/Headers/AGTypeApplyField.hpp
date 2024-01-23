@@ -5,8 +5,8 @@
 //  Created by Kyle on 2024/1/24.
 //
 
-#ifndef OGTypeApplyField_hpp
-#define OGTypeApplyField_hpp
+#ifndef AGTypeApplyField_hpp
+#define AGTypeApplyField_hpp
 
 #include <CoreFoundation/CoreFoundation.h>
 #include "AGTypeApplyOptions.hpp"
