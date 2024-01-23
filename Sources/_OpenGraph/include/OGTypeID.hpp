@@ -11,6 +11,6 @@
 #include "OGBase.hpp"
 #include "OGSwiftMetadata.hpp"
 
-typedef const OGSwiftMetadata *OGTypeID __attribute__((swift_wrapper(struct)));
+typedef const OGSwiftMetadata *OGTypeID OG_SWIFT_STRUCT;
 
 #endif /* OGTypeID_hpp */
