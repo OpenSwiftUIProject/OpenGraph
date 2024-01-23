@@ -10,6 +10,8 @@
 #include "AGCompareValues.hpp"
 #include "AGComparisonMode.hpp"
 #include "AGSwiftMetadata.hpp"
+#include "AGTypeApplyField.hpp"
+#include "AGTypeApplyOptions.hpp"
 #include "AGTypeID.hpp"
 #include "AGTypeKind.hpp"
 #include "AGUniqueID.hpp"

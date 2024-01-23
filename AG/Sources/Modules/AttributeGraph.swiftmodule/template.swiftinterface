@@ -75,7 +75,27 @@ public func makeUniqueID() -> AGUniqueID
 extension AGTypeID {
 	public init(_ type: Any.Type)
 	public var type: Any.Type { get }
+
+  public func forEachField(
+    options: AGTypeApplyOptions,
+    do body: (UnsafePointer<Int8>, Int, Any.Type) -> Bool
+  ) -> Bool
 }
+
+// MARK: - AGTypeApplyFields
+
+@_silgen_name("AGTypeApplyFields")
+public func AGTypeApplyFields(
+    _ type: Any.Type,
+    body: (UnsafePointer<Int8>, Int, Any.Type) -> Void
+)
+
+@_silgen_name("AGTypeApplyFields2")
+public func AGTypeApplyFields2(
+    _ type: Any.Type,
+    options: AGTypeApplyOptions,
+    body: (UnsafePointer<Int8>, Int, Any.Type) -> Bool
+) -> Bool
 
 // MARK: - DebugServer C functions
 
