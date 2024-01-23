@@ -11,6 +11,7 @@ public typealias OGAttribute = AGAttribute
 public typealias OGUniqueID = AGUniqueID
 public typealias OGSwiftMetadata = AGSwiftMetadata
 public typealias OGTypeID = AGTypeID
+public typealias OGTypeApplyOptions = AGTypeApplyOptions
 #else
 @_exported import OpenGraph
 #endif

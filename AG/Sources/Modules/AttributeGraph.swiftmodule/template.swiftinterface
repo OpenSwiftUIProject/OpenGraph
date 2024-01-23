@@ -72,10 +72,10 @@ public func makeUniqueID() -> AGUniqueID
 
 // MARK: - AGTypeID
 
-extension AGTypeID {
+extension AGTypeID : Swift.CustomStringConvertible {
 	public init(_ type: Any.Type)
 	public var type: Any.Type { get }
-
+  public var description: String { get }
   public func forEachField(
     options: AGTypeApplyOptions,
     do body: (UnsafePointer<Int8>, Int, Any.Type) -> Bool

@@ -8,6 +8,13 @@
 
 import _OpenGraph
 
+#if canImport(ObjectiveC)
+@_silgen_name("OGTypeDescription")
+public func OGTypeDescription(
+    _ type: OGTypeID
+) -> CFString
+#endif
+
 @_silgen_name("OGTypeApplyFields")
 public func OGTypeApplyFields(
     _ type: Any.Type,
@@ -21,7 +28,7 @@ public func OGTypeApplyFields2(
     body: (UnsafePointer<Int8>, Int, Any.Type) -> Bool
 ) -> Bool
 
-extension OGTypeID {
+extension OGTypeID: CustomStringConvertible {
     public init(_ type: Any.Type) {
         self.init(rawValue: unsafeBitCast(type, to: UnsafePointer<OGSwiftMetadata>.self))
     }
@@ -29,7 +36,15 @@ extension OGTypeID {
     public var type: Any.Type {
         unsafeBitCast(rawValue, to: Any.Type.self)
     }
-
+    
+    public var description: String {
+        #if canImport(ObjectiveC)
+        OGTypeDescription(self) as String
+        #else
+        fatalError("Unimplemented")
+        #endif
+    }
+    
     public func forEachField(
         do body: (UnsafePointer<Int8>, Int, Any.Type) -> Void
     ) {
