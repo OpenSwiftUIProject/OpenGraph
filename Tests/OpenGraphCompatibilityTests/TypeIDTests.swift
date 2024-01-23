@@ -5,7 +5,6 @@
 //  Created by Kyle on 2024/1/24.
 //
 
-import OpenGraphShims
 import XCTest
 
 final class TypeIDTests: XCTestCase {

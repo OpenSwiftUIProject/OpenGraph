@@ -8,7 +8,6 @@
 #if canImport(Darwin)
 import CoreFoundation
 import Foundation
-import OpenGraphShims
 import XCTest
 
 final class DebugServerTests: XCTestCase {

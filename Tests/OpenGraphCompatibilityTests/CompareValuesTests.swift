@@ -5,7 +5,6 @@
 //  Created by Kyle on 2023/12/20.
 //
 
-import OpenGraphShims
 import XCTest
 
 final class OGCompareValuesTests: XCTestCase {

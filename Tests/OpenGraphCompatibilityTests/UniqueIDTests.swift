@@ -5,7 +5,6 @@
 //  Created by Kyle on 2023/10/9.
 //
 
-import OpenGraphShims
 import XCTest
 
 final class UniqueIDTests: XCTestCase {

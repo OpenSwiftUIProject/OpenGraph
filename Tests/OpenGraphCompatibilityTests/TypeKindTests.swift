@@ -5,7 +5,6 @@
 //  Created by Kyle on 2024/1/8.
 //
 
-import OpenGraphShims
 import XCTest
 
 private protocol P {}

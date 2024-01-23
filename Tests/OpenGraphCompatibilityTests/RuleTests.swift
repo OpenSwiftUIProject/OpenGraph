@@ -5,7 +5,6 @@
 //  Created by Kyle on 2023/10/17.
 //
 
-import OpenGraphShims
 import XCTest
 
 final class RuleTests: XCTestCase {

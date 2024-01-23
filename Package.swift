@@ -100,10 +100,8 @@ if compatibilityTestCondition && attributeGraphCondition {
     var swiftSettings: [SwiftSetting] = (openGraphCompatibilityTestTarget.swiftSettings ?? [])
     swiftSettings.append(.define("OPENGRAPH_COMPATIBILITY_TEST"))
     openGraphCompatibilityTestTarget.swiftSettings = swiftSettings
-    openGraphCompatibilityTestTarget.dependencies.append(.target(name: openGraphShimsTarget.name))
 } else {
     openGraphCompatibilityTestTarget.dependencies.append("OpenGraph")
-    openGraphCompatibilityTestTarget.dependencies.append(.target(name: openGraphShimsTarget.name))
 }
 
 // Remove this when swift-testing is 1.0.0
