@@ -6,7 +6,6 @@
 //
 
 import _OpenGraph
-import Foundation
 
 @_silgen_name("OGGraphArchiveJSON")
 @inline(__always)
@@ -21,6 +20,8 @@ public func graphCreate() -> UnsafeRawPointer?
 public func graphCreateShared(_: UnsafeRawPointer?) -> UnsafeRawPointer?
 
 #if canImport(ObjectiveC)
+import Foundation
+
 @_silgen_name("OGGraphDescription")
 @inline(__always)
 public func graphDescription(_ graph: UnsafeRawPointer? = nil, options: NSDictionary) -> UnsafeRawPointer?
