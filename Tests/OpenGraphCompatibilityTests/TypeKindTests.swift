@@ -5,13 +5,8 @@
 //  Created by Kyle on 2024/1/8.
 //
 
+import OpenGraphShims
 import XCTest
-#if OPENGRAPH_COMPATIBILITY_TEST
-import AttributeGraph
-typealias OGTypeID = AGTypeID
-#else
-import OpenGraph
-#endif
 
 private protocol P {}
 

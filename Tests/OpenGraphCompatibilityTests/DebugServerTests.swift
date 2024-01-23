@@ -1,20 +1,15 @@
 //
 //  DebugServerTests.swift
-//  
+//
 //
 //  Created by Kyle on 2024/1/15.
 //
 
 #if canImport(Darwin)
-import XCTest
-import Foundation
 import CoreFoundation
-
-#if OPENGRAPH_COMPATIBILITY_TEST
-import AttributeGraph
-#else
-import OpenGraph
-#endif
+import Foundation
+import OpenGraphShims
+import XCTest
 
 final class DebugServerTests: XCTestCase {
     func testExample() throws {
