@@ -2,10 +2,10 @@
 //  GraphShims.swift
 //
 //
-//  Created by Kyle on 2023/12/21.
+//  Created by Kyle on 2024/1/24.
 //
 
-#if OPENGRAPH_ATTRIBUTEGRAPH
+#if OPENGRAPH_COMPATIBILITY_TEST
 @_exported import AttributeGraph
 public typealias OGAttribute = AGAttribute
 public typealias OGUniqueID = AGUniqueID

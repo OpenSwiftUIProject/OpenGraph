@@ -1,16 +1,11 @@
 //
 //  GraphTests.swift
-//  
+//
 //
 //  Created by Kyle on 2024/1/18.
 //
 
 import XCTest
-#if OPENGRAPH_COMPATIBILITY_TEST
-import AttributeGraph
-#else
-import OpenGraph
-#endif
 
 final class GraphTests: XCTestCase {
     func testGraphArchiveJSON() throws {

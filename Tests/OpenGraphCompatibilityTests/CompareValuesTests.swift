@@ -1,16 +1,11 @@
 //
 //  OGCompareValuesTests.swift
-//  
+//
 //
 //  Created by Kyle on 2023/12/20.
 //
 
 import XCTest
-#if OPENGRAPH_COMPATIBILITY_TEST
-import AttributeGraph
-#else
-import OpenGraph
-#endif
 
 final class OGCompareValuesTests: XCTestCase {
     override func setUp() async throws {
@@ -44,7 +39,7 @@ final class OGCompareValuesTests: XCTestCase {
     }
 
     func testStructCompare() throws {
-        struct A1{
+        struct A1 {
             var a: Int
             var b: Bool
         }

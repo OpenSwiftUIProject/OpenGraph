@@ -39,6 +39,8 @@
 #define OG_CONSTEXPR
 #endif
 
+#define OG_SWIFT_STRUCT __attribute__((swift_wrapper(struct)))
+
 #ifdef __APPLE__
 #include <CoreFoundation/CoreFoundation.h>
 #include <TargetConditionals.h>
