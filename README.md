@@ -14,6 +14,7 @@ OpenGraph is an open source implementation of Apple's Private framework - Attrib
 |[![macOS](https://github.com/OpenSwiftUIProject/OpenGraph/actions/workflows/macos.yml/badge.svg)](https://github.com/OpenSwiftUIProject/OpenGraph/actions/workflows/macos.yml)|
 |[![iOS](https://github.com/OpenSwiftUIProject/OpenGraph/actions/workflows/ios.yml/badge.svg)](https://github.com/OpenSwiftUIProject/OpenGraph/actions/workflows/ios.yml)|
 |[![Ubuntu](https://github.com/OpenSwiftUIProject/OpenGraph/actions/workflows/ubuntu.yml/badge.svg)](https://github.com/OpenSwiftUIProject/OpenGraph/actions/workflows/ubuntu.yml)|
+|[![Wasm](https://github.com/OpenSwiftUIProject/OpenGraph/actions/workflows/wasm.yml/badge.svg)](https://github.com/OpenSwiftUIProject/OpenGraph/actions/workflows/wasm.yml)|
 
 The project is for the following purposes:
 - Add OG support for non-Apple platform (eg. Linux & Windows)
