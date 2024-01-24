@@ -28,7 +28,7 @@ public func OGTypeApplyFields2(
     body: (UnsafePointer<Int8>, Int, Any.Type) -> Bool
 ) -> Bool
 
-extension OGTypeID: CustomStringConvertible {
+extension OGTypeID: Hashable, CustomStringConvertible {
     public init(_ type: Any.Type) {
         self.init(rawValue: unsafeBitCast(type, to: UnsafePointer<OGSwiftMetadata>.self))
     }
@@ -45,7 +45,7 @@ extension OGTypeID: CustomStringConvertible {
         #endif
     }
     
-    public func forEachField(
+    /* public */func forEachField(
         do body: (UnsafePointer<Int8>, Int, Any.Type) -> Void
     ) {
         OGTypeApplyFields(type, body: body)
