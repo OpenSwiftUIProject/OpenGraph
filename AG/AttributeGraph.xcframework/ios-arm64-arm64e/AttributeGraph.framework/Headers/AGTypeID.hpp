@@ -8,9 +8,9 @@
 #ifndef AGTypeID_hpp
 #define AGTypeID_hpp
 
-#include <CoreFoundation/CoreFoundation.h>
+#include "AGBase.hpp"
 #include "AGSwiftMetadata.hpp"
 
-typedef const AGSwiftMetadata *AGTypeID __attribute__((swift_wrapper(struct)));
+typedef const AGSwiftMetadata *AGTypeID AG_SWIFT_STRUCT;
 
 #endif /* AGTypeID_hpp */

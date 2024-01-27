@@ -8,19 +8,19 @@
 #ifndef AGTypeApplyField_hpp
 #define AGTypeApplyField_hpp
 
-#include <CoreFoundation/CoreFoundation.h>
+#include "AGBase.hpp"
 #include "AGTypeApplyOptions.hpp"
 
-CF_EXTERN_C_BEGIN
+AG_EXTERN_C_BEGIN
 
-CF_EXPORT
-CF_REFINED_FOR_SWIFT
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
 void AGTypeApplyFields(const void *type, const void *block, void *context);
 
-CF_EXPORT
-CF_REFINED_FOR_SWIFT
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
 bool AGTypeApplyFields2(const void *type, AGTypeApplyOptions options, const void *block, void *context);
 
-CF_EXTERN_C_END
+AG_EXTERN_C_END
 
 #endif /* AGTypeApplyField_hpp */

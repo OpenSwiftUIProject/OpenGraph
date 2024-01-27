@@ -37,7 +37,7 @@ let package = Package(
         .library(name: "OpenGraph", targets: ["OpenGraph"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/OpenSwiftUIProject/OpenFoundation", from: "0.0.1"),
+        .package(url: "https://github.com/OpenSwiftUIProject/OpenFoundation", from: "0.0.2"),
     ],
     targets: [
         // FIXME: Merge into one target
@@ -45,7 +45,9 @@ let package = Package(
         // The SwiftPM support for such usage is still in progress.
         .target(
             name: "_OpenGraph",
-            dependencies: [.product(name: "OpenFoundation", package: "OpenFoundation")],
+            dependencies: [
+                .product(name: "OpenFoundation", package: "OpenFoundation"),
+            ],
             cSettings: [clangEnumFixSetting]
         ),
         .target(

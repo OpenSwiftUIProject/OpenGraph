@@ -8,13 +8,13 @@
 #ifndef AGUniqueID_hpp
 #define AGUniqueID_hpp
 
-#include <CoreFoundation/CoreFoundation.h>
+#include "AGBase.hpp"
 typedef long long AGUniqueID;
 
-CF_EXTERN_C_BEGIN
-CF_EXPORT
-CF_REFINED_FOR_SWIFT
+AG_EXTERN_C_BEGIN
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
 AGUniqueID AGMakeUniqueID(void);
-CF_EXTERN_C_END
+AG_EXTERN_C_END
 
 #endif /* AGUniqueID_hpp */

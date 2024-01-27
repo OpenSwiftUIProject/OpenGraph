@@ -82,6 +82,17 @@ extension AGTypeID : Swift.CustomStringConvertible {
   ) -> Bool
 }
 
+// MARK: - AGTupleType
+
+extension AGTupleType {
+  public init(_ type: [Any.Type])
+  public init(_ type: Any.Type)
+  public var type: Any.Type { get }
+  public var isEmpty: Bool { get }
+  public var indices: Range<Int> { get }
+  public func type(at index: Int) -> Any.Type
+}
+
 // MARK: - AGTypeApplyFields
 
 @_silgen_name("AGTypeApplyFields")
