@@ -28,5 +28,9 @@ AG_EXPORT
 AG_REFINED_FOR_SWIFT
 AGTypeID AGTupleElementType(AGTupleType tupleType, long index);
 
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+long AGTupleElementOffset(AGTupleType tupleType, long index) AG_SWIFT_NAME(AGTupleType.offset(self:at:));
+
 AG_EXTERN_C_END
 #endif /* AGTupleType_hpp */

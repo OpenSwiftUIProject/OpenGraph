@@ -21,5 +21,8 @@ final class TupleTypeTests: XCTestCase {
         XCTAssertEqual(tupleType.size, 16)
         XCTAssertTrue(tupleType.type(at: 0) == Int.self)
         XCTAssertTrue(tupleType.type(at: 1) == Double.self)
+        
+        XCTAssertEqual(tupleType.offset(at: 0), 0)
+        XCTAssertEqual(tupleType.offset(at: 1), 8)
     }
 }

@@ -22,3 +22,8 @@ OGTypeID OGTupleElementType(OGTupleType tupleType, long index) {
     // TODO
     return nullptr;
 }
+
+long OGTupleElementOffset(OGTupleType tupleType, long index) {
+    // TODO
+    return 0;
+}

@@ -28,5 +28,9 @@ OG_EXPORT
 OG_REFINED_FOR_SWIFT
 OGTypeID OGTupleElementType(OGTupleType tupleType, long index);
 
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+long OGTupleElementOffset(OGTupleType tupleType, long index) OG_SWIFT_NAME(OGTupleType.offset(self:at:));
+
 OG_EXTERN_C_END
 #endif /* OGTupleType_hpp */
