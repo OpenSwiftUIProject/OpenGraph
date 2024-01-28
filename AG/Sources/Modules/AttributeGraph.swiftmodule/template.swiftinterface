@@ -88,10 +88,24 @@ extension AGTupleType {
   public init(_ type: [Any.Type])
   public init(_ type: Any.Type)
   public var type: Any.Type { get }
-  public var isEmpty: Bool { get }
-  public var indices: Range<Int> { get }
-  public func type(at index: Int) -> Any.Type
+  public var isEmpty: Swift.Bool { get }
+  public var indices: Swift.Range<Swift.Int> { get }
+  public func type(at index: Swift.Int) -> Any.Type
 }
+
+// MARK: - AGTypeApplyEnumData
+
+@discardableResult
+public func withUnsafePointerToEnumCase<T>(
+    of value: Swift.UnsafeMutablePointer<T>,
+    do body: (Swift.Int, Any.Type, Swift.UnsafeRawPointer) -> ()
+) -> Swift.Bool
+
+@discardableResult
+public func withUnsafeMutablePointerToEnumCase<T>(
+    of value: UnsafeMutablePointer<T>,
+    do body: (Swift.Int, Any.Type, Swift.UnsafeMutableRawPointer) -> ()
+) -> Swift.Bool
 
 // MARK: - AGTypeApplyFields
 
