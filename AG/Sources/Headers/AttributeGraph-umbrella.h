@@ -12,6 +12,7 @@
 #include "AGComparisonMode.hpp"
 #include "AGSwiftMetadata.hpp"
 #include "AGTupleType.hpp"
+#include "AGTypeApplyEnumData.hpp"
 #include "AGTypeApplyField.hpp"
 #include "AGTypeApplyOptions.hpp"
 #include "AGTypeDescription.hpp"
