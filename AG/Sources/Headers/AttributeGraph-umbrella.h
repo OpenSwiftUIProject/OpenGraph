@@ -7,9 +7,11 @@
 #endif
 
 #include "AGAttribute.hpp"
+#include "AGBase.hpp"
 #include "AGCompareValues.hpp"
 #include "AGComparisonMode.hpp"
 #include "AGSwiftMetadata.hpp"
+#include "AGTupleType.hpp"
 #include "AGTypeApplyField.hpp"
 #include "AGTypeApplyOptions.hpp"
 #include "AGTypeDescription.hpp"

@@ -8,9 +8,9 @@
 #ifndef AGTypeApplyOptions_hpp
 #define AGTypeApplyOptions_hpp
 
-#include <CoreFoundation/CoreFoundation.h>
+#include "AGBase.hpp"
 
-typedef CF_OPTIONS(uint32_t, AGTypeApplyOptions) {
+typedef AG_OPTIONS(uint32_t, AGTypeApplyOptions) {
     AGTypeApplyOptions_0 = 0,
     AGTypeApplyOptions_1 = 1 << 0,
     AGTypeApplyOptions_2 = 1 << 1,

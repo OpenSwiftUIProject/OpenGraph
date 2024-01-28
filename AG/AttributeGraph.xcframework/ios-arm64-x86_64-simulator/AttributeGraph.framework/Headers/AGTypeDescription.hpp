@@ -8,13 +8,13 @@
 #ifndef AGTypeDescription_hpp
 #define AGTypeDescription_hpp
 
-#include <CoreFoundation/CoreFoundation.h>
+#include "AGBase.hpp"
 #include "AGTypeID.hpp"
 
-CF_EXTERN_C_BEGIN
-CF_EXPORT
-CF_REFINED_FOR_SWIFT
+AG_EXTERN_C_BEGIN
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
 CFStringRef AGTypeDescription(AGTypeID type);
-CF_EXTERN_C_END
+AG_EXTERN_C_END
 
 #endif /* AGTypeDescription_hpp */

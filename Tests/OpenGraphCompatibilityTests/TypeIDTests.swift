@@ -36,12 +36,14 @@ final class TypeIDTests: XCTestCase {
     
     func testForEachField() throws {
         for options in [OGTypeApplyOptions._1] {
-            let result = OGTypeID(T1.self).forEachField(options: options) { _, index, type in
-                if index == 16 {
+            let result = OGTypeID(T1.self).forEachField(options: options) { name, offset, type in
+                if offset == 16 {
                     XCTAssertTrue(type is Int.Type)
+                    XCTAssertEqual(String(cString: name), "a")
                     return true
-                } else if index == 24 {
+                } else if offset == 24 {
                     XCTAssertTrue(type is Double.Type)
+                    XCTAssertEqual(String(cString: name), "b")
                     return true
                 } else {
                     return false
@@ -50,12 +52,14 @@ final class TypeIDTests: XCTestCase {
             XCTAssertTrue(result)
         }
         for options in [OGTypeApplyOptions._2, ._4, []] {
-            let result = OGTypeID(T1.self).forEachField(options: options) { _, index, type in
-                if index == 16 {
+            let result = OGTypeID(T1.self).forEachField(options: options) { name, offset, type in
+                if offset == 16 {
                     XCTAssertTrue(type is Int.Type)
+                    XCTAssertEqual(String(cString: name), "a")
                     return true
-                } else if index == 24 {
+                } else if offset == 24 {
                     XCTAssertTrue(type is Double.Type)
+                    XCTAssertEqual(String(cString: name), "b")
                     return true
                 } else {
                     return false
@@ -64,11 +68,11 @@ final class TypeIDTests: XCTestCase {
             XCTAssertFalse(result)
         }
         for options in [OGTypeApplyOptions._2, []] {
-            let result = OGTypeID(T2.self).forEachField(options: options) { _, index, type in
-                if index == 0 {
+            let result = OGTypeID(T2.self).forEachField(options: options) { name, offset, type in
+                if offset == 0 {
                     XCTAssertTrue(type is Int.Type)
                     return true
-                } else if index == 8 {
+                } else if offset == 8 {
                     XCTAssertTrue(type is Double.Type)
                     return true
                 } else {
@@ -78,12 +82,14 @@ final class TypeIDTests: XCTestCase {
             XCTAssertTrue(result)
         }
         for options in [OGTypeApplyOptions._1, ._4] {
-            let result = OGTypeID(T2.self).forEachField(options: options) { _, index, type in
-                if index == 0 {
+            let result = OGTypeID(T2.self).forEachField(options: options) { name, offset, type in
+                if offset == 0 {
                     XCTAssertTrue(type is Int.Type)
+                    XCTAssertEqual(String(cString: name), "a")
                     return true
-                } else if index == 8 {
+                } else if offset == 8 {
                     XCTAssertTrue(type is Double.Type)
+                    XCTAssertEqual(String(cString: name), "b")
                     return true
                 } else {
                     return false

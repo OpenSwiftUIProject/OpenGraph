@@ -8,7 +8,7 @@
 #ifndef AGTypeKind_hpp
 #define AGTypeKind_hpp
 
-#include <CoreFoundation/CoreFoundation.h>
+#include "AGBase.hpp"
 #include "AGTypeID.hpp"
 
 typedef enum __attribute__((enum_extensibility(open))) AGTypeKind: uint32_t {
@@ -23,10 +23,10 @@ typedef enum __attribute__((enum_extensibility(open))) AGTypeKind: uint32_t {
     AGTypeKindMetatype,
 } AGTypeKind;
 
-CF_EXTERN_C_BEGIN
-CF_EXPORT
-CF_REFINED_FOR_SWIFT
-AGTypeKind AGTypeGetKind(AGTypeID typeID) CF_SWIFT_NAME(getter:AGTypeID.kind(self:));
-CF_EXTERN_C_END
+AG_EXTERN_C_BEGIN
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+AGTypeKind AGTypeGetKind(AGTypeID typeID) AG_SWIFT_NAME(getter:AGTypeID.kind(self:));
+AG_EXTERN_C_END
 
 #endif /* AGTypeKind_hpp */
