@@ -4,9 +4,6 @@
 import Foundation
 import PackageDescription
 
-// https://github.com/llvm/llvm-project/issues/48757
-let clangEnumFixSetting = CSetting.unsafeFlags(["-Wno-elaborated-enum-base"], .when(platforms: [.linux]))
-
 let openGraphShimsTarget = Target.target(
     name: "OpenGraphShims"
 )
@@ -47,11 +44,6 @@ let package = Package(
         // The SwiftPM support for such usage is still in progress.
         .target(
             name: "_OpenGraph",
-            cSettings: [
-                clangEnumFixSetting,
-                .unsafeFlags(["-I", includePath]),
-                .define("__COREFOUNDATION_FORSWIFTFOUNDATIONONLY__", to: "1"),
-            ],
             cxxSettings: [
                 .unsafeFlags(["-I", includePath]),
                 .define("__COREFOUNDATION_FORSWIFTFOUNDATIONONLY__", to: "1"),
@@ -59,8 +51,7 @@ let package = Package(
         ),
         .target(
             name: "OpenGraph",
-            dependencies: ["_OpenGraph"],
-            cSettings: [clangEnumFixSetting]
+            dependencies: ["_OpenGraph"]
         ),
         openGraphShimsTarget,
         openGraphTestTarget,
