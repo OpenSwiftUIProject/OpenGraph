@@ -4,9 +4,6 @@
 import Foundation
 import PackageDescription
 
-// https://github.com/llvm/llvm-project/issues/48757
-let clangEnumFixSetting = CSetting.unsafeFlags(["-Wno-elaborated-enum-base"], .when(platforms: [.linux]))
-
 let openGraphShimsTarget = Target.target(
     name: "OpenGraphShims"
 )
@@ -22,6 +19,11 @@ let openGraphCompatibilityTestTarget = Target.testTarget(
     exclude: ["README.md"]
 )
 
+let swiftBinPath = Context.environment["_"] ?? ""
+let swiftBinURL = URL(fileURLWithPath: swiftBinPath)
+let SDKPath = swiftBinURL.deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent().path
+let includePath = SDKPath.appending("/usr/lib/swift_static")
+
 let package = Package(
     name: "OpenGraph",
     platforms: [
@@ -36,24 +38,20 @@ let package = Package(
         .library(name: "OpenGraphShims", targets: ["OpenGraphShims"]),
         .library(name: "OpenGraph", targets: ["OpenGraph"]),
     ],
-    dependencies: [
-        .package(url: "https://github.com/OpenSwiftUIProject/OpenFoundation", from: "0.0.2"),
-    ],
     targets: [
         // FIXME: Merge into one target
         // OpenGraph is a C++ & Swift mix target.
         // The SwiftPM support for such usage is still in progress.
         .target(
             name: "_OpenGraph",
-            dependencies: [
-                .product(name: "OpenFoundation", package: "OpenFoundation"),
-            ],
-            cSettings: [clangEnumFixSetting]
+            cxxSettings: [
+                .unsafeFlags(["-I", includePath], .when(platforms: .nonDarwinPlatforms)),
+                .define("__COREFOUNDATION_FORSWIFTFOUNDATIONONLY__", to: "1", .when(platforms: .nonDarwinPlatforms)),
+            ]
         ),
         .target(
             name: "OpenGraph",
-            dependencies: ["_OpenGraph"],
-            cSettings: [clangEnumFixSetting]
+            dependencies: ["_OpenGraph"]
         ),
         openGraphShimsTarget,
         openGraphTestTarget,
@@ -63,7 +61,7 @@ let package = Package(
 )
 
 func envEnable(_ key: String, default defaultValue: Bool = false) -> Bool {
-    guard let value = ProcessInfo.processInfo.environment[key] else {
+    guard let value = Context.environment[key] else {
         return defaultValue
     }
     if value == "1" {
@@ -118,4 +116,10 @@ if swiftTestingCondition {
     var swiftSettings: [SwiftSetting] = (openGraphTestTarget.swiftSettings ?? [])
     swiftSettings.append(.define("OPENGRAPH_SWIFT_TESTING"))
     openGraphTestTarget.swiftSettings = swiftSettings
+}
+
+extension [Platform] {
+    static var nonDarwinPlatforms: [Platform] {
+        [.linux, .android, .wasi, .openbsd, .windows]
+    }
 }
