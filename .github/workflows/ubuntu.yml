@@ -17,6 +17,9 @@ jobs:
     container: swift:${{ matrix.swift_version }}-jammy
     steps:
       - uses: actions/checkout@v4
+      - name: Swift version
+        run: |
+          which swift && swift --version
       - name: Building and running tests in debug mode with coverage
         run: |
           swift test \

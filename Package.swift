@@ -24,8 +24,8 @@ let openGraphCompatibilityTestTarget = Target.testTarget(
 
 let swiftBinPath = Context.environment["_"] ?? ""
 let swiftBinURL = URL(fileURLWithPath: swiftBinPath)
-let SDKPath = swiftBinURL.deletingLastPathComponent().deletingLastPathComponent().path
-let includePath = SDKPath.appending("/lib/swift_static")
+let SDKPath = swiftBinURL.deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent().path
+let includePath = SDKPath.appending("/usr/lib/swift_static")
 
 let package = Package(
     name: "OpenGraph",
@@ -53,7 +53,7 @@ let package = Package(
                 .define("__COREFOUNDATION_FORSWIFTFOUNDATIONONLY__", to: "1"),
             ],
             cxxSettings: [
-                .unsafeFlags(["-I", "/home/kyle/.swiftbox/toolchain/swift-5.9.2/usr/lib/swift_static"]),
+                .unsafeFlags(["-I", includePath]),
                 .define("__COREFOUNDATION_FORSWIFTFOUNDATIONONLY__", to: "1"),
             ]
         ),
