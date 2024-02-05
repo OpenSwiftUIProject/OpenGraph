@@ -45,8 +45,8 @@ let package = Package(
         .target(
             name: "_OpenGraph",
             cxxSettings: [
-                .unsafeFlags(["-I", includePath]),
-                .define("__COREFOUNDATION_FORSWIFTFOUNDATIONONLY__", to: "1"),
+                .unsafeFlags(["-I", includePath], .when(platforms: .nonDarwinPlatforms)),
+                .define("__COREFOUNDATION_FORSWIFTFOUNDATIONONLY__", to: "1", .when(platforms: .nonDarwinPlatforms)),
             ]
         ),
         .target(
@@ -116,4 +116,10 @@ if swiftTestingCondition {
     var swiftSettings: [SwiftSetting] = (openGraphTestTarget.swiftSettings ?? [])
     swiftSettings.append(.define("OPENGRAPH_SWIFT_TESTING"))
     openGraphTestTarget.swiftSettings = swiftSettings
+}
+
+extension [Platform] {
+    static var nonDarwinPlatforms: [Platform] {
+        [.linux, .android, .wasi, .openbsd, .windows]
+    }
 }
