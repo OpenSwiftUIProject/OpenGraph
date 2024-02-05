@@ -43,7 +43,6 @@
 
 #include <CoreFoundation/CoreFoundation.h>
 #include <TargetConditionals.h>
-#define TARGET_OS_DARWIN TARGET_OS_MAC
 #define AG_OPTIONS CF_OPTIONS
 #define AG_EXTERN_C_BEGIN CF_EXTERN_C_BEGIN
 #define AG_EXTERN_C_END CF_EXTERN_C_END

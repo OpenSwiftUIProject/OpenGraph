@@ -22,6 +22,11 @@ let openGraphCompatibilityTestTarget = Target.testTarget(
     exclude: ["README.md"]
 )
 
+let swiftBinPath = Context.environment["_"] ?? ""
+let swiftBinURL = URL(fileURLWithPath: swiftBinPath)
+let SDKPath = swiftBinURL.deletingLastPathComponent().deletingLastPathComponent().path
+let includePath = SDKPath.appending("/lib/swift_static")
+
 let package = Package(
     name: "OpenGraph",
     platforms: [
@@ -36,19 +41,21 @@ let package = Package(
         .library(name: "OpenGraphShims", targets: ["OpenGraphShims"]),
         .library(name: "OpenGraph", targets: ["OpenGraph"]),
     ],
-    dependencies: [
-        .package(url: "https://github.com/OpenSwiftUIProject/OpenFoundation", from: "0.0.2"),
-    ],
     targets: [
         // FIXME: Merge into one target
         // OpenGraph is a C++ & Swift mix target.
         // The SwiftPM support for such usage is still in progress.
         .target(
             name: "_OpenGraph",
-            dependencies: [
-                .product(name: "OpenFoundation", package: "OpenFoundation"),
+            cSettings: [
+                clangEnumFixSetting,
+                .unsafeFlags(["-I", includePath]),
+                .define("__COREFOUNDATION_FORSWIFTFOUNDATIONONLY__", to: "1"),
             ],
-            cSettings: [clangEnumFixSetting]
+            cxxSettings: [
+                .unsafeFlags(["-I", "/home/kyle/.swiftbox/toolchain/swift-5.9.2/usr/lib/swift_static"]),
+                .define("__COREFOUNDATION_FORSWIFTFOUNDATIONONLY__", to: "1"),
+            ]
         ),
         .target(
             name: "OpenGraph",
@@ -63,7 +70,7 @@ let package = Package(
 )
 
 func envEnable(_ key: String, default defaultValue: Bool = false) -> Bool {
-    guard let value = ProcessInfo.processInfo.environment[key] else {
+    guard let value = Context.environment[key] else {
         return defaultValue
     }
     if value == "1" {
