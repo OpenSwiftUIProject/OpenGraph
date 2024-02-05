@@ -44,6 +44,9 @@
 #include <CoreFoundation/CoreFoundation.h>
 #ifdef __APPLE__
 #include <TargetConditionals.h>
+#ifndef TARGET_OS_DARWIN
+#define TARGET_OS_DARWIN TARGET_OS_MAC
+#endif
 #else
 #include <CoreFoundation/TargetConditionals.h>
 #endif
