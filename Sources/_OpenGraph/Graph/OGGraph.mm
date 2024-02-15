@@ -23,7 +23,7 @@ OGGraphRef OGGraphCreateShared(OGGraphRef storage) {
     if (storage == nullptr) {
         graph = new OG::Graph();
     } else {
-        if (storage->invalid) {
+        if (storage->context.isInvalid()) {
             OG::precondition_failure("invalidated graph");
         }
         graph = &storage->context.get_graph();
@@ -35,7 +35,7 @@ OGGraphRef OGGraphCreateShared(OGGraphRef storage) {
 //    if ([graph+0x10c] == 0) {
 //        delete graph
 //    }
-    instance->invalid = false;
+    instance->context.setInvalid(false);
     return instance;
 }
 
@@ -47,7 +47,7 @@ CFTypeRef OGGraphDescription(OGGraphRef graph, CFDictionaryRef options) {
     if (graph == nullptr) {
         return OG::Graph::description(nullptr, (__bridge NSDictionary*)options);
     }
-    if (graph->invalid) {
+    if (graph->context.isInvalid()) {
         OG::precondition_failure("invalidated graph");
     }
     return OG::Graph::description(&graph->context.get_graph(), (__bridge NSDictionary*)options);
@@ -57,7 +57,7 @@ namespace {
 CFRuntimeClass &graph_type_id() {
     static auto dealloc = [](const void* ptr) {
         OGGraphRef storage = (OGGraphRef)ptr;
-        if (storage->invalid) {
+        if (storage->context.isInvalid()) {
             return;
         }
         storage->context.~Context();

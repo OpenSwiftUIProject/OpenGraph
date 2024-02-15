@@ -10,7 +10,7 @@
 #include "../Util/assert.hpp"
 
 OG::Graph::Context &OG::Graph::Context::from_cf(OGGraphRef storage) OG_NOEXCEPT {
-    if (storage->invalid) {
+    if (storage->context.isInvalid()) {
         OG::precondition_failure("invalidated graph");
     }
     return storage->context;

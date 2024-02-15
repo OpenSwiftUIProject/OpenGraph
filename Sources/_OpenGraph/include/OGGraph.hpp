@@ -13,12 +13,8 @@
 #include "../Private/CFRuntime.h"
 
 struct OGGraphStorage {
-    // 0x0
     CFRuntimeBase base;
-    // 0x10~0x50
     OG::Graph::Context context;
-    // 0x58
-    bool invalid;
 };
 
 // MARK: - Exported C functions
