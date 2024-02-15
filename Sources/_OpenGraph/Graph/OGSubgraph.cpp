@@ -7,15 +7,7 @@
 
 #include "OGSubgraph.hpp"
 #include "OGGraph.hpp"
-
-OGSubgraphRef OGSubgraphCreate(OGGraphRef graph) {
-    return OGSubgraphCreate2(graph/*, OGAttributeNil*/);
-}
-
-OGSubgraphRef OGSubgraphCreate2(OGGraphRef graph) {
-    // TODO
-    OG::Graph::Context::from_cf(graph);
-}
+#include "../Util/assert.hpp"
 
 namespace {
 CFRuntimeClass &subgraph_type_id() {
@@ -49,4 +41,19 @@ CFRuntimeClass &subgraph_type_id() {
 CFTypeID OGSubgraphGetTypeID() {
     static CFTypeID type = _CFRuntimeRegisterClass(&subgraph_type_id());
     return type;
+}
+
+OGSubgraphRef OGSubgraphCreate(OGGraphRef graph) {
+    return OGSubgraphCreate2(graph, OGAttributeNil);
+}
+
+OGSubgraphRef OGSubgraphCreate2(OGGraphRef graph, OGAttribute attribute) {
+    OG::Graph::Context &context = OG::Graph::Context::from_cf(graph);
+    const CFIndex extraSize = sizeof(OGSubgraphStorage)-sizeof(CFRuntimeBase);
+    static_assert(extraSize == 0x8);
+    OGSubgraphRef instance = (OGSubgraphRef)_CFRuntimeCreateInstance(kCFAllocatorDefault, OGSubgraphGetTypeID(), extraSize, nullptr);
+    if (instance == nullptr) {
+        OG::precondition_failure("memory allocation failure.");
+    }
+    instance->subgraph = new OG::Subgraph((OG::SubgraphObject *)instance, context, attribute);
 }

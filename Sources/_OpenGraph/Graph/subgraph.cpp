@@ -15,3 +15,7 @@
 //OG::Subgraph::to_cf() OG_NOEXCEPT {
 //    
 //}
+
+OG::Subgraph::Subgraph(OG::SubgraphObject*, OG::Graph::Context&, OG::AttributeID) {
+    
+}

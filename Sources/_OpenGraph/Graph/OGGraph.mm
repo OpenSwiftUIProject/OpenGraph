@@ -14,7 +14,7 @@ OGGraphRef OGGraphCreate() {
 
 OGGraphRef OGGraphCreateShared(OGGraphRef storage) {
     const CFIndex extraSize = sizeof(OGGraphStorage)-sizeof(CFRuntimeBase);
-    static_assert(extraSize == 0x10/*0x50*/, "");
+    static_assert(extraSize == 0x10/*0x50*/);
     OGGraphRef instance = (OGGraphRef)_CFRuntimeCreateInstance(kCFAllocatorDefault, OGGraphGetTypeID(), extraSize, nullptr);
     if (instance == nullptr) {
         OG::precondition_failure("memory allocation failure.");
