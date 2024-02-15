@@ -160,4 +160,4 @@ public func graphCreateShared(_ graph: AGGraph? = nil) -> AGGraph
 
 @_silgen_name("AGGraphDescription")
 @inline(__always)
-public func graphDescription(_ graph: AGGraph? = nil, options: NSDictionary) -> UnsafeRawPointer?
+public func graphDescription(_ graph: AGGraph? = nil, options: CFDictionary) -> UnsafeRawPointer?

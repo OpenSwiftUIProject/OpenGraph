@@ -7,7 +7,7 @@
 
 #include "graph-description.hpp"
 
-#if TARGET_OS_DARWIN
+#if OG_OBJC_FOUNDATION
 #include <Foundation/Foundation.h>
 
 CFStringRef OGDescriptionFormat = CFSTR("format");

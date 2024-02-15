@@ -24,5 +24,5 @@ import Foundation
 
 @_silgen_name("OGGraphDescription")
 @inline(__always)
-public func graphDescription(_ graph: OGGraph? = nil, options: NSDictionary) -> UnsafeRawPointer?
+public func graphDescription(_ graph: OGGraph? = nil, options: CFDictionary) -> UnsafeRawPointer?
 #endif

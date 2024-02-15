@@ -39,7 +39,7 @@ void OGGraphArchiveJSON(char const* name);
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-CFTypeRef OGGraphDescription(OG::Graph* graph, CFDictionaryRef options);
+CFTypeRef OGGraphDescription(OGGraphRef graph, CFDictionaryRef options);
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT

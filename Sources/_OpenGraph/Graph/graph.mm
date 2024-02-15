@@ -13,6 +13,15 @@ OG::Graph::Context &OG::Graph::Context::from_cf(OGGraphRef storage) OG_NOEXCEPT 
     if (storage->invalid) {
         OG::precondition_failure("invalidated graph");
     }
+    return storage->context;
+}
+
+OG::Graph::Context::Context(Graph &graph) OG_NOEXCEPT {
     // TODO
-//    return storage->graph;
+}
+
+
+
+OG::Graph::Context::~Context() OG_NOEXCEPT {
+    // TODO
 }
