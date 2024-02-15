@@ -13,16 +13,16 @@ public func graphArchiveJSON(_ name: UnsafePointer<Int8>)
 
 @_silgen_name("OGGraphCreate")
 @inline(__always)
-public func graphCreate() -> UnsafeRawPointer?
+public func graphCreate() -> OGGraph
 
 @_silgen_name("OGGraphCreateShared")
 @inline(__always)
-public func graphCreateShared(_: UnsafeRawPointer?) -> UnsafeRawPointer?
+public func graphCreateShared(_ graph: OGGraph? = nil) -> OGGraph
 
 #if canImport(ObjectiveC)
 import Foundation
 
 @_silgen_name("OGGraphDescription")
 @inline(__always)
-public func graphDescription(_ graph: UnsafeRawPointer? = nil, options: NSDictionary) -> UnsafeRawPointer?
+public func graphDescription(_ graph: OGGraph? = nil, options: NSDictionary) -> UnsafeRawPointer?
 #endif

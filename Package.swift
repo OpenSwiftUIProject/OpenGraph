@@ -4,19 +4,26 @@
 import Foundation
 import PackageDescription
 
+let sharedSwiftSettings: [SwiftSetting] = [
+    .interoperabilityMode(.Cxx),
+]
+
 let openGraphShimsTarget = Target.target(
-    name: "OpenGraphShims"
+    name: "OpenGraphShims",
+    swiftSettings: sharedSwiftSettings
 )
 
 let openGraphTestTarget = Target.testTarget(
     name: "OpenGraphTests",
     dependencies: [
         "OpenGraph",
-    ]
+    ],
+    swiftSettings: sharedSwiftSettings
 )
 let openGraphCompatibilityTestTarget = Target.testTarget(
     name: "OpenGraphCompatibilityTests",
-    exclude: ["README.md"]
+    exclude: ["README.md"],
+    swiftSettings: sharedSwiftSettings
 )
 
 let swiftBinPath = Context.environment["_"] ?? ""
@@ -51,13 +58,14 @@ let package = Package(
         ),
         .target(
             name: "OpenGraph",
-            dependencies: ["_OpenGraph"]
+            dependencies: ["_OpenGraph"],
+            swiftSettings: sharedSwiftSettings
         ),
         openGraphShimsTarget,
         openGraphTestTarget,
         openGraphCompatibilityTestTarget,
     ],
-    cxxLanguageStandard: .cxx14
+    cxxLanguageStandard: .cxx17
 )
 
 func envEnable(_ key: String, default defaultValue: Bool = false) -> Bool {
@@ -94,7 +102,7 @@ if attributeGraphCondition {
     openGraphShimsTarget.dependencies.append("OpenGraph")
 }
 
-let compatibilityTestCondition = envEnable("OPENGRAPH_COMPATIBILITY_TEST")
+let compatibilityTestCondition = envEnable("OPENGRAPH_COMPATIBILITY_TEST", default: false)
 if compatibilityTestCondition && attributeGraphCondition {
     openGraphCompatibilityTestTarget.dependencies.append("AttributeGraph")
     var swiftSettings: [SwiftSetting] = (openGraphCompatibilityTestTarget.swiftSettings ?? [])

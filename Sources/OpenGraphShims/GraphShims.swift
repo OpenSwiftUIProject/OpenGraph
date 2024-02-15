@@ -13,6 +13,7 @@ public typealias OGSwiftMetadata = AGSwiftMetadata
 public typealias OGTypeID = AGTypeID
 public typealias OGTypeApplyOptions = AGTypeApplyOptions
 public typealias OGTupleType = AGTupleType
+public typealias OGGraph = AGGraph
 #else
 @_exported import OpenGraph
 #endif

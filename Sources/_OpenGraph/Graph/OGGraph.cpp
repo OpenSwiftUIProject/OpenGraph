@@ -17,9 +17,9 @@ OGGraphRef OGGraphCreate() {
 }
 
 OGGraphRef OGGraphCreateShared(OGGraphRef storage) {
-    // AGGraphGetTypeID(context)
-    CFTypeID typeID;
-    OGGraphRef instance = (OGGraphRef)_CFRuntimeCreateInstance(kCFAllocatorDefault, typeID, 0x50, nullptr);
+    const CFIndex extraSize = sizeof(OGGraphStorage)-sizeof(CFRuntimeBase);
+    static_assert(extraSize == 0x8/*0x50*/, "");
+    OGGraphRef instance = (OGGraphRef)_CFRuntimeCreateInstance(kCFAllocatorDefault, OGGraphGetTypeID(), extraSize, nullptr);
     if (instance == nullptr) {
         OG::precondition_failure("memory allocation failure.");
     }
@@ -30,7 +30,7 @@ OGGraphRef OGGraphCreateShared(OGGraphRef storage) {
         if (storage->invalid) {
             OG::precondition_failure("invalidated graph");
         }
-        graph = storage->graph;
+//        graph = storage->context;
         //  [graph+0x10c] += 1
     }
     // AG::Context(instance->graph, graph)
@@ -40,7 +40,7 @@ OGGraphRef OGGraphCreateShared(OGGraphRef storage) {
 //        delete graph
 //    }
     instance->invalid = false;
-    return nullptr;
+    return instance;
 }
 
 void OGGraphArchiveJSON(char const* name) {
@@ -60,3 +60,35 @@ CFTypeRef OGGraphDescription(OG::Graph* graph, CFDictionary* options) {
     }
 }
 #endif /* OG_OBJC_FOUNDATION */
+
+namespace {
+CFRuntimeClass &graph_type_id() {
+    static auto dealloc = [](const void* ptr) {
+        OGGraphRef storage = (OGGraphRef)ptr;
+        if (storage->invalid) {
+            return;
+        }
+        storage->context.~Context();
+    };
+    static CFRuntimeClass klass = {
+        0,
+        "OGGraphStorage",
+        NULL,   // init
+        NULL,   // copy
+        dealloc,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+    };
+    return klass;
+}
+}
+
+CFTypeID OGGraphGetTypeID() {
+    static CFTypeID type = _CFRuntimeRegisterClass(&graph_type_id());
+    return type;
+}

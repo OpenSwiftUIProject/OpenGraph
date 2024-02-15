@@ -12,16 +12,11 @@
 #include "graph.hpp"
 #include "../Private/CFRuntime.h"
 
-// https://github.com/apple/swift/blob/main/docs/CToSwiftNameTranslation.md#cf-types
-typedef struct OG_BRIDGED_TYPE(id) OGGraphStorage * OGGraphRef;
-
 struct OGGraphStorage {
     // 0x0
     CFRuntimeBase base;
-    // 0x10
-    OG::Graph *graph;
-    // 0x18
-    // TODO
+    // 0x10~0x50
+    OG::Graph::Context context;
     // 0x58
     bool invalid;
 };
@@ -45,6 +40,10 @@ void OGGraphArchiveJSON(char const* name);
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
 CFTypeRef OGGraphDescription(OG::Graph* graph, CFDictionaryRef options);
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+CFTypeID OGGraphGetTypeID();
 
 OG_EXTERN_C_END
 

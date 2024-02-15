@@ -148,12 +148,12 @@ public func graphArchiveJSON(_ name: UnsafePointer<Int8>)
 
 @_silgen_name("AGGraphCreate")
 @inline(__always)
-public func graphCreate() -> UnsafeRawPointer?
+public func graphCreate() -> AGGraph
 
 @_silgen_name("AGGraphCreateShared")
 @inline(__always)
-public func graphCreateShared(_: UnsafeRawPointer?) -> UnsafeRawPointer?
+public func graphCreateShared(_ graph: AGGraph? = nil) -> AGGraph
 
 @_silgen_name("AGGraphDescription")
 @inline(__always)
-public func graphDescription(_ graph: UnsafeRawPointer? = nil, options: NSDictionary) -> UnsafeRawPointer?
+public func graphDescription(_ graph: AGGraph? = nil, options: NSDictionary) -> UnsafeRawPointer?
