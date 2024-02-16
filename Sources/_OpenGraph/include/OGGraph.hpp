@@ -10,6 +10,7 @@
 
 #include "OGBase.hpp"
 #include "graph.hpp"
+#include "graph-context.hpp"
 #include "../Private/CFRuntime.h"
 
 struct OGGraphStorage {
