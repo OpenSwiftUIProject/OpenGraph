@@ -9,13 +9,13 @@ import XCTest
 
 final class GraphTests: XCTestCase {
     func testGraphCreate() throws {
-        _ = graphCreate()
+        _ = OGGraph()
     }
     
     func testGraphCreateShared() throws {
-        let graph = graphCreate()
-        _ = graphCreateShared(graph)
-        _ = graphCreateShared(nil)
+        let graph = OGGraph()
+        _ = OGGraph(shared: graph)
+        _ = OGGraph(shared: nil)
     }
     
     func testGraphArchiveJSON() throws {
@@ -52,7 +52,7 @@ final class GraphTests: XCTestCase {
         let options = NSMutableDictionary()
         options["format"] = "graph/dot"
         XCTAssertNil(graphDescription(options: options))
-        let graph = graphCreate()
+        let graph = OGGraph()
         let description = try XCTUnwrap(graphDescription(graph, options: options))
         let dotGraph = Unmanaged<NSString>.fromOpaque(description).takeUnretainedValue() as String
         let expectedEmptyDotGraph = #"""

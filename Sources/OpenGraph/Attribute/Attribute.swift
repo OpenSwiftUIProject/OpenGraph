@@ -14,6 +14,11 @@ public struct Attribute<Value> {
     public subscript<Member>(keyPath: KeyPath<Value, Member>) -> Attribute<Member> {
         fatalError()
     }
+    
+    public var value: Value {
+        get { wrappedValue }
+        set { fatalError("TODO") }
+    }
 }
 
 extension Attribute: Equatable {}

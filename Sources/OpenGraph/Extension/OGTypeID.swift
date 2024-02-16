@@ -29,14 +29,17 @@ public func OGTypeApplyFields2(
 ) -> Bool
 
 extension OGTypeID: Hashable, CustomStringConvertible {
+    @inline(__always)
     public init(_ type: Any.Type) {
         self.init(rawValue: unsafeBitCast(type, to: UnsafePointer<OGSwiftMetadata>.self))
     }
     
+    @inline(__always)
     public var type: Any.Type {
         unsafeBitCast(rawValue, to: Any.Type.self)
     }
     
+    @inline(__always)
     public var description: String {
         #if canImport(ObjectiveC)
         OGTypeDescription(self) as String
