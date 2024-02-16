@@ -61,6 +61,13 @@ let package = Package(
             dependencies: ["_OpenGraph"],
             swiftSettings: sharedSwiftSettings
         ),
+        .plugin(
+            name: "UpdateModule",
+            capability: .command(
+                intent: .custom(verb: "update-module", description: "Update AG xcframework"),
+                permissions: [.writeToPackageDirectory(reason: "Update AG xcframework")]
+            )
+        ),
         openGraphShimsTarget,
         openGraphTestTarget,
         openGraphCompatibilityTestTarget,
