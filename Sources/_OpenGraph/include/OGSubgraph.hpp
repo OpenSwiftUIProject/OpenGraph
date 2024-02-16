@@ -11,6 +11,7 @@
 #include "OGBase.hpp"
 #include "subgraph.hpp"
 #include "graph.hpp"
+#include "graph-context.hpp"
 #include "../Private/CFRuntime.h"
 #include "OGAttribute.hpp"
 
@@ -35,11 +36,35 @@ CFTypeID OGSubgraphGetTypeID();
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-OGSubgraphRef OGSubgraphCreate(OGGraphRef graph);
+OGSubgraphRef OGSubgraphCreate(OGGraphRef cf_graph);
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-OGSubgraphRef OGSubgraphCreate2(OGGraphRef graph, OGAttribute attribute);
+OGSubgraphRef OGSubgraphCreate2(OGGraphRef cf_graph, OGAttribute attribute);
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+OGSubgraphRef OGSubgraphGetCurrent();
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGSubgraphSetCurrent(OGSubgraphRef cf_subgraph);
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+OGGraphContextRef OGSubgraphGetCurrentGraphContext();
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGSubgraphInvalidate(OGSubgraphRef cf_subgraph);
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+bool OGSubgraphIsValid(OGSubgraphRef cf_subgraph);
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+OGGraphRef OGSubgraphGetGraph(OGSubgraphRef cf_subgraph);
 
 OG_EXTERN_C_END
 
