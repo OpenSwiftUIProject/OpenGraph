@@ -177,24 +177,6 @@ public func AGTypeApplyFields2(
     body: (UnsafePointer<Int8>, Int, Any.Type) -> Bool
 ) -> Bool
 
-// MARK: - DebugServer C functions
-
-@_silgen_name("AGDebugServerStart")
-@inline(__always)
-public func debugServerStart(_ mode: UInt) -> UnsafeRawPointer?
-
-@_silgen_name("AGDebugServerStop")
-@inline(__always)
-public func debugServerStop()
-
-@_silgen_name("AGDebugServerCopyURL")
-@inline(__always)
-public func debugServerCopyURL() -> CFURL?
-
-@_silgen_name("AGDebugServerRun")
-@inline(__always)
-public func debugServerRun(_ timeout: Int)
-
 // MARK: - AGGraph C functions
 
 @_silgen_name("AGGraphArchiveJSON")

@@ -332,28 +332,4 @@ void OG::DebugServer::Connection::handler(void *_Nullable context) {
     return;
 }
 
-// MARK: - Exported C functions
-
-OG::DebugServer* _Nullable OGDebugServerStart(unsigned int port) {
-    return OG::DebugServer::start(port);
-}
-
-void OGDebugServerStop() {
-    OG::DebugServer::stop();
-}
-
-CFURLRef _Nullable OGDebugServerCopyURL() {
-    if (OG::DebugServer::_shared_server == nullptr) {
-        return nullptr;
-    }
-    return OG::DebugServer::_shared_server->copy_url();
-}
-
-void OGDebugServerRun(int timeout) {
-    if (OG::DebugServer::_shared_server == nullptr) {
-        return;
-    }
-    OG::DebugServer::_shared_server->run(timeout);
-}
-
 #endif /* TARGET_OS_DARWIN */

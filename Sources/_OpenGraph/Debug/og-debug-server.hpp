@@ -10,6 +10,7 @@
 
 #include "OGBase.hpp"
 #if TARGET_OS_DARWIN
+#include "OGDebugServer.hpp"
 #include "../Util/vector.hpp"
 #include <dispatch/dispatch.h>
 #include <memory>
@@ -57,18 +58,10 @@ public:
 };
 } /* OG */
 
-// MARK: - Exported C functions
+struct OGDebugServerStorage {
+    OG::DebugServer debugServer;
+};
 
-OG_EXTERN_C_BEGIN
-OG_EXPORT
-OG::DebugServer* _Nullable OGDebugServerStart(unsigned int mode);
-OG_EXPORT
-void OGDebugServerStop();
-OG_EXPORT
-CFURLRef _Nullable OGDebugServerCopyURL();
-OG_EXPORT
-void OGDebugServerRun(int timeout);
-OG_EXTERN_C_END
 
 OG_ASSUME_NONNULL_END
 
