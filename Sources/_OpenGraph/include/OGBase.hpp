@@ -42,6 +42,8 @@
 #define OG_SWIFT_STRUCT __attribute__((swift_wrapper(struct)))
 
 #include <CoreFoundation/CoreFoundation.h>
+#include <stdint.h>
+#include <stdbool.h>
 #ifdef __APPLE__
 #include <TargetConditionals.h>
 #ifndef TARGET_OS_DARWIN
@@ -50,7 +52,19 @@
 #else
 #include <CoreFoundation/TargetConditionals.h>
 #endif
-#define OG_OPTIONS CF_OPTIONS
+
+// FIXME: Copy content from CF_OPTIONS to fix a issue when CXX enabled + Linux
+// #define OG_OPTIONS CF_OPTIONS
+#if __has_attribute(enum_extensibility)
+#define __OG_OPTIONS_ATTRIBUTES __attribute__((flag_enum,enum_extensibility(open)))
+#else
+#define __OG_OPTIONS_ATTRIBUTES
+#endif
+#if (__cplusplus)
+#define OG_OPTIONS(_type, _name) __attribute__((availability(swift,unavailable))) _type _name; enum __OG_OPTIONS_ATTRIBUTES : _name
+#else
+#define OG_OPTIONS(_type, _name) enum __OG_OPTIONS_ATTRIBUTES _name : _type _name; enum _name : _type
+#endif
 #define OG_EXTERN_C_BEGIN CF_EXTERN_C_BEGIN
 #define OG_EXTERN_C_END CF_EXTERN_C_END
 #define OG_ASSUME_NONNULL_BEGIN CF_ASSUME_NONNULL_BEGIN

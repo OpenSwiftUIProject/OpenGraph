@@ -11,11 +11,9 @@
 #include "OGBase.hpp"
 #include "graph.hpp"
 
-#if TARGET_OS_DARWIN
 OG_EXTERN_C_BEGIN
 OG_EXPORT
 CFStringRef OGDescriptionFormat;
 OG_EXTERN_C_END
 
-#endif /* TARGET_OS_DARWIN */
 #endif /* graph_description_hpp */

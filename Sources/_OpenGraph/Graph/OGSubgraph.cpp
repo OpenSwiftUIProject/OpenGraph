@@ -34,7 +34,7 @@ CFRuntimeClass &subgraph_type_id() {
         NULL,
         NULL,
         NULL,
-        NULL,
+        0,
     };
     return klass;
 }
@@ -94,7 +94,7 @@ OG::Graph::Context* OGSubgraphGetCurrentGraphContext() {
 
 void OGSubgraphInvalidate(OGSubgraphRef cf_subgraph) {
     if (cf_subgraph->subgraph == nullptr) {
-        return false;
+        return;
     }
     cf_subgraph->subgraph->invalidate_and_delete_(false);
 }

@@ -11,7 +11,7 @@
 #include "OGBase.hpp"
 #include "AttributeID.hpp"
 #include "graph.hpp"
-#include <pthread/pthread.h>
+#include <pthread.h>
 
 typedef struct OG_BRIDGED_TYPE(id) OGSubgraphStorage * OGSubgraphRef;
 

@@ -1,6 +1,6 @@
 //
-//  OGGraph.cpp
-//  
+//  OGGraph.mm
+//
 //
 //  Created by Kyle on 2024/2/15.
 //
@@ -44,6 +44,7 @@ void OGGraphArchiveJSON(char const* name) {
 }
 
 CFTypeRef OGGraphDescription(OGGraphRef graph, CFDictionaryRef options) {
+    #if OG_OBJC_FOUNDATION
     if (graph == nullptr) {
         return OG::Graph::description(nullptr, (__bridge NSDictionary*)options);
     }
@@ -51,6 +52,9 @@ CFTypeRef OGGraphDescription(OGGraphRef graph, CFDictionaryRef options) {
         OG::precondition_failure("invalidated graph");
     }
     return OG::Graph::description(&graph->context.get_graph(), (__bridge NSDictionary*)options);
+    #else
+    return nullptr;
+    #endif
 }
 
 namespace {
@@ -74,7 +78,7 @@ CFRuntimeClass &graph_type_id() {
         NULL,
         NULL,
         NULL,
-        NULL,
+        0,
     };
     return klass;
 }
