@@ -10,10 +10,11 @@ import XCTest
 final class ExternalTests: XCTestCase {
     func testExample() throws {
         #if OPENGRAPH_COMPATIBILITY_TEST
-        let externalInt = External<Int>()
+        let type = External<Int>.self
+        let externalInt = type.init()
         XCTAssertEqual(externalInt.description, "External<Int>")
         #endif
-        XCTAssertEqual(External<Int>.comparisonMode.rawValue, 3)
-        XCTAssertEqual(External<Int>.flags.rawValue, 0)
+        XCTAssertEqual(type.comparisonMode.rawValue, 3)
+        XCTAssertEqual(type.flags.rawValue, 0)
     }
 }

@@ -52,7 +52,7 @@ final class GraphTests: XCTestCase {
         let options = NSMutableDictionary()
         options["format"] = "graph/dot"
         XCTAssertNil(graphDescription(options: options))
-        let graph = graphCreate()
+        let graph = OGGraph()
         let description = try XCTUnwrap(graphDescription(graph, options: options))
         let dotGraph = Unmanaged<NSString>.fromOpaque(description).takeUnretainedValue() as String
         let expectedEmptyDotGraph = #"""
