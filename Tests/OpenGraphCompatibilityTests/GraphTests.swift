@@ -9,13 +9,13 @@ import XCTest
 
 final class GraphTests: XCTestCase {
     func testGraphCreate() throws {
-        _ = graphCreate()
+        _ = OGGraph()
     }
     
     func testGraphCreateShared() throws {
-        let graph = graphCreate()
-        _ = graphCreateShared(graph)
-        _ = graphCreateShared(nil)
+        let graph = OGGraph()
+        _ = OGGraph(shared: graph)
+        _ = OGGraph(shared: nil)
     }
     
     func testGraphArchiveJSON() throws {

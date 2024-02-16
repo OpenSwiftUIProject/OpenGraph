@@ -19,17 +19,19 @@ struct OGGraphStorage;
 struct OGGraphContextStorage;
 struct OGSubgraphStorage;
 
+OG_ASSUME_NONNULL_BEGIN
+
 // MARK: - Exported C functions
 
 OG_EXTERN_C_BEGIN
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-OGGraphRef OGGraphCreate();
+OGGraphRef OGGraphCreate(void) OG_SWIFT_NAME(OGGraphRef.init());
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-OGGraphRef OGGraphCreateShared(OGGraphRef graph);
+OGGraphRef OGGraphCreateShared(_Nullable OGGraphRef graph) OG_SWIFT_NAME(OGGraphRef.init(shared:));
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
@@ -45,5 +47,6 @@ CFTypeID OGGraphGetTypeID();
 
 OG_EXTERN_C_END
 
+OG_ASSUME_NONNULL_END
 
 #endif /* OGGraph_h */
