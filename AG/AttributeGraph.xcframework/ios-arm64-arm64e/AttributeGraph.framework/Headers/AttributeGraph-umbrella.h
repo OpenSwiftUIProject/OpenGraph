@@ -12,6 +12,7 @@
 #include "AGBase.hpp"
 #include "AGCompareValues.hpp"
 #include "AGComparisonMode.hpp"
+#include "AGDebugServer.hpp"
 #include "AGGraph.hpp"
 #include "AGSubgraph.hpp"
 #include "AGSwiftMetadata.hpp"
