@@ -40,6 +40,7 @@ public protocol _AttributeBody {
   static var _hasDestroySelf: Swift.Bool { get }
   static func _updateDefault(_ value: Swift.UnsafeMutableRawPointer)
   static var comparisonMode: AGComparisonMode { get }
+  static var flags: AGAttributeTypeFlags { get }
 }
 extension AttributeGraph._AttributeBody {
   public static func _destroySelf(_ value: Swift.UnsafeMutableRawPointer)
@@ -48,6 +49,7 @@ extension AttributeGraph._AttributeBody {
   }
   public static func _updateDefault(_ value: Swift.UnsafeMutableRawPointer)
   public static var comparisonMode: AGComparisonMode { get }
+  public static var flags: AGAttributeTypeFlags { get }
 }
 public protocol Rule : AttributeGraph._AttributeBody {
   associatedtype Value
@@ -157,3 +159,13 @@ public func graphCreateShared(_ graph: AGGraph? = nil) -> AGGraph
 @_silgen_name("AGGraphDescription")
 @inline(__always)
 public func graphDescription(_ graph: AGGraph? = nil, options: CFDictionary) -> UnsafeRawPointer?
+
+// MARK: - External
+
+public struct External<Value>: _AttributeBody, CustomStringConvertible {
+	public init()
+	public var description: Swift.String { get }
+	public static var comparisonMode: AGComparisonMode { get }
+	public static var flags: AGAttributeTypeFlags { get }
+	public static func _update(_: Swift.UnsafeMutableRawPointer, attribute: AGAttribute)
+}

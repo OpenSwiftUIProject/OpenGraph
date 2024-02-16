@@ -7,6 +7,8 @@
 #endif
 
 #include "AGAttribute.hpp"
+#include "AGAttributeFlags.hpp"
+#include "AGAttributeTypeFlags.hpp"
 #include "AGBase.hpp"
 #include "AGCompareValues.hpp"
 #include "AGComparisonMode.hpp"

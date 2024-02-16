@@ -12,10 +12,14 @@
 #include "CFRuntime.h"
 
 typedef struct AG_BRIDGED_TYPE(id) AGGraphStorage * AGGraphRef;
+typedef struct AG_BRIDGED_TYPE(id) AGGraphContextStorage * AGGraphContextRef;
+typedef struct AG_BRIDGED_TYPE(id) AGSubgraphStorage * AGSubgraphRef;
 
-struct AGGraphStorage {
-    CFRuntimeBase base;
-};
+struct AGGraphStorage;
+struct AGGraphContextStorage;
+struct AGSubgraphStorage;
+
+AG_ASSUME_NONNULL_BEGIN
 
 // MARK: - Exported C functions
 
@@ -23,11 +27,11 @@ AG_EXTERN_C_BEGIN
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
-AGGraphRef AGGraphCreate();
+AGGraphRef AGGraphCreate(void) AG_SWIFT_NAME(AGGraphRef.init());
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
-AGGraphRef AGGraphCreateShared(AGGraphRef graph);
+AGGraphRef AGGraphCreateShared(_Nullable AGGraphRef graph) AG_SWIFT_NAME(AGGraphRef.init(shared:));
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
@@ -43,5 +47,6 @@ CFTypeID AGGraphGetTypeID();
 
 AG_EXTERN_C_END
 
+AG_ASSUME_NONNULL_END
 
 #endif /* AGGraph_h */
