@@ -6,6 +6,12 @@ import _StringProcessing
 
 // MARK: - Attribute Related
 
+// MARK: - AGAttribute
+
+extension AGAttribute: Swift.CustomStringConvertible {
+	public var description: Swift.String { get }
+}
+
 // MARK: - Attribute
 
 @frozen @propertyWrapper @dynamicMemberLookup public struct Attribute<Value>: Swift.Hashable, Swift.Equatable, Swift.CustomStringConvertible {
@@ -103,23 +109,12 @@ extension AttributeGraph.Rule {
     }
 }
 
-// MARK: - Extension Related
+// MARK: - Runtime Related
 
-// MARK: - AGAttribute
-
-extension AGAttribute: Swift.CustomStringConvertible {
-    public var description: Swift.String { get }
-}
-
-// MARK: - AGCompareValues
+// MARK: - CompareValues
 
 public func compareValues<A>(_ lhs: A, _ rhs: A, mode: AGComparisonMode = ._3) -> Swift.Bool
 public func compareValues<A>(_ lhs: A, _ rhs: A, options: AGComparisonOptions) -> Swift.Bool
-
-// MARK: - AGUniqueID
-
-@_silgen_name("AGMakeUniqueID")
-public func makeUniqueID() -> AGUniqueID
 
 // MARK: - AGTypeID
 

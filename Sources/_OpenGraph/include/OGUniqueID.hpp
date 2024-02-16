@@ -14,7 +14,7 @@ typedef long long OGUniqueID;
 OG_EXTERN_C_BEGIN
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-OGUniqueID OGMakeUniqueID(void);
+OGUniqueID OGMakeUniqueID(void) OG_SWIFT_NAME(makeUniqueID());
 OG_EXTERN_C_END
 
 #endif /* OGMakeUniqueID_hpp */

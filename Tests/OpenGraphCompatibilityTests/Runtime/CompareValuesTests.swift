@@ -1,5 +1,5 @@
 //
-//  OGCompareValuesTests.swift
+//  CompareValuesTests.swift
 //
 //
 //  Created by Kyle on 2023/12/20.
@@ -7,7 +7,7 @@
 
 import XCTest
 
-final class OGCompareValuesTests: XCTestCase {
+final class CompareValuesTests: XCTestCase {
     override func setUp() async throws {
         #if !OPENGRAPH_COMPATIBILITY_TEST
         throw XCTSkip("OGCompareValues is not implemented")

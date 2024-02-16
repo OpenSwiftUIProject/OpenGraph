@@ -1,5 +1,5 @@
 //
-//  OGCompareValues.swift
+//  CompareValues.swift
 //  OpenGraph
 //
 //  Created by Kyle on 2024/1/9.
@@ -11,7 +11,7 @@ import _OpenGraph
 @_silgen_name("OGCompareValues")
 @inlinable
 @inline(__always)
-public func OGCompareValues(lhs: UnsafeRawPointer,
+func OGCompareValues(lhs: UnsafeRawPointer,
                             rhs: UnsafeRawPointer,
                             options: OGComparisonOptions,
                             type: Any.Type) -> Bool

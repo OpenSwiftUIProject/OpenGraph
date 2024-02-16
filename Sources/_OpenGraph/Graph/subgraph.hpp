@@ -9,7 +9,7 @@
 #define subgraph_hpp
 
 #include "OGBase.hpp"
-#include "../Other/AttributeID.hpp"
+#include "../Attribute/AttributeID.hpp"
 #include "graph.hpp"
 #include <pthread.h>
 
