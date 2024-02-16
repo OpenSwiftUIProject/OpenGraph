@@ -103,6 +103,14 @@ extension AttributeGraph.Rule {
     }
 }
 
+// MARK: - Extension Related
+
+// MARK: - AGAttribute
+
+extension AGAttribute: Swift.CustomStringConvertible {
+    public var description: Swift.String { get }
+}
+
 // MARK: - AGCompareValues
 
 public func compareValues<A>(_ lhs: A, _ rhs: A, mode: AGComparisonMode = ._3) -> Swift.Bool

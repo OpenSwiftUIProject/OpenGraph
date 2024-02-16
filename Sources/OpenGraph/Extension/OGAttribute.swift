@@ -10,6 +10,5 @@ import _OpenGraph
 // MARK: CustomStringConvertible
 
 extension OGAttribute: CustomStringConvertible {
-
     public var description: String { "#\(rawValue)" }
 }

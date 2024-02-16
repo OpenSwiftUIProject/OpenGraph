@@ -63,6 +63,12 @@ extension AttributeGraph._AttributeBody {
     public static var flags: AGAttributeTypeFlags { get }
 }
 
+// MARK: - AttributeBodyVisitor
+
+public protocol AttributeBodyVisitor {
+    func visit<Body: AttributeGraph._AttributeBody>(body: Swift.UnsafePointer<Body>)
+}
+
 // MARK: - External
 
 public struct External<Value>: AttributeGraph._AttributeBody, Swift.CustomStringConvertible {
@@ -99,6 +105,14 @@ extension AttributeGraph.Rule {
     public static var initialValue: Self.Value? {
         get
     }
+}
+
+// MARK: - Extension Related
+
+// MARK: - AGAttribute
+
+extension AGAttribute: Swift.CustomStringConvertible {
+    public var description: Swift.String { get }
 }
 
 // MARK: - AGCompareValues
