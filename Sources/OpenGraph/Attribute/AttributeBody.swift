@@ -2,7 +2,7 @@
 //  _AttributeBody.swift
 //  OpenGraph
 //
-//  Created by Kyle on 2023/10/17.
+//  Updated by Kyle on 2024/2/16.'
 //  Lastest Version: iOS 15.5
 //  Status: Blocked by AttributeBodyVisitor
 
@@ -16,18 +16,18 @@ public protocol _AttributeBody {
     static var flags: OGAttributeTypeFlags { get }
 }
 
+// MARK: - Protocol Default implementation
+
 extension _AttributeBody {
-    // TODO
-//    public static func _visitBody<A1: AttributeBodyVisitor>(_ visitor: inout A1, _ body: UnsafeRawPointer) {
-//    }
-
     public static func _destroySelf(_ value: UnsafeMutableRawPointer) {}
-
     public static var _hasDestroySelf: Bool { false }
-
     public static func _updateDefault(_ value: UnsafeMutableRawPointer) {}
-
     public static var comparisonMode: OGComparisonMode { ._2 }
-
     public static var flags: OGAttributeTypeFlags { ._8 }
+}
+
+extension _AttributeBody {
+    static func _visitBody<Visitor: AttributeBodyVisitor>(_ visitor: inout Visitor, _ body: UnsafeRawPointer) {
+        visitor.visit(body: body.assumingMemoryBound(to: Self.self))
+    }
 }

@@ -59,6 +59,12 @@ extension AttributeGraph._AttributeBody {
     public static var flags: AGAttributeTypeFlags { get }
 }
 
+// MARK: - AttributeBodyVisitor
+
+public protocol AttributeBodyVisitor {
+    func visit<Body: AttributeGraph._AttributeBody>(body: Swift.UnsafePointer<Body>)
+}
+
 // MARK: - External
 
 public struct External<Value>: AttributeGraph._AttributeBody, Swift.CustomStringConvertible {

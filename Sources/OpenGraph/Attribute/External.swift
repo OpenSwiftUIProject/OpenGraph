@@ -12,9 +12,7 @@ public struct External<Value>: _AttributeBody, CustomStringConvertible {
     // MARK: CustomStringConvertible
     
     @inline(__always)
-    public var description: String {
-        OGTypeID(Self.self).description
-    }
+    public var description: String { OGTypeID(Self.self).description }
     
     // MARK: - _AttributeBody
 

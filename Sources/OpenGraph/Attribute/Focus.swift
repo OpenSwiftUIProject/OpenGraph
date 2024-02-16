@@ -19,11 +19,7 @@ public struct Focus<Root, Value>: Rule, CustomStringConvertible {
     // MARK: CustomStringConvertible
     
     @inline(__always)
-    public var description: String {
-        var description = "• "
-        description.append(OGTypeID(Self.self).description)
-        return description
-    }
+    public var description: String { "• \(OGTypeID(Self.self).description)" }
     
     // MARK: - Rule
     
