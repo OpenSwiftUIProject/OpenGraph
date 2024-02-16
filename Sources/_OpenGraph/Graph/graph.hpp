@@ -9,42 +9,65 @@
 #define graph_hpp
 
 #include "OGBase.hpp"
-#if TARGET_OS_DARWIN && __OBJC__
+#include "OGGraph.hpp"
+#include "../Private/CFRuntime.h"
+
+#if OG_OBJC_FOUNDATION
 @class NSDictionary;
-#endif /* TARGET_OS_DARWIN */
+#endif /* OG_OBJC_FOUNDATION */
 
 namespace OG {
-class Graph {
+class Graph final {
     // TODO
+private:
 public:
-    #if TARGET_OS_DARWIN && __OBJC__
+    class Context final {
+    private:
+        Graph *_graph;
+        bool _isInvalid;
+    public:
+        static Context &from_cf(OGGraphRef graph) OG_NOEXCEPT;
+        Context(Graph &graph) OG_NOEXCEPT;
+        ~Context() OG_NOEXCEPT;
+        
+        OG_INLINE OG_CONSTEXPR
+        const bool has_graph() const OG_NOEXCEPT {
+            return _graph != nullptr;
+        }
+        
+        OG_INLINE OG_CONSTEXPR
+        const Graph &get_graph() const OG_NOEXCEPT {
+            return *_graph;
+        }
+        
+        OG_INLINE OG_CONSTEXPR
+        Graph &get_graph() OG_NOEXCEPT {
+            return *_graph;
+        }
+        
+        OG_INLINE OG_CONSTEXPR
+        const bool isInvalid() const OG_NOEXCEPT {
+            return _isInvalid;
+        }
+        
+        OG_INLINE OG_CONSTEXPR
+        void setInvalid(bool invalid) OG_NOEXCEPT {
+            _isInvalid = invalid;
+        }
+    };
+    #if OG_OBJC_FOUNDATION
     static CFTypeRef description(const Graph * graph, NSDictionary* dic);
-    #endif /* TARGET_OS_DARWIN && __OBJC__ */
+    #endif /* OG_OBJC_FOUNDATION */
 }; /* Graph */
 } /* OG */
 
-// MARK: - Exported C functions
+struct OGGraphStorage {
+    CFRuntimeBase base;
+    OG::Graph::Context context;
+};
 
-OG_EXTERN_C_BEGIN
-
-OG_EXPORT
-OG_REFINED_FOR_SWIFT
-OG::Graph* OGGraphCreate();
-
-OG_EXPORT
-OG_REFINED_FOR_SWIFT
-OG::Graph* OGGraphCreateShared(void *);
-
-OG_EXPORT
-OG_REFINED_FOR_SWIFT
-void OGGraphArchiveJSON(char const* name);
-
-#if TARGET_OS_DARWIN && __OBJC__
-OG_EXPORT
-OG_REFINED_FOR_SWIFT
-CFTypeRef OGGraphDescription(OG::Graph* graph, NSDictionary* options);
-#endif /* TARGET_OS_DARWIN && __OBJC__ */
-
-OG_EXTERN_C_END
+struct OGGraphContextStorage {
+    OG::Graph::Context context;
+};
 
 #endif /* graph_hpp */

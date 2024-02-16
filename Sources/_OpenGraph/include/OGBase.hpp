@@ -42,6 +42,8 @@
 #define OG_SWIFT_STRUCT __attribute__((swift_wrapper(struct)))
 
 #include <CoreFoundation/CoreFoundation.h>
+#include <stdint.h>
+#include <stdbool.h>
 #ifdef __APPLE__
 #include <TargetConditionals.h>
 #ifndef TARGET_OS_DARWIN
@@ -50,6 +52,7 @@
 #else
 #include <CoreFoundation/TargetConditionals.h>
 #endif
+
 #define OG_OPTIONS CF_OPTIONS
 #define OG_EXTERN_C_BEGIN CF_EXTERN_C_BEGIN
 #define OG_EXTERN_C_END CF_EXTERN_C_END
@@ -58,4 +61,12 @@
 #define OG_EXPORT CF_EXPORT
 #define OG_REFINED_FOR_SWIFT CF_REFINED_FOR_SWIFT
 #define OG_SWIFT_NAME CF_SWIFT_NAME
+#define OG_BRIDGED_TYPE CF_BRIDGED_TYPE
+
+#if TARGET_OS_DARWIN && __OBJC__
+#define OG_OBJC_FOUNDATION 1
+#else
+#define OG_OBJC_FOUNDATION 0
+#endif /* TARGET_OS_DARWIN && __OBJC__ */
+
 #endif /* OGBase_h */

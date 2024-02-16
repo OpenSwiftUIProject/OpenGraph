@@ -43,7 +43,9 @@
 
 #include <CoreFoundation/CoreFoundation.h>
 #include <TargetConditionals.h>
+#ifndef TARGET_OS_DARWIN
 #define TARGET_OS_DARWIN TARGET_OS_MAC
+#endif
 #define AG_OPTIONS CF_OPTIONS
 #define AG_EXTERN_C_BEGIN CF_EXTERN_C_BEGIN
 #define AG_EXTERN_C_END CF_EXTERN_C_END
@@ -52,4 +54,12 @@
 #define AG_EXPORT CF_EXPORT
 #define AG_REFINED_FOR_SWIFT CF_REFINED_FOR_SWIFT
 #define AG_SWIFT_NAME CF_SWIFT_NAME
+#define AG_BRIDGED_TYPE CF_BRIDGED_TYPE
+
+#if TARGET_OS_DARWIN && __OBJC__
+#define AG_OBJC_FOUNDATION 1
+#else
+#define AG_OBJC_FOUNDATION 0
+#endif /* TARGET_OS_DARWIN && __OBJC__ */
+
 #endif /* AGBase_h */

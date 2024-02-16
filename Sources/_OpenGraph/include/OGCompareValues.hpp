@@ -10,7 +10,6 @@
 
 #include "OGBase.hpp"
 #include "OGComparisonMode.hpp"
-#include <stdbool.h>
 
 OG_EXTERN_C_BEGIN
 OG_EXPORT

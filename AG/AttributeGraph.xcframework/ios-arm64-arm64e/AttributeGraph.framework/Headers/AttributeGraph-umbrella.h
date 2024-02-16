@@ -10,6 +10,8 @@
 #include "AGBase.hpp"
 #include "AGCompareValues.hpp"
 #include "AGComparisonMode.hpp"
+#include "AGGraph.hpp"
+#include "AGSubgraph.hpp"
 #include "AGSwiftMetadata.hpp"
 #include "AGTupleType.hpp"
 #include "AGTypeApplyEnumData.hpp"

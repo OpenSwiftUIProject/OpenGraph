@@ -8,6 +8,16 @@
 import XCTest
 
 final class GraphTests: XCTestCase {
+    func testGraphCreate() throws {
+        _ = graphCreate()
+    }
+    
+    func testGraphCreateShared() throws {
+        let graph = graphCreate()
+        _ = graphCreateShared(graph)
+        _ = graphCreateShared(nil)
+    }
+    
     func testGraphArchiveJSON() throws {
         #if OPENGRAPH_COMPATIBILITY_TEST
         struct Graphs: Codable {
@@ -21,24 +31,6 @@ final class GraphTests: XCTestCase {
         let data = try Data(contentsOf: url)
         let graphs = try JSONDecoder().decode(Graphs.self, from: data)
         XCTAssertEqual(graphs.version, 2)
-        #else
-        throw XCTSkip("Not implemented on OG")
-        #endif
-    }
-    
-    func testGraphCreate() throws {
-        #if OPENGRAPH_COMPATIBILITY_TEST
-        let graph = graphCreate()
-        XCTAssertNotNil(graph)
-        #else
-        throw XCTSkip("Not implemented on OG")
-        #endif
-    }
-    
-    func testGraphCreateShared() throws {
-        #if OPENGRAPH_COMPATIBILITY_TEST
-        let graph = graphCreateShared(nil)
-        XCTAssertNotNil(graph)
         #else
         throw XCTSkip("Not implemented on OG")
         #endif
