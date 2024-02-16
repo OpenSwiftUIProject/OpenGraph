@@ -12,7 +12,13 @@ final class OGAttributeTests: XCTestCase {
         let attributeNil = OGAttribute.nil
         XCTAssertEqual(attributeNil.rawValue, 2)
     }
-    
+
+    // FIXME: Strange compile issue on non-ObjectiveC platform
+    // Cannot look up associated type for imported conformance:
+    // (struct_type decl=_OpenGraph.(file).OGAttribute)
+    // (associated_type_decl "_ObjectiveCType" access=public overridden=)
+    // Please submit a bug report (https://swift.org/contributing/#reporting-bugs) and include the crash backtrace.
+    #if canImport(ObjectiveC)
     func testDescription() throws {
         let attribute = OGAttribute(rawValue: 0)
         XCTAssertEqual(attribute.description, "#0")
@@ -20,4 +26,5 @@ final class OGAttributeTests: XCTestCase {
         let attributeNil = OGAttribute.nil
         XCTAssertEqual(attributeNil.description, "#2")
     }
+    #endif
 }
