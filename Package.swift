@@ -5,7 +5,7 @@ import Foundation
 import PackageDescription
 
 let sharedSwiftSettings: [SwiftSetting] = [
-//    .interoperabilityMode(.Cxx),
+    .unsafeFlags(["-warnings-as-errors"]),
 ]
 
 let openGraphShimsTarget = Target.target(
