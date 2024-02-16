@@ -9,7 +9,7 @@
 #define OGGraphContext_hpp
 
 #include "OGBase.hpp"
-#include "graph-context.hpp"
+#include "OGGraph.hpp"
 
 // MARK: - Exported C functions
 

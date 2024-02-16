@@ -6,11 +6,12 @@
 //
 
 #include "graph-description.hpp"
-
-CFStringRef OGDescriptionFormat = CFSTR("format");
+#include "OGGraph.hpp"
+#include "graph.hpp"
 
 #if OG_OBJC_FOUNDATION
 #include <Foundation/Foundation.h>
+CFStringRef OGDescriptionFormat = CFSTR("format");
 
 CFTypeRef OG::Graph::description(const Graph *graph, NSDictionary* dic) {
     // TODO

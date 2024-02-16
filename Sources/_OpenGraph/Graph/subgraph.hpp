@@ -9,7 +9,7 @@
 #define subgraph_hpp
 
 #include "OGBase.hpp"
-#include "AttributeID.hpp"
+#include "../Other/AttributeID.hpp"
 #include "graph.hpp"
 #include <pthread.h>
 
@@ -21,7 +21,7 @@ class SubgraphObject;
 class Subgraph final {
 private:
     OGSubgraphRef _cf_subgraph;
-    OG::Graph::Context& _context;
+    OGGraphContextStorage& _context;
     // TODO
     bool _isInvalid;
     static pthread_key_t _current_subgraph_key;
@@ -56,12 +56,12 @@ public:
     // MARK: - Getter and setter
     
     OG_INLINE OG_CONSTEXPR
-    const OG::Graph::Context *get_context() const OG_NOEXCEPT {
+    const OGGraphContextRef get_context() const OG_NOEXCEPT {
         return &_context;
     }
     
     OG_INLINE OG_CONSTEXPR
-    OG::Graph::Context *get_context() OG_NOEXCEPT {
+    OGGraphContextRef get_context() OG_NOEXCEPT {
         return &_context;
     }
     
@@ -77,5 +77,15 @@ public:
 }; /* Subgraph */
 } /* OG */
 
+struct OGSubgraphStorage {
+    CFRuntimeBase base;
+    OG::Subgraph *subgraph;
+};
+
+namespace OG {
+class SubgraphObject final {
+    OGSubgraphStorage storage;
+};
+}
 
 #endif /* subgraph_hpp */

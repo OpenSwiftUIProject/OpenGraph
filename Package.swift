@@ -5,7 +5,7 @@ import Foundation
 import PackageDescription
 
 let sharedSwiftSettings: [SwiftSetting] = [
-    .interoperabilityMode(.Cxx),
+//    .interoperabilityMode(.Cxx),
 ]
 
 let openGraphShimsTarget = Target.target(

@@ -9,14 +9,15 @@
 #define OGGraph_h
 
 #include "OGBase.hpp"
-#include "graph.hpp"
-#include "graph-context.hpp"
 #include "../Private/CFRuntime.h"
 
-struct OGGraphStorage {
-    CFRuntimeBase base;
-    OG::Graph::Context context;
-};
+typedef struct OG_BRIDGED_TYPE(id) OGGraphStorage * OGGraphRef;
+typedef struct OG_BRIDGED_TYPE(id) OGGraphContextStorage * OGGraphContextRef;
+typedef struct OG_BRIDGED_TYPE(id) OGSubgraphStorage * OGSubgraphRef;
+
+struct OGGraphStorage;
+struct OGGraphContextStorage;
+struct OGSubgraphStorage;
 
 // MARK: - Exported C functions
 

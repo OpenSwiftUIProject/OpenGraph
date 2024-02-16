@@ -7,6 +7,7 @@
 
 #include "OGSubgraph.hpp"
 #include "OGGraph.hpp"
+#include "subgraph.hpp"
 #include "../Util/assert.hpp"
 #include <pthread.h>
 #include "OGGraphContext.hpp"
@@ -84,7 +85,7 @@ void OGSubgraphSetCurrent(OGSubgraphRef cf_subgraph) {
     }
 }
 
-OG::Graph::Context* OGSubgraphGetCurrentGraphContext() {
+OGGraphContextRef OGSubgraphGetCurrentGraphContext() {
     OG::Subgraph* subgraph = (OG::Subgraph*)pthread_getspecific(OG::Subgraph::current_key());
     if (subgraph == nullptr) {
         return nullptr;

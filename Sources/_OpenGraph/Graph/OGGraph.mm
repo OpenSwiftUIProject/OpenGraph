@@ -6,6 +6,7 @@
 //
 
 #include "OGGraph.hpp"
+#include "graph.hpp"
 #include "../Util/assert.hpp"
 
 OGGraphRef OGGraphCreate() {

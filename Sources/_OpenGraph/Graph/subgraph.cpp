@@ -23,5 +23,5 @@ void OG::Subgraph::invalidate_and_delete_(bool) const OG_NOEXCEPT {
 }
 
 OG::Subgraph::Subgraph(OG::SubgraphObject*, OG::Graph::Context& context, OG::AttributeID):
-_context(context){
+_context((OGGraphContextStorage &)context){
 }

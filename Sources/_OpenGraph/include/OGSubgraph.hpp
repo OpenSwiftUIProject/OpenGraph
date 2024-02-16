@@ -9,22 +9,9 @@
 #define OGSubgraph_hpp
 
 #include "OGBase.hpp"
-#include "subgraph.hpp"
-#include "graph.hpp"
-#include "graph-context.hpp"
-#include "../Private/CFRuntime.h"
+#include "OGGraph.hpp"
 #include "OGAttribute.hpp"
-
-struct OGSubgraphStorage {
-    CFRuntimeBase base;
-    OG::Subgraph *subgraph;
-};
-
-namespace OG {
-class SubgraphObject final {
-    OGSubgraphStorage storage;
-};
-}
+#include "../Private/CFRuntime.h"
 
 // MARK: - Exported C functions
 

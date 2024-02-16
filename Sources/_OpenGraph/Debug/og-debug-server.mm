@@ -10,7 +10,8 @@
 
 #include "../Util/log.hpp"
 #include "../Util/assert.hpp"
-#include "graph-description.hpp"
+#include "../Graph/graph-description.hpp"
+#include "../Graph/graph.hpp"
 
 #include <iostream>
 #include <sys/socket.h>
