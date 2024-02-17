@@ -8,7 +8,7 @@
 #ifndef vector_hpp
 #define vector_hpp
 
-#include "OGBase.hpp"
+#include "OGBase.h"
 #include "wrap_iter.hpp"
 #include "realloc_vector.hpp"
 #include <cstdio>

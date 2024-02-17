@@ -8,7 +8,7 @@
 #ifndef graph_description_hpp
 #define graph_description_hpp
 
-#include "OGBase.hpp"
+#include "OGBase.h"
 
 #if OG_OBJC_FOUNDATION
 OG_EXTERN_C_BEGIN

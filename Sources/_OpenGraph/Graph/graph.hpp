@@ -8,8 +8,8 @@
 #ifndef graph_hpp
 #define graph_hpp
 
-#include "OGBase.hpp"
-#include "OGGraph.hpp"
+#include "OGBase.h"
+#include "OGGraph.h"
 #include "../Private/CFRuntime.h"
 
 #if OG_OBJC_FOUNDATION

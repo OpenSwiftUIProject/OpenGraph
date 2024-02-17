@@ -5,7 +5,7 @@
 //  Created by Kyle on 2024/1/25.
 //
 
-#include "OGTupleType.hpp"
+#include "OGTupleType.h"
 
 long OGTupleCount(OGTupleType tupleType) {
     // If tupleType is not tupleType/#0x301, return 1

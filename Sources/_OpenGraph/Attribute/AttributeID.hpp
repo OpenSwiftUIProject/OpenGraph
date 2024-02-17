@@ -8,8 +8,8 @@
 #ifndef AttributeID_hpp
 #define AttributeID_hpp
 
-#include "OGBase.hpp"
-#include "OGAttribute.hpp"
+#include "OGBase.h"
+#include "OGAttribute.h"
 
 namespace OG {
 class AttributeID final {

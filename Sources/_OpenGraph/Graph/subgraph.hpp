@@ -8,7 +8,7 @@
 #ifndef subgraph_hpp
 #define subgraph_hpp
 
-#include "OGBase.hpp"
+#include "OGBase.h"
 #include "../Attribute/AttributeID.hpp"
 #include "graph.hpp"
 #include <pthread.h>

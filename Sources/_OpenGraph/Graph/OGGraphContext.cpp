@@ -5,7 +5,7 @@
 //  Created by Kyle on 2024/2/16.
 //
 
-#include "OGGraphContext.hpp"
+#include "OGGraphContext.h"
 #include "../Private/CFRuntime.h"
 
 OGGraphRef OGGraphContextGetGraph(OGGraphContextRef context) {

@@ -6,7 +6,7 @@
 //
 
 #include "graph-description.hpp"
-#include "OGGraph.hpp"
+#include "OGGraph.h"
 #include "graph.hpp"
 #include "../Util/assert.hpp"
 

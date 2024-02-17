@@ -5,7 +5,7 @@
 //  Created by Kyle on 2024/1/29.
 //
 
-#include "OGTypeApplyEnumData.hpp"
+#include "OGTypeApplyEnumData.h"
 
 bool OGTypeApplyEnumData() {
     // TODO

@@ -8,7 +8,7 @@
 #ifndef log_hpp
 #define log_hpp
 
-#include "OGBase.hpp"
+#include "OGBase.h"
 
 #if TARGET_OS_DARWIN
 

@@ -5,7 +5,7 @@
 //  Created by Kyle on 2024/1/24.
 //
 
-#include "OGTypeDescription.hpp"
+#include "OGTypeDescription.h"
 
 #if TARGET_OS_DARWIN
 CFStringRef OGTypeDescription(OGTypeID id) {
