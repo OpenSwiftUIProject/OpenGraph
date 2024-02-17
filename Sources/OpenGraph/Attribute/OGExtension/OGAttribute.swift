@@ -16,7 +16,7 @@ extension OGAttribute {
     @inlinable
     public static var current: OGAttribute? {
         let current = __OGGraphGetCurrentAttribute()
-        return current == .nil ? .nil : current
+        return current == .nil ? nil : current
     }
     
     @inlinable
