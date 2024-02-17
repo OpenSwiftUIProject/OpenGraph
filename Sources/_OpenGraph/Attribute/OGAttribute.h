@@ -20,7 +20,7 @@ const OGAttribute OGAttributeNil;
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-OGAttribute OGGraphGetCurrentAttribute(void) OG_SWIFT_NAME(getter:OGAttribute._current());
+OGAttribute OGGraphGetCurrentAttribute(void);
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT

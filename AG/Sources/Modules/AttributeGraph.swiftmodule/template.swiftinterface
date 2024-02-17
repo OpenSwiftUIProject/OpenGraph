@@ -178,13 +178,3 @@ public func AGTypeApplyFields2(
     options: AGTypeApplyOptions,
     body: (UnsafePointer<Int8>, Int, Any.Type) -> Bool
 ) -> Bool
-
-// MARK: - AGGraph C functions
-
-@_silgen_name("AGGraphArchiveJSON")
-@inline(__always)
-public func graphArchiveJSON(_ name: UnsafePointer<Int8>)
-
-@_silgen_name("AGGraphDescription")
-@inline(__always)
-public func graphDescription(_ graph: AGGraph? = nil, options: CFDictionary) -> UnsafeRawPointer?

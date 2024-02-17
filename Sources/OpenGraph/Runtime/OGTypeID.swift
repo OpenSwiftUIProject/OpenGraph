@@ -7,12 +7,8 @@
 //  Status: WIP
 
 import _OpenGraph
-
 #if canImport(ObjectiveC)
-@_silgen_name("OGTypeDescription")
-public func OGTypeDescription(
-    _ type: OGTypeID
-) -> CFString
+import Foundation
 #endif
 
 @_silgen_name("OGTypeApplyFields")
@@ -42,7 +38,7 @@ extension OGTypeID: Hashable, CustomStringConvertible {
     @inline(__always)
     public var description: String {
         #if canImport(ObjectiveC)
-        OGTypeDescription(self) as String
+        __OGTypeDescription(self).takeUnretainedValue() as String
         #else
         fatalError("Unimplemented")
         #endif

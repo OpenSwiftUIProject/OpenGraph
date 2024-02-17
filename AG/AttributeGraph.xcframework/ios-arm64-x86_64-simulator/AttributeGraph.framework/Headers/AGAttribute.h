@@ -26,7 +26,7 @@ AG_EXTERN_C_END
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
-AGAttribute AGGraphGetCurrentAttribute(void) AG_SWIFT_NAME(getter:AGAttribute._current());
+AGAttribute AGGraphGetCurrentAttribute(void);
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
