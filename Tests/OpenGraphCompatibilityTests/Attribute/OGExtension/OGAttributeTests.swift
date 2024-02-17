@@ -26,5 +26,16 @@ final class OGAttributeTests: XCTestCase {
         let attributeNil = OGAttribute.nil
         XCTAssertEqual(attributeNil.description, "#2")
     }
+    
+    func testCurrent() {
+        #if OPENGRAPH_COMPATIBILITY_TEST
+        XCTAssertNotNil(OGAttribute.current)
+        #else
+        XCTAssertNil(OGAttribute.current)
+        #endif
+    }
+    
+    // TODO: Add OGAttribute init
+    func testSetFlags() throws {}
     #endif
 }

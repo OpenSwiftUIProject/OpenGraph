@@ -43,7 +43,7 @@ CFTypeRef AGGraphDescription(AGGraphRef graph, CFDictionaryRef options);
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
-CFTypeID AGGraphGetTypeID();
+CFTypeID AGGraphGetTypeID(void) AG_SWIFT_NAME(getter:AGGraphRef.typeID());
 
 AG_EXTERN_C_END
 
