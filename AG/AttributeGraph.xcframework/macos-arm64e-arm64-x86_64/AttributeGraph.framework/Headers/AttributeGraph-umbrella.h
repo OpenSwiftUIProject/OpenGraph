@@ -14,6 +14,7 @@
 #include "AGComparisonMode.h"
 #include "AGDebugServer.h"
 #include "AGGraph.h"
+#include "AGInputOptions.h"
 #include "AGSubgraph.h"
 #include "AGSwiftMetadata.h"
 #include "AGTupleType.h"

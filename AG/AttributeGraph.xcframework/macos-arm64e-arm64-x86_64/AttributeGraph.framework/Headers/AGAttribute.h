@@ -11,6 +11,7 @@
 
 #include "AGBase.h"
 #include "AGAttributeFlags.h"
+#include "AGInputOptions.h"
 
 typedef uint32_t AGAttribute __attribute((swift_newtype(struct)));
 
@@ -19,22 +20,17 @@ AG_EXTERN_C_BEGIN
 AG_EXPORT
 const AGAttribute AGAttributeNil;
 
-AG_EXTERN_C_BEGIN
-AG_EXPORT
-const AGAttribute AGAttributeNil;
-AG_EXTERN_C_END
-
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
 AGAttribute AGGraphGetCurrentAttribute(void);
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
-AGAttribute AGGraphCreateOffsetAttribute(AGAttribute attribute, uint64_t offset) AG_SWIFT_NAME(AGAttribute.create(self:offset:));
+AGAttribute AGGraphCreateOffsetAttribute(AGAttribute attribute, long offset) AG_SWIFT_NAME(AGAttribute.create(self:offset:));
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
-AGAttribute AGGraphCreateOffsetAttribute2(AGAttribute attribute, uint64_t offset, uint64_t size) AG_SWIFT_NAME(AGAttribute.create(self:offset:size:));
+AGAttribute AGGraphCreateOffsetAttribute2(AGAttribute attribute, long offset, uint64_t size) AG_SWIFT_NAME(AGAttribute.create(self:offset:size:));
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
@@ -43,6 +39,10 @@ AGAttributeFlags AGGraphGetFlags(AGAttribute attribute) AG_SWIFT_NAME(getter:AGA
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
 void AGGraphSetFlags(AGAttribute attribute, AGAttributeFlags flags) AG_SWIFT_NAME(setter:AGAttribute.flags(self:_:));
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+void AGGraphAddInput(AGAttribute attribute1, AGAttribute attribute2, AGInputOptions options, long token);
 
 AG_EXTERN_C_END
 

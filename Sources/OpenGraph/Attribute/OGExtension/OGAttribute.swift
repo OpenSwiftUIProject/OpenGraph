@@ -21,12 +21,22 @@ extension OGAttribute {
     
     @inlinable
     public func unsafeOffset(at offset: Int) -> OGAttribute {
-        create(offset: UInt64(offset))
+        create(offset: offset)
     }
     
     @inlinable
     public func setFlags(_ newFlags: OGAttributeFlags, mask: OGAttributeFlags) {
         flags = flags.subtracting(mask).union(newFlags.intersection(mask))
+    }
+    
+    @inlinable
+    public func addInput(_ attribute: OGAttribute, options: OGInputOptions, token: Int) {
+        __OGGraphAddInput(self, attribute, options, token)
+    }
+    
+    @inlinable
+    public func addInput<Value>(_ attribute: Attribute<Value>, options: OGInputOptions, token: Int) {
+        addInput(attribute.identifier, options: options, token: token)
     }
 }
 

@@ -25,11 +25,11 @@ OGAttribute create_offset_attribute(OGAttribute attribute, uint64_t offset, std:
 }
 }
 
-OGAttribute OGGraphCreateOffsetAttribute(OGAttribute attribute, uint64_t offset) {
+OGAttribute OGGraphCreateOffsetAttribute(OGAttribute attribute, long offset) {
     return create_offset_attribute(attribute, offset, std::nullopt);
 }
 
-OGAttribute OGGraphCreateOffsetAttribute2(OGAttribute attribute, uint64_t offset, uint64_t size) {
+OGAttribute OGGraphCreateOffsetAttribute2(OGAttribute attribute, long offset, uint64_t size) {
     return create_offset_attribute(attribute, offset, std::optional(size));
 }
 
@@ -44,6 +44,14 @@ OGAttributeFlags OGGraphGetFlags(OGAttribute attribute) {
 
 void OGGraphSetFlags(OGAttribute attribute, OGAttributeFlags flags) {
     const OG::AttributeID id = OG::AttributeID(attribute);
+    if (!id.isDirect()) {
+        OG::precondition_failure("non-direct attribute id: %u", id);
+    }
+    // TODO: data/table
+}
+
+void OGGraphAddInput(OGAttribute attribute1, OGAttribute attribute2, OGInputOptions options, long token) {
+    const OG::AttributeID id = OG::AttributeID(attribute1);
     if (!id.isDirect()) {
         OG::precondition_failure("non-direct attribute id: %u", id);
     }

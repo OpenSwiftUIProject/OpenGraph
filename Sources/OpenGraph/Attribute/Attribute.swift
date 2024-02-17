@@ -2,7 +2,7 @@ import _OpenGraph
 
 @propertyWrapper
 public struct Attribute<Value> {
-    var identifier: OGAttribute
+    public var identifier: OGAttribute
     
     public init() {
         fatalError("TODO")
@@ -18,6 +18,16 @@ public struct Attribute<Value> {
     public var value: Value {
         get { wrappedValue }
         set { fatalError("TODO") }
+    }
+    
+    @inlinable
+    public func addInput(_ attribute: OGAttribute, options: OGInputOptions, token: Int) {
+        __OGGraphAddInput(self.identifier, attribute, options, token)
+    }
+    
+    @inlinable
+    public func addInput<V>(_ attribute: Attribute<V>, options: OGInputOptions, token: Int) {
+        addInput(attribute.identifier, options: options, token: token)
     }
 }
 
