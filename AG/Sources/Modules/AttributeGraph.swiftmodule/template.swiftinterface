@@ -10,6 +10,8 @@ import _StringProcessing
 
 extension AGAttribute {
 	@inlinable
+	public init<Value>(_ attribute: AttributeGraph.Attribute<Value>)
+	@inlinable
 	public func unsafeCast<Value>(to type: Value.Type) -> AttributeGraph.Attribute<Value>
 	@inlinable
 	public static var current: AGAttribute? { get }
@@ -21,6 +23,20 @@ extension AGAttribute {
 	public func addInput(_ attribute: AGAttribute, options: AGInputOptions, token: Swift.Int)
 	@inlinable
 	public func addInput<Value>(_ attribute: AttributeGraph.Attribute<Value>, options: AGInputOptions, token: Int)
+	@inlinable
+	public func visitBody<Visitor: AttributeGraph.AttributeBodyVisitor>(_ visitor: inout Visitor);
+	@inlinable
+	public func mutateBody<Value>(as: Value.Type, invalidating: Swift.Bool, _ body: (inout Value) -> ())
+	@inlinable
+	public func breadthFirstSearch(options: AGSearchOptions, _: (AGAttribute) -> Swift.Bool) -> Swift.Bool
+	@inlinable
+	public var _bodyType: Any.Type { get }
+	@inlinable
+	public var _bodyPointer: UnsafeRawPointer { get }
+	@inlinable
+	public var valueType: Any.Type { get }
+	@inlinable
+	public var indirectDependency: AGAttribute { get set }
 }
 
 extension AGAttribute: Swift.CustomStringConvertible {
