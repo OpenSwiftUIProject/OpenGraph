@@ -18,9 +18,21 @@
 
 namespace OG {
 class Graph final {
-    // TODO
 private:
+    // TODO    
+    static pthread_key_t _current_update_key;
 public:
+    #if OG_OBJC_FOUNDATION
+    static CFTypeRef description(const Graph * graph, NSDictionary* dic);
+    #endif /* OG_OBJC_FOUNDATION */
+    
+    // MARK: - pthread related
+    
+    OG_INLINE OG_CONSTEXPR
+    const static pthread_key_t& current_key() OG_NOEXCEPT {
+        return _current_update_key;
+    }
+    
     class Context final {
     private:
         Graph *_graph;
@@ -55,9 +67,6 @@ public:
             _isInvalid = invalid;
         }
     };
-    #if OG_OBJC_FOUNDATION
-    static CFTypeRef description(const Graph * graph, NSDictionary* dic);
-    #endif /* OG_OBJC_FOUNDATION */
 }; /* Graph */
 } /* OG */
 
