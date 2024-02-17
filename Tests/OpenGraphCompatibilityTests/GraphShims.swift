@@ -16,6 +16,7 @@ public typealias OGDebugServer = AGDebugServer
 public typealias OGGraph = AGGraph
 public typealias OGGraphContext = AGGraphContext
 public typealias OGInputOptions = AGInputOptions
+public typealias OGSearchOptions = AGSearchOptions
 public typealias OGSubgraph = AGSubgraph
 public typealias OGSwiftMetadata = AGSwiftMetadata
 public typealias OGTupleType = AGTupleType
