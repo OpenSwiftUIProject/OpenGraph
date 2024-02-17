@@ -41,7 +41,7 @@ void AGSubgraphSetCurrent(AGSubgraphRef cf_subgraph) AG_SWIFT_NAME(setter:AGSubg
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
-AGGraphContextRef AGSubgraphGetCurrentGraphContext();
+_Nullable AGGraphContextRef AGSubgraphGetCurrentGraphContext(void) AG_SWIFT_NAME(getter:AGSubgraphRef.currentGraphContext());
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT

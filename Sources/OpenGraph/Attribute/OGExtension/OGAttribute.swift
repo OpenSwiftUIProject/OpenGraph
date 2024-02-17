@@ -14,7 +14,7 @@ extension OGAttribute {
     }
     
     public func unsafeCast<Value>(to _: Value.Type) -> Attribute<Value> {
-        fatalError("TODO")
+        Attribute<Value>(identifier: self)
     }
     
     public static var current: OGAttribute? {
@@ -34,12 +34,12 @@ extension OGAttribute {
         __OGGraphAddInput(self, attribute, options, token)
     }
 
-    public func addInput(_ attribute: Attribute<some Any>, options: OGInputOptions, token: Int) {
+    public func addInput<Value>(_ attribute: Attribute<Value>, options: OGInputOptions, token: Int) {
         addInput(attribute.identifier, options: options, token: token)
     }
     
-    // Question
-    public func visitBody(_ visitor: inout some AttributeBodyVisitor) {
+    // FIXME: Use AttributeType instead
+    public func visitBody<Body: AttributeBodyVisitor>(_ visitor: inout Body) {
         let info = __OGGraphGetAttributeInfo(self)
         let bodyType = info.type.advanced(by: 1).pointee.typeID.type as! _AttributeBody.Type
         bodyType._visitBody(&visitor, info.body)
