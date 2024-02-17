@@ -1,12 +1,12 @@
 //
-//  graph-description.hpp
+//  GraphDescription.hpp
 //
 //
 //  Created by Kyle on 2024/1/21.
 //
 
-#ifndef graph_description_hpp
-#define graph_description_hpp
+#ifndef GraphDescription_hpp
+#define GraphDescription_hpp
 
 #include "OGBase.h"
 
@@ -17,4 +17,4 @@ CFStringRef OGDescriptionFormat;
 OG_EXTERN_C_END
 #endif
 
-#endif /* graph_description_hpp */
+#endif /* GraphDescription_hpp */

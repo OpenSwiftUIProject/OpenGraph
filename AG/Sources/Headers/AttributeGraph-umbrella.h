@@ -8,6 +8,8 @@
 
 #include "AGAttribute.h"
 #include "AGAttributeFlags.h"
+#include "AGAttributeInfo.h"
+#include "AGAttributeType.h"
 #include "AGAttributeTypeFlags.h"
 #include "AGBase.h"
 #include "AGCompareValues.h"

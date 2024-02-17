@@ -10,6 +10,8 @@
 
 #include "OGAttribute.h"
 #include "OGAttributeFlags.h"
+#include "OGAttributeInfo.h"
+#include "OGAttributeType.h"
 #include "OGAttributeTypeFlags.h"
 #include "OGBase.h"
 #include "OGCompareValues.h"

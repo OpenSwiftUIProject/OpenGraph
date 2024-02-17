@@ -1,11 +1,11 @@
 //
-//  graph-context.cpp
-//  
+//  GraphContext.cpp
+//
 //
 //  Created by Kyle on 2024/2/16.
 //
 
-#include "graph.hpp"
+#include "Graph.hpp"
 #include "OGGraph.h"
 #include "../Util/assert.hpp"
 

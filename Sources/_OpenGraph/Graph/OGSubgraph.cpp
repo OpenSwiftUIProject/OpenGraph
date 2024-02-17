@@ -7,7 +7,7 @@
 
 #include "OGSubgraph.h"
 #include "OGGraph.h"
-#include "subgraph.hpp"
+#include "Subgraph.hpp"
 #include "../Util/assert.hpp"
 #include <pthread.h>
 #include "OGGraphContext.h"

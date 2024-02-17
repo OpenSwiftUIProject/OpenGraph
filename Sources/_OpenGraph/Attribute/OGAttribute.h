@@ -11,6 +11,7 @@
 #include "OGBase.h"
 #include "OGAttributeFlags.h"
 #include "OGInputOptions.h"
+#include "OGAttributeInfo.h"
 
 typedef uint32_t OGAttribute __attribute((swift_newtype(struct)));
 
@@ -42,6 +43,10 @@ void OGGraphSetFlags(OGAttribute attribute, OGAttributeFlags flags) OG_SWIFT_NAM
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
 void OGGraphAddInput(OGAttribute attribute1, OGAttribute attribute2, OGInputOptions options, long token);
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+const OGAttributeInfo OGGraphGetAttributeInfo(OGAttribute attribute);
 
 OG_EXTERN_C_END
 

@@ -1,12 +1,12 @@
 //
-//  graph.hpp
+//  Graph.hpp
 //
 //
 //  Created by Kyle on 2024/1/18.
 //
 
-#ifndef graph_hpp
-#define graph_hpp
+#ifndef Graph_hpp
+#define Graph_hpp
 
 #include "OGBase.h"
 #include "OGGraph.h"
@@ -79,4 +79,4 @@ struct OGGraphContextStorage {
     OG::Graph::Context context;
 };
 
-#endif /* graph_hpp */
+#endif /* Graph_hpp */

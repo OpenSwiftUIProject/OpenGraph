@@ -9,6 +9,8 @@
 @_exported import AttributeGraph
 public typealias OGAttribute = AGAttribute
 public typealias OGAttributeFlags = AGAttributeFlags
+public typealias OGAttributeInfo = AGAttributeInfo
+public typealias OGAttributeType = AGAttributeType
 public typealias OGAttributeTypeFlags = AGAttributeTypeFlags
 public typealias OGComparisonMode = AGComparisonMode
 public typealias OGComparisonOptions = AGComparisonOptions

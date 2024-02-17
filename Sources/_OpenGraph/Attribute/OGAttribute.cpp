@@ -57,3 +57,12 @@ void OGGraphAddInput(OGAttribute attribute1, OGAttribute attribute2, OGInputOpti
     }
     // TODO: data/table
 }
+
+const OGAttributeInfo OGGraphGetAttributeInfo(OGAttribute attribute) {
+    const OG::AttributeID id = OG::AttributeID(attribute);
+    if (!id.isDirect()) {
+        OG::precondition_failure("non-direct attribute id: %u", id);
+    }
+    // TODO
+    return { nullptr, nullptr };
+}

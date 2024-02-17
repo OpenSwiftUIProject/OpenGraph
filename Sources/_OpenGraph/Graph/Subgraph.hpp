@@ -1,16 +1,16 @@
 //
-//  subgraph.hpp
-//  
+//  Subgraph.hpp
+//
 //
 //  Created by Kyle on 2024/2/15.
 //
 
-#ifndef subgraph_hpp
-#define subgraph_hpp
+#ifndef Subgraph_hpp
+#define Subgraph_hpp
 
 #include "OGBase.h"
 #include "../Attribute/AttributeID.hpp"
-#include "graph.hpp"
+#include "Graph.hpp"
 #include <pthread.h>
 
 typedef struct OG_BRIDGED_TYPE(id) OGSubgraphStorage * OGSubgraphRef;
@@ -88,4 +88,4 @@ class SubgraphObject final {
 };
 }
 
-#endif /* subgraph_hpp */
+#endif /* Subgraph_hpp */
