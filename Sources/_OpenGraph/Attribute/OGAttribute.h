@@ -12,6 +12,7 @@
 #include "OGAttributeFlags.h"
 #include "OGInputOptions.h"
 #include "OGAttributeInfo.h"
+#include "OGTypeID.h"
 
 typedef uint32_t OGAttribute __attribute((swift_newtype(struct)));
 
@@ -47,6 +48,18 @@ void OGGraphAddInput(OGAttribute attribute1, OGAttribute attribute2, OGInputOpti
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
 const OGAttributeInfo OGGraphGetAttributeInfo(OGAttribute attribute);
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGGraphMutateAttribute(OGAttribute attribute, const OGTypeID type, bool invalidating/*, closure*/);
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+OGAttribute OGGraphGetIndirectDependency(OGAttribute attribute);
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGGraphSetIndirectDependency(OGAttribute attribute1, OGAttribute attribute2);
 
 OG_EXTERN_C_END
 

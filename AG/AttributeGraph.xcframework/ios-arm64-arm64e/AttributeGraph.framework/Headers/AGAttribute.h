@@ -12,6 +12,8 @@
 #include "AGBase.h"
 #include "AGAttributeFlags.h"
 #include "AGInputOptions.h"
+#include "AGAttributeInfo.h"
+#include "AGTypeID.h"
 
 typedef uint32_t AGAttribute __attribute((swift_newtype(struct)));
 
@@ -43,6 +45,22 @@ void AGGraphSetFlags(AGAttribute attribute, AGAttributeFlags flags) AG_SWIFT_NAM
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
 void AGGraphAddInput(AGAttribute attribute1, AGAttribute attribute2, AGInputOptions options, long token);
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+const AGAttributeInfo AGGraphGetAttributeInfo(AGAttribute attribute);
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+void AGGraphMutateAttribute(AGAttribute attribute, const AGTypeID type, bool invalidating/*, closure*/);
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+AGAttribute AGGraphGetIndirectDependency(AGAttribute attribute);
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+void AGGraphSetIndirectDependency(AGAttribute attribute1, AGAttribute attribute2);
 
 AG_EXTERN_C_END
 

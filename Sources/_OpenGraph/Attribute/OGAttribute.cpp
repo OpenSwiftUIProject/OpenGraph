@@ -66,3 +66,16 @@ const OGAttributeInfo OGGraphGetAttributeInfo(OGAttribute attribute) {
     // TODO
     return { nullptr, nullptr };
 }
+
+void OGGraphMutateAttribute(OGAttribute attribute, const OGTypeID type, bool invalidating) {
+    // TODO
+}
+
+OGAttribute OGGraphGetIndirectDependency(OGAttribute attribute) {
+    // TODO
+    return OGAttributeNil;
+}
+
+void OGGraphSetIndirectDependency(OGAttribute attribute1, OGAttribute attribute2) {
+    // TODO
+}

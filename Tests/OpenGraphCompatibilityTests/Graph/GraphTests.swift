@@ -27,7 +27,11 @@ final class GraphTests: XCTestCase {
         }
         let name = "empty_graph.json"
         name.withCString { OGGraph.archiveJSON(name: $0) }
-        let url = URL(filePath: NSTemporaryDirectory().appending(name))
+        let url = if #available(macOS 13.0, iOS 16.0, tvOS 16.0, watchOS 9.0, *) {
+            URL(filePath: NSTemporaryDirectory().appending(name))
+        } else {
+            URL(fileURLWithPath: NSTemporaryDirectory().appending(name))
+        }
         let data = try Data(contentsOf: url)
         let graphs = try JSONDecoder().decode(Graphs.self, from: data)
         XCTAssertEqual(graphs.version, 2)
