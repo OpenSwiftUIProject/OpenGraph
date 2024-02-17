@@ -6,7 +6,7 @@
 //
 
 #include "graph.hpp"
-#include "OGGraph.hpp"
+#include "OGGraph.h"
 #include "../Util/assert.hpp"
 
 OG::Graph::Context &OG::Graph::Context::from_cf(OGGraphRef storage) OG_NOEXCEPT {

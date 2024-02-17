@@ -8,9 +8,9 @@
 #ifndef og_debug_server_hpp
 #define og_debug_server_hpp
 
-#include "OGBase.hpp"
+#include "OGBase.h"
 #if TARGET_OS_DARWIN
-#include "OGDebugServer.hpp"
+#include "OGDebugServer.h"
 #include "../Util/vector.hpp"
 #include <dispatch/dispatch.h>
 #include <memory>

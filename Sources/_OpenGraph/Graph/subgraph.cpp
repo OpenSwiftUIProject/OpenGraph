@@ -6,7 +6,7 @@
 //
 
 #include "subgraph.hpp"
-#include "OGSubgraph.hpp"
+#include "OGSubgraph.h"
 
 pthread_key_t OG::Subgraph::_current_subgraph_key;
 

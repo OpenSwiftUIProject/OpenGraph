@@ -5,12 +5,12 @@
 //  Created by Kyle on 2024/2/15.
 //
 
-#include "OGSubgraph.hpp"
-#include "OGGraph.hpp"
+#include "OGSubgraph.h"
+#include "OGGraph.h"
 #include "subgraph.hpp"
 #include "../Util/assert.hpp"
 #include <pthread.h>
-#include "OGGraphContext.hpp"
+#include "OGGraphContext.h"
 
 namespace {
 CFRuntimeClass &subgraph_type_id() {

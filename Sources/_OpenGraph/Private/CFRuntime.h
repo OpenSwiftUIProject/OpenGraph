@@ -1,4 +1,4 @@
-#include "OGBase.hpp"
+#include "OGBase.h"
 #if TARGET_OS_DARWIN
 // Copied from https://github.com/apple/swift-corelibs-foundation/blob/d8e8a8b92b3a8af8381a11155328c1bba1c6bd2c/CoreFoundation/Base.subproj/CFRuntime.h
 /*	CFRuntime.h

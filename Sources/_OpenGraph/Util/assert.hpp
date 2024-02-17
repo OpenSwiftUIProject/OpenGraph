@@ -8,7 +8,7 @@
 #ifndef assert_hpp
 #define assert_hpp
 
-#include "OGBase.hpp"
+#include "OGBase.h"
 
 namespace OG {
 void precondition_failure(const char *format, ...) __cold __dead2;
