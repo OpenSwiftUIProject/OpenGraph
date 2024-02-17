@@ -6,3 +6,5 @@
 //
 
 #include "graph.hpp"
+
+pthread_key_t OG::Graph::_current_update_key;

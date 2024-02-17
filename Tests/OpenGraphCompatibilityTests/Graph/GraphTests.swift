@@ -26,7 +26,7 @@ final class GraphTests: XCTestCase {
             struct Graph: Codable {}
         }
         let name = "empty_graph.json"
-        name.withCString { graphArchiveJSON($0) }
+        name.withCString { OGGraph.archiveJSON(name: $0) }
         let url = URL(filePath: NSTemporaryDirectory().appending(name))
         let data = try Data(contentsOf: url)
         let graphs = try JSONDecoder().decode(Graphs.self, from: data)
@@ -38,8 +38,8 @@ final class GraphTests: XCTestCase {
     
     func testGraphDescriptionDict() throws {
         #if OPENGRAPH_COMPATIBILITY_TEST
-        let description = try XCTUnwrap(graphDescription(options: ["format": "graph/dict"] as NSDictionary))
-        let dic = Unmanaged<NSDictionary>.fromOpaque(description).takeUnretainedValue()
+        let description = try XCTUnwrap(OGGraph.description(nil, options: ["format": "graph/dict"] as NSDictionary))
+        let dic = description.takeUnretainedValue() as! Dictionary<String, AnyHashable>
         XCTAssertEqual(dic["version"] as? UInt32, 2)
         XCTAssertEqual((dic["graphs"] as? NSArray)?.count, 0)
         #else
@@ -51,10 +51,10 @@ final class GraphTests: XCTestCase {
         #if OPENGRAPH_COMPATIBILITY_TEST
         let options = NSMutableDictionary()
         options["format"] = "graph/dot"
-        XCTAssertNil(graphDescription(options: options))
+        XCTAssertNil(OGGraph.description(nil, options: options))
         let graph = OGGraph()
-        let description = try XCTUnwrap(graphDescription(graph, options: options))
-        let dotGraph = Unmanaged<NSString>.fromOpaque(description).takeUnretainedValue() as String
+        let description = try XCTUnwrap(OGGraph.description(graph, options: options))
+        let dotGraph = description.takeUnretainedValue() as! String
         let expectedEmptyDotGraph = #"""
         digraph {
         }

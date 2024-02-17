@@ -35,15 +35,15 @@ AGGraphRef AGGraphCreateShared(_Nullable AGGraphRef graph) AG_SWIFT_NAME(AGGraph
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
-void AGGraphArchiveJSON(char const* name);
+void AGGraphArchiveJSON(char const* name) AG_SWIFT_NAME(AGGraphRef.archiveJSON(name:));
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
-CFTypeRef AGGraphDescription(AGGraphRef graph, CFDictionaryRef options);
+_Nullable CFTypeRef AGGraphDescription(_Nullable AGGraphRef graph, CFDictionaryRef options) AG_SWIFT_NAME(AGGraphRef.description(_:options:));
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
-CFTypeID AGGraphGetTypeID();
+CFTypeID AGGraphGetTypeID(void) AG_SWIFT_NAME(getter:AGGraphRef.typeID());
 
 AG_EXTERN_C_END
 

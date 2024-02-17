@@ -8,6 +8,17 @@ import _StringProcessing
 
 // MARK: - AGAttribute
 
+extension AGAttribute {
+	@inlinable
+	public func unsafeCast<Value>(to type: Value.Type) -> AttributeGraph.Attribute<Value>
+	@inlinable
+	public static var current: AGAttribute? { get }
+	@inlinable
+	public func unsafeOffset(at offset: Int) -> AGAttribute
+	@inlinable
+	public func setFlags(_ newFlags: AGAttributeFlags, mask: AGAttributeFlags)
+}
+
 extension AGAttribute: Swift.CustomStringConvertible {
 	public var description: Swift.String { get }
 }
@@ -167,13 +178,3 @@ public func AGTypeApplyFields2(
     options: AGTypeApplyOptions,
     body: (UnsafePointer<Int8>, Int, Any.Type) -> Bool
 ) -> Bool
-
-// MARK: - AGGraph C functions
-
-@_silgen_name("AGGraphArchiveJSON")
-@inline(__always)
-public func graphArchiveJSON(_ name: UnsafePointer<Int8>)
-
-@_silgen_name("AGGraphDescription")
-@inline(__always)
-public func graphDescription(_ graph: AGGraph? = nil, options: CFDictionary) -> UnsafeRawPointer?

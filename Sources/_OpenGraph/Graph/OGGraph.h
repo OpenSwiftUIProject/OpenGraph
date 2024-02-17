@@ -35,15 +35,15 @@ OGGraphRef OGGraphCreateShared(_Nullable OGGraphRef graph) OG_SWIFT_NAME(OGGraph
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-void OGGraphArchiveJSON(char const* name);
+void OGGraphArchiveJSON(char const* name) OG_SWIFT_NAME(OGGraphRef.archiveJSON(name:));
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-CFTypeRef OGGraphDescription(OGGraphRef graph, CFDictionaryRef options);
+_Nullable CFTypeRef OGGraphDescription(_Nullable OGGraphRef graph, CFDictionaryRef options) OG_SWIFT_NAME(OGGraphRef.description(_:options:));
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-CFTypeID OGGraphGetTypeID();
+CFTypeID OGGraphGetTypeID(void) OG_SWIFT_NAME(getter:OGGraphRef.typeID());
 
 OG_EXTERN_C_END
 
