@@ -10,6 +10,8 @@
 
 #include "OGAttribute.h"
 #include "OGAttributeFlags.h"
+#include "OGAttributeInfo.h"
+#include "OGAttributeType.h"
 #include "OGAttributeTypeFlags.h"
 #include "OGBase.h"
 #include "OGCompareValues.h"
@@ -17,6 +19,8 @@
 #include "OGDebugServer.h"
 #include "OGGraph.h"
 #include "OGGraphContext.h"
+#include "OGInputOptions.h"
+#include "OGSearchOptions.h"
 #include "OGSubgraph.h"
 #include "OGSwiftMetadata.h"
 #include "OGTupleType.h"

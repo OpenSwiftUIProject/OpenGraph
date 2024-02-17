@@ -1,11 +1,11 @@
 //
-//  subgraph.cpp
+//  Subgraph.cpp
 //  
 //
 //  Created by Kyle on 2024/2/15.
 //
 
-#include "subgraph.hpp"
+#include "Subgraph.hpp"
 #include "OGSubgraph.h"
 
 pthread_key_t OG::Subgraph::_current_subgraph_key;

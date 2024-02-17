@@ -40,5 +40,17 @@ final class OGAttributeTests: XCTestCase {
     
     // TODO: Add OGAttribute init
     func testSetFlags() throws {}
+    
+    func testVisitBody() {
+        // FIXME: attribute is invalid here.
+//        struct Visitor: AttributeBodyVisitor {
+//            func visit<Body>(body: UnsafePointer<Body>) where Body : _AttributeBody {
+//                print("Visit")
+//            }
+//        }
+//        let attribute = OGAttribute.nil
+//        var visitor = Visitor()
+//        attribute.visitBody(&visitor)
+    }
     #endif
 }

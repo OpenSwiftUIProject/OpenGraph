@@ -1,13 +1,13 @@
 //
-//  graph-description.cpp
+//  GraphDescription.mm
 //
 //
 //  Created by Kyle on 2024/1/21.
 //
 
-#include "graph-description.hpp"
+#include "GraphDescription.hpp"
 #include "OGGraph.h"
-#include "graph.hpp"
+#include "Graph.hpp"
 #include "../Util/assert.hpp"
 
 #if OG_OBJC_FOUNDATION

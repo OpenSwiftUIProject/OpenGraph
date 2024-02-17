@@ -13,14 +13,20 @@ import _StringProcessing
 // MARK: - AGAttribute
 
 extension AGAttribute {
-	@inlinable
+	public init<Value>(_ attribute: AttributeGraph.Attribute<Value>)
 	public func unsafeCast<Value>(to type: Value.Type) -> AttributeGraph.Attribute<Value>
-	@inlinable
 	public static var current: AGAttribute? { get }
-	@inlinable
 	public func unsafeOffset(at offset: Int) -> AGAttribute
-	@inlinable
 	public func setFlags(_ newFlags: AGAttributeFlags, mask: AGAttributeFlags)
+	public func addInput(_ attribute: AGAttribute, options: AGInputOptions, token: Swift.Int)
+	public func addInput<Value>(_ attribute: AttributeGraph.Attribute<Value>, options: AGInputOptions, token: Int)
+	public func visitBody<Visitor: AttributeGraph.AttributeBodyVisitor>(_ visitor: inout Visitor);
+	public func mutateBody<Value>(as: Value.Type, invalidating: Swift.Bool, _ body: (inout Value) -> ())
+	public func breadthFirstSearch(options: AGSearchOptions, _: (AGAttribute) -> Swift.Bool) -> Swift.Bool
+	public var _bodyType: Any.Type { get }
+	public var _bodyPointer: UnsafeRawPointer { get }
+	public var valueType: Any.Type { get }
+	public var indirectDependency: AGAttribute? { get set }
 }
 
 extension AGAttribute: Swift.CustomStringConvertible {
@@ -60,6 +66,11 @@ extension AGAttribute: Swift.CustomStringConvertible {
     public func hash(into hasher: inout Swift.Hasher)
     public var hashValue: Swift.Int { get }
     public var value: Value { get set }
+
+	@inlinable
+	public func addInput(_ attribute: AGAttribute, options: AGInputOptions, token: Swift.Int)
+	@inlinable
+	public func addInput<V>(_ attribute: AttributeGraph.Attribute<V>, options: AGInputOptions, token: Int)
 }
 
 // MARK: - _AttributeBody
