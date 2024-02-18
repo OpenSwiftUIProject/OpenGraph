@@ -26,6 +26,10 @@ let openGraphCompatibilityTestTarget = Target.testTarget(
     exclude: ["README.md"],
     swiftSettings: sharedSwiftSettings
 )
+let openGraphTempTestTarget = Target.testTarget(
+    name: "OpenGraphTempTests",
+    exclude: ["README.md"]
+)
 
 let swiftBinPath = Context.environment["_"] ?? ""
 let swiftBinURL = URL(fileURLWithPath: swiftBinPath)
@@ -126,16 +130,23 @@ if swiftTestingCondition {
         .product(name: "Testing", package: "swift-testing")
     )
     package.targets.append(openGraphCompatibilityTestTarget)
+    openGraphTempTestTarget.dependencies.append(
+        .product(name: "Testing", package: "swift-testing")
+    )
+    package.targets.append(openGraphTempTestTarget)
 }
 
 let compatibilityTestCondition = envEnable("OPENGRAPH_COMPATIBILITY_TEST")
 if compatibilityTestCondition && attributeGraphCondition {
     openGraphCompatibilityTestTarget.dependencies.append("AttributeGraph")
+    openGraphTempTestTarget.dependencies.append("AttributeGraph")
     var swiftSettings: [SwiftSetting] = (openGraphCompatibilityTestTarget.swiftSettings ?? [])
     swiftSettings.append(.define("OPENGRAPH_COMPATIBILITY_TEST"))
     openGraphCompatibilityTestTarget.swiftSettings = swiftSettings
+    openGraphTempTestTarget.swiftSettings = swiftSettings
 } else {
     openGraphCompatibilityTestTarget.dependencies.append("OpenGraph")
+    openGraphTempTestTarget.dependencies.append("OpenGraph")
 }
 
 extension [Platform] {
