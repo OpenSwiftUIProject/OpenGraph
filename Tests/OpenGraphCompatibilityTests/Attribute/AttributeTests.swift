@@ -14,4 +14,12 @@ final class AttributeTests: AttributeTestBase {
         let intAttribute = Attribute(value: 0)
         #expect(intAttribute.value == 0)
     }
+    
+    @Test
+    func hashableAndEquatable() throws {
+        let a = Attribute<Int>(identifier: .nil)
+        let b = Attribute<Int>(identifier: .nil)
+        #expect(a == b)
+        #expect(a.hashValue == b.hashValue)
+    }
 }

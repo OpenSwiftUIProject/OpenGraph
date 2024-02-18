@@ -1,6 +1,6 @@
 //
-//  AttributeTestCase.swift
-//  
+//  AttributeTestBase.swift
+//
 //
 //  Created by Kyle on 2024/2/18.
 //
