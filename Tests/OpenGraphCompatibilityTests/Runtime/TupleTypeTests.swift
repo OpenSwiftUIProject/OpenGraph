@@ -5,24 +5,20 @@
 //  Created by Kyle on 2024/1/27.
 //
 
-import XCTest
+import Testing
 
-final class TupleTypeTests: XCTestCase {
-    override func setUp() async throws {
-        #if !OPENGRAPH_COMPATIBILITY_TEST
-        throw XCTSkip("OGTupleType is not implemented")
-        #endif
-    }
-    
-    func testExample() throws {
+@Suite(.disabled(if: !compatibilityTestEnabled, "OGTupleType is not implemented"))
+struct TupleTypeTests {
+    @Test
+    func example() {
         let value = (3, 5.0)
         let tupleType = OGTupleType(type(of: value))
-        XCTAssertEqual(tupleType.count, 2)
-        XCTAssertEqual(tupleType.size, 16)
-        XCTAssertTrue(tupleType.type(at: 0) == Int.self)
-        XCTAssertTrue(tupleType.type(at: 1) == Double.self)
+        #expect(tupleType.count == 2)
+        #expect(tupleType.size == 16)
+        #expect(tupleType.type(at: 0) == Int.self)
+        #expect(tupleType.offset(at: 0) == 0)
         
-        XCTAssertEqual(tupleType.offset(at: 0), 0)
-        XCTAssertEqual(tupleType.offset(at: 1), 8)
+        #expect(tupleType.type(at: 1) == Double.self)
+        #expect(tupleType.offset(at: 1) == 8)
     }
 }

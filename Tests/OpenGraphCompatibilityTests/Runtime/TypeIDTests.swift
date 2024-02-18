@@ -5,9 +5,10 @@
 //  Created by Kyle on 2024/1/24.
 //
 
-import XCTest
+import Testing
 
-final class TypeIDTests: XCTestCase {
+@Suite(.disabled(if: !compatibilityTestEnabled, "OGTypeID is not implemented"))
+struct TypeIDTests {
     class T1 {
         var a = 0
         var b: Double = 0
@@ -22,86 +23,82 @@ final class TypeIDTests: XCTestCase {
         case a, b
     }
     
-    override func setUp() async throws {
-        #if !OPENGRAPH_COMPATIBILITY_TEST
-        throw XCTSkip("OGTypeID is not implemented")
-        #endif
+    @Test
+    func description() {
+        #expect(OGTypeID(T1.self).description == "TypeIDTests.T1")
+        #expect(OGTypeID(T2.self).description == "TypeIDTests.T2")
+        #expect(OGTypeID(T3.self).description == "TypeIDTests.T3")
     }
     
-    func testDescription() {
-        XCTAssertEqual(OGTypeID(T1.self).description, "TypeIDTests.T1")
-        XCTAssertEqual(OGTypeID(T2.self).description, "TypeIDTests.T2")
-        XCTAssertEqual(OGTypeID(T3.self).description, "TypeIDTests.T3")
-    }
-    
-    func testForEachField() throws {
+    @Test
+    func forEachField() throws {
         for options in [OGTypeApplyOptions._1] {
             let result = OGTypeID(T1.self).forEachField(options: options) { name, offset, type in
                 if offset == 16 {
-                    XCTAssertTrue(type is Int.Type)
-                    XCTAssertEqual(String(cString: name), "a")
+                    #expect(type is Int.Type)
+                    #expect(String(cString: name) == "a")
                     return true
                 } else if offset == 24 {
-                    XCTAssertTrue(type is Double.Type)
-                    XCTAssertEqual(String(cString: name), "b")
+                    #expect(type is Double.Type)
+                    #expect(String(cString: name) == "b")
                     return true
                 } else {
                     return false
                 }
             }
-            XCTAssertTrue(result)
+            #expect(result == true)
         }
         for options in [OGTypeApplyOptions._2, ._4, []] {
             let result = OGTypeID(T1.self).forEachField(options: options) { name, offset, type in
                 if offset == 16 {
-                    XCTAssertTrue(type is Int.Type)
-                    XCTAssertEqual(String(cString: name), "a")
+                    #expect(type is Int.Type)
+                    #expect(String(cString: name) == "a")
                     return true
                 } else if offset == 24 {
-                    XCTAssertTrue(type is Double.Type)
-                    XCTAssertEqual(String(cString: name), "b")
+                    #expect(type is Double.Type)
+                    #expect(String(cString: name) == "b")
                     return true
                 } else {
                     return false
                 }
             }
-            XCTAssertFalse(result)
+            #expect(result == false)
         }
         for options in [OGTypeApplyOptions._2, []] {
             let result = OGTypeID(T2.self).forEachField(options: options) { name, offset, type in
                 if offset == 0 {
-                    XCTAssertTrue(type is Int.Type)
+                    #expect(type is Int.Type)
                     return true
                 } else if offset == 8 {
-                    XCTAssertTrue(type is Double.Type)
+                    #expect(type is Double.Type)
                     return true
                 } else {
                     return false
                 }
             }
-            XCTAssertTrue(result)
+            #expect(result == true)
         }
         for options in [OGTypeApplyOptions._1, ._4] {
             let result = OGTypeID(T2.self).forEachField(options: options) { name, offset, type in
                 if offset == 0 {
-                    XCTAssertTrue(type is Int.Type)
-                    XCTAssertEqual(String(cString: name), "a")
+                    #expect(type is Int.Type)
+                    #expect(String(cString: name) == "a")
                     return true
                 } else if offset == 8 {
-                    XCTAssertTrue(type is Double.Type)
-                    XCTAssertEqual(String(cString: name), "b")
+                    #expect(type is Double.Type)
+                    #expect(String(cString: name) == "b")
                     return true
                 } else {
                     return false
                 }
             }
-            XCTAssertFalse(result)
+            #expect(result == false)
         }
         for options in [OGTypeApplyOptions._1, ._2, ._4, []] {
             let result = OGTypeID(T3.self).forEachField(options: options) { _, _, _ in
                 true
             }
-            XCTAssertFalse(result)
+            #expect(result == false)
         }
     }
 }

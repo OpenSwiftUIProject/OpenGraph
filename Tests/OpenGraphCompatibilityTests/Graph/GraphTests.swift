@@ -5,21 +5,25 @@
 //  Created by Kyle on 2024/1/18.
 //
 
-import XCTest
+import Testing
+import Foundation
 
-final class GraphTests: XCTestCase {
-    func testGraphCreate() throws {
+struct GraphTests {
+    @Test
+    func graphCreate() throws {
         _ = OGGraph()
     }
     
-    func testGraphCreateShared() throws {
+    @Test
+    func graphCreateShared() throws {
         let graph = OGGraph()
         _ = OGGraph(shared: graph)
         _ = OGGraph(shared: nil)
     }
     
-    func testGraphArchiveJSON() throws {
-        #if OPENGRAPH_COMPATIBILITY_TEST
+    #if canImport(Darwin)
+    @Test(.disabled(if: !compatibilityTestEnabled, "Not implemented on OG"))
+    func graphArchiveJSON() throws {
         struct Graphs: Codable {
             var version: Int
             var graphs: [Graph]
@@ -34,39 +38,31 @@ final class GraphTests: XCTestCase {
         }
         let data = try Data(contentsOf: url)
         let graphs = try JSONDecoder().decode(Graphs.self, from: data)
-        XCTAssertEqual(graphs.version, 2)
-        #else
-        throw XCTSkip("Not implemented on OG")
-        #endif
+        #expect(graphs.version == 2)
     }
     
-    func testGraphDescriptionDict() throws {
-        #if OPENGRAPH_COMPATIBILITY_TEST
-        let description = try XCTUnwrap(OGGraph.description(nil, options: ["format": "graph/dict"] as NSDictionary))
+    @Test(.disabled(if: !compatibilityTestEnabled, "Not implemented on OG"))
+    func graphDescriptionDict() throws {
+        let description = try #require(OGGraph.description(nil, options: ["format": "graph/dict"] as NSDictionary))
         let dic = description.takeUnretainedValue() as! Dictionary<String, AnyHashable>
-        XCTAssertEqual(dic["version"] as? UInt32, 2)
-        XCTAssertEqual((dic["graphs"] as? NSArray)?.count, 0)
-        #else
-        throw XCTSkip("Not implemented on OG")
-        #endif
+        #expect(dic["version"] as? UInt32 == 2)
+        #expect((dic["graphs"] as? NSArray)?.count == 0)
     }
     
-    func testGraphDescriptionDot() throws {
-        #if OPENGRAPH_COMPATIBILITY_TEST
+    @Test(.disabled(if: !compatibilityTestEnabled, "Not implemented on OG"))
+    func graphDescriptionDot() throws {
         let options = NSMutableDictionary()
         options["format"] = "graph/dot"
-        XCTAssertNil(OGGraph.description(nil, options: options))
+        #expect(OGGraph.description(nil, options: options) == nil)
         let graph = OGGraph()
-        let description = try XCTUnwrap(OGGraph.description(graph, options: options))
+        let description = try #require(OGGraph.description(graph, options: options))
         let dotGraph = description.takeUnretainedValue() as! String
         let expectedEmptyDotGraph = #"""
         digraph {
         }
         
         """#
-        XCTAssertEqual(dotGraph, expectedEmptyDotGraph)
-        #else
-        throw XCTSkip("Not implemented on OG")
-        #endif
+        #expect(dotGraph == expectedEmptyDotGraph)
     }
+    #endif
 }

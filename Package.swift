@@ -18,12 +18,17 @@ let openGraphTestTarget = Target.testTarget(
     dependencies: [
         "OpenGraph",
     ],
+    exclude: ["README.md"],
     swiftSettings: sharedSwiftSettings
 )
 let openGraphCompatibilityTestTarget = Target.testTarget(
     name: "OpenGraphCompatibilityTests",
     exclude: ["README.md"],
     swiftSettings: sharedSwiftSettings
+)
+let openGraphTempTestTarget = Target.testTarget(
+    name: "OpenGraphTempTests",
+    exclude: ["README.md"]
 )
 
 let swiftBinPath = Context.environment["_"] ?? ""
@@ -73,8 +78,6 @@ let package = Package(
             )
         ),
         openGraphShimsTarget,
-        openGraphTestTarget,
-        openGraphCompatibilityTestTarget,
     ],
     cxxLanguageStandard: .cxx17
 )
@@ -113,28 +116,38 @@ if attributeGraphCondition {
     openGraphShimsTarget.dependencies.append("OpenGraph")
 }
 
-let compatibilityTestCondition = envEnable("OPENGRAPH_COMPATIBILITY_TEST")
-if compatibilityTestCondition && attributeGraphCondition {
-    openGraphCompatibilityTestTarget.dependencies.append("AttributeGraph")
-    var swiftSettings: [SwiftSetting] = (openGraphCompatibilityTestTarget.swiftSettings ?? [])
-    swiftSettings.append(.define("OPENGRAPH_COMPATIBILITY_TEST"))
-    openGraphCompatibilityTestTarget.swiftSettings = swiftSettings
-} else {
-    openGraphCompatibilityTestTarget.dependencies.append("OpenGraph")
-}
-
 // Remove this when swift-testing is 1.0.0
-let swiftTestingCondition = envEnable("OPENGRAPH_SWIFT_TESTING")
+let swiftTestingCondition = envEnable("OPENGRAPH_SWIFT_TESTING", default: true)
 if swiftTestingCondition {
     package.dependencies.append(
-        .package(url: "https://github.com/apple/swift-testing", from: "0.2.0")
+        // Fix it to be 0.3.0 before we bump to Swift 5.10
+        .package(url: "https://github.com/apple/swift-testing", exact: "0.3.0")
     )
     openGraphTestTarget.dependencies.append(
         .product(name: "Testing", package: "swift-testing")
     )
-    var swiftSettings: [SwiftSetting] = (openGraphTestTarget.swiftSettings ?? [])
-    swiftSettings.append(.define("OPENGRAPH_SWIFT_TESTING"))
-    openGraphTestTarget.swiftSettings = swiftSettings
+    package.targets.append(openGraphTestTarget)
+    openGraphCompatibilityTestTarget.dependencies.append(
+        .product(name: "Testing", package: "swift-testing")
+    )
+    package.targets.append(openGraphCompatibilityTestTarget)
+    openGraphTempTestTarget.dependencies.append(
+        .product(name: "Testing", package: "swift-testing")
+    )
+    package.targets.append(openGraphTempTestTarget)
+}
+
+let compatibilityTestCondition = envEnable("OPENGRAPH_COMPATIBILITY_TEST")
+if compatibilityTestCondition && attributeGraphCondition {
+    openGraphCompatibilityTestTarget.dependencies.append("AttributeGraph")
+    openGraphTempTestTarget.dependencies.append("AttributeGraph")
+    var swiftSettings: [SwiftSetting] = (openGraphCompatibilityTestTarget.swiftSettings ?? [])
+    swiftSettings.append(.define("OPENGRAPH_COMPATIBILITY_TEST"))
+    openGraphCompatibilityTestTarget.swiftSettings = swiftSettings
+    openGraphTempTestTarget.swiftSettings = swiftSettings
+} else {
+    openGraphCompatibilityTestTarget.dependencies.append("OpenGraph")
+    openGraphTempTestTarget.dependencies.append("OpenGraph")
 }
 
 extension [Platform] {

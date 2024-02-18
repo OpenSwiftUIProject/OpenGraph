@@ -25,11 +25,11 @@ CFTypeID OGSubgraphGetTypeID();
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-OGSubgraphRef OGSubgraphCreate(_Nullable OGGraphRef cf_graph) OG_SWIFT_NAME(OGSubgraphRef.init(_:));
+OGSubgraphRef OGSubgraphCreate(OGGraphRef cf_graph) OG_SWIFT_NAME(OGSubgraphRef.init(graph:));
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-OGSubgraphRef OGSubgraphCreate2(_Nullable OGGraphRef cf_graph, OGAttribute attribute) OG_SWIFT_NAME(OGSubgraphRef.init(_:attribute:));
+OGSubgraphRef OGSubgraphCreate2(OGGraphRef cf_graph, OGAttribute attribute) OG_SWIFT_NAME(OGSubgraphRef.init(graph:attribute:));
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
@@ -37,11 +37,11 @@ _Nullable OGSubgraphRef OGSubgraphGetCurrent(void) OG_SWIFT_NAME(getter:OGSubgra
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-void OGSubgraphSetCurrent(OGSubgraphRef cf_subgraph) OG_SWIFT_NAME(setter:OGSubgraphRef.current(_:));
+void OGSubgraphSetCurrent(_Nullable OGSubgraphRef cf_subgraph) OG_SWIFT_NAME(setter:OGSubgraphRef.current(_:));
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-OGGraphContextRef OGSubgraphGetCurrentGraphContext();
+_Nullable OGGraphContextRef OGSubgraphGetCurrentGraphContext(void) OG_SWIFT_NAME(getter:OGSubgraphRef.currentGraphContext());
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT

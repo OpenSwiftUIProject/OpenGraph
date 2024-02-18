@@ -22,7 +22,8 @@ jobs:
           swift-version: wasm-${{ matrix.swift_version }}-RELEASE
       - name: build
         run: |
-          swift build
-      - name: test
-        run: |
-          swift test
+          swift build --triple wasm32-unknown-wasi
+      # Blocked by upstream support for WASM. See https://github.com/apple/swift-testing/issues/228
+      # - name: test
+        # run: |
+          # swift test --triple wasm32-unknown-wasi

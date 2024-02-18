@@ -25,11 +25,11 @@ CFTypeID AGSubgraphGetTypeID();
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
-AGSubgraphRef AGSubgraphCreate(_Nullable AGGraphRef cf_graph) AG_SWIFT_NAME(AGSubgraphRef.init(_:));
+AGSubgraphRef AGSubgraphCreate(AGGraphRef cf_graph) AG_SWIFT_NAME(AGSubgraphRef.init(graph:));
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
-AGSubgraphRef AGSubgraphCreate2(_Nullable AGGraphRef cf_graph, AGAttribute attribute) AG_SWIFT_NAME(AGSubgraphRef.init(_:attribute:));
+AGSubgraphRef AGSubgraphCreate2(AGGraphRef cf_graph, AGAttribute attribute) AG_SWIFT_NAME(AGSubgraphRef.init(graph:attribute:));
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
@@ -37,11 +37,11 @@ _Nullable AGSubgraphRef AGSubgraphGetCurrent(void) AG_SWIFT_NAME(getter:AGSubgra
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
-void AGSubgraphSetCurrent(AGSubgraphRef cf_subgraph) AG_SWIFT_NAME(setter:AGSubgraphRef.current(_:));
+void AGSubgraphSetCurrent(_Nullable AGSubgraphRef cf_subgraph) AG_SWIFT_NAME(setter:AGSubgraphRef.current(_:));
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
-AGGraphContextRef AGSubgraphGetCurrentGraphContext();
+_Nullable AGGraphContextRef AGSubgraphGetCurrentGraphContext(void) AG_SWIFT_NAME(getter:AGSubgraphRef.currentGraphContext());
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT

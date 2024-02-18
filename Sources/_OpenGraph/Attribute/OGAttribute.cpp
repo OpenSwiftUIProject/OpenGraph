@@ -79,3 +79,8 @@ OGAttribute OGGraphGetIndirectDependency(OGAttribute attribute) {
 void OGGraphSetIndirectDependency(OGAttribute attribute1, OGAttribute attribute2) {
     // TODO
 }
+
+OGAttribute OGGraphCreateAttribute(long index, const void *body, const void * value) {
+    // TODO
+    return OGAttributeNil;
+}

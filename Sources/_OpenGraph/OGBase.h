@@ -49,6 +49,9 @@
 #ifndef TARGET_OS_DARWIN
 #define TARGET_OS_DARWIN TARGET_OS_MAC
 #endif
+#ifndef TARGET_CPU_WASM32
+#define TARGET_CPU_WASM32 0
+#endif
 #else
 #include <CoreFoundation/TargetConditionals.h>
 #endif

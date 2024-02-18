@@ -5,16 +5,22 @@
 //  Created by Kyle on 2024/2/16.
 //
 
-import XCTest
+import Testing
 
-final class ExternalTests: XCTestCase {
-    func testExample() throws {
+// *** Program crashed: Bad pointer dereference at 0x0000000ffff9400a ***
+// swift-testing framework will crash here on Linux
+// Report to upstream for investigation when we bump to 5.10
+#if canImport(Darwin)
+final class ExternalTests: AttributeTestBase {
+    @Test
+    func example() throws {
         let type = External<Int>.self
-        #if OPENGRAPH_COMPATIBILITY_TEST
-        let externalInt = type.init()
-        XCTAssertEqual(externalInt.description, "External<Int>")
-        #endif
-        XCTAssertEqual(type.comparisonMode.rawValue, 3)
-        XCTAssertEqual(type.flags.rawValue, 0)
+        if compatibilityTestEnabled {
+            let externalInt = type.init()
+            #expect(externalInt.description == "External<Int>")
+        }
+        #expect(type.comparisonMode == ._3)
+        #expect(type.flags == [])
     }
 }
+#endif

@@ -15,7 +15,12 @@ OGGraphRef OGGraphCreate() {
 
 OGGraphRef OGGraphCreateShared(OGGraphRef storage) {
     const CFIndex extraSize = sizeof(OGGraphStorage)-sizeof(CFRuntimeBase);
+    #if TARGET_CPU_WASM32
+    // FIXME: extraSize will be 8 on WASM. Investate later.
+    static_assert(extraSize == 0x8);
+    #else
     static_assert(extraSize == 0x10/*0x50*/);
+    #endif
     OGGraphRef instance = (OGGraphRef)_CFRuntimeCreateInstance(kCFAllocatorDefault, OGGraphGetTypeID(), extraSize, nullptr);
     if (instance == nullptr) {
         OG::precondition_failure("memory allocation failure.");
