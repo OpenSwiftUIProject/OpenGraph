@@ -27,7 +27,6 @@ struct DebugServerTests {
         let url = try #require(OGDebugServer.copyURL())
         let urlString = (url.takeRetainedValue() as URL).absoluteString
         #expect(urlString.hasPrefix("graph://"))
-        OGDebugServer.run(timeout: 1)
     }
 }
 #endif
