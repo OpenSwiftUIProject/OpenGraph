@@ -7,7 +7,7 @@
 
 import XCTest
 
-final class FocusTests: XCTestCase {
+final class FocusTests: AttributeTestCase {
     struct Demo {
         var a: Int
         var b: Double

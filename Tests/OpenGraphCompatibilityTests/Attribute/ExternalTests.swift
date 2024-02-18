@@ -7,7 +7,7 @@
 
 import XCTest
 
-final class ExternalTests: XCTestCase {
+final class ExternalTests: AttributeTestCase {
     func testExample() throws {
         let type = External<Int>.self
         #if OPENGRAPH_COMPATIBILITY_TEST

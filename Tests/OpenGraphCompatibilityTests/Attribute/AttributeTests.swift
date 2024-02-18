@@ -7,6 +7,10 @@
 
 import XCTest
 
-final class AttributeTests: XCTestCase {
-    func testExample() throws {}
+final class AttributeTests: AttributeTestCase {
+
+    func testInitWithValue() throws {
+        let intAttribute = Attribute(value: 0)
+        XCTAssertEqual(intAttribute.value, 0)
+    }
 }

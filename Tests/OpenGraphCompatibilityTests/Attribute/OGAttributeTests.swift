@@ -7,7 +7,7 @@
 
 import XCTest
 
-final class OGAttributeTests: XCTestCase {
+final class OGAttributeTests: AttributeTestCase {
     func testNil() throws {
         let attributeNil = OGAttribute.nil
         XCTAssertEqual(attributeNil.rawValue, 2)
@@ -38,19 +38,32 @@ final class OGAttributeTests: XCTestCase {
         #endif
     }
     
-    // TODO: Add OGAttribute init
-    func testSetFlags() throws {}
+    func testSetFlags() throws {
+        let attribute = OGAttribute(Attribute(value: 0))
+        XCTAssertEqual(attribute.flags, [])
+        
+        // Test mask = []
+        attribute.flags = []
+        
+        attribute.setFlags([._1], mask: [])
+        XCTAssertEqual(attribute.flags, [])
+        
+        attribute.setFlags([._2], mask: [])
+        XCTAssertEqual(attribute.flags, [])
+
+        attribute.setFlags([._1, ._4], mask: [])
+        XCTAssertEqual(attribute.flags, [])
+    }
     
     func testVisitBody() {
-        // FIXME: attribute is invalid here.
-//        struct Visitor: AttributeBodyVisitor {
-//            func visit<Body>(body: UnsafePointer<Body>) where Body : _AttributeBody {
-//                print("Visit")
-//            }
-//        }
-//        let attribute = OGAttribute.nil
-//        var visitor = Visitor()
-//        attribute.visitBody(&visitor)
+        struct Visitor: AttributeBodyVisitor {
+            func visit<Body>(body: UnsafePointer<Body>) where Body : _AttributeBody {
+                print("Visit")
+            }
+        }
+        let attribute = OGAttribute(Attribute(value: 0))
+        var visitor = Visitor()
+        attribute.visitBody(&visitor)
     }
     #endif
 }
