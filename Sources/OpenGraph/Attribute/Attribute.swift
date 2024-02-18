@@ -40,6 +40,11 @@ public struct Attribute<Value> {
         flags: OGAttributeTypeFlags,
         update: AttributeUpdateBlock
     ) {
+        #if os(WASI)
+        // This is a compiler issue and SwiftWasm toolchain enable the assertation
+        // See https://github.com/swiftwasm/swift/issues/5569
+        fatalError("Swift 5.9.1 Compiler issue - type mismatch of Unmanaged<OGGraphContext> and OGGraphContext")
+        #else
         guard let context = OGSubgraph.currentGraphContext else {
             fatalError("attempting to create attribute with no subgraph: \(Value.self)")
         }
@@ -51,6 +56,7 @@ public struct Attribute<Value> {
             update: update
         )
         identifier = __OGGraphCreateAttribute(index, body, value)
+        #endif
     }
     
     // MARK: - @propertyWrapper
