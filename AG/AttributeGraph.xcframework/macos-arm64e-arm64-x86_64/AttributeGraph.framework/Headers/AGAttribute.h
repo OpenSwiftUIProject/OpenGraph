@@ -15,6 +15,8 @@
 #include "AGAttributeInfo.h"
 #include "AGTypeID.h"
 
+AG_ASSUME_NONNULL_BEGIN
+
 typedef uint32_t AGAttribute __attribute((swift_newtype(struct)));
 
 AG_EXTERN_C_BEGIN
@@ -62,6 +64,12 @@ AG_EXPORT
 AG_REFINED_FOR_SWIFT
 void AGGraphSetIndirectDependency(AGAttribute attribute1, AGAttribute attribute2);
 
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+AGAttribute AGGraphCreateAttribute(long index, const void *body, const void * _Nullable value);
+
 AG_EXTERN_C_END
+
+AG_ASSUME_NONNULL_END
 
 #endif /* AGAttribute_h */

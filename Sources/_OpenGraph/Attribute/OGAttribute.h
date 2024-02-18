@@ -14,6 +14,8 @@
 #include "OGAttributeInfo.h"
 #include "OGTypeID.h"
 
+OG_ASSUME_NONNULL_BEGIN
+
 typedef uint32_t OGAttribute __attribute((swift_newtype(struct)));
 
 OG_EXTERN_C_BEGIN
@@ -61,7 +63,13 @@ OG_EXPORT
 OG_REFINED_FOR_SWIFT
 void OGGraphSetIndirectDependency(OGAttribute attribute1, OGAttribute attribute2);
 
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+OGAttribute OGGraphCreateAttribute(long index, const void *body, const void * _Nullable value);
+
 OG_EXTERN_C_END
+
+OG_ASSUME_NONNULL_END
 
 #endif /* OGAttribute_h */
 

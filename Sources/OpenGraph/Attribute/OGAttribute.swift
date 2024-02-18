@@ -83,3 +83,5 @@ extension OGAttribute: CustomStringConvertible {
     @inlinable
     public var description: String { "#\(rawValue)" }
 }
+
+public typealias AttributeUpdateBlock = () -> ((UnsafeMutableRawPointer, OGAttribute) -> Void)

@@ -33,19 +33,24 @@ public struct Attribute<Value> {
             }
         }
     }
-        
-    public typealias UpdateBlock = () -> ((UnsafeMutableRawPointer, OGAttribute) -> Void)
 
     public init<Body: _AttributeBody>(
         body: UnsafePointer<Body>,
         value: UnsafePointer<Value>?,
         flags: OGAttributeTypeFlags,
-        update: UpdateBlock
+        update: AttributeUpdateBlock
     ) {
-        guard let _ = OGSubgraph.currentGraphContext else {
+        guard let context = OGSubgraph.currentGraphContext else {
             fatalError("attempting to create attribute with no subgraph: \(Value.self)")
         }
-        fatalError("WIP")
+        let index = OGGraph.typeIndex(
+            ctx: context,
+            body: Body.self,
+            valueType: OGTypeID(Value.self),
+            flags: flags,
+            update: update
+        )
+        identifier = __OGGraphCreateAttribute(index, body, value)
     }
     
     // MARK: - @propertyWrapper
