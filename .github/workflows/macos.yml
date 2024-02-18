@@ -30,6 +30,7 @@ jobs:
         run: |
           swift test \
             -c debug \
+            -Xswiftc -warnings-as-errors \
             --enable-code-coverage \
             --build-path .build-test-debug
           xcrun llvm-cov show \
@@ -40,6 +41,7 @@ jobs:
         run: |
           swift test \
             -c release \
+            -Xswiftc -warnings-as-errors \
             --enable-code-coverage \
             --build-path .build-test-release
       - uses: codecov/codecov-action@v3
