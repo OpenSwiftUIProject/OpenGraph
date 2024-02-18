@@ -4,9 +4,27 @@
 import Foundation
 import PackageDescription
 
-let sharedSwiftSettings: [SwiftSetting] = [
-//    .interoperabilityMode(.Cxx),
-]
+func envEnable(_ key: String, default defaultValue: Bool = false) -> Bool {
+    guard let value = Context.environment[key] else {
+        return defaultValue
+    }
+    if value == "1" {
+        return true
+    } else if value == "0" {
+        return false
+    } else {
+        return defaultValue
+    }
+}
+
+let isXcodeEnv = Context.environment["__CFBundleIdentifier"] == "com.apple.dt.Xcode"
+
+var sharedSwiftSettings: [SwiftSetting] = []
+
+let warningsAsErrorsCondition = envEnable("OPENGRAPH_WERROR", default: isXcodeEnv)
+if warningsAsErrorsCondition {
+    sharedSwiftSettings.append(.unsafeFlags(["-warnings-as-errors"]))
+}
 
 let openGraphShimsTarget = Target.target(
     name: "OpenGraphShims",
@@ -81,19 +99,6 @@ let package = Package(
     ],
     cxxLanguageStandard: .cxx17
 )
-
-func envEnable(_ key: String, default defaultValue: Bool = false) -> Bool {
-    guard let value = Context.environment[key] else {
-        return defaultValue
-    }
-    if value == "1" {
-        return true
-    } else if value == "0" {
-        return false
-    } else {
-        return defaultValue
-    }
-}
 
 #if os(macOS)
 // FIXME: Enable it by default will cause non-iOS/macOS Apple OS build fail currently.
