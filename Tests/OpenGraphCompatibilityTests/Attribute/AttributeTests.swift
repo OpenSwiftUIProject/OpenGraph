@@ -7,6 +7,7 @@
 
 import Testing
 
+#if canImport(Darwin)
 @Suite(.disabled(if: !compatibilityTestEnabled, "Attribute is not implemented"))
 final class AttributeTests: AttributeTestBase {
     @Test
@@ -23,3 +24,4 @@ final class AttributeTests: AttributeTestBase {
         #expect(a.hashValue == b.hashValue)
     }
 }
+#endif
