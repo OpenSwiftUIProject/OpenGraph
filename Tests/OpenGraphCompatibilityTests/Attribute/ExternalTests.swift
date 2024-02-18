@@ -11,6 +11,7 @@ import Testing
 // swift-testing framework will crash here on Linux
 // Report to upstream for investigation when we bump to 5.10
 #if canImport(Darwin)
+@Suite(.disabled(if: !compatibilityTestEnabled, "Attribute is not implemented"))
 final class ExternalTests: AttributeTestBase {
     @Test
     func example() throws {

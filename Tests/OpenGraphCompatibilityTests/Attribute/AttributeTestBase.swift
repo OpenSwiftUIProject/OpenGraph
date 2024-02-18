@@ -13,7 +13,6 @@ class AttributeTestBase {
     private var graph: OGGraph
     private var subgraph: OGSubgraph
     
-    
     init() {
         graph = OGGraph(shared: Self.sharedGraph)
         subgraph = OGSubgraph(graph: graph)
