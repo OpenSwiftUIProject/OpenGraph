@@ -5,16 +5,18 @@
 //  Created by Kyle on 2024/2/16.
 //
 
-import XCTest
+import Testing
 
-final class ExternalTests: AttributeTestCase {
-    func testExample() throws {
+final class ExternalTests: AttributeTestBase {
+    @Test
+    func example() throws {
         let type = External<Int>.self
-        #if OPENGRAPH_COMPATIBILITY_TEST
-        let externalInt = type.init()
-        XCTAssertEqual(externalInt.description, "External<Int>")
-        #endif
-        XCTAssertEqual(type.comparisonMode.rawValue, 3)
-        XCTAssertEqual(type.flags.rawValue, 0)
+        if compatibilityTestEnabled {
+            let externalInt = type.init()
+            #expect(externalInt.description == "External<Int>")
+        }
+        #expect(type.comparisonMode == ._3)
+        #expect(type.flags == [])
+        
     }
 }

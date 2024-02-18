@@ -5,12 +5,14 @@
 //  Created by Kyle on 2024/2/16.
 //
 
-import XCTest
+import Testing
 
-final class OGAttributeTests: AttributeTestCase {
-    func testNil() throws {
+@Suite(.disabled(if: !compatibilityTestEnabled, "Attribute is not implemented"))
+final class OGAttributeTests: AttributeTestBase {
+    @Test
+    func constantValue() throws {
         let attributeNil = OGAttribute.nil
-        XCTAssertEqual(attributeNil.rawValue, 2)
+        #expect(attributeNil.rawValue == 2)
     }
 
     // FIXME: Strange compile issue on non-ObjectiveC platform
@@ -19,51 +21,78 @@ final class OGAttributeTests: AttributeTestCase {
     // (associated_type_decl "_ObjectiveCType" access=public overridden=)
     // Please submit a bug report (https://swift.org/contributing/#reporting-bugs) and include the crash backtrace.
     #if canImport(ObjectiveC)
-    func testDescription() throws {
+    @Test
+    func description() throws {
         let attribute = OGAttribute(rawValue: 0)
-        XCTAssertEqual(attribute.description, "#0")
+        #expect(attribute.description == "#0")
         
         let attributeNil = OGAttribute.nil
-        XCTAssertEqual(attributeNil.description, "#2")
+        #expect(attributeNil.description == "#2")
     }
     
-    func testCurrent() {
-        #if OPENGRAPH_COMPATIBILITY_TEST
-        // The value will not be nil if we run this test case seperately.
-        // The value will be nil if we run the whole CompatibilityTests.
-        // We need more knowledge to write the test case here.
-        // XCTAssertNotNil(OGAttribute.current)
-        #else
-        XCTAssertNil(OGAttribute.current)
-        #endif
+    @Test
+    func current() {
+        if compatibilityTestEnabled {
+            // The value will not be nil if we run this test case seperately.
+            // The value will be nil if we run the whole CompatibilityTests.
+            // We need more knowledge to write the test case here.
+            // #expect(OGAttribute.current != nil)
+        } else {
+            #expect(OGAttribute.current == nil)
+        }
     }
     
-    func testSetFlags() throws {
+    @Test
+    func setFlags() throws {
         let attribute = OGAttribute(Attribute(value: 0))
-        XCTAssertEqual(attribute.flags, [])
+        #expect(attribute.flags == [])
         
         // Test mask = []
         attribute.flags = []
         
         attribute.setFlags([._1], mask: [])
-        XCTAssertEqual(attribute.flags, [])
+        #expect(attribute.flags == [])
         
         attribute.setFlags([._2], mask: [])
-        XCTAssertEqual(attribute.flags, [])
-
+        #expect(attribute.flags == [])
+        
         attribute.setFlags([._1, ._4], mask: [])
-        XCTAssertEqual(attribute.flags, [])
+        #expect(attribute.flags == [])
+    
+        // Test mask
+        attribute.flags = []
+        attribute.setFlags([._1], mask: [._1])
+        #expect(attribute.flags == [._1])
+        
+        attribute.setFlags([._2], mask: [._2])
+        #expect(attribute.flags == [._1, ._2])
+        
+        attribute.setFlags([._4], mask: [._1])
+        #expect(attribute.flags == [._2])
+        
+        attribute.setFlags([._1, ._4], mask: [._1, ._2, ._4])
+        #expect(attribute.flags == [._1, ._4])
     }
     
-    func testVisitBody() {
+    @Test
+    func visitBody() async {
         struct Visitor: AttributeBodyVisitor {
             func visit<Body>(body: UnsafePointer<Body>) where Body : _AttributeBody {
-                print("Visit")
+                guard let confirm = body.pointee as? Confirmation else {
+                    Issue.record()
+                    return
+                }
+                confirm()
             }
         }
-        let attribute = OGAttribute(Attribute(value: 0))
-        var visitor = Visitor()
-        attribute.visitBody(&visitor)
+        
+        await withKnownIssue("Fetch Confirmation value from the body pointer") {
+            await confirmation("Visit Body", expectedCount: 1) { confirm in
+                let attribute = OGAttribute(Attribute(value: confirm))
+                var visitor = Visitor()
+                attribute.visitBody(&visitor)
+            }
+        }
     }
     #endif
 }

@@ -5,11 +5,12 @@
 //  Created by Kyle on 2023/10/9.
 //
 
-import XCTest
+import Testing
 
-final class UniqueIDTests: XCTestCase {
-    func testUniqueID() throws {
+struct UniqueIDTests {
+    @Test
+    func uniqueID() throws {
         let initialID = makeUniqueID()
-        XCTAssertEqual(makeUniqueID(), initialID + 1)
+        #expect(makeUniqueID() == initialID + 1)
     }
 }

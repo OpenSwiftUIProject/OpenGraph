@@ -18,6 +18,7 @@ let openGraphTestTarget = Target.testTarget(
     dependencies: [
         "OpenGraph",
     ],
+    exclude: ["README.md"],
     swiftSettings: sharedSwiftSettings
 )
 let openGraphCompatibilityTestTarget = Target.testTarget(
@@ -73,8 +74,6 @@ let package = Package(
             )
         ),
         openGraphShimsTarget,
-        openGraphTestTarget,
-        openGraphCompatibilityTestTarget,
     ],
     cxxLanguageStandard: .cxx17
 )
@@ -113,6 +112,22 @@ if attributeGraphCondition {
     openGraphShimsTarget.dependencies.append("OpenGraph")
 }
 
+// Remove this when swift-testing is 1.0.0
+let swiftTestingCondition = envEnable("OPENGRAPH_SWIFT_TESTING", default: true)
+if swiftTestingCondition {
+    package.dependencies.append(
+        .package(url: "https://github.com/apple/swift-testing", from: "0.3.0")
+    )
+    openGraphTestTarget.dependencies.append(
+        .product(name: "Testing", package: "swift-testing")
+    )
+    package.targets.append(openGraphTestTarget)
+    openGraphCompatibilityTestTarget.dependencies.append(
+        .product(name: "Testing", package: "swift-testing")
+    )
+    package.targets.append(openGraphCompatibilityTestTarget)
+}
+
 let compatibilityTestCondition = envEnable("OPENGRAPH_COMPATIBILITY_TEST")
 if compatibilityTestCondition && attributeGraphCondition {
     openGraphCompatibilityTestTarget.dependencies.append("AttributeGraph")
@@ -121,20 +136,6 @@ if compatibilityTestCondition && attributeGraphCondition {
     openGraphCompatibilityTestTarget.swiftSettings = swiftSettings
 } else {
     openGraphCompatibilityTestTarget.dependencies.append("OpenGraph")
-}
-
-// Remove this when swift-testing is 1.0.0
-let swiftTestingCondition = envEnable("OPENGRAPH_SWIFT_TESTING")
-if swiftTestingCondition {
-    package.dependencies.append(
-        .package(url: "https://github.com/apple/swift-testing", from: "0.2.0")
-    )
-    openGraphTestTarget.dependencies.append(
-        .product(name: "Testing", package: "swift-testing")
-    )
-    var swiftSettings: [SwiftSetting] = (openGraphTestTarget.swiftSettings ?? [])
-    swiftSettings.append(.define("OPENGRAPH_SWIFT_TESTING"))
-    openGraphTestTarget.swiftSettings = swiftSettings
 }
 
 extension [Platform] {

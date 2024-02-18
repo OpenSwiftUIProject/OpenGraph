@@ -26,6 +26,9 @@ public typealias OGTypeApplyOptions = AGTypeApplyOptions
 public typealias OGTypeKind = AGTypeKind
 public typealias OGTypeID = AGTypeID
 public typealias OGUniqueID = AGUniqueID
+
+let compatibilityTestEnabled = true
 #else
 @_exported import OpenGraph
+let compatibilityTestEnabled = false
 #endif

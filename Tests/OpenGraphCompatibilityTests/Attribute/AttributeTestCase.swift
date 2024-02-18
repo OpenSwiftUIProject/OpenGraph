@@ -5,25 +5,22 @@
 //  Created by Kyle on 2024/2/18.
 //
 
-import XCTest
+import Testing
 
 /// Base class for Attribute Related test case
-class AttributeTestCase: XCTestCase {
+class AttributeTestBase {
     private static let sharedGraph = OGGraph()
-    private static var graph: OGGraph!
-    private static var subgraph: OGSubgraph!
+    private var graph: OGGraph
+    private var subgraph: OGSubgraph
     
-    override class func setUp() {
-        let sharedGraph = OGGraph()
-        let graph = OGGraph(shared: sharedGraph)
-        let subgraph = OGSubgraph(graph: graph)
+    
+    init() {
+        graph = OGGraph(shared: Self.sharedGraph)
+        subgraph = OGSubgraph(graph: graph)
         OGSubgraph.current = subgraph
-        
-        self.graph = graph
-        self.subgraph = subgraph
     }
     
-    override class func tearDown() {
+    deinit {
         OGSubgraph.current = nil
     }
 }
