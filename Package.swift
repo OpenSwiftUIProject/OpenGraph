@@ -120,7 +120,8 @@ if attributeGraphCondition {
 let swiftTestingCondition = envEnable("OPENGRAPH_SWIFT_TESTING", default: true)
 if swiftTestingCondition {
     package.dependencies.append(
-        .package(url: "https://github.com/apple/swift-testing", from: "0.3.0")
+        // Fix it to be 0.3.0 before we bump to Swift 5.10
+        .package(url: "https://github.com/apple/swift-testing", exact: "0.3.0")
     )
     openGraphTestTarget.dependencies.append(
         .product(name: "Testing", package: "swift-testing")
