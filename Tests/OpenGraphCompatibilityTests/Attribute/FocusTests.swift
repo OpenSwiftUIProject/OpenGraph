@@ -7,6 +7,7 @@
 
 import Testing
 
+#if canImport(Darwin)
 @Suite(.disabled(if: !compatibilityTestEnabled, "Attribute is not implemented"))
 final class FocusTests: AttributeTestBase {
     struct Demo {
@@ -25,3 +26,4 @@ final class FocusTests: AttributeTestBase {
         #expect(type.flags == [])
     }
 }
+#endif

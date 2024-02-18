@@ -62,7 +62,11 @@ public struct Attribute<Value> {
 	public func addInput<V>(_ attribute: AttributeGraph.Attribute<V>, options: AGInputOptions, token: Int)
 }
 
-extension AttributeGraph.Attribute: Swift.Hashable {}
+extension AttributeGraph.Attribute: Swift.Hashable {
+    public static func == (lhs: AttributeGraph.Attribute<Value>, rhs: AttributeGraph.Attribute<Value>) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int { get }
+}
 
 extension AttributeGraph.Attribute: Swift.CustomStringConvertible {
 	public var description: String { get }
