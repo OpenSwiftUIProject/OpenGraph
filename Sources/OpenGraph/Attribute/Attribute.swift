@@ -70,7 +70,10 @@ public struct Attribute<Value> {
         set { _ = setValue(newValue) }
     }
     
-    public var projectValue: Attribute<Value> { fatalError() }
+    public var projectedValue: Attribute<Value> {
+        get { Attribute(identifier: identifier) }
+        _modify { yield &self }
+    }
 
     // MARK: - @dynamicMemberLookup
     

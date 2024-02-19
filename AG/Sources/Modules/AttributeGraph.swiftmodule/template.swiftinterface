@@ -46,7 +46,7 @@ public struct Attribute<Value> {
 	public init<Body: _AttributeBody>(body: Swift.UnsafePointer<Body>, value: Swift.UnsafePointer<Value>?, flags: AGAttributeTypeFlags, update: AttributeUpdateBlock)
 
 	public var wrappedValue: Value { unsafeAddress set }
-	public var projectValue: AttributeGraph.Attribute<Value> { get }
+	public var projectedValue: AttributeGraph.Attribute<Value> { get _modify }
   
     public subscript<Member>(dynamicMember _: Swift.KeyPath<Value, Member>) -> AttributeGraph.Attribute<Member> {
         get
