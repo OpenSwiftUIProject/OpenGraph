@@ -84,3 +84,13 @@ OGAttribute OGGraphCreateAttribute(long index, const void *body, const void * va
     // TODO
     return OGAttributeNil;
 }
+
+OGValue OGGraphGetValue(OGAttribute attribute, OGValueOptions options, OGTypeID type) {
+    // TODO
+    return OGValue { nullptr, false };
+}
+
+bool OGGraphSetValue(OGAttribute attribute, const void *value, OGTypeID type) {
+    // TODO
+    return false;
+}

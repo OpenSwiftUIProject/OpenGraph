@@ -60,12 +60,20 @@ public struct Attribute<Value> {
     }
     
     // MARK: - @propertyWrapper
+        
+    public var wrappedValue: Value {
+        unsafeAddress {
+            __OGGraphGetValue(identifier, [], OGTypeID(Value.self))
+                .value
+                .assumingMemoryBound(to: Value.self)
+        }
+        set { _ = setValue(newValue) }
+    }
     
-    // TODO:
-    
-    public var wrappedValue: Value { fatalError() }
-    
-    public var projectValue: Attribute<Value> { fatalError() }
+    public var projectedValue: Attribute<Value> {
+        get { Attribute(identifier: identifier) }
+        _modify { yield &self }
+    }
 
     // MARK: - @dynamicMemberLookup
     
@@ -78,13 +86,37 @@ public struct Attribute<Value> {
     public subscript<Member>(_: KeyPath<Value, Member>) -> Attribute<Member> {
         fatalError()
     }
+        
+    public subscript<Member>(offset: (inout Value) -> PointerOffset<Value, Member>) -> Attribute<Member> {
+        fatalError()
+    }
     
-    // MARK: - Other
+    // MARK: - Value
     
     public var value: Value {
-        get { wrappedValue }
-        set { fatalError("TODO") }
+        unsafeAddress {
+            __OGGraphGetValue(identifier, [], OGTypeID(Value.self))
+                .value
+                .assumingMemoryBound(to: Value.self)
+        }
+        set { _ = setValue(newValue) }
     }
+    
+    public func changedValue(options: OGValueOptions) -> (value: Value, changed: Bool) {
+        let value = __OGGraphGetValue(identifier, options, OGTypeID(Value.self))
+        return (
+            value.value.assumingMemoryBound(to: Value.self).pointee ,
+            value.changed
+        )
+    }
+    
+    public func setValue(_ value: Value) -> Bool {
+        withUnsafePointer(to: value) { valuePointer in
+            __OGGraphSetValue(identifier, valuePointer, OGTypeID(Value.self))
+        }
+    }
+
+    // MARK: - Input
     
     public func addInput(_ attribute: OGAttribute, options: OGInputOptions, token: Int) {
         __OGGraphAddInput(self.identifier, attribute, options, token)

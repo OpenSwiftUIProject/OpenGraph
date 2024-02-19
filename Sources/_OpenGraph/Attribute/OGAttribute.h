@@ -13,6 +13,8 @@
 #include "OGInputOptions.h"
 #include "OGAttributeInfo.h"
 #include "OGTypeID.h"
+#include "OGValue.h"
+#include "OGValueOptions.h"
 
 OG_ASSUME_NONNULL_BEGIN
 
@@ -66,6 +68,14 @@ void OGGraphSetIndirectDependency(OGAttribute attribute1, OGAttribute attribute2
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
 OGAttribute OGGraphCreateAttribute(long index, const void *body, const void * _Nullable value);
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+OGValue OGGraphGetValue(OGAttribute attribute, OGValueOptions options, OGTypeID type);
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+bool OGGraphSetValue(OGAttribute attribute, const void *value, OGTypeID type);
 
 OG_EXTERN_C_END
 
