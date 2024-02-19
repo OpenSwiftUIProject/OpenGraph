@@ -29,13 +29,13 @@ jobs:
       - name: Build in debug mode on iOS
         run: |
           xcodebuild build \
-            -verbose \
             -scheme OpenGraph-Package \
             -configuration Debug \
             -destination "platform=iOS" \
-            -enableCodeCoverage=YES \
-            -derivedDataPath .build-debug \
-            OTHER_SWIFT_FLAGS="-warnings-as-errors" 
+            -skipMacroValidation \
+            -skipPackagePluginValidation \
+            -derivedDataPath .build-debug
+        # Disable OTHER_SWIFT_FLAGS="-warnings-as-errors" due to remote dependency warning will be treated as error in xcodebuild
       - name: Build and run tests in debug mode with coverage on iOS Simulator
         run: |
           xcodebuild test \
@@ -44,7 +44,8 @@ jobs:
             -destination "platform=iOS-Simulator" \
             -enableCodeCoverage=YES \
             -derivedDataPath .build-test-debug \
-            OTHER_SWIFT_FLAGS="-warnings-as-errors"
+            -skipPackagePluginValidation \
+            -skipMacroValidation
           profdata_file_path=$(find . -path "*.build-test-debug/Build/ProfileData*Coverage.profdata" -type f)
           xcrun llvm-cov show \
             -instr-profile=$profdata_file_path \
