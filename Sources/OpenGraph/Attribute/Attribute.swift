@@ -86,6 +86,10 @@ public struct Attribute<Value> {
     public subscript<Member>(_: KeyPath<Value, Member>) -> Attribute<Member> {
         fatalError()
     }
+        
+    public subscript<Member>(offset: (inout Value) -> PointerOffset<Value, Member>) -> Attribute<Member> {
+        fatalError()
+    }
     
     // MARK: - Value
     

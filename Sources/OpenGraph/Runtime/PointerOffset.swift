@@ -4,7 +4,7 @@
 //
 //  Created by Kyle on 2024/2/19.
 //  Lastest Version: iOS 15.5
-//  Status: WIP
+//  Status: Complete
 
 @frozen
 public struct PointerOffset<Base, Member> {
@@ -43,4 +43,48 @@ extension PointerOffset {
 
 extension PointerOffset where Base == Member {
     public init() { byteOffset = 0 }
+}
+
+extension UnsafePointer {
+    public subscript<Member>(offset offset: PointerOffset<Pointee, Member>) -> Member {
+        unsafeAddress {
+            UnsafeRawPointer(self)
+                .advanced(by: offset.byteOffset)
+                .assumingMemoryBound(to: Member.self)
+        }
+    }
+    
+    public static func + <Member>(
+        _ lhs: UnsafePointer,
+        _ rhs: PointerOffset<Pointee, Member>
+    ) -> UnsafePointer<Member> {
+        UnsafeRawPointer(lhs)
+            .advanced(by: rhs.byteOffset)
+            .assumingMemoryBound(to: Member.self)
+    }
+}
+
+extension UnsafeMutablePointer {
+    public subscript<Member>(offset offset: PointerOffset<Pointee, Member>) -> Member {
+        unsafeAddress {
+            UnsafeRawPointer(self)
+                .advanced(by: offset.byteOffset)
+                .assumingMemoryBound(to: Member.self)
+        }
+        
+        nonmutating unsafeMutableAddress {
+            UnsafeMutableRawPointer(self)
+                .advanced(by: offset.byteOffset)
+                .assumingMemoryBound(to: Member.self)
+        }
+    }
+    
+    public static func + <Member>(
+        _ lhs: UnsafeMutablePointer,
+        _ rhs: PointerOffset<Pointee, Member>
+    ) -> UnsafeMutablePointer<Member> {
+        UnsafeMutableRawPointer(lhs)
+            .advanced(by: rhs.byteOffset)
+            .assumingMemoryBound(to: Member.self)
+    }
 }

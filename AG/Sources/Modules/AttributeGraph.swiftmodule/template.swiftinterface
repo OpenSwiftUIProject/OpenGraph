@@ -216,16 +216,27 @@ public struct PointerOffset<Base, Member> {
 	public var byteOffset: Swift.Int
 	public init(byteOffset: Swift.Int)
 }
-extension AttributeGraph.PointerOffset where Base == Member {
-	public init()
-}
-
 extension AttributeGraph.PointerOffset {
 	public static func + <A>(_ lhs: AttributeGraph.PointerOffset<Base, A>, _ rhs: AttributeGraph.PointerOffset<A, Member>) -> AttributeGraph.PointerOffset<Base, Member>
 }
-
 extension AttributeGraph.PointerOffset {
 	public static func invalidScenePointer() -> Swift.UnsafeMutablePointer<Base>
 	public static func of(_ member: inout Member) -> AttributeGraph.PointerOffset<Base, Member>
 	public static func offset(_ body: (inout Base) -> AttributeGraph.PointerOffset<Base, Member>) -> PointerOffset<Base, Member>
+}
+extension AttributeGraph.PointerOffset where Base == Member {
+	public init()
+}
+extension Swift.UnsafePointer {
+	public subscript<Member>(offset offset: AttributeGraph.PointerOffset<Pointee, Member>) -> Member {
+		unsafeAddress
+	}
+	public static func + <Member>(_ lhs: Swift.UnsafePointer<Pointee>, _ rhs: AttributeGraph.PointerOffset<Pointee, Member>) -> Swift.UnsafePointer<Member>
+}
+extension Swift.UnsafeMutablePointer {
+	public subscript<Member>(offset offset: AttributeGraph.PointerOffset<Pointee, Member>) -> Member {
+		unsafeAddress
+		nonmutating unsafeMutableAddress
+	}
+	public static func + <Member>(_ lhs: Swift.UnsafeMutablePointer<Pointee>, _ rhs: AttributeGraph.PointerOffset<Pointee, Member>) -> Swift.UnsafeMutablePointer<Member>
 }

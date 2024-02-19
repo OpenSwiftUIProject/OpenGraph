@@ -8,41 +8,83 @@
 import Testing
 
 struct PointerOffsetTests {
-    struct PlainStruct {
-        var a = 4
-        var b = 5
+    struct Tuple<A, B> {
+        var first: A
+        var second: B
     }
-    
-    class PlainClass {
-        var a = 3
-        var b = PlainStruct()
-    }
-    
-    @Test
-    func basic() {
-        #expect(PointerOffset<PlainStruct, Int>(byteOffset: 8).byteOffset == 8)
-        #expect(PointerOffset<PlainStruct, PlainStruct>().byteOffset == 0)
-        let invalidPointer = PointerOffset<PlainStruct, Int>.invalidScenePointer()
-        #expect(invalidPointer == UnsafeMutablePointer(bitPattern: MemoryLayout<PlainStruct>.stride))
+
+    struct Triple<A, B, C> {
+        var first: A
+        var second: B
+        var third: C
     }
     
     @Test
-    func addLogic() {
-        let offset1 = PointerOffset<PlainClass, PlainStruct>(byteOffset: 8)
-        let offset2 = PointerOffset<PlainStruct, Int>(byteOffset: 8)
+    func basicInit() {
+        #expect(PointerOffset<Any, Any>(byteOffset: 8).byteOffset == 8)
+        #expect(PointerOffset<Int, Int>().byteOffset == 0)
+        let invalidPointer = PointerOffset<Tuple<Int, Int>, Int>.invalidScenePointer()
+        #expect(MemoryLayout<Tuple<Int, Int>>.stride == 16)
+        #expect(invalidPointer == UnsafeMutablePointer(bitPattern: MemoryLayout<Tuple<Int, Int>>.stride))
+    }
+    
+    @Test
+    func plusOperator() {
+        let offset1 = PointerOffset<Tuple<Int, Tuple<Int, Int>>, Tuple<Int, Int>>(byteOffset: 8)
+        let offset2 = PointerOffset<Tuple<Int, Int>, Int>(byteOffset: 8)
         let result = offset1 + offset2
         #expect(result.byteOffset == 16)
     }
     
     @Test(.disabled("TODO: Add appropriate PointerOffset.of and PointerOffset.offset test case"))
     func ofAndOffset() {
-        let pc = PlainClass()
-        let b = PointerOffset<PlainClass, PlainStruct>.of(&pc.b)
-        let c = PointerOffset<PlainStruct, Int>.of(&pc.b.b)
-        let d: PointerOffset<PlainClass, Int> = b + c
-        #expect(d.byteOffset == 16)
-        _ = PointerOffset<PlainClass, Int>.offset { _ in
-            .init(byteOffset: 0)
+        var tuple = Tuple(first: 1, second: 2)
+        _ = PointerOffset<Tuple<Int, Int>, Int>.of(&tuple.second)
+    }
+    
+    @Test
+    func unsafePointer() {
+        let tuple = Tuple(first: 1, second: 2.0)
+        withUnsafePointer(to: tuple) { pointer in
+            let first = pointer[offset: PointerOffset<Tuple<Int, Double>, Int>(byteOffset: 0)]
+            #expect(first == 1)
+            let second = pointer[offset: PointerOffset<Tuple<Int, Double>, Double>(byteOffset: 8)]
+            #expect(second == 2.0)
+        }
+        
+        let triple = Triple(first: 0, second: 1, third: 2)
+        withUnsafePointer(to: triple) { pointer in
+            let first = pointer + PointerOffset<Triple<Int, Int, Int>, Int>(byteOffset: 0)
+            #expect(first.pointee == 0)
+            let second = pointer + PointerOffset<Triple<Int, Int, Int>, Int>(byteOffset: 8)
+            #expect(second.pointee == 1)
+            let third = pointer + PointerOffset<Triple<Int, Int, Int>, Int>(byteOffset: 16)
+            #expect(third.pointee == 2)
+        }
+    }
+    
+    @Test
+    func unsafeMutablePointer() {
+        var tuple = Tuple(first: 1, second: 2.0)
+        withUnsafeMutablePointer(to: &tuple) { pointer in
+            let first = pointer[offset: PointerOffset<Tuple<Int, Double>, Int>(byteOffset: 0)]
+            #expect(first == 1)
+            let second = pointer[offset: PointerOffset<Tuple<Int, Double>, Double>(byteOffset: 8)]
+            #expect(second == 2.0)
+            
+            pointer[offset: PointerOffset<Tuple<Int, Double>, Int>(byteOffset: 0)] = 3
+            let newFirst = pointer[offset: PointerOffset<Tuple<Int, Double>, Int>(byteOffset: 0)]
+            #expect(newFirst == 3)
+        }
+        
+        var triple = Triple(first: 0, second: 1, third: 2)
+        withUnsafeMutablePointer(to: &triple) { pointer in
+            let first = pointer + PointerOffset<Triple<Int, Int, Int>, Int>(byteOffset: 0)
+            #expect(first.pointee == 0)
+            let second = pointer + PointerOffset<Triple<Int, Int, Int>, Int>(byteOffset: 8)
+            #expect(second.pointee == 1)
+            let third = pointer + PointerOffset<Triple<Int, Int, Int>, Int>(byteOffset: 16)
+            #expect(third.pointee == 2)
         }
     }
 }
