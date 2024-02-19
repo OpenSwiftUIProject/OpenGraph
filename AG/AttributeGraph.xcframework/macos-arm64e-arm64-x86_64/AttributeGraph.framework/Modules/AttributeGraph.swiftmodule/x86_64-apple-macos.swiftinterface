@@ -212,3 +212,24 @@ public func AGTypeApplyFields2(
     options: AGTypeApplyOptions,
     body: (UnsafePointer<Int8>, Int, Any.Type) -> Bool
 ) -> Bool
+
+// MARK: - PointerOffset
+
+@frozen
+public struct PointerOffset<Base, Member> {
+	public var byteOffset: Swift.Int
+	public init(byteOffset: Swift.Int)
+}
+extension AttributeGraph.PointerOffset where Base == Member {
+	public init()
+}
+
+extension AttributeGraph.PointerOffset {
+	public static func + <A>(_ lhs: AttributeGraph.PointerOffset<Base, A>, _ rhs: AttributeGraph.PointerOffset<A, Member>) -> AttributeGraph.PointerOffset<Base, Member>
+}
+
+extension AttributeGraph.PointerOffset {
+	public static func invalidScenePointer() -> Swift.UnsafeMutablePointer<Base>
+	public static func of(_ member: inout Member) -> AttributeGraph.PointerOffset<Base, Member>
+	public static func offset(_ body: (inout Base) -> AttributeGraph.PointerOffset<Base, Member>) -> PointerOffset<Base, Member>
+}
