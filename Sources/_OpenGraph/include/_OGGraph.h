@@ -31,6 +31,7 @@
 #include "OGTypeID.h"
 #include "OGTypeKind.h"
 #include "OGUniqueID.h"
+#include "OGValue.h"
 #include "OGValueOptions.h"
 
 #endif /* _OGGraph_h */

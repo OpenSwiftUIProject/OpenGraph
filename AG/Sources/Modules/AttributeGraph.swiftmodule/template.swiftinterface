@@ -56,10 +56,11 @@ public struct Attribute<Value> {
         get
     }
 
-    public var value: Value { get set }
-
 	public func addInput(_ attribute: AGAttribute, options: AGInputOptions, token: Swift.Int)
 	public func addInput<V>(_ attribute: AttributeGraph.Attribute<V>, options: AGInputOptions, token: Int)
+
+	public var value: Value { unsafeAddress set }
+	public func changedValue(options: AGValueOptions) -> (value: Value, changed: Bool)
 }
 
 extension AttributeGraph.Attribute: Swift.Hashable {

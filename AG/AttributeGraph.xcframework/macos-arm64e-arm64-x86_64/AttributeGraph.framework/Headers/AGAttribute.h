@@ -14,6 +14,8 @@
 #include "AGInputOptions.h"
 #include "AGAttributeInfo.h"
 #include "AGTypeID.h"
+#include "AGValue.h"
+#include "AGValueOptions.h"
 
 AG_ASSUME_NONNULL_BEGIN
 
@@ -67,6 +69,10 @@ void AGGraphSetIndirectDependency(AGAttribute attribute1, AGAttribute attribute2
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
 AGAttribute AGGraphCreateAttribute(long index, const void *body, const void * _Nullable value);
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+AGValue AGGraphGetValue(AGAttribute attribute, AGValueOptions options, AGTypeID type);
 
 AG_EXTERN_C_END
 

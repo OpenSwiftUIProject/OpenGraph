@@ -63,7 +63,9 @@ public struct Attribute<Value> {
         
     public var wrappedValue: Value {
         unsafeAddress {
-            fatalError("WIP")
+            __OGGraphGetValue(identifier, [], OGTypeID(Value.self))
+                .value
+                .assumingMemoryBound(to: Value.self)
         }
         set {
             fatalError("WIP")
@@ -84,12 +86,26 @@ public struct Attribute<Value> {
         fatalError()
     }
     
-    // MARK: - Other
+    // MARK: - Value
     
     public var value: Value {
-        get { wrappedValue }
+        unsafeAddress {
+            __OGGraphGetValue(identifier, [], OGTypeID(Value.self))
+                .value
+                .assumingMemoryBound(to: Value.self)
+        }
         set { fatalError("TODO") }
     }
+    
+    public func changedValue(options: OGValueOptions) -> (value: Value, changed: Bool) {
+        let value = __OGGraphGetValue(identifier, options, OGTypeID(Value.self))
+        return (
+            value.value.assumingMemoryBound(to: Value.self).pointee ,
+            value.changed
+        )
+    }
+    
+    // MARK: - Input
     
     public func addInput(_ attribute: OGAttribute, options: OGInputOptions, token: Int) {
         __OGGraphAddInput(self.identifier, attribute, options, token)
