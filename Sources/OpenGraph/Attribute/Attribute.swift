@@ -60,10 +60,15 @@ public struct Attribute<Value> {
     }
     
     // MARK: - @propertyWrapper
-    
-    // TODO:
-    
-    public var wrappedValue: Value { fatalError() }
+        
+    public var wrappedValue: Value {
+        unsafeAddress {
+            fatalError("WIP")
+        }
+        set {
+            fatalError("WIP")
+        }
+    }
     
     public var projectValue: Attribute<Value> { fatalError() }
 

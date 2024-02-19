@@ -28,6 +28,7 @@
 #include "AGTypeID.h"
 #include "AGTypeKind.h"
 #include "AGUniqueID.h"
+#include "AGValueOptions.h"
 
 FOUNDATION_EXPORT double AGAttributeVersionNumber;
 FOUNDATION_EXPORT const unsigned char AGAttributeVersionString[];

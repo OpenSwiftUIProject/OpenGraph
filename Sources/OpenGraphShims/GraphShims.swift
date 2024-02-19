@@ -26,6 +26,7 @@ public typealias OGTypeApplyOptions = AGTypeApplyOptions
 public typealias OGTypeKind = AGTypeKind
 public typealias OGTypeID = AGTypeID
 public typealias OGUniqueID = AGUniqueID
+public typealias OGValueOptions = AGValueOptions
 #else
 @_exported import OpenGraph
 #endif
