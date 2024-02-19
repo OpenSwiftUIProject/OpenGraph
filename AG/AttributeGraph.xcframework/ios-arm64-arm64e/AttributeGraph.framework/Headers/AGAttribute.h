@@ -74,6 +74,10 @@ AG_EXPORT
 AG_REFINED_FOR_SWIFT
 AGValue AGGraphGetValue(AGAttribute attribute, AGValueOptions options, AGTypeID type);
 
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+bool AGGraphSetValue(AGAttribute attribute, const void *value, AGTypeID type);
+
 AG_EXTERN_C_END
 
 AG_ASSUME_NONNULL_END

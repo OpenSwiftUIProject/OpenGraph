@@ -73,6 +73,10 @@ OG_EXPORT
 OG_REFINED_FOR_SWIFT
 OGValue OGGraphGetValue(OGAttribute attribute, OGValueOptions options, OGTypeID type);
 
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+bool OGGraphSetValue(OGAttribute attribute, const void *value, OGTypeID type);
+
 OG_EXTERN_C_END
 
 OG_ASSUME_NONNULL_END

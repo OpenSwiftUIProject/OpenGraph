@@ -67,9 +67,7 @@ public struct Attribute<Value> {
                 .value
                 .assumingMemoryBound(to: Value.self)
         }
-        set {
-            fatalError("WIP")
-        }
+        set { _ = setValue(newValue) }
     }
     
     public var projectValue: Attribute<Value> { fatalError() }
@@ -94,7 +92,7 @@ public struct Attribute<Value> {
                 .value
                 .assumingMemoryBound(to: Value.self)
         }
-        set { fatalError("TODO") }
+        set { _ = setValue(newValue) }
     }
     
     public func changedValue(options: OGValueOptions) -> (value: Value, changed: Bool) {
@@ -105,6 +103,12 @@ public struct Attribute<Value> {
         )
     }
     
+    public func setValue(_ value: Value) -> Bool {
+        withUnsafePointer(to: value) { valuePointer in
+            __OGGraphSetValue(identifier, valuePointer, OGTypeID(Value.self))
+        }
+    }
+
     // MARK: - Input
     
     public func addInput(_ attribute: OGAttribute, options: OGInputOptions, token: Int) {

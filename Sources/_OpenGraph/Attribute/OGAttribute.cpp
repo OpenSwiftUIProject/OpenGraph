@@ -89,3 +89,8 @@ OGValue OGGraphGetValue(OGAttribute attribute, OGValueOptions options, OGTypeID 
     // TODO
     return OGValue { nullptr, false };
 }
+
+bool OGGraphSetValue(OGAttribute attribute, const void *value, OGTypeID type) {
+    // TODO
+    return false;
+}
