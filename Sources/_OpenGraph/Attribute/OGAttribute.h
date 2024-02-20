@@ -9,12 +9,14 @@
 #define OGAttribute_h
 
 #include "OGBase.h"
-#include "OGAttributeFlags.h"
-#include "OGInputOptions.h"
 #include "OGAttributeInfo.h"
+#include "OGAttributeFlags.h"
+#include "OGGraph.h"
+#include "OGInputOptions.h"
 #include "OGTypeID.h"
 #include "OGValue.h"
 #include "OGValueOptions.h"
+#include "OGValueState.h"
 
 OG_ASSUME_NONNULL_BEGIN
 
@@ -76,6 +78,38 @@ OGValue OGGraphGetValue(OGAttribute attribute, OGValueOptions options, OGTypeID 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
 bool OGGraphSetValue(OGAttribute attribute, const void *value, OGTypeID type);
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+OGValueState OGGraphGetValueState(OGAttribute attribute) OG_SWIFT_NAME(getter:OGAttribute.valueState(self:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+bool OGGraphHasValue(OGAttribute attribute) OG_SWIFT_NAME(getter:OGAttribute.hasValue(self:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGGraphUpdateValue(OGAttribute attribute) OG_SWIFT_NAME(OGAttribute.updateValue(self:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGGraphPrefetchValue(OGAttribute attribute) OG_SWIFT_NAME(OGAttribute.prefetchValue(self:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGGraphInvalidateValue(OGAttribute attribute) OG_SWIFT_NAME(OGAttribute.invalidateValue(self:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGGraphVerifyType(OGAttribute attribute, OGTypeID type) OG_SWIFT_NAME(OGAttribute.verify(self:type:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+OGGraphRef OGGraphGetAttributeGraph(OGAttribute attribute) OG_SWIFT_NAME(getter:OGAttribute.graph(self:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+OGSubgraphRef OGGraphGetAttributeSubgraph(OGAttribute attribute) OG_SWIFT_NAME(getter:OGAttribute.subgraph(self:));
 
 OG_EXTERN_C_END
 

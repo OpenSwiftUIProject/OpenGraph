@@ -1,0 +1,1 @@
+../OpenGraphCompatibilityTests/Attribute/AttributeTestBase.swift
