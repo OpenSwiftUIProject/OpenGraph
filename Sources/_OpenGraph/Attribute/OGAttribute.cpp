@@ -94,3 +94,20 @@ bool OGGraphSetValue(OGAttribute attribute, const void *value, OGTypeID type) {
     // TODO
     return false;
 }
+
+bool OGGraphHasValue(OGAttribute attribute) {
+    // TODO
+    return false;
+}
+
+void OGGraphUpdateValue(OGAttribute attribute) {
+    // TODO
+}
+
+void OGGraphPrefetchValue(OGAttribute attribute) {
+    // TODO
+}
+
+void OGGraphInvalidateValue(OGAttribute attribute) {
+    // TODO
+}

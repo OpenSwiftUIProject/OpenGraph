@@ -77,6 +77,22 @@ OG_EXPORT
 OG_REFINED_FOR_SWIFT
 bool OGGraphSetValue(OGAttribute attribute, const void *value, OGTypeID type);
 
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+bool OGGraphHasValue(OGAttribute attribute) OG_SWIFT_NAME(getter:OGAttribute.hasValue(self:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGGraphUpdateValue(OGAttribute attribute) OG_SWIFT_NAME(OGAttribute.updateValue(self:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGGraphPrefetchValue(OGAttribute attribute) OG_SWIFT_NAME(OGAttribute.prefetchValue(self:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGGraphInvalidateValue(OGAttribute attribute) OG_SWIFT_NAME(OGAttribute.invalidateValue(self:));
+
 OG_EXTERN_C_END
 
 OG_ASSUME_NONNULL_END

@@ -78,6 +78,22 @@ AG_EXPORT
 AG_REFINED_FOR_SWIFT
 bool AGGraphSetValue(AGAttribute attribute, const void *value, AGTypeID type);
 
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+bool AGGraphHasValue(AGAttribute attribute) AG_SWIFT_NAME(getter:AGAttribute.hasValue(self:));
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+void AGGraphUpdateValue(AGAttribute attribute) AG_SWIFT_NAME(AGAttribute.updateValue(self:));
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+void AGGraphPrefetchValue(AGAttribute attribute) AG_SWIFT_NAME(AGAttribute.prefetchValue(self:));
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+void AGGraphInvalidateValue(AGAttribute attribute) AG_SWIFT_NAME(AGAttribute.invalidateValue(self:));
+
 AG_EXTERN_C_END
 
 AG_ASSUME_NONNULL_END

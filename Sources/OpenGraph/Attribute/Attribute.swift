@@ -121,6 +121,11 @@ public struct Attribute<Value> {
             __OGGraphSetValue(identifier, valuePointer, OGTypeID(Value.self))
         }
     }
+    
+    public var hasValue: Bool { identifier.hasValue }
+    public func updateValue() { identifier.updateValue() }
+    public func prefetchValue() { identifier.prefetchValue() }
+    public func invalidateValue() { identifier.invalidateValue() }
 
     // MARK: - Input
     

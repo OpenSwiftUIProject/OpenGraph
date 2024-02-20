@@ -54,7 +54,7 @@ public struct Attribute<Value> {
   
     public subscript<Member>(dynamicMember _: Swift.KeyPath<Value, Member>) -> AttributeGraph.Attribute<Member> { get }
     public subscript<Member>(keyPath _: Swift.KeyPath<Value, Member>) -> AttributeGraph.Attribute<Member> { get }
-	public subscript<Member>(offset _: (inout Value) -> AttributeGraph.PointerOffset<Value, Member>) -> AttributeGraph.Attribute<Member> { get }
+	public subscript<Member>(offset body: (inout Value) -> AttributeGraph.PointerOffset<Value, Member>) -> AttributeGraph.Attribute<Member> { get }
 
 	public func addInput(_ attribute: AGAttribute, options: AGInputOptions, token: Swift.Int)
 	public func addInput<V>(_ attribute: AttributeGraph.Attribute<V>, options: AGInputOptions, token: Int)
@@ -62,6 +62,10 @@ public struct Attribute<Value> {
 	public var value: Value { unsafeAddress set }
 	public func changedValue(options: AGValueOptions) -> (value: Value, changed: Bool)
 	public func setValue(_ value: Value) -> Bool
+	public var hasValue: Bool { get }
+	public func updateValue()
+	public func prefetchValue()
+	public func invalidateValue()
 }
 
 extension AttributeGraph.Attribute: Swift.Hashable {

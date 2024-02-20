@@ -28,12 +28,11 @@ final class AttributeTests: AttributeTestBase {
     func propertyWrapper() {
         @Attribute(value: 0) var value
         #expect(value == 0)
-//        value = 3
-//        #expect(value == 3)
-        
+        #expect(_value.setValue(3) == true)
+        #expect(value == 3)
         let newAttribute = $value
-//        value = 5
-        #expect(newAttribute.wrappedValue == 0 /* 5 */ )
+        #expect(_value.setValue(5) == true)
+        #expect(newAttribute.wrappedValue == 5)
     }
     
     @Test(arguments: [
@@ -53,7 +52,20 @@ final class AttributeTests: AttributeTestBase {
     @Test
     func value() {
         let attribute = Attribute(value: 5)
+        #expect(attribute.hasValue == true)
         #expect(attribute.changedValue(options: []) == (5, false))
+        
+        #expect(attribute.setValue(3) == true)
+        #expect(attribute.changedValue(options: []) == (3, false))
+        
+        #expect(attribute.hasValue == false)
+        #expect(attribute.changedValue(options: []) == (3, false)) // TODO: How to test for changed == true
+
+        // Unknown effect and untested.
+        // Just add here for linkage test
+        attribute.updateValue()
+        attribute.prefetchValue()
+        attribute.invalidateValue()
     }
 }
 #endif

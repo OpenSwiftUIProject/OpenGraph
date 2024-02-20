@@ -142,7 +142,7 @@ if swiftTestingCondition {
     package.targets.append(openGraphTempTestTarget)
 }
 
-let compatibilityTestCondition = envEnable("OPENGRAPH_COMPATIBILITY_TEST")
+let compatibilityTestCondition = envEnable("OPENGRAPH_COMPATIBILITY_TEST", default: true)
 if compatibilityTestCondition && attributeGraphCondition {
     openGraphCompatibilityTestTarget.dependencies.append("AttributeGraph")
     openGraphTempTestTarget.dependencies.append("AttributeGraph")

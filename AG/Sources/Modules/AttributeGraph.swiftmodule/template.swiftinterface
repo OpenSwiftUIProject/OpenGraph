@@ -58,6 +58,10 @@ public struct Attribute<Value> {
 	public var value: Value { unsafeAddress set }
 	public func changedValue(options: AGValueOptions) -> (value: Value, changed: Bool)
 	public func setValue(_ value: Value) -> Bool
+	public var hasValue: Bool { get }
+	public func updateValue()
+	public func prefetchValue()
+	public func invalidateValue()
 }
 
 extension AttributeGraph.Attribute: Swift.Hashable {
