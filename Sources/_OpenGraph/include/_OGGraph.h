@@ -14,6 +14,7 @@
 #include "OGAttributeType.h"
 #include "OGAttributeTypeFlags.h"
 #include "OGBase.h"
+#include "OGChangedValueFlags.h"
 #include "OGCompareValues.h"
 #include "OGComparisonMode.h"
 #include "OGDebugServer.h"
@@ -33,6 +34,7 @@
 #include "OGUniqueID.h"
 #include "OGValue.h"
 #include "OGValueOptions.h"
+#include "OGValueState.h"
 
 #endif /* _OGGraph_h */
 

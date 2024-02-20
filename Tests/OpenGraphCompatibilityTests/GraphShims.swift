@@ -12,6 +12,7 @@ public typealias OGAttributeFlags = AGAttributeFlags
 public typealias OGAttributeInfo = AGAttributeInfo
 public typealias OGAttributeType = AGAttributeType
 public typealias OGAttributeTypeFlags = AGAttributeTypeFlags
+public typealias OGChangedValueFlags = AGChangedValueFlags
 public typealias OGComparisonMode = AGComparisonMode
 public typealias OGComparisonOptions = AGComparisonOptions
 public typealias OGDebugServer = AGDebugServer
@@ -28,7 +29,7 @@ public typealias OGTypeID = AGTypeID
 public typealias OGUniqueID = AGUniqueID
 public typealias OGValue = AGValue
 public typealias OGValueOptions = AGValueOptions
-
+public typealias OGValueState = AGValueState
 let compatibilityTestEnabled = true
 #else
 @_exported import OpenGraph

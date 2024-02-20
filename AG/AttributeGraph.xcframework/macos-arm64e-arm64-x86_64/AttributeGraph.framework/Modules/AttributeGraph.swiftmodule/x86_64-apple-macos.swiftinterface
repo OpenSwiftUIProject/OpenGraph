@@ -56,16 +56,32 @@ public struct Attribute<Value> {
     public subscript<Member>(keyPath _: Swift.KeyPath<Value, Member>) -> AttributeGraph.Attribute<Member> { get }
 	public subscript<Member>(offset body: (inout Value) -> AttributeGraph.PointerOffset<Value, Member>) -> AttributeGraph.Attribute<Member> { get }
 
-	public func addInput(_ attribute: AGAttribute, options: AGInputOptions, token: Swift.Int)
-	public func addInput<V>(_ attribute: AttributeGraph.Attribute<V>, options: AGInputOptions, token: Int)
+	public func unsafeCast<V>(to type: V.Type) -> AttributeGraph.Attribute<V>
+	public func unsafeOffset<Member>(at offset: Swift.Int, as type: Member.Type) -> AttributeGraph.Attribute<Member>
+	public func applying<Member>(offset: AttributeGraph.PointerOffset<Value, Member>) -> AttributeGraph.Attribute<Member>
+	public func visitBody<Body: AttributeGraph.AttributeBodyVisitor>(_ visitor: inout Body) {
+	public func mutateBody<V>(as type: V.Type, invalidating: Swift.Bool, _ body: (inout V) -> Swift.Void) {
+	public func breadthFirstSearch(options: AGSearchOptions, _ body: (AGAttribute) -> Swift.Bool) -> Swift.Bool {
+
+	public var graph: AGGraph { get }
+	public var subgraph: AGSubgraph { get }
 
 	public var value: Value { unsafeAddress set }
+	public var valueState: AGValueState { get }
+	public func valueAndFlags(options: AGValueOptions) -> (value: Value, flags: AGChangedValueFlags)
 	public func changedValue(options: AGValueOptions) -> (value: Value, changed: Bool)
 	public func setValue(_ value: Value) -> Bool
 	public var hasValue: Bool { get }
 	public func updateValue()
 	public func prefetchValue()
 	public func invalidateValue()
+	public func validate()
+
+	public func addInput(_ attribute: AGAttribute, options: AGInputOptions, token: Swift.Int)
+	public func addInput<V>(_ attribute: AttributeGraph.Attribute<V>, options: AGInputOptions, token: Int)
+
+	public var flags: AGAttributeFlags { get _modify }
+	public func setFlags(_ newFlags: AGAttributeFlags, mask: AGAttributeFlags)
 }
 
 extension AttributeGraph.Attribute: Swift.Hashable {

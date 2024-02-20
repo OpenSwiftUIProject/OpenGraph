@@ -9,13 +9,14 @@
 #ifndef AGAttribute_h
 #define AGAttribute_h
 
-#include "AGBase.h"
-#include "AGAttributeFlags.h"
-#include "AGInputOptions.h"
 #include "AGAttributeInfo.h"
+#include "AGAttributeFlags.h"
+#include "AGGraph.h"
+#include "AGInputOptions.h"
 #include "AGTypeID.h"
 #include "AGValue.h"
 #include "AGValueOptions.h"
+#include "AGValueState.h"
 
 AG_ASSUME_NONNULL_BEGIN
 
@@ -80,6 +81,10 @@ bool AGGraphSetValue(AGAttribute attribute, const void *value, AGTypeID type);
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
+AGValueState AGGraphGetValueState(AGAttribute attribute) AG_SWIFT_NAME(getter:AGAttribute.valueState(self:));
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
 bool AGGraphHasValue(AGAttribute attribute) AG_SWIFT_NAME(getter:AGAttribute.hasValue(self:));
 
 AG_EXPORT
@@ -93,6 +98,18 @@ void AGGraphPrefetchValue(AGAttribute attribute) AG_SWIFT_NAME(AGAttribute.prefe
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
 void AGGraphInvalidateValue(AGAttribute attribute) AG_SWIFT_NAME(AGAttribute.invalidateValue(self:));
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+void AGGraphVerifyType(AGAttribute attribute, AGTypeID type) AG_SWIFT_NAME(AGAttribute.verify(self:type:));
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+AGGraphRef AGGraphGetAttributeGraph(AGAttribute attribute) AG_SWIFT_NAME(getter:AGAttribute.graph(self:));
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+AGSubgraphRef AGGraphGetAttributeSubgraph(AGAttribute attribute) AG_SWIFT_NAME(getter:AGAttribute.subgraph(self:));
 
 AG_EXTERN_C_END
 

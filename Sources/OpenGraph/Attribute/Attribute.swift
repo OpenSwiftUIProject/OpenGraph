@@ -83,19 +83,52 @@ public struct Attribute<Value> {
     
     public subscript<Member>(keyPath keyPath: KeyPath<Value, Member>) -> Attribute<Member> {
         if let offset = MemoryLayout<Value>.offset(of: keyPath) {
-            let identifier = identifier.create(offset: offset, size: numericCast(MemoryLayout<Member>.size))
-            return Attribute<Member>(identifier: identifier)
+            return unsafeOffset(at: offset, as: Member.self)
         } else {
             _ = Focus(root: self, keyPath: keyPath)
-            fatalError()
+            fatalError("TODO")
         }
     }
         
     public subscript<Member>(offset body: (inout Value) -> PointerOffset<Value, Member>) -> Attribute<Member> {
-        let offset = PointerOffset.offset(body)
-        let identifier = identifier.create(offset: offset.byteOffset, size: numericCast(MemoryLayout<Member>.size))
-        return Attribute<Member>(identifier: identifier)
+        unsafeOffset(at: PointerOffset.offset(body).byteOffset, as: Member.self)
     }
+    
+    // MARK: - Transform
+    
+    public func unsafeCast<V>(to type: V.Type) -> Attribute<V> {
+        identifier.unsafeCast(to: type)
+    }
+    
+    public func unsafeOffset<Member>(at offset: Int, as _: Member.Type) -> Attribute<Member> {
+        Attribute<Member>(
+            identifier: identifier.create(
+                offset: offset,
+                size: numericCast(MemoryLayout<Member>.size)
+            )
+        )
+    }
+    
+    public func applying<Member>(offset: PointerOffset<Value, Member>) -> Attribute<Member> {
+        unsafeOffset(at: offset.byteOffset, as: Member.self)
+    }
+    
+    public func visitBody<Body: AttributeBodyVisitor>(_ visitor: inout Body) {
+        identifier.visitBody(&visitor)
+    }
+    
+    public func mutateBody<V>(as type: V.Type, invalidating: Bool, _ body: (inout V) -> Void) {
+        identifier.mutateBody(as: type, invalidating: invalidating, body)
+    }
+
+    public func breadthFirstSearch(options: OGSearchOptions, _ body: (OGAttribute) -> Bool) -> Bool {
+        identifier.breadthFirstSearch(options: options, body)
+    }
+    
+    // MARK: - Graph
+    
+    public var graph: OGGraph { identifier.graph }
+    public var subgraph: OGSubgraph { identifier.subgraph }
     
     // MARK: - Value
     
@@ -106,6 +139,16 @@ public struct Attribute<Value> {
                 .assumingMemoryBound(to: Value.self)
         }
         set { _ = setValue(newValue) }
+    }
+    
+    public var valueState: OGValueState { identifier.valueState }
+    
+    public func valueAndFlags(options: OGValueOptions) -> (value: Value, flags: OGChangedValueFlags) {
+        let value = __OGGraphGetValue(identifier, options, OGTypeID(Value.self))
+        return (
+            value.value.assumingMemoryBound(to: Value.self).pointee,
+            value.changed ? ._1 : []
+        )
     }
     
     public func changedValue(options: OGValueOptions) -> (value: Value, changed: Bool) {
@@ -126,15 +169,27 @@ public struct Attribute<Value> {
     public func updateValue() { identifier.updateValue() }
     public func prefetchValue() { identifier.prefetchValue() }
     public func invalidateValue() { identifier.invalidateValue() }
+    public func validate() { identifier.verify(type: OGTypeID(Value.self)) }
 
     // MARK: - Input
     
     public func addInput(_ attribute: OGAttribute, options: OGInputOptions, token: Int) {
-        __OGGraphAddInput(self.identifier, attribute, options, token)
+        identifier.addInput(attribute, options: options, token: token)
     }
     
     public func addInput<V>(_ attribute: Attribute<V>, options: OGInputOptions, token: Int) {
-        addInput(attribute.identifier, options: options, token: token)
+        identifier.addInput(attribute, options: options, token: token)
+    }
+    
+    // MARK: - Flags
+
+    public var flags: OGAttributeFlags {
+        get { identifier.flags }
+        _modify { yield &identifier.flags }
+    }
+    
+    public func setFlags(_ newFlags: OGAttributeFlags, mask: OGAttributeFlags) {
+        identifier.setFlags(newFlags, mask: mask)
     }
 }
 

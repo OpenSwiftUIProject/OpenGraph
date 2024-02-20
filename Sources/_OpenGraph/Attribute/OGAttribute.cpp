@@ -95,6 +95,11 @@ bool OGGraphSetValue(OGAttribute attribute, const void *value, OGTypeID type) {
     return false;
 }
 
+OGValueState OGGraphGetValueState(OGAttribute attribute) {
+    // TODO
+    return {};
+}
+
 bool OGGraphHasValue(OGAttribute attribute) {
     // TODO
     return false;
@@ -110,4 +115,18 @@ void OGGraphPrefetchValue(OGAttribute attribute) {
 
 void OGGraphInvalidateValue(OGAttribute attribute) {
     // TODO
+}
+
+void OGGraphVerifyType(OGAttribute attribute, OGTypeID type) {
+    // TODO
+}
+
+OGGraphRef OGGraphGetAttributeGraph(OGAttribute attribute) {
+    // TODO
+    return nullptr;
+}
+
+OGSubgraphRef OGGraphGetAttributeSubgraph(OGAttribute attribute) {
+    // TODO
+    return nullptr;
 }
