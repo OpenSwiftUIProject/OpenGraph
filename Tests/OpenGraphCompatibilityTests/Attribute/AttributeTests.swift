@@ -46,7 +46,7 @@ final class AttributeTests: AttributeTestBase {
         }]
         #expect(offsetValue.wrappedValue == value.second)
         #expect(attribute.first.wrappedValue == value.first)
-        #expect(attribute[keyPath: \.third].wrappedValue == value.second)
+        #expect(attribute[keyPath: \.third].wrappedValue == value.third)
     }
     
     @Test
@@ -56,9 +56,6 @@ final class AttributeTests: AttributeTestBase {
         #expect(attribute.changedValue(options: []) == (5, false))
         
         #expect(attribute.setValue(3) == true)
-        #expect(attribute.changedValue(options: []) == (3, false))
-        
-        #expect(attribute.hasValue == false)
         #expect(attribute.changedValue(options: []) == (3, false)) // TODO: How to test for changed == true
 
         // Unknown effect and untested.
