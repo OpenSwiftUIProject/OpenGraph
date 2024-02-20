@@ -127,8 +127,20 @@ public struct Attribute<Value> {
     
     // MARK: - Graph
     
-    public var graph: OGGraph { identifier.graph }
-    public var subgraph: OGSubgraph { identifier.subgraph }
+    public var graph: OGGraph {
+        #if os(WASI)
+        fatalError("Compiler Bug")
+        #else
+        identifier.graph
+        #endif
+    }
+    public var subgraph: OGSubgraph {
+        #if os(WASI)
+        fatalError("Compiler Bug")
+        #else
+        identifier.subgraph
+        #endif
+    }
     
     // MARK: - Value
     
