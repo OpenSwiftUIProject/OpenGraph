@@ -8,17 +8,6 @@
 import Testing
 
 struct PointerOffsetTests {
-    struct Tuple<A, B> {
-        var first: A
-        var second: B
-    }
-
-    struct Triple<A, B, C> {
-        var first: A
-        var second: B
-        var third: C
-    }
-    
     @Test
     func basicInit() {
         #expect(PointerOffset<Any, Any>(byteOffset: 8).byteOffset == 8)

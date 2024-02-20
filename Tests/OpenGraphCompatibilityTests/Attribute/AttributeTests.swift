@@ -33,7 +33,21 @@ final class AttributeTests: AttributeTestBase {
         
         let newAttribute = $value
 //        value = 5
-        #expect(newAttribute.wrappedValue == 0/*5*/)
+        #expect(newAttribute.wrappedValue == 0 /* 5 */ )
+    }
+    
+    @Test(arguments: [
+        Triple(first: 0, second: 1, third: 2),
+        Triple(first: 3, second: 4, third: 5),
+    ])
+    func attributeWithSubscript(_ value: Triple<Int, Int, Int>) {
+        let attribute = Attribute(value: value)
+        let offsetValue = attribute[offset: { _ in
+            PointerOffset<Triple<Int, Int, Int>, Int>(byteOffset: 8)
+        }]
+        #expect(offsetValue.wrappedValue == value.second)
+        #expect(attribute.first.wrappedValue == value.first)
+        #expect(attribute[keyPath: \.third].wrappedValue == value.second)
     }
     
     @Test
