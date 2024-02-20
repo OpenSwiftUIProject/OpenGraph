@@ -8,6 +8,10 @@
 
 OpenGraph is an open source implementation of Apple's Private framework - AttributeGraph
 
+AttributeGraph is a high performance computing engine written in C++ and Swift.
+
+And it powers the underlying computing and diffing of SwiftUI.
+
 | **CI Status** |
 |---|
 |[![Compatibility tests](https://github.com/OpenSwiftUIProject/OpenGraph/actions/workflows/compatibility_tests.yml/badge.svg)](https://github.com/OpenSwiftUIProject/OpenGraph/actions/workflows/compatibility_tests.yml)|
@@ -17,7 +21,7 @@ OpenGraph is an open source implementation of Apple's Private framework - Attrib
 |[![Wasm](https://github.com/OpenSwiftUIProject/OpenGraph/actions/workflows/wasm.yml/badge.svg)](https://github.com/OpenSwiftUIProject/OpenGraph/actions/workflows/wasm.yml)|
 
 The project is for the following purposes:
-- Add OG support for non-Apple platform (eg. Linux & Windows)
+- Add OG support for non-Apple platform (eg. Linux, WASI and Windows)
 - Diagnose and debug AG issues on Apple platform
 
 Currently, this project is in early development.
