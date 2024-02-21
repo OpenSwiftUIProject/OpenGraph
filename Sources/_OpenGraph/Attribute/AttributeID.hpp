@@ -54,7 +54,7 @@ public:
     
     OG_INLINE OG_CONSTEXPR
     const bool isIndirect() const OG_NOEXCEPT {
-        return getKind() == Kind::Direct;
+        return getKind() == Kind::Indirect;
     }
     
     OG_INLINE OG_CONSTEXPR
