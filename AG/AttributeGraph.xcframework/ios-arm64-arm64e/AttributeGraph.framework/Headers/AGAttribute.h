@@ -53,7 +53,7 @@ void AGGraphAddInput(AGAttribute attribute1, AGAttribute attribute2, AGInputOpti
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
-const AGAttributeInfo AGGraphGetAttributeInfo(AGAttribute attribute);
+const AGAttributeInfo AGGraphGetAttributeInfo(AGAttribute attribute) AG_SWIFT_NAME(getter:AGAttribute.info(self:));
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
