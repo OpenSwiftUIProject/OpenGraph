@@ -40,7 +40,6 @@ extension OGAttribute {
     
     // FIXME: Use AttributeType instead
     public func visitBody<Body: AttributeBodyVisitor>(_ visitor: inout Body) {
-        let info = __OGGraphGetAttributeInfo(self)
         let bodyType = info.type.advanced(by: 1).pointee.typeID.type as! _AttributeBody.Type
         bodyType._visitBody(&visitor, info.body)
     }
@@ -55,15 +54,15 @@ extension OGAttribute {
     }
     
     public var _bodyType: Any.Type {
-        __OGGraphGetAttributeInfo(self).type.pointee.typeID.type
+        info.type.pointee.typeID.type
     }
 
     public var _bodyPointer: UnsafeRawPointer {
-        __OGGraphGetAttributeInfo(self).body
+        info.body
     }
     
     public var valueType: Any.Type {
-        __OGGraphGetAttributeInfo(self).type.pointee.valueTypeID.type
+        info.type.pointee.valueTypeID.type
     }
 
     public var indirectDependency: OGAttribute? {

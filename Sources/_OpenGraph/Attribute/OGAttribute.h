@@ -53,7 +53,7 @@ void OGGraphAddInput(OGAttribute attribute1, OGAttribute attribute2, OGInputOpti
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-const OGAttributeInfo OGGraphGetAttributeInfo(OGAttribute attribute);
+const OGAttributeInfo OGGraphGetAttributeInfo(OGAttribute attribute) OG_SWIFT_NAME(getter:OGAttribute.info(self:));
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
