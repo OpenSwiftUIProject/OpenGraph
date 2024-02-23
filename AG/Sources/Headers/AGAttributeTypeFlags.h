@@ -19,5 +19,5 @@ typedef AG_OPTIONS(uint32_t, AGAttributeTypeFlags) {
     AGAttributeTypeFlags_16 = 1 << 4,
 };
 
-#endif /* AGAttribute_h */
+#endif /* AGAttributeTypeFlags_h */
 

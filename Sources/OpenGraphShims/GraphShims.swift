@@ -12,6 +12,7 @@ public typealias OGAttributeFlags = AGAttributeFlags
 public typealias OGAttributeInfo = AGAttributeInfo
 public typealias OGAttributeType = AGAttributeType
 public typealias OGAttributeTypeFlags = AGAttributeTypeFlags
+public typealias OGCachedValueOptions = AGCachedValueOptions
 public typealias OGChangedValueFlags = AGChangedValueFlags
 public typealias OGComparisonMode = AGComparisonMode
 public typealias OGComparisonOptions = AGComparisonOptions

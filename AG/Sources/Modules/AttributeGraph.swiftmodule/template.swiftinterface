@@ -161,9 +161,42 @@ public protocol Rule: AttributeGraph._AttributeBody {
 }
 
 extension AttributeGraph.Rule {
-    public static var initialValue: Self.Value? {
-        get
-    }
+    public static var initialValue: Self.Value? { get }
+	public static func _update(_ value: Swift.UnsafeMutableRawPointer, attribute: AGAttribute)
+	public static func _updateDefault(_ value: Swift.UnsafeMutableRawPointer)
+}
+
+extension AttributeGraph.Rule {
+	public var attribute: AttributeGraph.Attribute<Value> { get }
+	public var context: AttributeGraph.RuleContext<Value> { get }
+}
+
+extension AttributeGraph.Rule where Value: Swift.Hashable {
+	public func cachedValueIfExists(
+		options: AGCachedValueOptions,
+		owner: AGAttribute?
+	) -> Value?
+
+	public func cachedValue(
+		options: AGCachedValueOptions,
+		owner: AGAttribute?
+	) -> Value
+
+	public static func _cachedValue(
+		options: AGCachedValueOptions,
+		owner: AGAttribute?,
+		hashValue: Swift.Int,
+		bodyPtr: Swift.UnsafeRawPointer,
+		update: () -> (Swift.UnsafeMutableRawPointer, AGAttribute) -> ()
+	) -> Swift.UnsafePointer<Value>
+}
+
+// MARK: - RuleContext
+
+public struct RuleContext<A> {
+	public var attribute: AttributeGraph.Attribute<A>
+
+	public init(attribute: AttributeGraph.Attribute<A>)
 }
 
 // MARK: - Runtime Related

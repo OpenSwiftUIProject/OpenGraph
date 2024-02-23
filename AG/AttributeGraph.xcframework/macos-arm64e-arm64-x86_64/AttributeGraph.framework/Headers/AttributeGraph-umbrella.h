@@ -12,6 +12,7 @@
 #include "AGAttributeType.h"
 #include "AGAttributeTypeFlags.h"
 #include "AGBase.h"
+#include "AGCachedValueOptions.h"
 #include "AGChangedValueFlags.h"
 #include "AGCompareValues.h"
 #include "AGComparisonMode.h"
@@ -35,4 +36,3 @@
 
 FOUNDATION_EXPORT double AGAttributeVersionNumber;
 FOUNDATION_EXPORT const unsigned char AGAttributeVersionString[];
-

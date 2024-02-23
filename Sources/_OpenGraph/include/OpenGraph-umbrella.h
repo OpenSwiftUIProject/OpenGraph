@@ -1,12 +1,10 @@
-//
-//  _OGGraph.h
-//
-//
-//  Created by Kyle on 2024/2/17.
-//
-
-#ifndef _OGGraph_h
-#define _OGGraph_h
+#ifndef FOUNDATION_EXPORT
+#if defined(__cplusplus)
+#define FOUNDATION_EXPORT extern "C"
+#else
+#define FOUNDATION_EXPORT extern
+#endif
+#endif
 
 #include "OGAttribute.h"
 #include "OGAttributeFlags.h"
@@ -14,6 +12,7 @@
 #include "OGAttributeType.h"
 #include "OGAttributeTypeFlags.h"
 #include "OGBase.h"
+#include "OGCachedValueOptions.h"
 #include "OGChangedValueFlags.h"
 #include "OGCompareValues.h"
 #include "OGComparisonMode.h"
@@ -36,6 +35,5 @@
 #include "OGValueOptions.h"
 #include "OGValueState.h"
 
-#endif /* _OGGraph_h */
-
-//AttributeGraph-umbrella
+FOUNDATION_EXPORT double AGAttributeVersionNumber;
+FOUNDATION_EXPORT const unsigned char AGAttributeVersionString[];
