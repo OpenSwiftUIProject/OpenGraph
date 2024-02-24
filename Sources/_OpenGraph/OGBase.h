@@ -44,17 +44,7 @@
 #include <CoreFoundation/CoreFoundation.h>
 #include <stdint.h>
 #include <stdbool.h>
-#ifdef __APPLE__
-#include <TargetConditionals.h>
-#ifndef TARGET_OS_DARWIN
-#define TARGET_OS_DARWIN TARGET_OS_MAC
-#endif
-#ifndef TARGET_CPU_WASM32
-#define TARGET_CPU_WASM32 0
-#endif
-#else
-#include <CoreFoundation/TargetConditionals.h>
-#endif
+#include "OGTargetConditionals.h"
 
 #define OG_OPTIONS CF_OPTIONS
 #define OG_EXTERN_C_BEGIN CF_EXTERN_C_BEGIN
@@ -66,10 +56,10 @@
 #define OG_SWIFT_NAME CF_SWIFT_NAME
 #define OG_BRIDGED_TYPE CF_BRIDGED_TYPE
 
-#if TARGET_OS_DARWIN && __OBJC__
+#if OG_TARGET_OS_DARWIN && __OBJC__
 #define OG_OBJC_FOUNDATION 1
 #else
 #define OG_OBJC_FOUNDATION 0
-#endif /* TARGET_OS_DARWIN && __OBJC__ */
+#endif /* OG_TARGET_OS_DARWIN && __OBJC__ */
 
 #endif /* OGBase_h */

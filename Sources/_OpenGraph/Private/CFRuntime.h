@@ -1,5 +1,5 @@
 #include "OGBase.h"
-#if TARGET_OS_DARWIN
+#if OG_TARGET_OS_DARWIN
 // Copied from https://github.com/apple/swift-corelibs-foundation/blob/d8e8a8b92b3a8af8381a11155328c1bba1c6bd2c/CoreFoundation/Base.subproj/CFRuntime.h
 /*	CFRuntime.h
 	Copyright (c) 1999-2019, Apple Inc. All rights reserved.
@@ -283,4 +283,4 @@ CF_EXTERN_C_END
 #endif /* ! __COREFOUNDATION_CFRUNTIME__ */
 #else
 #include <CoreFoundation/CFRuntime.h>
-#endif /* TARGET_OS_DARWIN */
+#endif /* OG_TARGET_OS_DARWIN */

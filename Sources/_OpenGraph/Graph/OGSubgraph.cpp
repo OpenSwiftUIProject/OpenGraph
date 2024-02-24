@@ -53,7 +53,7 @@ OGSubgraphRef OGSubgraphCreate(OGGraphRef cf_graph) {
 OGSubgraphRef OGSubgraphCreate2(OGGraphRef cf_graph, OGAttribute attribute) {
     OG::Graph::Context &context = OG::Graph::Context::from_cf(cf_graph);
     const CFIndex extraSize = sizeof(OGSubgraphStorage)-sizeof(CFRuntimeBase);
-    #if TARGET_CPU_WASM32
+    #if OG_TARGET_CPU_WASM32
     // FIXME: extraSize will always be 8 thus it will fail on WASM. Investate later.
     static_assert(extraSize == 8);
     #else

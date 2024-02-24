@@ -8,7 +8,7 @@
 #include "OGDebugServer.h"
 #include "og-debug-server.hpp"
 
-#if TARGET_OS_DARWIN
+#if OG_TARGET_OS_DARWIN
 
 // MARK: - Exported C functions
 

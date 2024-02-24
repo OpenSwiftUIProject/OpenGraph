@@ -7,7 +7,7 @@
 
 #include "log.hpp"
 
-#if TARGET_OS_DARWIN
+#if OG_TARGET_OS_DARWIN
 
 namespace OG {
 os_log_t misc_log() {
@@ -20,4 +20,4 @@ os_log_t error_log() {
 }
 } /* OG */
 
-#endif /* TARGET_OS_DARWIN */
+#endif /* OG_TARGET_OS_DARWIN */

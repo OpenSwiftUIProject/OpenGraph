@@ -14,7 +14,7 @@ typedef struct OG_BRIDGED_TYPE(id) OGDebugServerStorage * OGDebugServerRef;
 
 struct OGDebugServerStorage;
 
-#if TARGET_OS_DARWIN
+#if OG_TARGET_OS_DARWIN
 
 OG_ASSUME_NONNULL_BEGIN
 
