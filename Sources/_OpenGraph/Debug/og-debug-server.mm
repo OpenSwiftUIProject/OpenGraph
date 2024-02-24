@@ -6,7 +6,7 @@
 //  Audited for 2021 Release
 
 #include "og-debug-server.hpp"
-#if TARGET_OS_DARWIN
+#if OG_TARGET_OS_DARWIN
 
 #include "../Util/log.hpp"
 #include "../Util/assert.hpp"
@@ -332,4 +332,4 @@ void OG::DebugServer::Connection::handler(void *_Nullable context) {
     return;
 }
 
-#endif /* TARGET_OS_DARWIN */
+#endif /* OG_TARGET_OS_DARWIN */

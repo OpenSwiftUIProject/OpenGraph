@@ -8,11 +8,11 @@
 #include "realloc_vector.hpp"
 #include "assert.hpp"
 
-#if TARGET_OS_DARWIN
+#if OG_TARGET_OS_DARWIN
 #include <malloc/malloc.h>
 #else
 #include <malloc.h>
-#endif /* TARGET_OS_DARWIN */
+#endif /* OG_TARGET_OS_DARWIN */
 
 template <typename T, size_t Alignment>
 void *_Nullable OG::details::realloc_vector(void* ptr, T& size, T new_size) {

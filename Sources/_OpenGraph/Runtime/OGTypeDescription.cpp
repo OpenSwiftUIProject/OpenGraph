@@ -7,11 +7,11 @@
 
 #include "OGTypeDescription.h"
 
-#if TARGET_OS_DARWIN
+#if OG_TARGET_OS_DARWIN
 CFStringRef OGTypeDescription(OGTypeID id) {
     CFMutableStringRef ref = CFStringCreateMutable(CFAllocatorGetDefault(), 0);
     // OG::swift::metadata::append_description(__CFString*) const
     // cast id into metadata and call append_description
     return ref;
 }
-#endif /* TARGET_OS_DARWIN */
+#endif /* OG_TARGET_OS_DARWIN */
