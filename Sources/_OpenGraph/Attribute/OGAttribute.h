@@ -73,11 +73,15 @@ OGAttribute OGGraphCreateAttribute(long index, const void *body, const void * _N
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-OGValue OGGraphGetValue(OGAttribute attribute, OGValueOptions options, OGTypeID type);
+OGValue OGGraphGetValue(OGAttribute attribute, OGValueOptions options, const OGTypeID type);
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-bool OGGraphSetValue(OGAttribute attribute, const void *value, OGTypeID type);
+bool OGGraphSetValue(OGAttribute attribute, const void *value, const OGTypeID type);
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGGraphSetOutputValue(const void *value, const OGTypeID type);
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT

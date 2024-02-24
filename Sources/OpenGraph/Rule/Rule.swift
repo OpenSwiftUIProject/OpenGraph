@@ -1,3 +1,11 @@
+//
+//  _AttributeBody.swift
+//  OpenGraph
+//
+//  Updated by Kyle on 2024/2/24.
+//  Lastest Version: iOS 15.5
+//  Status: Complete
+
 import _OpenGraph
 
 public protocol Rule: _AttributeBody {
@@ -11,12 +19,23 @@ public protocol Rule: _AttributeBody {
 extension Rule {
     public static var initialValue: Value? { nil }
 
-    public static func _update(_ value: UnsafeMutableRawPointer, attribute: OGAttribute) {
-        fatalError("TODO")
+    public static func _update(_ pointer: UnsafeMutableRawPointer, attribute _: OGAttribute) {
+        let rule = pointer.assumingMemoryBound(to: Self.self)
+        let value = rule.pointee.value
+        // Verified for iOS 17
+        withUnsafePointer(to: value) { valuePointer in
+            __OGGraphSetOutputValue(valuePointer, OGTypeID(Value.self))
+        }
     }
 
-    public static func _updateDefault(_ value: UnsafeMutableRawPointer) {
-        fatalError("TODO")
+    public static func _updateDefault(_: UnsafeMutableRawPointer) {
+        guard let initialValue else {
+            return
+        }
+        // Verified for iOS 17
+        withUnsafePointer(to: initialValue) { valuePointer in
+            __OGGraphSetOutputValue(valuePointer, OGTypeID(Value.self))
+        }
     }
 }
 

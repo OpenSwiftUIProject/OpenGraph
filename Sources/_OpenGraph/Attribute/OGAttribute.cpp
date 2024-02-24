@@ -95,6 +95,10 @@ bool OGGraphSetValue(OGAttribute attribute, const void *value, OGTypeID type) {
     return false;
 }
 
+void OGGraphSetOutputValue(const void *value, const OGTypeID type) {
+    // TODO
+}
+
 OGValueState OGGraphGetValueState(OGAttribute attribute) {
     // TODO
     return {};
