@@ -63,7 +63,7 @@ public struct Attribute<Value> {
         
     public var wrappedValue: Value {
         unsafeAddress {
-            __OGGraphGetValue(identifier, [], OGTypeID(Value.self))
+            OGGraphGetValue(identifier, type: Value.self)
                 .value
                 .assumingMemoryBound(to: Value.self)
         }
@@ -146,7 +146,7 @@ public struct Attribute<Value> {
     
     public var value: Value {
         unsafeAddress {
-            __OGGraphGetValue(identifier, [], OGTypeID(Value.self))
+            OGGraphGetValue(identifier, type: Value.self)
                 .value
                 .assumingMemoryBound(to: Value.self)
         }
@@ -156,7 +156,7 @@ public struct Attribute<Value> {
     public var valueState: OGValueState { identifier.valueState }
     
     public func valueAndFlags(options: OGValueOptions) -> (value: Value, flags: OGChangedValueFlags) {
-        let value = __OGGraphGetValue(identifier, options, OGTypeID(Value.self))
+        let value = OGGraphGetValue(identifier, options: options, type: Value.self)
         return (
             value.value.assumingMemoryBound(to: Value.self).pointee,
             value.changed ? ._1 : []
@@ -164,7 +164,7 @@ public struct Attribute<Value> {
     }
     
     public func changedValue(options: OGValueOptions) -> (value: Value, changed: Bool) {
-        let value = __OGGraphGetValue(identifier, options, OGTypeID(Value.self))
+        let value = OGGraphGetValue(identifier, options: options, type: Value.self)
         return (
             value.value.assumingMemoryBound(to: Value.self).pointee,
             value.changed
@@ -173,7 +173,7 @@ public struct Attribute<Value> {
     
     public func setValue(_ value: Value) -> Bool {
         withUnsafePointer(to: value) { valuePointer in
-            __OGGraphSetValue(identifier, valuePointer, OGTypeID(Value.self))
+            OGGraphSetValue(identifier, valuePointer: valuePointer)
         }
     }
     
@@ -224,3 +224,13 @@ private struct AttributeType {
     var graphType: OGAttributeType
     var type: _AttributeBody.Type
 }
+
+@_silgen_name("OGGraphGetValue")
+@inline(__always)
+@inlinable
+func OGGraphGetValue<Value>(_ attribute: OGAttribute, options: OGValueOptions = [], type: Value.Type = Value.self) -> OGValue
+
+@_silgen_name("OGGraphSetValue")
+@inline(__always)
+@inlinable
+func OGGraphSetValue<Value>(_ attribute: OGAttribute, valuePointer: UnsafePointer<Value>) -> Bool
