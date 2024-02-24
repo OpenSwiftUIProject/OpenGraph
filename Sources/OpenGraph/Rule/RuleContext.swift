@@ -1,3 +1,11 @@
+//
+//  RuleContext.swift
+//  OpenGraph
+//
+//  Updated by Kyle on 2024/2/24.
+//  Lastest Version: iOS 15.5
+//  Status: Blocked by WeakAttribute and OptionalAttribute
+
 import _OpenGraph
 
 @frozen
@@ -16,11 +24,11 @@ public struct RuleContext<Value> {
         }
     }
     
-//    public subscript<V>(weakAttribute: WeakAttribute<V>) -> V {
+//    public subscript<V>(weakAttribute: WeakAttribute<V>) -> V? {
 //        get
 //    }
 //
-//    public subscript<V>(optionalAttribute: OptionalAttribute<V>) -> V {
+//    public subscript<V>(optionalAttribute: OptionalAttribute<V>) -> V? {
 //        get
 //    }
 //

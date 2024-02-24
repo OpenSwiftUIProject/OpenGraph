@@ -199,11 +199,30 @@ extension AttributeGraph.Rule where Self: Swift.Hashable {
 public struct RuleContext<Value> {
 	public var attribute: AttributeGraph.Attribute<Value>
 	public init(attribute: AttributeGraph.Attribute<Value>)
+	public subscript<V>(attribute: Attribute<V>) -> V { unsafeAddress }
+	//    public subscript<V>(weakAttribute: WeakAttribute<V>) -> V? { get }
+	//    public subscript<V>(optionalAttribute: OptionalAttribute<V>) -> V? { get }
 	public var value: Value { unsafeAddress nonmutating set }
 	public var hasValue: Bool
-	public func valueAndFlags<V>(of attribute: AttributeGraph.Attribute<V>, options: AGValueOptions) -> (value: V, flags: AGChangedValueFlags)
-	public func changedValue<V>(of attribute: AttributeGraph.Attribute<V>, options: AGValueOptions) -> (value: V, changed: Swift.Bool)
+	public func valueAndFlags<V>(of input: AttributeGraph.Attribute<V>, options: AGValueOptions) -> (value: V, flags: AGChangedValueFlags)
+	public func changedValue<V>(of input: AttributeGraph.Attribute<V>, options: AGValueOptions) -> (value: V, changed: Swift.Bool)
 	public func update(body: () -> Void)
+}
+
+// MARK: - AnyRuleContext
+
+@frozen
+public struct AnyRuleContext {
+	public var attribute: AGAttribute
+	public init(attribute: OGAttribute)
+	public init<V>(_ context: RuleContext<V>)
+	public subscript<V>(attribute: Attribute<V>) -> V { unsafeAddress }
+	//    public subscript<V>(weakAttribute: WeakAttribute<V>) -> V? { get }
+	//    public subscript<V>(optionalAttribute: OptionalAttribute<V>) -> V? { get }
+	public func valueAndFlags<V>(of input: AttributeGraph.Attribute<V>, options: AGValueOptions) -> (value: V, flags: AGChangedValueFlags)
+	public func changedValue<V>(of input: AttributeGraph.Attribute<V>, options: AGValueOptions) -> (value: V, changed: Swift.Bool)
+	public func update(body: () -> Void)
+	public func unsafeCast<V>(to _: V.Type) -> AttributeGraph.RuleContext<V>
 }
 
 // MARK: - Runtime Related
