@@ -5,12 +5,13 @@
 //  Created by Kyle on 2023/8/30.
 //
 
-
 #ifndef AGAttribute_h
 #define AGAttribute_h
 
+#include "AGBase.h"
 #include "AGAttributeInfo.h"
 #include "AGAttributeFlags.h"
+#include "AGCachedValueOptions.h"
 #include "AGGraph.h"
 #include "AGInputOptions.h"
 #include "AGTypeID.h"
@@ -114,6 +115,14 @@ AGGraphRef AGGraphGetAttributeGraph(AGAttribute attribute) AG_SWIFT_NAME(getter:
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
 AGSubgraphRef AGGraphGetAttributeSubgraph(AGAttribute attribute) AG_SWIFT_NAME(getter:AGAttribute.subgraph(self:));
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+const void * AGGraphReadCachedAttribute(long hashValue, AGTypeID bodyType, const void *bodyPointer, AGTypeID valueType, AGCachedValueOptions options, AGAttribute attribute, bool unknown/*, ...*/);
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+const void * _Nullable AGGraphReadCachedAttributeIfExists(long hashValue, AGTypeID bodyType, const void *bodyPointer, AGTypeID valueType, AGCachedValueOptions options, AGAttribute attribute, bool unknown);
 
 AG_EXTERN_C_END
 

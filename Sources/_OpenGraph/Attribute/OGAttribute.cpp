@@ -134,3 +134,13 @@ OGSubgraphRef OGGraphGetAttributeSubgraph(OGAttribute attribute) {
     // TODO
     return nullptr;
 }
+
+const void * OGGraphReadCachedAttribute(long hashValue, OGTypeID bodyType, const void *bodyPointer, OGTypeID valueType, OGCachedValueOptions options, OGAttribute attribute, bool unknown) {
+    // TODO
+    return nullptr;
+}
+
+const void * _Nullable OGGraphReadCachedAttributeIfExists(long hashValue, OGTypeID bodyType, const void *bodyPointer, OGTypeID valueType, OGCachedValueOptions options, OGAttribute attribute, bool unknown) {
+    // TODO
+    return nullptr;
+}

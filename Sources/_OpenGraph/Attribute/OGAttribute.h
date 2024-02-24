@@ -11,6 +11,7 @@
 #include "OGBase.h"
 #include "OGAttributeInfo.h"
 #include "OGAttributeFlags.h"
+#include "OGCachedValueOptions.h"
 #include "OGGraph.h"
 #include "OGInputOptions.h"
 #include "OGTypeID.h"
@@ -114,6 +115,14 @@ OGGraphRef OGGraphGetAttributeGraph(OGAttribute attribute) OG_SWIFT_NAME(getter:
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
 OGSubgraphRef OGGraphGetAttributeSubgraph(OGAttribute attribute) OG_SWIFT_NAME(getter:OGAttribute.subgraph(self:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+const void * OGGraphReadCachedAttribute(long hashValue, OGTypeID bodyType, const void *bodyPointer, OGTypeID valueType, OGCachedValueOptions options, OGAttribute attribute, bool unknown/*, ...*/);
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+const void * _Nullable OGGraphReadCachedAttributeIfExists(long hashValue, OGTypeID bodyType, const void *bodyPointer, OGTypeID valueType, OGCachedValueOptions options, OGAttribute attribute, bool unknown);
 
 OG_EXTERN_C_END
 

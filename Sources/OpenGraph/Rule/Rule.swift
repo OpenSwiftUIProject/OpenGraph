@@ -53,14 +53,7 @@ extension Rule {
 
 // MARK: - Rule extension for Hashable Value
 
-extension Rule where Value: Hashable {
-    public func cachedValueIfExists(
-        options: OGCachedValueOptions,
-        owner: OGAttribute?
-    ) -> Value? {
-        fatalError("TODO")
-    }
-    
+extension Rule where Self: Hashable {
     public func cachedValue(
         options: OGCachedValueOptions,
         owner: OGAttribute?
@@ -69,11 +62,21 @@ extension Rule where Value: Hashable {
             Self._cachedValue(
                 options: options,
                 owner: owner,
-                hashValue: value.hashValue,
-                bodyPtr: pointer
-            ) {
-                fatalError("TODO")
-            }.pointee
+                hashValue: hashValue,
+                bodyPtr: pointer,
+                update: { Self._update }
+            ).pointee
+        }
+    }
+    
+    public func cachedValueIfExists(
+        options: OGCachedValueOptions,
+        owner: OGAttribute?
+    ) -> Value? {
+        withUnsafePointer(to: self) { bodyPointer in
+            let value = __OGGraphReadCachedAttributeIfExists(hashValue, OGTypeID(Self.self), bodyPointer, OGTypeID(Value.self), options, owner ?? .nil, false)
+            guard let value else { return nil }
+            return value.assumingMemoryBound(to: Value.self).pointee
         }
     }
 
@@ -82,8 +85,10 @@ extension Rule where Value: Hashable {
         owner: OGAttribute?,
         hashValue: Int, 
         bodyPtr: UnsafeRawPointer, 
-        update: () -> (UnsafeMutableRawPointer, OGAttribute) -> ()
+        update: AttributeUpdateBlock
     ) -> UnsafePointer<Value> {
-        fatalError("TODO")
+        // TODO: pass closure here
+        __OGGraphReadCachedAttribute(hashValue, OGTypeID(Self.self), bodyPtr, OGTypeID(Value.self), options, owner ?? .nil, false)
+            .assumingMemoryBound(to: Value.self)
     }
 }

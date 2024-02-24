@@ -171,7 +171,7 @@ extension AttributeGraph.Rule {
 	public var context: AttributeGraph.RuleContext<Value> { get }
 }
 
-extension AttributeGraph.Rule where Value: Swift.Hashable {
+extension AttributeGraph.Rule where Self: Swift.Hashable {
 	public func cachedValueIfExists(
 		options: AGCachedValueOptions,
 		owner: AGAttribute?
