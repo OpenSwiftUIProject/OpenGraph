@@ -39,12 +39,11 @@
 #define OG_CONSTEXPR
 #endif
 
-#define OG_SWIFT_STRUCT __attribute__((swift_wrapper(struct)))
-
 #include <CoreFoundation/CoreFoundation.h>
 #include <stdint.h>
 #include <stdbool.h>
 #include "OGTargetConditionals.h"
+#include "OGSwiftSupport.h"
 
 #define OG_OPTIONS CF_OPTIONS
 #define OG_EXTERN_C_BEGIN CF_EXTERN_C_BEGIN
@@ -52,8 +51,6 @@
 #define OG_ASSUME_NONNULL_BEGIN CF_ASSUME_NONNULL_BEGIN
 #define OG_ASSUME_NONNULL_END CF_ASSUME_NONNULL_END
 #define OG_EXPORT CF_EXPORT
-#define OG_REFINED_FOR_SWIFT CF_REFINED_FOR_SWIFT
-#define OG_SWIFT_NAME CF_SWIFT_NAME
 #define OG_BRIDGED_TYPE CF_BRIDGED_TYPE
 
 #if OG_TARGET_OS_DARWIN && __OBJC__

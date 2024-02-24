@@ -132,6 +132,14 @@ OG_EXPORT
 OG_REFINED_FOR_SWIFT
 const void * _Nullable OGGraphReadCachedAttributeIfExists(long hashValue, OGTypeID bodyType, const void *bodyPointer, OGTypeID valueType, OGCachedValueOptions options, OGAttribute attribute, bool unknown);
 
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGGraphWithUpdate(
+    OGAttribute attribute,
+    void (* callback)(const void *context OG_SWIFT_CONTEXT) OG_SWIFT_CC(swift),
+    const void *context
+);
+
 OG_EXTERN_C_END
 
 OG_ASSUME_NONNULL_END

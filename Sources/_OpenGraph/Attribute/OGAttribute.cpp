@@ -154,3 +154,12 @@ const void * _Nullable OGGraphReadCachedAttributeIfExists(long hashValue, OGType
     // TODO
     return nullptr;
 }
+
+void OGGraphWithUpdate(
+    OGAttribute attribute,
+    void (* callback)(const void *context OG_SWIFT_CONTEXT) OG_SWIFT_CC(swift),
+    const void *context
+) {
+    // TODO
+    callback(context);
+}

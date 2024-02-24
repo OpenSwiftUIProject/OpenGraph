@@ -202,7 +202,8 @@ public struct RuleContext<Value> {
 	public var value: Value { unsafeAddress nonmutating set }
 	public var hasValue: Bool
 	public func valueAndFlags<V>(of attribute: AttributeGraph.Attribute<V>, options: AGValueOptions) -> (value: V, flags: AGChangedValueFlags)
-	public func changedValue<V>(of attribute: AttributeGraph.Attribute<V>, options: AGValueOptions) -> (value: V, changed: Bool)
+	public func changedValue<V>(of attribute: AttributeGraph.Attribute<V>, options: AGValueOptions) -> (value: V, changed: Swift.Bool)
+	public func update(body: () -> Void)
 }
 
 // MARK: - Runtime Related

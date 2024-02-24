@@ -19,11 +19,11 @@ public struct RuleContext<Value> {
 //    public subscript<V>(weakAttribute: WeakAttribute<V>) -> V {
 //        get
 //    }
-//    
+//
 //    public subscript<V>(optionalAttribute: OptionalAttribute<V>) -> V {
 //        get
 //    }
-//    
+//
     public var value: Value {
         unsafeAddress {
             OGGraphGetOutputValue()!
@@ -55,9 +55,18 @@ public struct RuleContext<Value> {
             value.changed
         )
     }
+    
+    public func update(body: () -> Void) {
+        OGGraphWithUpdate(attribute.identifier, body: body)
+    }
 }
 
 @_silgen_name("OGGraphGetInputValue")
 @inline(__always)
 @inlinable
 func OGGraphGetInputValue<Value>(_ attribute: OGAttribute, input: OGAttribute, options: OGValueOptions = [], type: Value.Type = Value.self) -> OGValue
+
+@_silgen_name("OGGraphWithUpdate")
+@inline(__always)
+@inlinable
+func OGGraphWithUpdate(_ attribute: OGAttribute, body: () -> Void)

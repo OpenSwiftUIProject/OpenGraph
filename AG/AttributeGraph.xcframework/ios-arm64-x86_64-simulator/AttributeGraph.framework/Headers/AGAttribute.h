@@ -132,6 +132,14 @@ AG_EXPORT
 AG_REFINED_FOR_SWIFT
 const void * _Nullable AGGraphReadCachedAttributeIfExists(long hashValue, AGTypeID bodyType, const void *bodyPointer, AGTypeID valueType, AGCachedValueOptions options, AGAttribute attribute, bool unknown);
 
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+void AGGraphWithUpdate(
+    AGAttribute attribute,
+    void (* callback)(const void *context AG_SWIFT_CONTEXT) AG_SWIFT_CC(swift),
+    const void *context
+);
+
 AG_EXTERN_C_END
 
 AG_ASSUME_NONNULL_END
