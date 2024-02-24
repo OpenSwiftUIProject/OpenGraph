@@ -67,7 +67,7 @@ OGSubgraphRef OGSubgraphCreate2(OGGraphRef cf_graph, OGAttribute attribute) {
     return cf_subgrah;
 }
 
-OGSubgraphRef OGSubgraphGetCurrent() {
+_Nullable OGSubgraphRef OGSubgraphGetCurrent() {
     OG::Subgraph* subgraph = (OG::Subgraph*)pthread_getspecific(OG::Subgraph::current_key());
     if (subgraph == nullptr) {
         return nullptr;
@@ -75,7 +75,7 @@ OGSubgraphRef OGSubgraphGetCurrent() {
     return subgraph->to_cf();
 }
 
-void OGSubgraphSetCurrent(OGSubgraphRef cf_subgraph) {
+void OGSubgraphSetCurrent(_Nullable OGSubgraphRef cf_subgraph) {
     OG::Subgraph* oldSubgraph = (OG::Subgraph*)pthread_getspecific(OG::Subgraph::current_key());
     if (cf_subgraph == nullptr) {
         pthread_setspecific(OG::Subgraph::current_key(), nullptr);
@@ -86,7 +86,10 @@ void OGSubgraphSetCurrent(OGSubgraphRef cf_subgraph) {
         }
     }
     if (oldSubgraph != nullptr) {
-        CFRelease(oldSubgraph->to_cf());
+        OGSubgraphRef cf_oldSubgraph = oldSubgraph->to_cf();
+        if (cf_oldSubgraph) {
+            CFRelease(cf_oldSubgraph);
+        }
     }
 }
 

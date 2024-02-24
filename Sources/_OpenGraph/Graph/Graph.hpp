@@ -33,6 +33,8 @@ public:
         return _current_update_key;
     }
     
+    Graph() OG_NOEXCEPT;
+    
     class Context final {
     private:
         Graph *_graph;
