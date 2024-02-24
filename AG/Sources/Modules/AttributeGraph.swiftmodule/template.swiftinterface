@@ -193,6 +193,27 @@ extension AttributeGraph.Rule where Self: Swift.Hashable {
 	) -> Swift.UnsafePointer<Value>
 }
 
+// MARK: - StateRule
+
+public protocol StatefulRule: AttributeGraph._AttributeBody {
+	associatedtype Value
+	static var initialValue: Value? { get }
+	func updateValue()
+}
+
+extension AttributeGraph.StatefulRule {
+	public static var initialValue: Self.Value? { get }
+	public static func _update(_ pointer: Swift.UnsafeMutableRawPointer, attribute: AGAttribute)
+	public static func _updateDefault(_ pointer: Swift.UnsafeMutableRawPointer)
+}
+
+extension AttributeGraph.StatefulRule {
+	public var attribute: AttributeGraph.Attribute<Value> { get }
+	public var context: AttributeGraph.RuleContext<Value> { get }
+	public var value: Value { unsafeAddress nonmutating set }
+	public var hasValue: Bool { get }
+}
+
 // MARK: - RuleContext
 
 @frozen
@@ -214,7 +235,7 @@ public struct RuleContext<Value> {
 @frozen
 public struct AnyRuleContext {
 	public var attribute: AGAttribute
-	public init(attribute: OGAttribute)
+	public init(attribute: AGAttribute)
 	public init<V>(_ context: RuleContext<V>)
 	public subscript<V>(attribute: Attribute<V>) -> V { unsafeAddress }
 	//    public subscript<V>(weakAttribute: WeakAttribute<V>) -> V? { get }
