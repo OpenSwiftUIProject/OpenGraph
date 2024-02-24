@@ -85,7 +85,7 @@ OGAttribute OGGraphCreateAttribute(long index, const void *body, const void * va
     return OGAttributeNil;
 }
 
-OGValue OGGraphGetValue(OGAttribute attribute, OGValueOptions options, OGTypeID type) {
+const OGValue OGGraphGetValue(OGAttribute attribute, OGValueOptions options, OGTypeID type) {
     // TODO
     return OGValue { nullptr, false };
 }
@@ -93,6 +93,11 @@ OGValue OGGraphGetValue(OGAttribute attribute, OGValueOptions options, OGTypeID 
 bool OGGraphSetValue(OGAttribute attribute, const void *value, OGTypeID type) {
     // TODO
     return false;
+}
+
+const OGValue OGGraphGetInputValue(OGAttribute attribute, OGAttribute inputAttribute, OGValueOptions options, const OGTypeID type) {
+    // TODO
+    return OGValue { nullptr, false };
 }
 
 const void * _Nullable OGGraphGetOutputValue(OGTypeID type) {

@@ -74,11 +74,15 @@ AGAttribute AGGraphCreateAttribute(long index, const void *body, const void * _N
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
-AGValue AGGraphGetValue(AGAttribute attribute, AGValueOptions options, const AGTypeID type);
+const AGValue AGGraphGetValue(AGAttribute attribute, AGValueOptions options, const AGTypeID type);
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
 bool AGGraphSetValue(AGAttribute attribute, const void *value, const AGTypeID type);
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+const AGValue AGGraphGetInputValue(AGAttribute attribute, AGAttribute inputAttribute, AGValueOptions options, const AGTypeID type);
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
