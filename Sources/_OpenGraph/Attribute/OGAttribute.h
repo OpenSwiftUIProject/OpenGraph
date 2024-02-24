@@ -82,6 +82,10 @@ bool OGGraphSetValue(OGAttribute attribute, const void *value, const OGTypeID ty
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
+const void * _Nullable OGGraphGetOutputValue(OGTypeID type);
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
 void OGGraphSetOutputValue(const void *value, const OGTypeID type);
 
 OG_EXPORT

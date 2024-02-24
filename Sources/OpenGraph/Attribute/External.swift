@@ -6,6 +6,7 @@
 //  Lastest Version: iOS 15.5
 //  Status: Complete
 
+@frozen
 public struct External<Value>: _AttributeBody, CustomStringConvertible {
     public init() {}
     

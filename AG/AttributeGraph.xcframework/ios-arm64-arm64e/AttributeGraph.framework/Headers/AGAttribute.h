@@ -82,6 +82,10 @@ bool AGGraphSetValue(AGAttribute attribute, const void *value, const AGTypeID ty
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
+const void * _Nullable AGGraphGetOutputValue(AGTypeID type);
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
 void AGGraphSetOutputValue(const void *value, const AGTypeID type);
 
 AG_EXPORT

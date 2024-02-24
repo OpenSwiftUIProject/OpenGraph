@@ -95,6 +95,11 @@ bool OGGraphSetValue(OGAttribute attribute, const void *value, OGTypeID type) {
     return false;
 }
 
+const void * _Nullable OGGraphGetOutputValue(OGTypeID type) {
+    // TODO
+    return nullptr;
+}
+
 void OGGraphSetOutputValue(const void *value, const OGTypeID type) {
     // TODO
 }

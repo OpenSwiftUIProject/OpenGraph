@@ -24,7 +24,7 @@ extension Rule {
         let value = rule.pointee.value
         // Verified for iOS 17
         withUnsafePointer(to: value) { valuePointer in
-            __OGGraphSetOutputValue(valuePointer, OGTypeID(Value.self))
+            OGGraphSetOutputValue(valuePointer)
         }
     }
 
@@ -34,7 +34,7 @@ extension Rule {
         }
         // Verified for iOS 17
         withUnsafePointer(to: initialValue) { valuePointer in
-            __OGGraphSetOutputValue(valuePointer, OGTypeID(Value.self))
+            OGGraphSetOutputValue(valuePointer)
         }
     }
 }
@@ -92,3 +92,13 @@ extension Rule where Self: Hashable {
             .assumingMemoryBound(to: Value.self)
     }
 }
+
+@_silgen_name("OGGraphGetOutputValue")
+@inline(__always)
+@inlinable
+func OGGraphGetOutputValue<Value>() -> UnsafePointer<Value>?
+
+@_silgen_name("OGGraphSetOutputValue")
+@inline(__always)
+@inlinable
+func OGGraphSetOutputValue<Value>(_ valuePointer: UnsafePointer<Value>)
