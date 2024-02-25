@@ -23,7 +23,7 @@ extension _AttributeBody {
     public static var _hasDestroySelf: Bool { false }
     public static func _updateDefault(_ pointer: UnsafeMutableRawPointer) {}
     public static var comparisonMode: OGComparisonMode { ._2 }
-    public static var flags: OGAttributeTypeFlags { ._8 }
+    public static var flags: OGAttributeTypeFlags { .mainThread }
 }
 
 extension _AttributeBody {

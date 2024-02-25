@@ -11,12 +11,13 @@
 #include "OGBase.h"
 
 typedef OG_OPTIONS(uint32_t, OGAttributeTypeFlags) {
-    OGAttributeTypeFlags_0 = 0,
+    OGAttributeTypeFlagsDefault = 0,
     OGAttributeTypeFlags_1 = 1 << 0,
     OGAttributeTypeFlags_2 = 1 << 1,
     OGAttributeTypeFlags_4 = 1 << 2,
-    OGAttributeTypeFlags_8 = 1 << 3,
+    OGAttributeTypeFlagsMainThread = 1 << 3,
     OGAttributeTypeFlags_16 = 1 << 4,
+    OGAttributeTypeFlagsAsyncThread = 1 << 5,
 };
 
 #endif /* OGAttributeTypeFlags_h */
