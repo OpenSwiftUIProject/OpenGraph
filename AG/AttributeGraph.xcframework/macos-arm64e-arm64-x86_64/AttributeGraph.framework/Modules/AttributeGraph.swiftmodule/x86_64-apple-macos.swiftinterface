@@ -94,6 +94,11 @@ extension AttributeGraph.Attribute: Swift.CustomStringConvertible {
 	public var description: String { get }
 }
 
+extension AttributeGraph.Attribute {
+	init<R: AttributeGraph.Rule>(_ rule: R) where R.Value == Value
+	init<R: AttributeGraph.StatefulRule>(_ rule: R) where R.Value == Value
+}
+
 // MARK: - _AttributeBody
 
 public protocol _AttributeBody {
