@@ -37,7 +37,7 @@ public struct Attribute<Value> {
     public init<Body: _AttributeBody>(
         body: UnsafePointer<Body>,
         value: UnsafePointer<Value>?,
-        flags: OGAttributeTypeFlags,
+        flags: OGAttributeTypeFlags = [],
         update: AttributeUpdateBlock
     ) {
         #if os(WASI)
