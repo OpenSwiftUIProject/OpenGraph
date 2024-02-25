@@ -37,7 +37,7 @@ public struct Attribute<Value> {
     public init<Body: _AttributeBody>(
         body: UnsafePointer<Body>,
         value: UnsafePointer<Value>?,
-        flags: OGAttributeTypeFlags,
+        flags: OGAttributeTypeFlags = [],
         update: AttributeUpdateBlock
     ) {
         #if os(WASI)
@@ -55,7 +55,7 @@ public struct Attribute<Value> {
             flags: flags,
             update: update
         )
-        identifier = __OGGraphCreateAttribute(index, body, value)
+        identifier = OGGraphCreateAttribute(index: index, body: body, value: value)
         #endif
     }
     
@@ -85,8 +85,7 @@ public struct Attribute<Value> {
         if let offset = MemoryLayout<Value>.offset(of: keyPath) {
             return unsafeOffset(at: offset, as: Member.self)
         } else {
-            _ = Focus(root: self, keyPath: keyPath)
-            fatalError("TODO")
+            return Attribute<Member>(Focus(root: self, keyPath: keyPath))
         }
     }
         
@@ -216,7 +215,17 @@ extension Attribute: CustomStringConvertible {
 // MARK: Attribute + Rule
 
 extension Attribute {
-    // init with Rule and StatefulRule
+    init<R: Rule>(_ rule: R) where R.Value == Value {
+        self = withUnsafePointer(to: rule) { pointer in
+            Attribute(body: pointer, value: nil) { R._update }
+        }
+    }
+    
+    init<R: StatefulRule>(_ rule: R) where R.Value == Value {
+        self = withUnsafePointer(to: rule) { pointer in
+            Attribute(body: pointer, value: nil) { R._update }
+        }
+    }
 }
 
 // TODO:
@@ -224,6 +233,11 @@ private struct AttributeType {
     var graphType: OGAttributeType
     var type: _AttributeBody.Type
 }
+
+@_silgen_name("OGGraphCreateAttribute")
+@inline(__always)
+@inlinable
+func OGGraphCreateAttribute(index: Int, body: UnsafeRawPointer, value: UnsafeRawPointer?) -> OGAttribute
 
 @_silgen_name("OGGraphGetValue")
 @inline(__always)

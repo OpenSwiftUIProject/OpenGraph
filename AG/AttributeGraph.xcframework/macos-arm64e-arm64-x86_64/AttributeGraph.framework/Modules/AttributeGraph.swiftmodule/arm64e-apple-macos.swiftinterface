@@ -94,6 +94,11 @@ extension AttributeGraph.Attribute: Swift.CustomStringConvertible {
 	public var description: String { get }
 }
 
+extension AttributeGraph.Attribute {
+	init<R: AttributeGraph.Rule>(_ rule: R) where R.Value == Value
+	init<R: AttributeGraph.StatefulRule>(_ rule: R) where R.Value == Value
+}
+
 // MARK: - _AttributeBody
 
 public protocol _AttributeBody {
@@ -152,6 +157,17 @@ extension AttributeGraph.Focus: AttributeGraph.Rule {
 
 extension AttributeGraph.Focus: Swift.CustomStringConvertible {
 	public var description: Swift.String { get }
+}
+
+// MARK: - ObservedAttribute
+
+public protocol ObservedAttribute: AttributeGraph._AttributeBody {
+	func destroy()
+}
+
+extension AttributeGraph.ObservedAttribute {
+	public static func _destroySelf(_ pointer: Swift.UnsafeMutableRawPointer)
+	public static var _hasDestroySelf: Swift.Bool { get }
 }
 
 // MARK: - Graph Related
