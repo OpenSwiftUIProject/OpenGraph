@@ -12,6 +12,8 @@
 #include "OGGraph.h"
 #include "../Private/CFRuntime.h"
 
+OG_ASSUME_NONNULL_BEGIN
+
 #if OG_OBJC_FOUNDATION
 @class NSDictionary;
 #endif /* OG_OBJC_FOUNDATION */
@@ -35,9 +37,16 @@ public:
     
     Graph() OG_NOEXCEPT;
     
+    static void all_start_profiling(uint32_t) OG_NOEXCEPT;
+    static void all_stop_profiling() OG_NOEXCEPT;
+    void start_profiling(uint32_t) OG_NOEXCEPT;
+    void stop_profiling() OG_NOEXCEPT;
+    
+    static void write_to_file(const Graph * _Nullable, const char * _Nullable) OG_NOEXCEPT;
+    
     class Context final {
     private:
-        Graph *_graph;
+        Graph * _Nullable _graph;
         bool _isInvalid;
     public:
         static Context &from_cf(OGGraphRef graph) OG_NOEXCEPT;
@@ -80,5 +89,7 @@ struct OGGraphStorage {
 struct OGGraphContextStorage {
     OG::Graph::Context context;
 };
+
+OG_ASSUME_NONNULL_END
 
 #endif /* Graph_hpp */

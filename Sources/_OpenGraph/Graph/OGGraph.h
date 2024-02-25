@@ -35,7 +35,7 @@ OGGraphRef OGGraphCreateShared(_Nullable OGGraphRef graph) OG_SWIFT_NAME(OGGraph
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-void OGGraphArchiveJSON(char const* name) OG_SWIFT_NAME(OGGraphRef.archiveJSON(name:));
+void OGGraphArchiveJSON(char const * _Nullable name) OG_SWIFT_NAME(OGGraphRef.archiveJSON(name:));
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
@@ -44,6 +44,14 @@ _Nullable CFTypeRef OGGraphDescription(_Nullable OGGraphRef graph, CFDictionaryR
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
 CFTypeID OGGraphGetTypeID(void) OG_SWIFT_NAME(getter:OGGraphRef.typeID());
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGGraphStartProfiling(_Nullable OGGraphRef graph);
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGGraphStopProfiling(_Nullable OGGraphRef graph);
 
 OG_EXTERN_C_END
 

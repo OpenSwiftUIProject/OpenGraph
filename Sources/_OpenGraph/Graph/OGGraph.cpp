@@ -45,8 +45,8 @@ OGGraphRef OGGraphCreateShared(OGGraphRef storage) {
     return instance;
 }
 
-void OGGraphArchiveJSON(char const* name) {
-    // TODO
+void OGGraphArchiveJSON(char const * _Nullable name) {
+    OG::Graph::write_to_file(nullptr, name);
 }
 
 namespace {
@@ -79,4 +79,26 @@ CFRuntimeClass &graph_type_id() {
 CFTypeID OGGraphGetTypeID() {
     static CFTypeID type = _CFRuntimeRegisterClass(&graph_type_id());
     return type;
+}
+
+void OGGraphStartProfiling(_Nullable OGGraphRef graph) {
+    if (!graph) {
+        OG::Graph::all_start_profiling(1);
+        return;
+    }
+    if (graph->context.isInvalid()) {
+        OG::precondition_failure("invalidated graph");
+    }
+    graph->context.get_graph().start_profiling(1);
+}
+
+void OGGraphStopProfiling(_Nullable OGGraphRef graph) {
+    if (!graph) {
+        OG::Graph::all_stop_profiling();
+        return;
+    }
+    if (graph->context.isInvalid()) {
+        OG::precondition_failure("invalidated graph");
+    }
+    graph->context.get_graph().stop_profiling();
 }

@@ -19,3 +19,11 @@ extension OGGraph {
         0
     }
 }
+
+extension OGGraph {
+    @_silgen_name("OGGraphStartProfiling")
+    public static func startProfiling(_ graph: OGGraph? = nil)
+
+    @_silgen_name("OGGraphStopProfiling")
+    public static func stopProfiling(_ graph: OGGraph? = nil)
+}

@@ -35,7 +35,7 @@ AGGraphRef AGGraphCreateShared(_Nullable AGGraphRef graph) AG_SWIFT_NAME(AGGraph
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
-void AGGraphArchiveJSON(char const* name) AG_SWIFT_NAME(AGGraphRef.archiveJSON(name:));
+void AGGraphArchiveJSON(char const * _Nullable name) AG_SWIFT_NAME(AGGraphRef.archiveJSON(name:));
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
@@ -44,6 +44,14 @@ _Nullable CFTypeRef AGGraphDescription(_Nullable AGGraphRef graph, CFDictionaryR
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
 CFTypeID AGGraphGetTypeID(void) AG_SWIFT_NAME(getter:AGGraphRef.typeID());
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+void AGGraphStartProfiling(_Nullable AGGraphRef graph);
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+void AGGraphStopProfiling(_Nullable AGGraphRef graph);
 
 AG_EXTERN_C_END
 
