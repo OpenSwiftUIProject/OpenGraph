@@ -19,5 +19,5 @@ typedef OG_OPTIONS(uint32_t, OGAttributeTypeFlags) {
     OGAttributeTypeFlags_16 = 1 << 4,
 };
 
-#endif /* OGAttribute_h */
+#endif /* OGAttributeTypeFlags_h */
 

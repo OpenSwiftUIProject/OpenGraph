@@ -1,3 +1,11 @@
+//
+//  _AttributeBody.swift
+//  OpenGraph
+//
+//  Updated by Kyle on 2024/2/24.
+//  Lastest Version: iOS 15.5
+//  Status: Complete
+
 import _OpenGraph
 
 public protocol Rule: _AttributeBody {
@@ -6,19 +14,91 @@ public protocol Rule: _AttributeBody {
     var value: Value { get }
 }
 
+// MARK: - Rule Protocol default implementation
+
 extension Rule {
     public static var initialValue: Value? { nil }
 
-    // TODO
-    public static func _update(_ value: UnsafeMutableRawPointer, attribute: OGAttribute) {
-        
+    public static func _update(_ pointer: UnsafeMutableRawPointer, attribute _: OGAttribute) {
+        let rule = pointer.assumingMemoryBound(to: Self.self)
+        let value = rule.pointee.value
+        // Verified for iOS 17
+        withUnsafePointer(to: value) { valuePointer in
+            OGGraphSetOutputValue(valuePointer)
+        }
     }
 
-    // TODO
-    public static func _updateDefault(_ value: UnsafeMutableRawPointer) {
-
+    public static func _updateDefault(_: UnsafeMutableRawPointer) {
+        guard let initialValue else {
+            return
+        }
+        // Verified for iOS 17
+        withUnsafePointer(to: initialValue) { valuePointer in
+            OGGraphSetOutputValue(valuePointer)
+        }
     }
-
-//    public var attribute: Attribute<Value>
-//    public var context: RuleContext<Value>
 }
+
+// MARK: - Rule extension
+
+extension Rule {
+    public var attribute: Attribute<Value> {
+        Attribute<Value>(identifier: OGAttribute.current!)
+    }
+
+    public var context: RuleContext<Value> {
+        RuleContext<Value>(attribute: attribute)
+    }
+}
+
+// MARK: - Rule extension for Hashable Value
+
+extension Rule where Self: Hashable {
+    public func cachedValue(
+        options: OGCachedValueOptions,
+        owner: OGAttribute?
+    ) -> Value {
+        withUnsafePointer(to: self) { pointer in
+            Self._cachedValue(
+                options: options,
+                owner: owner,
+                hashValue: hashValue,
+                bodyPtr: pointer,
+                update: { Self._update }
+            ).pointee
+        }
+    }
+    
+    public func cachedValueIfExists(
+        options: OGCachedValueOptions,
+        owner: OGAttribute?
+    ) -> Value? {
+        withUnsafePointer(to: self) { bodyPointer in
+            let value = __OGGraphReadCachedAttributeIfExists(hashValue, OGTypeID(Self.self), bodyPointer, OGTypeID(Value.self), options, owner ?? .nil, false)
+            guard let value else { return nil }
+            return value.assumingMemoryBound(to: Value.self).pointee
+        }
+    }
+
+    public static func _cachedValue(
+        options: OGCachedValueOptions,
+        owner: OGAttribute?,
+        hashValue: Int, 
+        bodyPtr: UnsafeRawPointer, 
+        update: AttributeUpdateBlock
+    ) -> UnsafePointer<Value> {
+        // TODO: pass closure here
+        __OGGraphReadCachedAttribute(hashValue, OGTypeID(Self.self), bodyPtr, OGTypeID(Value.self), options, owner ?? .nil, false)
+            .assumingMemoryBound(to: Value.self)
+    }
+}
+
+@_silgen_name("OGGraphGetOutputValue")
+@inline(__always)
+@inlinable
+func OGGraphGetOutputValue<Value>() -> UnsafePointer<Value>?
+
+@_silgen_name("OGGraphSetOutputValue")
+@inline(__always)
+@inlinable
+func OGGraphSetOutputValue<Value>(_ valuePointer: UnsafePointer<Value>)

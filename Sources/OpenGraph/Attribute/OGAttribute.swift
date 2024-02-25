@@ -83,4 +83,4 @@ extension OGAttribute: CustomStringConvertible {
     public var description: String { "#\(rawValue)" }
 }
 
-public typealias AttributeUpdateBlock = () -> ((UnsafeMutableRawPointer, OGAttribute) -> Void)
+public typealias AttributeUpdateBlock = () -> (UnsafeMutableRawPointer, OGAttribute) -> Void

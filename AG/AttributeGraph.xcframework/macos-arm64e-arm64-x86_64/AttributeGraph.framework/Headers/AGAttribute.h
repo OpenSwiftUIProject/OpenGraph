@@ -5,12 +5,13 @@
 //  Created by Kyle on 2023/8/30.
 //
 
-
 #ifndef AGAttribute_h
 #define AGAttribute_h
 
+#include "AGBase.h"
 #include "AGAttributeInfo.h"
 #include "AGAttributeFlags.h"
+#include "AGCachedValueOptions.h"
 #include "AGGraph.h"
 #include "AGInputOptions.h"
 #include "AGTypeID.h"
@@ -73,11 +74,23 @@ AGAttribute AGGraphCreateAttribute(long index, const void *body, const void * _N
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
-AGValue AGGraphGetValue(AGAttribute attribute, AGValueOptions options, AGTypeID type);
+const AGValue AGGraphGetValue(AGAttribute attribute, AGValueOptions options, const AGTypeID type);
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
-bool AGGraphSetValue(AGAttribute attribute, const void *value, AGTypeID type);
+bool AGGraphSetValue(AGAttribute attribute, const void *value, const AGTypeID type);
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+const AGValue AGGraphGetInputValue(AGAttribute attribute, AGAttribute inputAttribute, AGValueOptions options, const AGTypeID type);
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+const void * _Nullable AGGraphGetOutputValue(AGTypeID type);
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+void AGGraphSetOutputValue(const void *value, const AGTypeID type);
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
@@ -110,6 +123,22 @@ AGGraphRef AGGraphGetAttributeGraph(AGAttribute attribute) AG_SWIFT_NAME(getter:
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
 AGSubgraphRef AGGraphGetAttributeSubgraph(AGAttribute attribute) AG_SWIFT_NAME(getter:AGAttribute.subgraph(self:));
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+const void * AGGraphReadCachedAttribute(long hashValue, AGTypeID bodyType, const void *bodyPointer, AGTypeID valueType, AGCachedValueOptions options, AGAttribute attribute, bool unknown/*, ...*/);
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+const void * _Nullable AGGraphReadCachedAttributeIfExists(long hashValue, AGTypeID bodyType, const void *bodyPointer, AGTypeID valueType, AGCachedValueOptions options, AGAttribute attribute, bool unknown);
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+void AGGraphWithUpdate(
+    AGAttribute attribute,
+    void (* callback)(const void *context AG_SWIFT_CONTEXT) AG_SWIFT_CC(swift),
+    const void *context
+);
 
 AG_EXTERN_C_END
 

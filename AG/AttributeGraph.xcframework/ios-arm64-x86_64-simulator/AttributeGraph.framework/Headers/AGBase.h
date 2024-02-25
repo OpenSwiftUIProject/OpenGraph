@@ -39,21 +39,19 @@
 #define AG_CONSTEXPR
 #endif
 
-#define AG_SWIFT_STRUCT __attribute__((swift_wrapper(struct)))
-
 #include <CoreFoundation/CoreFoundation.h>
 #include <TargetConditionals.h>
 #ifndef TARGET_OS_DARWIN
 #define TARGET_OS_DARWIN TARGET_OS_MAC
 #endif
+#include "AGSwiftSupport.h"
+
 #define AG_OPTIONS CF_OPTIONS
 #define AG_EXTERN_C_BEGIN CF_EXTERN_C_BEGIN
 #define AG_EXTERN_C_END CF_EXTERN_C_END
 #define AG_ASSUME_NONNULL_BEGIN CF_ASSUME_NONNULL_BEGIN
 #define AG_ASSUME_NONNULL_END CF_ASSUME_NONNULL_END
 #define AG_EXPORT CF_EXPORT
-#define AG_REFINED_FOR_SWIFT CF_REFINED_FOR_SWIFT
-#define AG_SWIFT_NAME CF_SWIFT_NAME
 #define AG_BRIDGED_TYPE CF_BRIDGED_TYPE
 
 #if TARGET_OS_DARWIN && __OBJC__

@@ -85,7 +85,7 @@ OGAttribute OGGraphCreateAttribute(long index, const void *body, const void * va
     return OGAttributeNil;
 }
 
-OGValue OGGraphGetValue(OGAttribute attribute, OGValueOptions options, OGTypeID type) {
+const OGValue OGGraphGetValue(OGAttribute attribute, OGValueOptions options, OGTypeID type) {
     // TODO
     return OGValue { nullptr, false };
 }
@@ -93,6 +93,20 @@ OGValue OGGraphGetValue(OGAttribute attribute, OGValueOptions options, OGTypeID 
 bool OGGraphSetValue(OGAttribute attribute, const void *value, OGTypeID type) {
     // TODO
     return false;
+}
+
+const OGValue OGGraphGetInputValue(OGAttribute attribute, OGAttribute inputAttribute, OGValueOptions options, const OGTypeID type) {
+    // TODO
+    return OGValue { nullptr, false };
+}
+
+const void * _Nullable OGGraphGetOutputValue(OGTypeID type) {
+    // TODO
+    return nullptr;
+}
+
+void OGGraphSetOutputValue(const void *value, const OGTypeID type) {
+    // TODO
 }
 
 OGValueState OGGraphGetValueState(OGAttribute attribute) {
@@ -129,4 +143,23 @@ OGGraphRef OGGraphGetAttributeGraph(OGAttribute attribute) {
 OGSubgraphRef OGGraphGetAttributeSubgraph(OGAttribute attribute) {
     // TODO
     return nullptr;
+}
+
+const void * OGGraphReadCachedAttribute(long hashValue, OGTypeID bodyType, const void *bodyPointer, OGTypeID valueType, OGCachedValueOptions options, OGAttribute attribute, bool unknown) {
+    // TODO
+    return nullptr;
+}
+
+const void * _Nullable OGGraphReadCachedAttributeIfExists(long hashValue, OGTypeID bodyType, const void *bodyPointer, OGTypeID valueType, OGCachedValueOptions options, OGAttribute attribute, bool unknown) {
+    // TODO
+    return nullptr;
+}
+
+void OGGraphWithUpdate(
+    OGAttribute attribute,
+    void (* callback)(const void *context OG_SWIFT_CONTEXT) OG_SWIFT_CC(swift),
+    const void *context
+) {
+    // TODO
+    callback(context);
 }

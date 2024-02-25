@@ -11,6 +11,7 @@
 #include "OGBase.h"
 #include "OGAttributeInfo.h"
 #include "OGAttributeFlags.h"
+#include "OGCachedValueOptions.h"
 #include "OGGraph.h"
 #include "OGInputOptions.h"
 #include "OGTypeID.h"
@@ -73,11 +74,23 @@ OGAttribute OGGraphCreateAttribute(long index, const void *body, const void * _N
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-OGValue OGGraphGetValue(OGAttribute attribute, OGValueOptions options, OGTypeID type);
+const OGValue OGGraphGetValue(OGAttribute attribute, OGValueOptions options, const OGTypeID type);
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-bool OGGraphSetValue(OGAttribute attribute, const void *value, OGTypeID type);
+bool OGGraphSetValue(OGAttribute attribute, const void *value, const OGTypeID type);
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+const OGValue OGGraphGetInputValue(OGAttribute attribute, OGAttribute inputAttribute, OGValueOptions options, const OGTypeID type);
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+const void * _Nullable OGGraphGetOutputValue(OGTypeID type);
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGGraphSetOutputValue(const void *value, const OGTypeID type);
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
@@ -110,6 +123,22 @@ OGGraphRef OGGraphGetAttributeGraph(OGAttribute attribute) OG_SWIFT_NAME(getter:
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
 OGSubgraphRef OGGraphGetAttributeSubgraph(OGAttribute attribute) OG_SWIFT_NAME(getter:OGAttribute.subgraph(self:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+const void * OGGraphReadCachedAttribute(long hashValue, OGTypeID bodyType, const void *bodyPointer, OGTypeID valueType, OGCachedValueOptions options, OGAttribute attribute, bool unknown/*, ...*/);
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+const void * _Nullable OGGraphReadCachedAttributeIfExists(long hashValue, OGTypeID bodyType, const void *bodyPointer, OGTypeID valueType, OGCachedValueOptions options, OGAttribute attribute, bool unknown);
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGGraphWithUpdate(
+    OGAttribute attribute,
+    void (* callback)(const void *context OG_SWIFT_CONTEXT) OG_SWIFT_CC(swift),
+    const void *context
+);
 
 OG_EXTERN_C_END
 

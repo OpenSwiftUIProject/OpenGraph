@@ -2,16 +2,16 @@
 //  _AttributeBody.swift
 //  OpenGraph
 //
-//  Updated by Kyle on 2024/2/16.'
+//  Updated by Kyle on 2024/2/16.
 //  Lastest Version: iOS 15.5
 //  Status: Complete
 
 import _OpenGraph
 
 public protocol _AttributeBody {
-    static func _destroySelf(_ value: UnsafeMutableRawPointer)
+    static func _destroySelf(_ pointer: UnsafeMutableRawPointer)
     static var _hasDestroySelf: Bool { get }
-    static func _updateDefault(_ value: UnsafeMutableRawPointer)
+    static func _updateDefault(_ pointer: UnsafeMutableRawPointer)
     static var comparisonMode: OGComparisonMode { get }
     static var flags: OGAttributeTypeFlags { get }
 }
@@ -19,9 +19,9 @@ public protocol _AttributeBody {
 // MARK: - Protocol Default implementation
 
 extension _AttributeBody {
-    public static func _destroySelf(_ value: UnsafeMutableRawPointer) {}
+    public static func _destroySelf(_ pointer: UnsafeMutableRawPointer) {}
     public static var _hasDestroySelf: Bool { false }
-    public static func _updateDefault(_ value: UnsafeMutableRawPointer) {}
+    public static func _updateDefault(_ pointer: UnsafeMutableRawPointer) {}
     public static var comparisonMode: OGComparisonMode { ._2 }
     public static var flags: OGAttributeTypeFlags { ._8 }
 }

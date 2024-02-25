@@ -93,17 +93,17 @@ extension AttributeGraph.Attribute: Swift.CustomStringConvertible {
 // MARK: - _AttributeBody
 
 public protocol _AttributeBody {
-    static func _destroySelf(_ value: Swift.UnsafeMutableRawPointer)
+    static func _destroySelf(_ pointer: Swift.UnsafeMutableRawPointer)
     static var _hasDestroySelf: Swift.Bool { get }
-    static func _updateDefault(_ value: Swift.UnsafeMutableRawPointer)
+    static func _updateDefault(_ pointer: Swift.UnsafeMutableRawPointer)
     static var comparisonMode: AGComparisonMode { get }
     static var flags: AGAttributeTypeFlags { get }
 }
 
 extension AttributeGraph._AttributeBody {
-    public static func _destroySelf(_ value: Swift.UnsafeMutableRawPointer)
+    public static func _destroySelf(_ pointer: Swift.UnsafeMutableRawPointer)
     public static var _hasDestroySelf: Swift.Bool { get }
-    public static func _updateDefault(_ value: Swift.UnsafeMutableRawPointer)
+    public static func _updateDefault(_ pointer: Swift.UnsafeMutableRawPointer)
     public static var comparisonMode: AGComparisonMode { get }
     public static var flags: AGAttributeTypeFlags { get }
 }
@@ -161,9 +161,87 @@ public protocol Rule: AttributeGraph._AttributeBody {
 }
 
 extension AttributeGraph.Rule {
-    public static var initialValue: Self.Value? {
-        get
-    }
+    public static var initialValue: Self.Value? { get }
+	public static func _update(_ pointer: Swift.UnsafeMutableRawPointer, attribute: AGAttribute)
+	public static func _updateDefault(_ pointer: Swift.UnsafeMutableRawPointer)
+}
+
+extension AttributeGraph.Rule {
+	public var attribute: AttributeGraph.Attribute<Value> { get }
+	public var context: AttributeGraph.RuleContext<Value> { get }
+}
+
+extension AttributeGraph.Rule where Self: Swift.Hashable {
+	public func cachedValueIfExists(
+		options: AGCachedValueOptions,
+		owner: AGAttribute?
+	) -> Value?
+
+	public func cachedValue(
+		options: AGCachedValueOptions,
+		owner: AGAttribute?
+	) -> Value
+
+	public static func _cachedValue(
+		options: AGCachedValueOptions,
+		owner: AGAttribute?,
+		hashValue: Swift.Int,
+		bodyPtr: Swift.UnsafeRawPointer,
+		update: () -> (Swift.UnsafeMutableRawPointer, AGAttribute) -> ()
+	) -> Swift.UnsafePointer<Value>
+}
+
+// MARK: - StateRule
+
+public protocol StatefulRule: AttributeGraph._AttributeBody {
+	associatedtype Value
+	static var initialValue: Value? { get }
+	func updateValue()
+}
+
+extension AttributeGraph.StatefulRule {
+	public static var initialValue: Self.Value? { get }
+	public static func _update(_ pointer: Swift.UnsafeMutableRawPointer, attribute: AGAttribute)
+	public static func _updateDefault(_ pointer: Swift.UnsafeMutableRawPointer)
+}
+
+extension AttributeGraph.StatefulRule {
+	public var attribute: AttributeGraph.Attribute<Value> { get }
+	public var context: AttributeGraph.RuleContext<Value> { get }
+	public var value: Value { unsafeAddress nonmutating set }
+	public var hasValue: Bool { get }
+}
+
+// MARK: - RuleContext
+
+@frozen
+public struct RuleContext<Value> {
+	public var attribute: AttributeGraph.Attribute<Value>
+	public init(attribute: AttributeGraph.Attribute<Value>)
+	public subscript<V>(attribute: Attribute<V>) -> V { unsafeAddress }
+	//    public subscript<V>(weakAttribute: WeakAttribute<V>) -> V? { get }
+	//    public subscript<V>(optionalAttribute: OptionalAttribute<V>) -> V? { get }
+	public var value: Value { unsafeAddress nonmutating set }
+	public var hasValue: Bool
+	public func valueAndFlags<V>(of input: AttributeGraph.Attribute<V>, options: AGValueOptions) -> (value: V, flags: AGChangedValueFlags)
+	public func changedValue<V>(of input: AttributeGraph.Attribute<V>, options: AGValueOptions) -> (value: V, changed: Swift.Bool)
+	public func update(body: () -> Void)
+}
+
+// MARK: - AnyRuleContext
+
+@frozen
+public struct AnyRuleContext {
+	public var attribute: AGAttribute
+	public init(attribute: AGAttribute)
+	public init<V>(_ context: RuleContext<V>)
+	public subscript<V>(attribute: Attribute<V>) -> V { unsafeAddress }
+	//    public subscript<V>(weakAttribute: WeakAttribute<V>) -> V? { get }
+	//    public subscript<V>(optionalAttribute: OptionalAttribute<V>) -> V? { get }
+	public func valueAndFlags<V>(of input: AttributeGraph.Attribute<V>, options: AGValueOptions) -> (value: V, flags: AGChangedValueFlags)
+	public func changedValue<V>(of input: AttributeGraph.Attribute<V>, options: AGValueOptions) -> (value: V, changed: Swift.Bool)
+	public func update(body: () -> Void)
+	public func unsafeCast<V>(to _: V.Type) -> AttributeGraph.RuleContext<V>
 }
 
 // MARK: - Runtime Related
