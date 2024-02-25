@@ -6,7 +6,6 @@
 //  Lastest Version: iOS 15.5
 //  Status: Complete
 
-@frozen
 public struct Focus<Root, Value>: Rule, CustomStringConvertible {
     public var root: Attribute<Root>
     public var keyPath: KeyPath<Root, Value>

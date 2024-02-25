@@ -116,7 +116,6 @@ public protocol AttributeBodyVisitor {
 
 // MARK: - External
 
-@frozen
 public struct External<Value>: AttributeGraph._AttributeBody, Swift.CustomStringConvertible {
 	public init()
 	public var description: Swift.String { get }
@@ -127,7 +126,6 @@ public struct External<Value>: AttributeGraph._AttributeBody, Swift.CustomString
 
 // MARK: - Focus
 
-@frozen
 public struct Focus<Root, Value>: AttributeGraph.Rule, Swift.CustomStringConvertible {
     public var root: Attribute<Root>
     public var keyPath: KeyPath<Root, Value>
