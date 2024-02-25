@@ -55,7 +55,7 @@ public struct Attribute<Value> {
             flags: flags,
             update: update
         )
-        identifier = __OGGraphCreateAttribute(index, body, value)
+        identifier = OGGraphCreateAttribute(index: index, body: body, value: value)
         #endif
     }
     
@@ -233,6 +233,11 @@ private struct AttributeType {
     var graphType: OGAttributeType
     var type: _AttributeBody.Type
 }
+
+@_silgen_name("OGGraphCreateAttribute")
+@inline(__always)
+@inlinable
+func OGGraphCreateAttribute(index: Int, body: UnsafeRawPointer, value: UnsafeRawPointer?) -> OGAttribute
 
 @_silgen_name("OGGraphGetValue")
 @inline(__always)
