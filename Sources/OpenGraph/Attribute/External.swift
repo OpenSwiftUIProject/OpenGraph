@@ -6,22 +6,21 @@
 //  Lastest Version: iOS 15.5
 //  Status: Complete
 
-public struct External<Value>: _AttributeBody, CustomStringConvertible {
+@frozen
+public struct External<Value> {
     public init() {}
-    
-    // MARK: CustomStringConvertible
-    
-    @inline(__always)
-    public var description: String { OGTypeID(Self.self).description }
-    
-    // MARK: - _AttributeBody
+}
 
-    @inline(__always)
+// MARK: - _AttributeBody
+
+extension External: _AttributeBody {
     public static var comparisonMode: OGComparisonMode { ._3 }
-        
-    @inline(__always)
-    public static var flags: OGAttributeTypeFlags { .init() }
-    
-    @inline(__always)
+    public static var flags: OGAttributeTypeFlags { [] }
     public static func _update(_: UnsafeMutableRawPointer, attribute _: OGAttribute) {}
+}
+
+// MARK: CustomStringConvertible
+
+extension External: CustomStringConvertible {
+    public var description: String { OGTypeID(Value.self).description }
 }
