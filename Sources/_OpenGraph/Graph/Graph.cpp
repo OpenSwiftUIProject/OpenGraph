@@ -30,3 +30,20 @@ OG::Graph::Graph() OG_NOEXCEPT {
     
     // TODO
 }
+
+void OG::Graph::all_start_profiling(uint32_t) OG_NOEXCEPT {
+    // TODO
+}
+void OG::Graph::all_stop_profiling() OG_NOEXCEPT {
+    // TODO
+}
+void OG::Graph::start_profiling(uint32_t) OG_NOEXCEPT {
+    // TODO
+}
+void OG::Graph::stop_profiling() OG_NOEXCEPT {
+    // TODO
+}
+
+void OG::Graph::write_to_file(const Graph * _Nullable, const char * _Nullable) OG_NOEXCEPT {
+    // TODO
+}

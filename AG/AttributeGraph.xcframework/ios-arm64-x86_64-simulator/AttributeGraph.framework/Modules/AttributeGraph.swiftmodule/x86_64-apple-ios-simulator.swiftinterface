@@ -184,6 +184,14 @@ extension AttributeGraph.AGGraph {
 	) -> Int
 }
 
+extension AttributeGraph.AGGraph {
+	@_silgen_name("AGGraphStartProfiling")
+	public static func startProfiling(_ graph: AGGraph? = nil)
+
+	@_silgen_name("AGGraphStopProfiling")
+	public static func stopProfiling(_ graph: AGGraph? = nil)
+}
+
 // MARK: - Rule Related
 
 // MARK: - Rule
