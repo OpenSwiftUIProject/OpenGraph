@@ -85,8 +85,7 @@ public struct Attribute<Value> {
         if let offset = MemoryLayout<Value>.offset(of: keyPath) {
             return unsafeOffset(at: offset, as: Member.self)
         } else {
-            _ = Focus(root: self, keyPath: keyPath)
-            fatalError("TODO")
+            return Attribute<Member>(Focus(root: self, keyPath: keyPath))
         }
     }
         
