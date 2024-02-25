@@ -116,24 +116,38 @@ public protocol AttributeBodyVisitor {
 
 // MARK: - External
 
-public struct External<Value>: AttributeGraph._AttributeBody, Swift.CustomStringConvertible {
+@frozen
+public struct External<Value> {
 	public init()
-	public var description: Swift.String { get }
+}
+
+extension AttributeGraph.External: AttributeGraph._AttributeBody {
 	public static var comparisonMode: AGComparisonMode { get }
 	public static var flags: AGAttributeTypeFlags { get }
 	public static func _update(_: Swift.UnsafeMutableRawPointer, attribute: AGAttribute)
 }
 
+extension AttributeGraph.External: Swift.CustomStringConvertible {
+	public var description: Swift.String { get }
+}
+
 // MARK: - Focus
 
-public struct Focus<Root, Value>: AttributeGraph.Rule, Swift.CustomStringConvertible {
+@frozen
+public struct Focus<Root, Value> {
     public var root: Attribute<Root>
     public var keyPath: KeyPath<Root, Value>
     
     public init(root: Attribute<Root>, keyPath: KeyPath<Root, Value>)
-    public var description: Swift.String { get }
-    public var value: Self.Value { get }
-    public static var flags: AGAttributeTypeFlags { get }
+}
+
+extension AttributeGraph.Focus: AttributeGraph.Rule {
+	public var value: Self.Value { get }
+	public static var flags: AGAttributeTypeFlags { get }
+}
+
+extension AttributeGraph.Focus: Swift.CustomStringConvertible {
+	public var description: Swift.String { get }
 }
 
 // MARK: - Graph Related

@@ -16,10 +16,8 @@ final class ExternalTests: AttributeTestBase {
     @Test
     func example() throws {
         let type = External<Int>.self
-        if compatibilityTestEnabled {
-            let externalInt = type.init()
-            #expect(externalInt.description == "External<Int>")
-        }
+        let externalInt = type.init()
+        #expect(externalInt.description == "Int")
         #expect(type.comparisonMode == ._3)
         #expect(type.flags == [])
     }

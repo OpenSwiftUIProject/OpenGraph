@@ -17,12 +17,12 @@ final class FocusTests: AttributeTestBase {
     
     @Test
     func example() throws {
-//        let root = Attribute<Demo>(identifier: .nil)
+        let root = Attribute<Demo>(value: Demo(a: 0, b: 1.0))
         let type = Focus<Demo, Int>.self
-        // FIXME: crash for some reason
-//        let focus = type.init(root: root, keyPath: \.a)
-//        XCTAssertEqual(focus.description, "• Focus<Demo, Int>")
-//        XCTAssertEqual(focus.value, 0)
+        let focus = type.init(root: root, keyPath: \.a)
+        let d = focus.description
+        #expect(d == "• Int")
+        #expect(focus.value == 0)
         #expect(type.flags == [])
     }
 }
