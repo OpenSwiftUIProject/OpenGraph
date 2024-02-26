@@ -215,13 +215,13 @@ extension Attribute: CustomStringConvertible {
 // MARK: Attribute + Rule
 
 extension Attribute {
-    init<R: Rule>(_ rule: R) where R.Value == Value {
+    public init<R: Rule>(_ rule: R) where R.Value == Value {
         self = withUnsafePointer(to: rule) { pointer in
             Attribute(body: pointer, value: nil) { R._update }
         }
     }
     
-    init<R: StatefulRule>(_ rule: R) where R.Value == Value {
+    public init<R: StatefulRule>(_ rule: R) where R.Value == Value {
         self = withUnsafePointer(to: rule) { pointer in
             Attribute(body: pointer, value: nil) { R._update }
         }
