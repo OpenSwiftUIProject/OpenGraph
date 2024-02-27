@@ -121,3 +121,7 @@ OGGraphRef OGSubgraphGetGraph(OGSubgraphRef cf_subgraph) {
     }
     return OGGraphContextGetGraph(cf_subgraph->subgraph->get_context());
 }
+
+void OGSubgraphAddChild(OGSubgraphRef parent, OGSubgraphRef child) {
+    // TODO
+}

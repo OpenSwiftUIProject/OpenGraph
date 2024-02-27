@@ -53,7 +53,11 @@ bool OGSubgraphIsValid(OGSubgraphRef cf_subgraph) OG_SWIFT_NAME(getter:OGSubgrap
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-OGGraphRef OGSubgraphGetGraph(OGSubgraphRef cf_subgraph);
+OGGraphRef OGSubgraphGetGraph(OGSubgraphRef cf_subgraph) OG_SWIFT_NAME(getter:OGSubgraphRef.graph(self:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGSubgraphAddChild(OGSubgraphRef parent, OGSubgraphRef child) OG_SWIFT_NAME(OGSubgraphRef.addChild(self:_:));
 
 OG_EXTERN_C_END
 

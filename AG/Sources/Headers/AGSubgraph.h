@@ -53,7 +53,11 @@ bool AGSubgraphIsValid(AGSubgraphRef cf_subgraph) AG_SWIFT_NAME(getter:AGSubgrap
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
-AGGraphRef AGSubgraphGetGraph(AGSubgraphRef cf_subgraph);
+AGGraphRef AGSubgraphGetGraph(AGSubgraphRef cf_subgraph) AG_SWIFT_NAME(getter:AGSubgraphRef.graph(self:));
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+void AGSubgraphAddChild(AGSubgraphRef parent, AGSubgraphRef child) AG_SWIFT_NAME(AGSubgraphRef.addChild(self:_:));
 
 AG_EXTERN_C_END
 
