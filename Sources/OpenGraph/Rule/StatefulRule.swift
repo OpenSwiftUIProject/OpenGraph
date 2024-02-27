@@ -2,8 +2,7 @@
 //  StatefulRule.swift
 //  OpenGraph
 //
-//  Updated by Kyle on 2024/2/25.
-//  Lastest Version: iOS 15.5
+//  Audited for RELEASE_2021
 //  Status: Complete
 
 import _OpenGraph

@@ -2,7 +2,6 @@
 //  TupleTypeTests.swift
 //  
 //
-//  Created by Kyle on 2024/1/27.
 //
 
 import Testing

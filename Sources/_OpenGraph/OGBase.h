@@ -8,6 +8,8 @@
 #ifndef OGBase_h
 #define OGBase_h
 
+#include "OGVersion.h"
+
 #if DEBUG
 #define OG_ASSERTION
 #else

@@ -24,8 +24,9 @@ void precondition_failure(const char *format, ...) {
         #if OG_TARGET_OS_DARWIN
         os_log_error(error_log(), "precondition failure: %s", s);
         #endif /* OG_TARGET_OS_DARWIN */
-        // 2023 release addition
+        #if OG_TARGET_RELEASE >= OG_RELEASE_2023
         // OG::Graph::trace_assertion_failure(true, "precondition failure: %s", s)
+        #endif
         if (error_message == nullptr) {
             asprintf(&error_message, "OpenGraph precondition failure: %s.\n", s);
         }

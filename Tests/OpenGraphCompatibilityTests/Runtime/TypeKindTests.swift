@@ -2,7 +2,6 @@
 //  TypeKindTests.swift
 //
 //
-//  Created by Kyle on 2024/1/8.
 //
 
 import Testing

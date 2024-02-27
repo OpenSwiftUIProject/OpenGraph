@@ -2,8 +2,7 @@
 //  _AttributeBody.swift
 //  OpenGraph
 //
-//  Updated by Kyle on 2024/2/24.
-//  Lastest Version: iOS 15.5
+//  Audited for RELEASE_2021
 //  Status: Complete
 
 import _OpenGraph
@@ -22,7 +21,7 @@ extension Rule {
     public static func _update(_ pointer: UnsafeMutableRawPointer, attribute _: OGAttribute) {
         let rule = pointer.assumingMemoryBound(to: Self.self)
         let value = rule.pointee.value
-        // Verified for iOS 17
+        // Verified for RELEASE_2023
         withUnsafePointer(to: value) { valuePointer in
             OGGraphSetOutputValue(valuePointer)
         }
@@ -32,7 +31,7 @@ extension Rule {
         guard let initialValue else {
             return
         }
-        // Verified for iOS 17
+        // Verified for RELEASE_2023
         withUnsafePointer(to: initialValue) { valuePointer in
             OGGraphSetOutputValue(valuePointer)
         }
