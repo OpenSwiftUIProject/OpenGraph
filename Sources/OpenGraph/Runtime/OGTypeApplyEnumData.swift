@@ -2,7 +2,6 @@
 //  OGTypeApplyEnumData.swift
 //
 //
-//  Created by Kyle on 2024/1/29.
 //
 
 import _OpenGraph

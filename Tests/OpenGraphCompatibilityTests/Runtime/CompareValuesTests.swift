@@ -2,7 +2,6 @@
 //  CompareValuesTests.swift
 //
 //
-//  Created by Kyle on 2023/12/20.
 //
 
 import Testing

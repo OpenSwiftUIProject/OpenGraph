@@ -2,7 +2,6 @@
 //  UniqueIDTests.swift
 //
 //
-//  Created by Kyle on 2023/10/9.
 //
 
 import Testing

@@ -2,7 +2,6 @@
 //  GraphShims.swift
 //
 //
-//  Created by Kyle on 2023/12/21.
 //
 
 #if OPENGRAPH_ATTRIBUTEGRAPH

@@ -2,8 +2,7 @@
 //  RuleContext.swift
 //  OpenGraph
 //
-//  Updated by Kyle on 2024/2/24.
-//  Lastest Version: iOS 15.5
+//  Audited for RELEASE_2021
 //  Status: Blocked by WeakAttribute and OptionalAttribute
 
 import _OpenGraph

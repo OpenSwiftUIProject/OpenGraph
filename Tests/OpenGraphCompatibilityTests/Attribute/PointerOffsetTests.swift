@@ -2,7 +2,6 @@
 //  PointerOffsetTests.swift
 //
 //
-//  Created by Kyle on 2024/2/19.
 //
 
 import Testing
