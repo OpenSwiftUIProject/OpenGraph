@@ -25,7 +25,7 @@ private:
     static pthread_key_t _current_update_key;
 public:
     #if OG_OBJC_FOUNDATION
-    static CFTypeRef description(const Graph * graph, NSDictionary* dic);
+    static CFTypeRef description(const Graph * _Nullable graph, NSDictionary* dic);
     #endif /* OG_OBJC_FOUNDATION */
     
     // MARK: - pthread related

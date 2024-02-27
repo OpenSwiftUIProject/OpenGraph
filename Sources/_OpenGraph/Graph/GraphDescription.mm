@@ -14,7 +14,7 @@
 #include <Foundation/Foundation.h>
 CFStringRef OGDescriptionFormat = CFSTR("format");
 
-CFTypeRef OG::Graph::description(const Graph *graph, NSDictionary* dic) {
+CFTypeRef OG::Graph::description(const Graph * _Nullable graph, NSDictionary* dic) {
     // TODO
     // For "format": "graph/dict" - NSMutableDictionray
     // For "format": "graph/dot" - NSMutableString
