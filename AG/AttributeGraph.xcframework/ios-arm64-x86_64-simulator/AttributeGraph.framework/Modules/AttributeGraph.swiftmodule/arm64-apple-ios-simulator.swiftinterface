@@ -99,6 +99,48 @@ extension AttributeGraph.Attribute {
 	public init<R: AttributeGraph.StatefulRule>(_ rule: R) where R.Value == Value
 }
 
+// MARK: - AGWeakAttribute
+
+extension AGWeakAttribute {
+	public init(_ attribute: AGAttribute?)
+	public init<Value>(_ weakAttribute: AttributeGraph.WeakAttribute<Value>)
+	public func unsafeCast<Value>(to _: Value.Type) -> AttributeGraph.WeakAttribute<Value>
+	public var attribute: AGAttribute? { get _modify }
+}
+
+extension AGWeakAttribute: Swift.Hashable {
+	public static func == (lhs: AGWeakAttribute, rhs: AGWeakAttribute) -> Bool
+	public func hash(into hasher: inout Hasher)
+}
+
+extension AGWeakAttribute: Swift.CustomStringConvertible {
+	public var description: Swift.String { get }
+}
+
+// MARK: - WeakAttribute
+
+@propertyWrapper
+@dynamicMemberLookup
+public struct WeakAttribute<Value> {
+	public var base: AGWeakAttribute
+	public init(base: AGWeakAttribute)
+	public init()
+	public init(_ attribute: AttributeGraph.Attribute<Value>)
+	public init(_ attribute: AttributeGraph.Attribute<Value>?)
+	public var wrappedValue: Value? { get }
+	public var projectedValue: AttributeGraph.Attribute<Value>?{ get _modify }
+	public subscript<Member>(dynamicMember keyPath: Swift.KeyPath<Value, Member>) -> AttributeGraph.Attribute<Member>? { get }
+	public var attribute: AttributeGraph.Attribute<Value>? { get _modify }
+	public var value: Value? { get }
+	public func changedValue(options: AGValueOptions) -> (value: Value, changed: Swift.Bool)?
+}
+
+extension AttributeGraph.WeakAttribute: Swift.Hashable {}
+
+extension AttributeGraph.WeakAttribute: Swift.CustomStringConvertible {
+	public var description: Swift.String { get }
+}
+
 // MARK: - _AttributeBody
 
 public protocol _AttributeBody {
