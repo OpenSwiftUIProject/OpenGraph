@@ -85,8 +85,8 @@ public struct Attribute<Value> {
 }
 
 extension AttributeGraph.Attribute: Swift.Hashable {
-    public static func == (lhs: AttributeGraph.Attribute<Value>, rhs: AttributeGraph.Attribute<Value>) -> Swift.Bool
     public func hash(into hasher: inout Swift.Hasher)
+	public static func == (lhs: AttributeGraph.Attribute<Value>, rhs: AttributeGraph.Attribute<Value>) -> Swift.Bool
     public var hashValue: Swift.Int { get }
 }
 
@@ -115,9 +115,65 @@ public struct WeakAttribute<Value> {
 	public func changedValue(options: AGValueOptions) -> (value: Value, changed: Swift.Bool)?
 }
 
-extension AttributeGraph.WeakAttribute: Swift.Hashable {}
+extension AttributeGraph.WeakAttribute: Swift.Hashable {
+	public func hash(into hasher: inout Swift.Hasher)
+	public static func == (lhs: AttributeGraph.WeakAttribute<Value>, rhs: AttributeGraph.WeakAttribute<Value>) -> Swift.Bool
+	public var hashValue: Swift.Int { get }
+}
 
 extension AttributeGraph.WeakAttribute: Swift.CustomStringConvertible {
+	public var description: Swift.String { get }
+}
+
+// MARK: - OptionalAttribute
+
+@frozen
+public struct AnyOptionalAttribute {
+	public init()
+	public init(_ attribute: AGAttribute)
+	public init(_ attribute: AGAttribute?)
+	public init<Value>(_ attribute: AttributeGraph.OptionalAttribute<Value>)
+	public var identifier: AGAttribute
+	public static var current: AttributeGraph.AnyOptionalAttribute { get }
+	public var attribute: AGAttribute? { get set _modify }
+	public func map<Value>(_ body: (AGAttribute) -> Value) -> Value?
+	public func unsafeCast<Value>(to type: Value.Type) -> AttributeGraph.OptionalAttribute<Value>
+}
+extension AttributeGraph.AnyOptionalAttribute: Swift.Hashable {
+	public func hash(into hasher: inout Swift.Hasher)
+	public static func == (lhs: AttributeGraph.AnyOptionalAttribute, rhs: AttributeGraph.AnyOptionalAttribute) -> Swift.Bool
+	public var hashValue: Swift.Int { get }
+}
+extension AttributeGraph.AnyOptionalAttribute: Swift.CustomStringConvertible {
+	public var description: Swift.String { get }
+}
+
+@frozen
+@propertyWrapper
+@dynamicMemberLookup
+public struct OptionalAttribute<Value> {
+	public var base: AttributeGraph.AnyOptionalAttribute
+	public init()
+	public init(base: AttributeGraph.AnyOptionalAttribute)
+	public init(_ attribute: AttributeGraph.Attribute<Value>)
+	public init(_ attribute: AttributeGraph.Attribute<Value>?)
+	public init(_ weakAttribute: AttributeGraph.WeakAttribute<Value>)
+	public var attribute: AttributeGraph.Attribute<Value>? { get set _modify }
+	public var value: Value? { get }
+	public func changedValue(options: AGValueOptions) -> (value: Value, changed: Bool)?
+	public func map<V>(_ body: (AttributeGraph.Attribute<Value>) -> V) -> V?
+	public var wrappedValue: Value? { get }
+	public var projectedValue: Attribute<Value>? { get set _modify }
+	public subscript<Member>(dynamicMember keyPath: KeyPath<Value, Member>) -> Attribute<Member>? { get }
+}
+
+extension AttributeGraph.OptionalAttribute: Swift.Hashable {
+	public func hash(into hasher: inout Swift.Hasher)
+	public static func == (lhs: AttributeGraph.OptionalAttribute<Value>, rhs: AttributeGraph.OptionalAttribute<Value>) -> Swift.Bool
+	public var hashValue: Swift.Int { get }
+}
+
+extension AttributeGraph.OptionalAttribute: Swift.CustomStringConvertible {
 	public var description: Swift.String { get }
 }
 
