@@ -22,11 +22,11 @@ AG_EXTERN_C_BEGIN
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
-AGWeakAttribute AGCreateWeakAttribute(AGAttribute attribute) AG_SWIFT_NAME(AGWeakAttribute.init(attribute:));
+AGWeakAttribute AGCreateWeakAttribute(AGAttribute attribute);
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
-AGAttribute AGWeakAttributeGetAttribute(AGWeakAttribute weakAttribute) AG_SWIFT_NAME(getter:AGWeakAttribute._attribute(self:));
+AGAttribute AGWeakAttributeGetAttribute(AGWeakAttribute weakAttribute);
 
 AG_EXTERN_C_END
 

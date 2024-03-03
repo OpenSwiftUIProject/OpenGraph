@@ -9,7 +9,7 @@ import _OpenGraph
 
 extension OGWeakAttribute {
     init(_ attribute: OGAttribute?) {
-        self.init(attribute: attribute ?? .nil)
+        self = __OGCreateWeakAttribute(attribute ?? .nil)
     }
     
     init<Value>(_ weakAttribute: WeakAttribute<Value>) {
@@ -22,17 +22,16 @@ extension OGWeakAttribute {
     
     var attribute: OGAttribute? {
         get {
-            let attribute = _attribute
+            let attribute = __OGWeakAttributeGetAttribute(self)
             return attribute == .nil ? nil : attribute
         }
         set {
             self = OGWeakAttribute(newValue)
         }
         _modify {
-            let attr = _attribute
-            var value = attr == .nil ? nil : attr            
+            var value = attribute
             yield &value
-            self = OGWeakAttribute(value)
+            attribute = value
         }
     }
 }
