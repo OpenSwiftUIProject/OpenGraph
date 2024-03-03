@@ -34,6 +34,7 @@
 #include "OGValue.h"
 #include "OGValueOptions.h"
 #include "OGValueState.h"
+#include "OGWeakAttribute.h"
 
 FOUNDATION_EXPORT double AGAttributeVersionNumber;
 FOUNDATION_EXPORT const unsigned char AGAttributeVersionString[];

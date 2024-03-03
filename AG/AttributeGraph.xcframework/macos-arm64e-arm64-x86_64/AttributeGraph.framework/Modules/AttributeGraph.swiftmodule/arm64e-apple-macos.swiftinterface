@@ -99,6 +99,28 @@ extension AttributeGraph.Attribute {
 	public init<R: AttributeGraph.StatefulRule>(_ rule: R) where R.Value == Value
 }
 
+// MARK: - WeakAttribute
+
+@propertyWrapper
+@dynamicMemberLookup
+public struct WeakAttribute<Value> {
+	public init()
+	public init(_ attribute: AttributeGraph.Attribute<Value>)
+	public init(_ attribute: AttributeGraph.Attribute<Value>?)
+	public var wrappedValue: Value? { get }
+	public var projectedValue: AttributeGraph.Attribute<Value>?{ get set _modify }
+	public subscript<Member>(dynamicMember keyPath: Swift.KeyPath<Value, Member>) -> AttributeGraph.Attribute<Member>? { get }
+	public var attribute: AttributeGraph.Attribute<Value>? { get set _modify }
+	public var value: Value? { get }
+	public func changedValue(options: AGValueOptions) -> (value: Value, changed: Swift.Bool)?
+}
+
+extension AttributeGraph.WeakAttribute: Swift.Hashable {}
+
+extension AttributeGraph.WeakAttribute: Swift.CustomStringConvertible {
+	public var description: Swift.String { get }
+}
+
 // MARK: - _AttributeBody
 
 public protocol _AttributeBody {

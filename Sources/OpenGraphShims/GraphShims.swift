@@ -30,6 +30,7 @@ public typealias OGUniqueID = AGUniqueID
 public typealias OGValue = AGValue
 public typealias OGValueOptions = AGValueOptions
 public typealias OGValueState = AGValueState
+public typealias OGWeakAttribute = AGWeakAttribute
 #else
 @_exported import OpenGraph
 #endif
