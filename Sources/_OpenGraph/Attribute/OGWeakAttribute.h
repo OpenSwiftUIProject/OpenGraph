@@ -22,11 +22,11 @@ OG_EXTERN_C_BEGIN
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-OGWeakAttribute OGCreateWeakAttribute(OGAttribute attribute) OG_SWIFT_NAME(OGWeakAttribute.init(attribute:));
+OGWeakAttribute OGCreateWeakAttribute(OGAttribute attribute);
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-OGAttribute OGWeakAttributeGetAttribute(OGWeakAttribute weakAttribute) OG_SWIFT_NAME(getter:OGWeakAttribute._attribute(self:));
+OGAttribute OGWeakAttributeGetAttribute(OGWeakAttribute weakAttribute);
 
 OG_EXTERN_C_END
 

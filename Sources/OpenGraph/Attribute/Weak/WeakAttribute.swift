@@ -21,11 +21,11 @@ public struct WeakAttribute<Value> {
     }
     
     public init(_ attribute: Attribute<Value>) {
-        base = OGWeakAttribute(attribute: attribute.identifier)
+        base = OGWeakAttribute(attribute.identifier)
     }
     
     public init(_ attribute: Attribute<Value>?) {
-        base = OGWeakAttribute(attribute: attribute?.identifier ?? .nil)
+        base = OGWeakAttribute(attribute?.identifier)
     }
     
     public var wrappedValue: Value? { value }
@@ -41,21 +41,12 @@ public struct WeakAttribute<Value> {
     }
     
     public var attribute: Attribute<Value>? {
-        get {
-            if let attribute = base.attribute {
-                Attribute(identifier: attribute)
-            } else {
-                nil
-            }
-        }
-        set {
-            base = OGWeakAttribute(newValue?.identifier)
-        }
+        get { base.attribute?.unsafeCast(to: Value.self) }
+        set { base.attribute = newValue?.identifier }
         _modify {
-            let attr = base._attribute
-            var value = attr == .nil ? nil : Attribute<Value>(identifier: attr)
+            var value = attribute
             yield &value
-            base = OGWeakAttribute(value?.identifier)
+            attribute = value
         }
     }
     
