@@ -7,12 +7,15 @@
 
 import _OpenGraph
 
+@frozen
 @propertyWrapper
 @dynamicMemberLookup
 public struct WeakAttribute<Value> {
+    @usableFromInline
     var base: OGWeakAttribute
     
-    init(base: OGWeakAttribute) {
+    @_alwaysEmitIntoClient
+    public init(base: OGWeakAttribute) {
         self.base = base
     }
     
