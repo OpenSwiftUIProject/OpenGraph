@@ -149,7 +149,7 @@ public struct Attribute<Value> {
                 .value
                 .assumingMemoryBound(to: Value.self)
         }
-        set { _ = setValue(newValue) }
+        nonmutating set { _ = setValue(newValue) }
     }
     
     public var valueState: OGValueState { identifier.valueState }
@@ -170,7 +170,7 @@ public struct Attribute<Value> {
         )
     }
     
-    public func setValue(_ value: Value) -> Bool {
+    public nonmutating func setValue(_ value: Value) -> Bool {
         withUnsafePointer(to: value) { valuePointer in
             OGGraphSetValue(identifier, valuePointer: valuePointer)
         }

@@ -173,6 +173,45 @@ extension AttributeGraph.OptionalAttribute: Swift.CustomStringConvertible {
 	public var description: Swift.String { get }
 }
 
+// MARK: - IndirectAttribute
+
+@frozen
+@propertyWrapper
+@dynamicMemberLookup
+public struct IndirectAttribute<Value> {
+	public let identifier: AGAttribute
+	public init(source: AttributeGraph.Attribute<Value>)
+	public var source: AttributeGraph.Attribute<Value> {
+		get
+		nonmutating set
+		nonmutating _modify
+	}
+	public var dependency: AGAttribute? {
+		get
+		nonmutating set
+		nonmutating _modify
+	}
+	public var value: Value {
+		get
+		nonmutating set
+		nonmutating _modify
+	}
+	public func changedValue(options: AGValueOptions) -> (value: Value, changed: Bool)
+	public var wrappedValue: Value {
+		get
+		nonmutating set
+		nonmutating _modify
+	}
+	public var projectedValue: AttributeGraph.Attribute<Value> { get }
+	public subscript<Member>(dynamicMember keyPath: KeyPath<Value, Member>) -> AttributeGraph.Attribute<Member> { get }
+}
+
+extension AttributeGraph.IndirectAttribute: Swift.Hashable {
+	public func hash(into hasher: inout Swift.Hasher)
+	public static func == (lhs: AttributeGraph.IndirectAttribute<Value>, rhs: AttributeGraph.IndirectAttribute<Value>) -> Swift.Bool
+	public var hashValue: Swift.Int { get }
+}
+
 // MARK: - _AttributeBody
 
 public protocol _AttributeBody {

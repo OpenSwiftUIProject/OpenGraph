@@ -42,6 +42,14 @@ OGAttribute OGGraphCreateOffsetAttribute2(OGAttribute attribute, long offset, ui
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
+OGAttribute OGGraphCreateIndirectAttribute(OGAttribute attribute) OG_SWIFT_NAME(OGAttribute.createIndirect(self:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+OGAttribute OGGraphCreateIndirectAttribute2(OGAttribute attribute, uint64_t size) OG_SWIFT_NAME(OGAttribute.createIndirect(self:size:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
 OGAttributeFlags OGGraphGetFlags(OGAttribute attribute) OG_SWIFT_NAME(getter:OGAttribute.flags(self:));
 
 OG_EXPORT
@@ -67,6 +75,14 @@ OGAttribute OGGraphGetIndirectDependency(OGAttribute attribute);
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
 void OGGraphSetIndirectDependency(OGAttribute attribute1, OGAttribute attribute2);
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+OGAttribute OGGraphGetIndirectAttribute(OGAttribute attribute);
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGGraphSetIndirectAttribute(OGAttribute attribute1, OGAttribute attribute2);
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
