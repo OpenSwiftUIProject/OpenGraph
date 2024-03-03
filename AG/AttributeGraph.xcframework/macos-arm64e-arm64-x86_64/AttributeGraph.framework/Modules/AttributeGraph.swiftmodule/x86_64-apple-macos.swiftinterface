@@ -99,11 +99,77 @@ extension AttributeGraph.Attribute {
 	public init<R: AttributeGraph.StatefulRule>(_ rule: R) where R.Value == Value
 }
 
+// MARK: - AGWeakAttribute
+
+extension AGWeakAttribute {
+	@_alwaysEmitIntoClient
+	public init(_ attribute: AGAttribute?) {
+		self = __AGCreateWeakAttribute(attribute ?? .nil)
+	}
+
+	@_alwaysEmitIntoClient
+	public init<Value>(_ weakAttribute: AttributeGraph.WeakAttribute<Value>) {
+		self = weakAttribute.base
+	}
+
+	@_alwaysEmitIntoClient
+	public func unsafeCast<Value>(to type: Value.Type) -> AttributeGraph.WeakAttribute<Value> {
+		WeakAttribute(base: self)
+	}
+
+	@_alwaysEmitIntoClient
+	public var attribute: AGAttribute? {
+		get {
+			let attribute = __AGWeakAttributeGetAttribute(self)
+			return attribute == .nil ? nil : attribute
+		}
+		set {
+			self = AGWeakAttribute(newValue)
+		}
+		_modify {
+			var value = attribute
+			yield &value
+			attribute = value
+		}
+	}
+}
+
+extension AGWeakAttribute: Hashable {
+	@_alwaysEmitIntoClient
+	public func hash(into hasher: inout Swift.Hasher) {
+		hasher.combine(raw_attribute)
+		hasher.combine(subgraph_id)
+	}
+
+	@_alwaysEmitIntoClient
+	public static func == (lhs: AGWeakAttribute, rhs: AGWeakAttribute) -> Swift.Bool {
+		lhs.raw_attribute == rhs.raw_attribute && lhs.subgraph_id == rhs.subgraph_id
+	}
+
+	@_alwaysEmitIntoClient
+	public var hashValue: Int {
+		_hashValue(for: self)
+	}
+}
+
+extension AGWeakAttribute: CustomStringConvertible {
+	@_alwaysEmitIntoClient
+	public var description: String {
+		attribute?.description ?? "nil"
+	}
+}
+
+
 // MARK: - WeakAttribute
 
+@frozen
 @propertyWrapper
 @dynamicMemberLookup
 public struct WeakAttribute<Value> {
+	@usableFromInline
+	internal var base: AGWeakAttribute
+	@_alwaysEmitIntoClient
+	public init(base: AGWeakAttribute) { self.base = base }
 	public init()
 	public init(_ attribute: AttributeGraph.Attribute<Value>)
 	public init(_ attribute: AttributeGraph.Attribute<Value>?)

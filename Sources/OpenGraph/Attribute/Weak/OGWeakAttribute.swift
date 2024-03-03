@@ -8,19 +8,23 @@
 import _OpenGraph
 
 extension OGWeakAttribute {
-    init(_ attribute: OGAttribute?) {
+    @_alwaysEmitIntoClient
+    public init(_ attribute: OGAttribute?) {
         self = __OGCreateWeakAttribute(attribute ?? .nil)
     }
     
-    init<Value>(_ weakAttribute: WeakAttribute<Value>) {
+    @_alwaysEmitIntoClient
+    public init<Value>(_ weakAttribute: WeakAttribute<Value>) {
         self = weakAttribute.base
     }
     
-    func unsafeCast<Value>(to _: Value.Type) -> WeakAttribute<Value> {
+    @_alwaysEmitIntoClient
+    public func unsafeCast<Value>(to _: Value.Type) -> WeakAttribute<Value> {
         WeakAttribute(base: self)
     }
     
-    var attribute: OGAttribute? {
+    @_alwaysEmitIntoClient
+    public var attribute: OGAttribute? {
         get {
             let attribute = __OGWeakAttributeGetAttribute(self)
             return attribute == .nil ? nil : attribute
@@ -37,16 +41,24 @@ extension OGWeakAttribute {
 }
 
 extension OGWeakAttribute: Hashable {
+    @_alwaysEmitIntoClient
     public static func == (lhs: OGWeakAttribute, rhs: OGWeakAttribute) -> Bool {
         lhs.raw_attribute == rhs.raw_attribute && lhs.subgraph_id == rhs.subgraph_id
     }
     
+    @_alwaysEmitIntoClient
     public func hash(into hasher: inout Hasher) {
         hasher.combine(raw_attribute)
         hasher.combine(subgraph_id)
     }
+    
+    @_alwaysEmitIntoClient
+    public var hashValue: Int {
+        _hashValue(for: self)
+    }
 }
 
 extension OGWeakAttribute: CustomStringConvertible {
+    @_alwaysEmitIntoClient
     public var description: String { attribute?.description ?? "nil" }
 }
