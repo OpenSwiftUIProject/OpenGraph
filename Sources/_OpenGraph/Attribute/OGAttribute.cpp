@@ -33,6 +33,21 @@ OGAttribute OGGraphCreateOffsetAttribute2(OGAttribute attribute, long offset, ui
     return create_offset_attribute(attribute, offset, std::optional(size));
 }
 
+namespace {
+OGAttribute create_indirect_attribute(OGAttribute attribute, std::optional<uint64_t> size) {
+    // TODO
+    return OGAttributeNil;
+}
+}
+
+OGAttribute OGGraphCreateIndirectAttribute(OGAttribute attribute) {
+    return create_indirect_attribute(attribute, std::nullopt);
+}
+
+OGAttribute OGGraphCreateIndirectAttribute2(OGAttribute attribute, uint64_t size) {
+    return create_indirect_attribute(attribute, std::optional(size));
+}
+
 OGAttributeFlags OGGraphGetFlags(OGAttribute attribute) {
     const OG::AttributeID id = OG::AttributeID(attribute);
     if (!id.isDirect()) {
@@ -77,6 +92,15 @@ OGAttribute OGGraphGetIndirectDependency(OGAttribute attribute) {
 }
 
 void OGGraphSetIndirectDependency(OGAttribute attribute1, OGAttribute attribute2) {
+    // TODO
+}
+
+OGAttribute OGGraphGetIndirectAttribute(OGAttribute attribute) {
+    // TODO
+    return OGAttributeNil;
+}
+
+void OGGraphSetIndirectAttribute(OGAttribute attribute1, OGAttribute attribute2) {
     // TODO
 }
 

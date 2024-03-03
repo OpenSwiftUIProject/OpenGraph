@@ -42,6 +42,14 @@ AGAttribute AGGraphCreateOffsetAttribute2(AGAttribute attribute, long offset, ui
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
+AGAttribute AGGraphCreateIndirectAttribute(AGAttribute attribute) AG_SWIFT_NAME(AGAttribute.createIndirect(self:));
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+AGAttribute AGGraphCreateIndirectAttribute2(AGAttribute attribute, uint64_t size) AG_SWIFT_NAME(AGAttribute.createIndirect(self:size:));
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
 AGAttributeFlags AGGraphGetFlags(AGAttribute attribute) AG_SWIFT_NAME(getter:AGAttribute.flags(self:));
 
 AG_EXPORT
@@ -67,6 +75,14 @@ AGAttribute AGGraphGetIndirectDependency(AGAttribute attribute);
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
 void AGGraphSetIndirectDependency(AGAttribute attribute1, AGAttribute attribute2);
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+AGAttribute AGGraphGetIndirectAttribute(AGAttribute attribute);
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+void AGGraphSetIndirectAttribute(AGAttribute attribute1, AGAttribute attribute2);
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
