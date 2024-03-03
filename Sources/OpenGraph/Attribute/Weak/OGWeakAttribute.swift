@@ -8,25 +8,31 @@
 import _OpenGraph
 
 extension OGWeakAttribute {
-    public init(_ attribute: OGAttribute?) {
+    init(_ attribute: OGAttribute?) {
         self.init(attribute: attribute ?? .nil)
     }
     
-    public init<Value>(_ weakAttribute: WeakAttribute<Value>) {
+    init<Value>(_ weakAttribute: WeakAttribute<Value>) {
         self = weakAttribute.base
     }
     
-    public func unsafeCast<Value>(to _: Value.Type) -> WeakAttribute<Value> {
+    func unsafeCast<Value>(to _: Value.Type) -> WeakAttribute<Value> {
         WeakAttribute(base: self)
     }
     
-    public var attribute: OGAttribute? {
+    var attribute: OGAttribute? {
         get {
             let attribute = _attribute
             return attribute == .nil ? nil : attribute
         }
-        set { // FIXME: _modify
+        set {
             self = OGWeakAttribute(newValue)
+        }
+        _modify {
+            let attr = _attribute
+            var value = attr == .nil ? nil : attr            
+            yield &value
+            self = OGWeakAttribute(value)
         }
     }
 }

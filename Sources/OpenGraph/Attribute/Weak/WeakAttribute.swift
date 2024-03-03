@@ -10,9 +10,9 @@ import _OpenGraph
 @propertyWrapper
 @dynamicMemberLookup
 public struct WeakAttribute<Value> {
-    public var base: OGWeakAttribute
+    var base: OGWeakAttribute
     
-    public init(base: OGWeakAttribute) {
+    init(base: OGWeakAttribute) {
         self.base = base
     }
     
@@ -32,6 +32,7 @@ public struct WeakAttribute<Value> {
     
     public var projectedValue: Attribute<Value>?{
         get { attribute }
+        set { attribute = newValue }
         _modify { yield &attribute }
     }
     
@@ -47,8 +48,14 @@ public struct WeakAttribute<Value> {
                 nil
             }
         }
-        set { // FIXME: _modify
+        set {
             base = OGWeakAttribute(newValue?.identifier)
+        }
+        _modify {
+            let attr = base._attribute
+            var value = attr == .nil ? nil : Attribute<Value>(identifier: attr)
+            yield &value
+            base = OGWeakAttribute(value?.identifier)
         }
     }
     
