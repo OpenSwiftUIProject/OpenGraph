@@ -31,6 +31,10 @@ OG::Graph::Graph() OG_NOEXCEPT {
     // TODO
 }
 
+const void OG::Graph::value_mark_all() const OG_NOEXCEPT {
+    // TODO
+}
+
 void OG::Graph::all_start_profiling(uint32_t) OG_NOEXCEPT {
     // TODO
 }

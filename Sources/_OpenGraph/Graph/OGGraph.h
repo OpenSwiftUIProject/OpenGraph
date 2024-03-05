@@ -65,6 +65,14 @@ OG_EXPORT
 OG_REFINED_FOR_SWIFT
 OGGraphContextRef OGGraphGetGraphContext(OGGraphRef graph) OG_SWIFT_NAME(getter:OGGraphRef.graphContext(self:));
 
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGGraphInvalidate(OGGraphRef graph) OG_SWIFT_NAME(OGGraphRef.invalidate(self:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGGraphInvalidateAllValues(OGGraphRef graph) OG_SWIFT_NAME(OGGraphRef.invalidateAllValues(self:));
+
 OG_EXTERN_C_END
 
 OG_ASSUME_NONNULL_END

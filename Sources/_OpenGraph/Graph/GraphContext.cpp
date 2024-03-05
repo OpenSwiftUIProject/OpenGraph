@@ -20,8 +20,6 @@ OG::Graph::Context::Context(Graph &graph) OG_NOEXCEPT {
     // TODO
 }
 
-
-
 OG::Graph::Context::~Context() OG_NOEXCEPT {
     // TODO
 }

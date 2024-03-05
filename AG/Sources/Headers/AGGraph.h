@@ -65,6 +65,14 @@ AG_EXPORT
 AG_REFINED_FOR_SWIFT
 AGGraphContextRef AGGraphGetGraphContext(AGGraphRef graph) AG_SWIFT_NAME(getter:AGGraphRef.graphContext(self:));
 
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+void AGGraphInvalidate(AGGraphRef graph) AG_SWIFT_NAME(AGGraphRef.invalidate(self:));
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+void AGGraphInvalidateAllValues(AGGraphRef graph) AG_SWIFT_NAME(AGGraphRef.invalidateAllValues(self:));
+
 AG_EXTERN_C_END
 
 AG_ASSUME_NONNULL_END

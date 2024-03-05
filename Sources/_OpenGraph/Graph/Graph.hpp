@@ -37,6 +37,8 @@ public:
     
     Graph() OG_NOEXCEPT;
     
+    const void value_mark_all() const OG_NOEXCEPT;
+    
     static void all_start_profiling(uint32_t) OG_NOEXCEPT;
     static void all_stop_profiling() OG_NOEXCEPT;
     void start_profiling(uint32_t) OG_NOEXCEPT;

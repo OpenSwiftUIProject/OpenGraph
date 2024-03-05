@@ -123,3 +123,18 @@ OGGraphContextRef OGGraphGetGraphContext(OGGraphRef graph) {
     }
     return reinterpret_cast<OGGraphContextRef>(reinterpret_cast<uintptr_t>(graph) + sizeof(CFRuntimeBase));
 }
+
+void OGGraphInvalidate(OGGraphRef graph) {
+    if (graph->context.isInvalid()) {
+        return;
+    }
+    graph->context.~Context();
+    graph->context.setInvalid(true);
+}
+
+void OGGraphInvalidateAllValues(OGGraphRef graph) {
+    if (graph->context.isInvalid()) {
+        OG::precondition_failure("invalidated graph");
+    }
+    graph->context.get_graph().value_mark_all();
+}
