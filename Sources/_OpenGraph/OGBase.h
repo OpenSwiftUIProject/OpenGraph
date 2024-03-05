@@ -21,7 +21,12 @@
 #else
 #define __cold
 #endif
+
+#if __has_attribute(noreturn)
 #define __dead2         __attribute__((__noreturn__))
+#else
+#define __dead2
+#endif
 
 #if defined(__cplusplus)
 #define OG_NOEXCEPT noexcept
@@ -29,7 +34,9 @@
 #define OG_NOEXCEPT
 #endif
 
-#if defined(__cplusplus)
+#if defined(__GNUC__)
+#define OG_INLINE __inline__ __attribute__((always_inline))
+#elif defined(__cplusplus)
 #define OG_INLINE inline
 #else
 #define OG_INLINE

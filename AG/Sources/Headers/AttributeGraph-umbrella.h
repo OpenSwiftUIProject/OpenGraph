@@ -18,6 +18,7 @@
 #include "AGComparisonMode.h"
 #include "AGDebugServer.h"
 #include "AGGraph.h"
+#include "AGGraphContext.h"
 #include "AGInputOptions.h"
 #include "AGSearchOptions.h"
 #include "AGSubgraph.h"

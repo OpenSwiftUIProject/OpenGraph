@@ -47,6 +47,7 @@ public:
     class Context final {
     private:
         Graph * _Nullable _graph;
+        void * _Nullable _context;
         bool _isInvalid;
     public:
         static Context &from_cf(OGGraphRef graph) OG_NOEXCEPT;
@@ -66,6 +67,21 @@ public:
         OG_INLINE OG_CONSTEXPR
         Graph &get_graph() OG_NOEXCEPT {
             return *_graph;
+        }
+        
+        OG_INLINE OG_CONSTEXPR
+        const void *get_context() const OG_NOEXCEPT {
+            return _context;
+        }
+        
+        OG_INLINE OG_CONSTEXPR
+        void *get_context() OG_NOEXCEPT {
+            return _context;
+        }
+        
+        OG_INLINE OG_CONSTEXPR
+        void set_context(void *context) OG_NOEXCEPT {
+            _context = context;
         }
         
         OG_INLINE OG_CONSTEXPR
