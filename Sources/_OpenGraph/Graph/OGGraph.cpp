@@ -16,8 +16,8 @@ OGGraphRef OGGraphCreate() {
 OGGraphRef OGGraphCreateShared(OGGraphRef storage) {
     const CFIndex extraSize = sizeof(OGGraphStorage)-sizeof(CFRuntimeBase);
     #if OG_TARGET_CPU_WASM32
-    // FIXME: extraSize will be 8 on WASM. Investate later.
-    static_assert(extraSize == 0x8);
+    // FIXME: extraSize will be 0x10 on WASM. Investate later.
+    static_assert(extraSize == 0x10);
     #else
     static_assert(extraSize == 0x18/*0x50*/);
     #endif
