@@ -53,6 +53,18 @@ AG_EXPORT
 AG_REFINED_FOR_SWIFT
 void AGGraphStopProfiling(_Nullable AGGraphRef graph);
 
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+void * _Nullable AGGraphGetContext(AGGraphRef graph) AG_SWIFT_NAME(getter:AGGraphRef.context(self:));
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+void AGGraphSetContext(AGGraphRef graph, void * _Nullable context) AG_SWIFT_NAME(setter:AGGraphRef.context(self:_:));
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+AGGraphContextRef AGGraphGetGraphContext(AGGraphRef graph) AG_SWIFT_NAME(getter:AGGraphRef.graphContext(self:));
+
 AG_EXTERN_C_END
 
 AG_ASSUME_NONNULL_END

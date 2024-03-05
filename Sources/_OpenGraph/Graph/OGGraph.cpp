@@ -19,7 +19,7 @@ OGGraphRef OGGraphCreateShared(OGGraphRef storage) {
     // FIXME: extraSize will be 8 on WASM. Investate later.
     static_assert(extraSize == 0x8);
     #else
-    static_assert(extraSize == 0x10/*0x50*/);
+    static_assert(extraSize == 0x18/*0x50*/);
     #endif
     OGGraphRef instance = (OGGraphRef)_CFRuntimeCreateInstance(kCFAllocatorDefault, OGGraphGetTypeID(), extraSize, nullptr);
     if (instance == nullptr) {
@@ -101,4 +101,25 @@ void OGGraphStopProfiling(_Nullable OGGraphRef graph) {
         OG::precondition_failure("invalidated graph");
     }
     graph->context.get_graph().stop_profiling();
+}
+
+void * _Nullable OGGraphGetContext(OGGraphRef graph) {
+    if (graph->context.isInvalid()) {
+        OG::precondition_failure("invalidated graph");
+    }
+    return graph->context.get_context();
+}
+
+void OGGraphSetContext(OGGraphRef graph, void * _Nullable context) {
+    if (graph->context.isInvalid()) {
+        OG::precondition_failure("invalidated graph");
+    }
+    graph->context.set_context(context);
+}
+
+OGGraphContextRef OGGraphGetGraphContext(OGGraphRef graph) {
+    if (graph->context.isInvalid()) {
+        OG::precondition_failure("invalidated graph");
+    }
+    return reinterpret_cast<OGGraphContextRef>(reinterpret_cast<uintptr_t>(graph) + sizeof(CFRuntimeBase));
 }

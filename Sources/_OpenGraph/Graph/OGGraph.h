@@ -53,6 +53,18 @@ OG_EXPORT
 OG_REFINED_FOR_SWIFT
 void OGGraphStopProfiling(_Nullable OGGraphRef graph);
 
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void * _Nullable OGGraphGetContext(OGGraphRef graph) OG_SWIFT_NAME(getter:OGGraphRef.context(self:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGGraphSetContext(OGGraphRef graph, void * _Nullable context) OG_SWIFT_NAME(setter:OGGraphRef.context(self:_:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+OGGraphContextRef OGGraphGetGraphContext(OGGraphRef graph) OG_SWIFT_NAME(getter:OGGraphRef.graphContext(self:));
+
 OG_EXTERN_C_END
 
 OG_ASSUME_NONNULL_END
