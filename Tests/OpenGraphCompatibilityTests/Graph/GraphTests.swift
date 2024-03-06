@@ -67,12 +67,12 @@ struct GraphTests {
     @Test
     func graphCallback() {
         let graph = OGGraph()
-        OGGraph.setUpdateCallback(graph: graph, callback: nil)
-        OGGraph.setUpdateCallback(graph: graph) {
+        OGGraph.setUpdateCallback(graph, callback: nil)
+        OGGraph.setUpdateCallback(graph) {
             print("Update")
         }
-        OGGraph.setInvalidationCallback(graph: graph, callback: nil)
-        OGGraph.setInvalidationCallback(graph: graph) { attr in
+        OGGraph.setInvalidationCallback(graph, callback: nil)
+        OGGraph.setInvalidationCallback(graph) { attr in
             print("Invalidate \(attr)")
         }
     }
