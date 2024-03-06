@@ -35,5 +35,5 @@ extension OGSubgraph {
 // TODO: migrate to use @_extern(c, "xx") in Swift 6
 extension OGSubgraph {
     @_silgen_name("OGSubgraphApply")
-    public static func apply(_ graph: OGSubgraph, flags: UInt32, callback: @escaping (UInt32) -> Void)
+    public static func apply(_ graph: OGSubgraph, flags: OGAttributeFlags, callback: @escaping (OGAttribute) -> Void)
 }

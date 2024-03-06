@@ -387,7 +387,7 @@ extension AttributeGraph.AGGraph {
 
 extension AttributeGraph.AGSubgraph {
 	@_silgen_name("AGSubgraphApply")
-	public static func apply(_ graph: AttributeGraph.AGSubgraph, flags: Swift.UInt32, callback: @escaping (Swift.UInt32) -> Void)
+	public static func apply(_ graph: AttributeGraph.AGSubgraph, flags: AGAttributeFlags, callback: @escaping (AGAttribute) -> Void)
 }
 
 // MARK: - Rule Related

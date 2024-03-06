@@ -50,7 +50,7 @@ public:
     void clear_object() const OG_NOEXCEPT;
     void invalidate_and_delete_(bool) const OG_NOEXCEPT;
     
-    void apply(uint32_t flags, OG::ClosureFunction<void, uint32_t> body) const OG_NOEXCEPT;
+    void apply(OGAttributeFlags flags, OG::ClosureFunction<void, OGAttribute> body) const OG_NOEXCEPT;
     
     // MARK: - Init and deinit
     

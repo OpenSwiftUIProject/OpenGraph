@@ -127,11 +127,11 @@ void OGSubgraphAddChild(OGSubgraphRef parent, OGSubgraphRef child) {
 }
 
 void OGSubgraphApply(OGSubgraphRef cf_subgraph,
-                     uint32_t flags,
-                     const void (*function)(const void * _Nullable context OG_SWIFT_CONTEXT, uint32_t flags) OG_SWIFT_CC(swift),
+                     OGAttributeFlags flags,
+                     const void (*function)(const void * _Nullable context OG_SWIFT_CONTEXT, OGAttribute attribute) OG_SWIFT_CC(swift),
                      const void * _Nullable context) {
     if (cf_subgraph->subgraph == nullptr) {
         return;
     }
-    return cf_subgraph->subgraph->apply(flags, OG::ClosureFunction<void, uint32_t>(function, context));
+    return cf_subgraph->subgraph->apply(flags, OG::ClosureFunction<void, OGAttribute>(function, context));
 }
