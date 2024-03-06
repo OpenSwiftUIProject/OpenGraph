@@ -365,18 +365,25 @@ extension AttributeGraph.AGGraph {
 
 extension AttributeGraph.AGGraph {
 	@_silgen_name("AGGraphStartProfiling")
-	public static func startProfiling(_ graph: AGGraph? = nil)
+	public static func startProfiling(_ graph: AttributeGraph.AGGraph? = nil)
 
 	@_silgen_name("AGGraphStopProfiling")
-	public static func stopProfiling(_ graph: AGGraph? = nil)
+	public static func stopProfiling(_ graph: AttributeGraph.AGGraph? = nil)
 }
 
 extension AttributeGraph.AGGraph {
 	@_silgen_name("AGGraphSetInvalidationCallback")
-	public static func setInvalidationCallback(graph: AGGraph, callback: ((AGAttribute) -> Void)?)
+	public static func setInvalidationCallback(_ graph: AttributeGraph.AGGraph, callback: ((AGAttribute) -> Void)?)
 
 	@_silgen_name("AGGraphSetUpdateCallback")
-	public static func setUpdateCallback(graph: AGGraph, callback: (() -> Void)?)
+	public static func setUpdateCallback(_ graph: AttributeGraph.AGGraph, callback: (() -> Void)?)
+}
+
+// MARK: - AGSubgraph
+
+extension AttributeGraph.AGSubgraph {
+	@_silgen_name("AGSubgraphApply")
+	public static func apply(_ graph: AttributeGraph.AGSubgraph, flags: AGAttributeFlags, callback: @escaping (AGAttribute) -> Void)
 }
 
 // MARK: - Rule Related

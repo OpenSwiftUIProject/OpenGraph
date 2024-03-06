@@ -59,6 +59,13 @@ AG_EXPORT
 AG_REFINED_FOR_SWIFT
 void AGSubgraphAddChild(AGSubgraphRef parent, AGSubgraphRef child) AG_SWIFT_NAME(AGSubgraphRef.addChild(self:_:));
 
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+void AGSubgraphApply(AGSubgraphRef cf_subgraph,
+                     AGAttributeFlags flags,
+                     const void (*function)(const void * _Nullable context AG_SWIFT_CONTEXT, AGAttribute attribute) AG_SWIFT_CC(swift),
+                     const void * _Nullable context);
+
 AG_EXTERN_C_END
 
 AG_ASSUME_NONNULL_END

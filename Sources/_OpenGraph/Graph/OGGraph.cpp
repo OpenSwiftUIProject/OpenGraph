@@ -98,14 +98,14 @@ void OGGraphStopProfiling(_Nullable OGGraphRef graph) {
     graph->context.get_graph().stop_profiling();
 }
 
-void * _Nullable OGGraphGetContext(OGGraphRef graph) {
+const void * _Nullable OGGraphGetContext(OGGraphRef graph) {
     if (graph->context.isInvalid()) {
         OG::precondition_failure("invalidated graph");
     }
     return graph->context.get_context();
 }
 
-void OGGraphSetContext(OGGraphRef graph, void * _Nullable context) {
+void OGGraphSetContext(OGGraphRef graph, const void * _Nullable context) {
     if (graph->context.isInvalid()) {
         OG::precondition_failure("invalidated graph");
     }

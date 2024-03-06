@@ -39,8 +39,8 @@ extension OGGraph {
 
 extension OGGraph {
     @_silgen_name("OGGraphSetInvalidationCallback")
-    public static func setInvalidationCallback(graph: OGGraph, callback: ((OGAttribute) -> Void)?)
+    public static func setInvalidationCallback(_ graph: OGGraph, callback: ((OGAttribute) -> Void)?)
 
     @_silgen_name("OGGraphSetUpdateCallback")
-    public static func setUpdateCallback(graph: OGGraph, callback: (() -> Void)?)
+    public static func setUpdateCallback(_ graph: OGGraph, callback: (() -> Void)?)
 }

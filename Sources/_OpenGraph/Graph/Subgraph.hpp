@@ -12,6 +12,7 @@
 #include "../Attribute/AttributeID.hpp"
 #include "Graph.hpp"
 #include <pthread.h>
+#include "../Data/ClosureFunction.hpp"
 
 typedef struct OG_BRIDGED_TYPE(id) OGSubgraphStorage * OGSubgraphRef;
 
@@ -48,6 +49,8 @@ public:
     // MARK: - Public API
     void clear_object() const OG_NOEXCEPT;
     void invalidate_and_delete_(bool) const OG_NOEXCEPT;
+    
+    void apply(OGAttributeFlags flags, OG::ClosureFunction<void, OGAttribute> body) const OG_NOEXCEPT;
     
     // MARK: - Init and deinit
     
