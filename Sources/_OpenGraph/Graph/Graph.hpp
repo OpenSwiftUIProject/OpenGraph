@@ -114,7 +114,11 @@ public:
             _isInvalid = invalid;
         }
     };
+    #if OG_TARGET_CPU_WASM32
+    static_assert(sizeof(Context) == 0x38);
+    #else
     static_assert(sizeof(Context) == 0x50);
+    #endif
 }; /* Graph */
 } /* OG */
 
