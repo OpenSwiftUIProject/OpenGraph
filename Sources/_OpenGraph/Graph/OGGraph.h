@@ -77,6 +77,18 @@ OG_EXPORT
 OG_REFINED_FOR_SWIFT
 void OGGraphInvalidateAllValues(OGGraphRef graph) OG_SWIFT_NAME(OGGraphRef.invalidateAllValues(self:));
 
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGGraphSetInvalidationCallback(OGGraphRef graph,
+                                    const void (*_Nullable function)(const void * _Nullable context OG_SWIFT_CONTEXT, OGAttribute) OG_SWIFT_CC(swift),
+                                    const void * _Nullable context);
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGGraphSetUpdateCallback(OGGraphRef graph,
+                               const void (*_Nullable function)(const void * _Nullable context OG_SWIFT_CONTEXT) OG_SWIFT_CC(swift),
+                               const void * _Nullable context);
+
 OG_EXTERN_C_END
 
 OG_ASSUME_NONNULL_END

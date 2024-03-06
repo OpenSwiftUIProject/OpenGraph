@@ -20,8 +20,8 @@ OG::Graph::Context::Context(OG::Graph &graph) OG_NOEXCEPT :
 _graph(&graph),
 _context(nullptr),
 _id(OGMakeUniqueID()),
-_invalidation_function(nullptr),
-_update_function(nullptr) {
+_invalidation_callback(nullptr),
+_update_callback(nullptr) {
     // TODO
 }
 

@@ -8,6 +8,7 @@
 #include "OGGraph.h"
 #include "Graph.hpp"
 #include "../Util/assert.hpp"
+#include "../Data/ClosureFunction.hpp"
 
 OGGraphRef OGGraphCreate() {
     return OGGraphCreateShared(nullptr);
@@ -131,4 +132,24 @@ void OGGraphInvalidateAllValues(OGGraphRef graph) {
         OG::precondition_failure("invalidated graph");
     }
     graph->context.get_graph().value_mark_all();
+}
+
+
+
+void OGGraphSetInvalidationCallback(OGGraphRef graph,
+                                    const void (*_Nullable function)(const void * _Nullable context OG_SWIFT_CONTEXT, OGAttribute) OG_SWIFT_CC(swift),
+                                    const void * _Nullable context) {
+    if (graph->context.isInvalid()) {
+        OG::precondition_failure("invalidated graph");
+    }
+    graph->context.set_invalidation_callback(OG::ClosureFunction<void, OGAttribute>(function, context));
+}
+
+void OGGraphSetUpdateCallback(OGGraphRef graph,
+                               const void (*_Nullable function)(const void * _Nullable context OG_SWIFT_CONTEXT) OG_SWIFT_CC(swift),
+                               const void * _Nullable context) {
+    if (graph->context.isInvalid()) {
+        OG::precondition_failure("invalidated graph");
+    }
+    graph->context.set_update_callback(OG::ClosureFunction<void>(function, context));
 }

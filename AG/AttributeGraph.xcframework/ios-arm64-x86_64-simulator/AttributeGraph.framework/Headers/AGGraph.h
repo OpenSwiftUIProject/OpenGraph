@@ -77,6 +77,18 @@ AG_EXPORT
 AG_REFINED_FOR_SWIFT
 void AGGraphInvalidateAllValues(AGGraphRef graph) AG_SWIFT_NAME(AGGraphRef.invalidateAllValues(self:));
 
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+void AGGraphSetInvalidationCallback(AGGraphRef graph,
+                                    const void (*_Nullable function)(const void * _Nullable context AG_SWIFT_CONTEXT, AGAttribute) AG_SWIFT_CC(swift),
+                                    const void * _Nullable context);
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+void AGGraphSetUpdateCallback(AGGraphRef graph,
+                               const void (*_Nullable function)(const void * _Nullable context AG_SWIFT_CONTEXT) AG_SWIFT_CC(swift),
+                               const void * _Nullable context);
+
 AG_EXTERN_C_END
 
 AG_ASSUME_NONNULL_END

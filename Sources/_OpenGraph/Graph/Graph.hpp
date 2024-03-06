@@ -53,8 +53,8 @@ public:
         Graph * _Nullable _graph;
         void * _Nullable _context;
         OGUniqueID _id;
-        ClosureFunction<void, OGAttribute> _invalidation_function;
-        ClosureFunction<void> _update_function;
+        ClosureFunction<void, OGAttribute> _invalidation_callback;
+        ClosureFunction<void> _update_callback;
         uint64_t unknown1;
         uint32_t unknown2;
         uint32_t unknown3;
@@ -92,6 +92,16 @@ public:
         OG_INLINE OG_CONSTEXPR
         void set_context(void *context) OG_NOEXCEPT {
             _context = context;
+        }
+        
+        OG_INLINE
+        void set_invalidation_callback(ClosureFunction<void, OGAttribute> invalidation_callback) OG_NOEXCEPT {
+            _invalidation_callback = invalidation_callback;
+        }
+        
+        OG_INLINE
+        void set_update_callback(ClosureFunction<void> update_callback) OG_NOEXCEPT {
+            _update_callback = update_callback;
         }
         
         OG_INLINE OG_CONSTEXPR
