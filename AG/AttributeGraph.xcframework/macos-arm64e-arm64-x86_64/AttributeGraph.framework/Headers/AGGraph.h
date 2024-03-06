@@ -59,11 +59,11 @@ void AGGraphStopProfiling(_Nullable AGGraphRef graph);
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
-void * _Nullable AGGraphGetContext(AGGraphRef graph) AG_SWIFT_NAME(getter:AGGraphRef.context(self:));
+const void * _Nullable AGGraphGetContext(AGGraphRef graph) AG_SWIFT_NAME(getter:AGGraphRef.context(self:));
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
-void AGGraphSetContext(AGGraphRef graph, void * _Nullable context) AG_SWIFT_NAME(setter:AGGraphRef.context(self:_:));
+void AGGraphSetContext(AGGraphRef graph, const void * _Nullable context) AG_SWIFT_NAME(setter:AGGraphRef.context(self:_:));
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT

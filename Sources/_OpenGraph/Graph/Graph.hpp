@@ -51,7 +51,7 @@ public:
     class Context final {
     private:
         Graph * _Nullable _graph;
-        void * _Nullable _context;
+        const void * _Nullable _context;
         OGUniqueID _id;
         ClosureFunction<void, OGAttribute> _invalidation_callback;
         ClosureFunction<void> _update_callback;
@@ -80,17 +80,12 @@ public:
         }
         
         OG_INLINE OG_CONSTEXPR
-        const void *get_context() const OG_NOEXCEPT {
+        const void * _Nullable get_context() const OG_NOEXCEPT {
             return _context;
         }
         
         OG_INLINE OG_CONSTEXPR
-        void *get_context() OG_NOEXCEPT {
-            return _context;
-        }
-        
-        OG_INLINE OG_CONSTEXPR
-        void set_context(void *context) OG_NOEXCEPT {
+        void set_context(const void * _Nullable context) OG_NOEXCEPT {
             _context = context;
         }
         
