@@ -11,6 +11,8 @@
 #include "AGBase.h"
 #include "CFRuntime.h"
 
+// Note: Place all structure declaration in a single place to avoid header cycle dependency
+
 typedef struct AG_BRIDGED_TYPE(id) AGGraphStorage * AGGraphRef;
 typedef struct AG_BRIDGED_TYPE(id) AGGraphContextStorage * AGGraphContextRef;
 typedef struct AG_BRIDGED_TYPE(id) AGSubgraphStorage * AGSubgraphRef;
@@ -18,6 +20,8 @@ typedef struct AG_BRIDGED_TYPE(id) AGSubgraphStorage * AGSubgraphRef;
 struct AGGraphStorage;
 struct AGGraphContextStorage;
 struct AGSubgraphStorage;
+
+typedef uint32_t AGAttribute __attribute((swift_newtype(struct)));
 
 AG_ASSUME_NONNULL_BEGIN
 

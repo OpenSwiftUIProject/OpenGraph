@@ -16,7 +16,12 @@ OG::Graph::Context &OG::Graph::Context::from_cf(OGGraphRef storage) OG_NOEXCEPT 
     return storage->context;
 }
 
-OG::Graph::Context::Context(Graph &graph) OG_NOEXCEPT {
+OG::Graph::Context::Context(OG::Graph &graph) OG_NOEXCEPT :
+_graph(&graph),
+_context(nullptr),
+_id(OGMakeUniqueID()),
+_invalidation_function(nullptr),
+_update_function(nullptr) {
     // TODO
 }
 

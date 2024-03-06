@@ -11,6 +11,8 @@
 #include "OGBase.h"
 #include "OGGraph.h"
 #include "../Private/CFRuntime.h"
+#include "../Data/ClosureFunction.hpp"
+#include "../Data/OGUniqueID.h"
 
 OG_ASSUME_NONNULL_BEGIN
 
@@ -50,6 +52,12 @@ public:
     private:
         Graph * _Nullable _graph;
         void * _Nullable _context;
+        OGUniqueID _id;
+        ClosureFunction<void, OGAttribute> _invalidation_function;
+        ClosureFunction<void> _update_function;
+        uint64_t unknown1;
+        uint32_t unknown2;
+        uint32_t unknown3;
         bool _isInvalid;
     public:
         static Context &from_cf(OGGraphRef graph) OG_NOEXCEPT;
@@ -96,6 +104,7 @@ public:
             _isInvalid = invalid;
         }
     };
+    static_assert(sizeof(Context) == 0x50);
 }; /* Graph */
 } /* OG */
 

@@ -11,6 +11,8 @@
 #include "OGBase.h"
 #include "../Private/CFRuntime.h"
 
+// Note: Place all structure declaration in a single place to avoid header cycle dependency
+
 typedef struct OG_BRIDGED_TYPE(id) OGGraphStorage * OGGraphRef;
 typedef struct OG_BRIDGED_TYPE(id) OGGraphContextStorage * OGGraphContextRef;
 typedef struct OG_BRIDGED_TYPE(id) OGSubgraphStorage * OGSubgraphRef;
@@ -18,6 +20,8 @@ typedef struct OG_BRIDGED_TYPE(id) OGSubgraphStorage * OGSubgraphRef;
 struct OGGraphStorage;
 struct OGGraphContextStorage;
 struct OGSubgraphStorage;
+
+typedef uint32_t OGAttribute __attribute((swift_newtype(struct)));
 
 OG_ASSUME_NONNULL_BEGIN
 
