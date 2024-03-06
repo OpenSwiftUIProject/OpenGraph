@@ -63,7 +63,6 @@ struct GraphTests {
         """#
         #expect(dotGraph == expectedEmptyDotGraph)
     }
-    #endif
     
     @Test
     func graphCallback() {
@@ -77,4 +76,5 @@ struct GraphTests {
             print("Invalidate \(attr)")
         }
     }
+    #endif
 }
