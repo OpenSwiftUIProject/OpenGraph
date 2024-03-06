@@ -54,7 +54,7 @@ OGAttributeFlags OGGraphGetFlags(OGAttribute attribute) {
         OG::precondition_failure("non-direct attribute id: %u", id);
     }
     // TODO: data/table
-    return OGAttributeFlags_0;
+    return OGAttributeFlagsDefault;
 }
 
 void OGGraphSetFlags(OGAttribute attribute, OGAttributeFlags flags) {

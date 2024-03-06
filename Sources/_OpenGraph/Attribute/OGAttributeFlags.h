@@ -11,12 +11,10 @@
 #include "OGBase.h"
 
 typedef OG_OPTIONS(uint32_t, OGAttributeFlags) {
-    OGAttributeFlags_0 = 0,
+    OGAttributeFlagsDefault = 0,
     OGAttributeFlags_1 = 1 << 0,
-    OGAttributeFlags_2 = 1 << 1,
-    OGAttributeFlags_4 = 1 << 2,
-    OGAttributeFlags_8 = 1 << 3,
-    OGAttributeFlags_16 = 1 << 4,
+    OGAttributeFlagsRemovable = 1 << 1,
+    OGAttributeFlagsInvalidatable = 1 << 2,
 };
 
 #endif /* OGAttributeFlags_h */
