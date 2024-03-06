@@ -63,5 +63,18 @@ struct GraphTests {
         """#
         #expect(dotGraph == expectedEmptyDotGraph)
     }
+    
+    @Test
+    func graphCallback() {
+        let graph = OGGraph()
+        OGGraph.setUpdateCallback(graph: graph, callback: nil)
+        OGGraph.setUpdateCallback(graph: graph) {
+            print("Update")
+        }
+        OGGraph.setInvalidationCallback(graph: graph, callback: nil)
+        OGGraph.setInvalidationCallback(graph: graph) { attr in
+            print("Invalidate \(attr)")
+        }
+    }
     #endif
 }

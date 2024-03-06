@@ -11,6 +11,8 @@
 #include "OGBase.h"
 #include "../Private/CFRuntime.h"
 
+// Note: Place all structure declaration in a single place to avoid header cycle dependency
+
 typedef struct OG_BRIDGED_TYPE(id) OGGraphStorage * OGGraphRef;
 typedef struct OG_BRIDGED_TYPE(id) OGGraphContextStorage * OGGraphContextRef;
 typedef struct OG_BRIDGED_TYPE(id) OGSubgraphStorage * OGSubgraphRef;
@@ -18,6 +20,8 @@ typedef struct OG_BRIDGED_TYPE(id) OGSubgraphStorage * OGSubgraphRef;
 struct OGGraphStorage;
 struct OGGraphContextStorage;
 struct OGSubgraphStorage;
+
+typedef uint32_t OGAttribute __attribute((swift_newtype(struct)));
 
 OG_ASSUME_NONNULL_BEGIN
 
@@ -64,6 +68,26 @@ void OGGraphSetContext(OGGraphRef graph, void * _Nullable context) OG_SWIFT_NAME
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
 OGGraphContextRef OGGraphGetGraphContext(OGGraphRef graph) OG_SWIFT_NAME(getter:OGGraphRef.graphContext(self:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGGraphInvalidate(OGGraphRef graph) OG_SWIFT_NAME(OGGraphRef.invalidate(self:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGGraphInvalidateAllValues(OGGraphRef graph) OG_SWIFT_NAME(OGGraphRef.invalidateAllValues(self:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGGraphSetInvalidationCallback(OGGraphRef graph,
+                                    const void (*_Nullable function)(const void * _Nullable context OG_SWIFT_CONTEXT, OGAttribute) OG_SWIFT_CC(swift),
+                                    const void * _Nullable context);
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGGraphSetUpdateCallback(OGGraphRef graph,
+                               const void (*_Nullable function)(const void * _Nullable context OG_SWIFT_CONTEXT) OG_SWIFT_CC(swift),
+                               const void * _Nullable context);
 
 OG_EXTERN_C_END
 

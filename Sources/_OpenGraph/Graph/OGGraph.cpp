@@ -8,6 +8,7 @@
 #include "OGGraph.h"
 #include "Graph.hpp"
 #include "../Util/assert.hpp"
+#include "../Data/ClosureFunction.hpp"
 
 OGGraphRef OGGraphCreate() {
     return OGGraphCreateShared(nullptr);
@@ -15,12 +16,6 @@ OGGraphRef OGGraphCreate() {
 
 OGGraphRef OGGraphCreateShared(OGGraphRef storage) {
     const CFIndex extraSize = sizeof(OGGraphStorage)-sizeof(CFRuntimeBase);
-    #if OG_TARGET_CPU_WASM32
-    // FIXME: extraSize will be 0x10 on WASM. Investate later.
-    static_assert(extraSize == 0x10);
-    #else
-    static_assert(extraSize == 0x18/*0x50*/);
-    #endif
     OGGraphRef instance = (OGGraphRef)_CFRuntimeCreateInstance(kCFAllocatorDefault, OGGraphGetTypeID(), extraSize, nullptr);
     if (instance == nullptr) {
         OG::precondition_failure("memory allocation failure.");
@@ -122,4 +117,39 @@ OGGraphContextRef OGGraphGetGraphContext(OGGraphRef graph) {
         OG::precondition_failure("invalidated graph");
     }
     return reinterpret_cast<OGGraphContextRef>(reinterpret_cast<uintptr_t>(graph) + sizeof(CFRuntimeBase));
+}
+
+void OGGraphInvalidate(OGGraphRef graph) {
+    if (graph->context.isInvalid()) {
+        return;
+    }
+    graph->context.~Context();
+    graph->context.setInvalid(true);
+}
+
+void OGGraphInvalidateAllValues(OGGraphRef graph) {
+    if (graph->context.isInvalid()) {
+        OG::precondition_failure("invalidated graph");
+    }
+    graph->context.get_graph().value_mark_all();
+}
+
+
+
+void OGGraphSetInvalidationCallback(OGGraphRef graph,
+                                    const void (*_Nullable function)(const void * _Nullable context OG_SWIFT_CONTEXT, OGAttribute) OG_SWIFT_CC(swift),
+                                    const void * _Nullable context) {
+    if (graph->context.isInvalid()) {
+        OG::precondition_failure("invalidated graph");
+    }
+    graph->context.set_invalidation_callback(OG::ClosureFunction<void, OGAttribute>(function, context));
+}
+
+void OGGraphSetUpdateCallback(OGGraphRef graph,
+                               const void (*_Nullable function)(const void * _Nullable context OG_SWIFT_CONTEXT) OG_SWIFT_CC(swift),
+                               const void * _Nullable context) {
+    if (graph->context.isInvalid()) {
+        OG::precondition_failure("invalidated graph");
+    }
+    graph->context.set_update_callback(OG::ClosureFunction<void>(function, context));
 }

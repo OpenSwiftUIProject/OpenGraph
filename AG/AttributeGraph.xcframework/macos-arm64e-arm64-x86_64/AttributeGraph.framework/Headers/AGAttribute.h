@@ -21,8 +21,6 @@
 
 AG_ASSUME_NONNULL_BEGIN
 
-typedef uint32_t AGAttribute __attribute((swift_newtype(struct)));
-
 AG_EXTERN_C_BEGIN
 
 AG_EXPORT

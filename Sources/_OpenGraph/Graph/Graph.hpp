@@ -11,6 +11,8 @@
 #include "OGBase.h"
 #include "OGGraph.h"
 #include "../Private/CFRuntime.h"
+#include "../Data/ClosureFunction.hpp"
+#include "../Data/OGUniqueID.h"
 
 OG_ASSUME_NONNULL_BEGIN
 
@@ -37,6 +39,8 @@ public:
     
     Graph() OG_NOEXCEPT;
     
+    const void value_mark_all() const OG_NOEXCEPT;
+    
     static void all_start_profiling(uint32_t) OG_NOEXCEPT;
     static void all_stop_profiling() OG_NOEXCEPT;
     void start_profiling(uint32_t) OG_NOEXCEPT;
@@ -48,6 +52,12 @@ public:
     private:
         Graph * _Nullable _graph;
         void * _Nullable _context;
+        OGUniqueID _id;
+        ClosureFunction<void, OGAttribute> _invalidation_callback;
+        ClosureFunction<void> _update_callback;
+        uint64_t unknown1;
+        uint32_t unknown2;
+        uint32_t unknown3;
         bool _isInvalid;
     public:
         static Context &from_cf(OGGraphRef graph) OG_NOEXCEPT;
@@ -84,6 +94,16 @@ public:
             _context = context;
         }
         
+        OG_INLINE
+        void set_invalidation_callback(ClosureFunction<void, OGAttribute> invalidation_callback) OG_NOEXCEPT {
+            _invalidation_callback = invalidation_callback;
+        }
+        
+        OG_INLINE
+        void set_update_callback(ClosureFunction<void> update_callback) OG_NOEXCEPT {
+            _update_callback = update_callback;
+        }
+        
         OG_INLINE OG_CONSTEXPR
         const bool isInvalid() const OG_NOEXCEPT {
             return _isInvalid;
@@ -94,6 +114,11 @@ public:
             _isInvalid = invalid;
         }
     };
+    #if OG_TARGET_CPU_WASM32
+    static_assert(sizeof(Context) == 0x38);
+    #else
+    static_assert(sizeof(Context) == 0x50);
+    #endif
 }; /* Graph */
 } /* OG */
 

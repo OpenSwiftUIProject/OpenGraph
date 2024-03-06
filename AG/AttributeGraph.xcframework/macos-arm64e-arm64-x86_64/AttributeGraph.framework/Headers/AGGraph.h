@@ -11,6 +11,8 @@
 #include "AGBase.h"
 #include "CFRuntime.h"
 
+// Note: Place all structure declaration in a single place to avoid header cycle dependency
+
 typedef struct AG_BRIDGED_TYPE(id) AGGraphStorage * AGGraphRef;
 typedef struct AG_BRIDGED_TYPE(id) AGGraphContextStorage * AGGraphContextRef;
 typedef struct AG_BRIDGED_TYPE(id) AGSubgraphStorage * AGSubgraphRef;
@@ -18,6 +20,8 @@ typedef struct AG_BRIDGED_TYPE(id) AGSubgraphStorage * AGSubgraphRef;
 struct AGGraphStorage;
 struct AGGraphContextStorage;
 struct AGSubgraphStorage;
+
+typedef uint32_t AGAttribute __attribute((swift_newtype(struct)));
 
 AG_ASSUME_NONNULL_BEGIN
 
@@ -64,6 +68,26 @@ void AGGraphSetContext(AGGraphRef graph, void * _Nullable context) AG_SWIFT_NAME
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
 AGGraphContextRef AGGraphGetGraphContext(AGGraphRef graph) AG_SWIFT_NAME(getter:AGGraphRef.graphContext(self:));
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+void AGGraphInvalidate(AGGraphRef graph) AG_SWIFT_NAME(AGGraphRef.invalidate(self:));
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+void AGGraphInvalidateAllValues(AGGraphRef graph) AG_SWIFT_NAME(AGGraphRef.invalidateAllValues(self:));
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+void AGGraphSetInvalidationCallback(AGGraphRef graph,
+                                    const void (*_Nullable function)(const void * _Nullable context AG_SWIFT_CONTEXT, AGAttribute) AG_SWIFT_CC(swift),
+                                    const void * _Nullable context);
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+void AGGraphSetUpdateCallback(AGGraphRef graph,
+                               const void (*_Nullable function)(const void * _Nullable context AG_SWIFT_CONTEXT) AG_SWIFT_CC(swift),
+                               const void * _Nullable context);
 
 AG_EXTERN_C_END
 
