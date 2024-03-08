@@ -16,6 +16,7 @@
 #include "OGChangedValueFlags.h"
 #include "OGCompareValues.h"
 #include "OGComparisonMode.h"
+#include "OGCounterQueryType.h"
 #include "OGDebugServer.h"
 #include "OGGraph.h"
 #include "OGGraphContext.h"
