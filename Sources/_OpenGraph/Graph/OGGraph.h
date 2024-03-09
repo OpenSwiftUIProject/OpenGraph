@@ -10,6 +10,7 @@
 
 #include "OGBase.h"
 #include "../Private/CFRuntime.h"
+#include "OGCounterQueryType.h"
 
 // Note: Place all structure declaration in a single place to avoid header cycle dependency
 
@@ -88,6 +89,10 @@ OG_REFINED_FOR_SWIFT
 void OGGraphSetUpdateCallback(OGGraphRef graph,
                                const void (*_Nullable function)(const void * _Nullable context OG_SWIFT_CONTEXT) OG_SWIFT_CC(swift),
                                const void * _Nullable context);
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+uint64_t OGGraphGetCounter(OGGraphRef graph, OGCounterQueryType query) OG_SWIFT_NAME(OGGraphRef.counter(self:for:));
 
 OG_EXTERN_C_END
 

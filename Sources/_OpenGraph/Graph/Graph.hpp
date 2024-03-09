@@ -22,32 +22,7 @@ OG_ASSUME_NONNULL_BEGIN
 
 namespace OG {
 class Graph final {
-private:
-    // TODO    
-    static pthread_key_t _current_update_key;
 public:
-    #if OG_OBJC_FOUNDATION
-    static CFTypeRef description(const Graph * _Nullable graph, NSDictionary* dic);
-    #endif /* OG_OBJC_FOUNDATION */
-    
-    // MARK: - pthread related
-    
-    OG_INLINE OG_CONSTEXPR
-    const static pthread_key_t& current_key() OG_NOEXCEPT {
-        return _current_update_key;
-    }
-    
-    Graph() OG_NOEXCEPT;
-    
-    const void value_mark_all() const OG_NOEXCEPT;
-    
-    static void all_start_profiling(uint32_t) OG_NOEXCEPT;
-    static void all_stop_profiling() OG_NOEXCEPT;
-    void start_profiling(uint32_t) OG_NOEXCEPT;
-    void stop_profiling() OG_NOEXCEPT;
-    
-    static void write_to_file(const Graph * _Nullable, const char * _Nullable) OG_NOEXCEPT;
-    
     class Context final {
     private:
         Graph * _Nullable _graph;
@@ -63,6 +38,8 @@ public:
         static Context &from_cf(OGGraphRef graph) OG_NOEXCEPT;
         Context(Graph &graph) OG_NOEXCEPT;
         ~Context() OG_NOEXCEPT;
+        
+        const bool thread_is_updating() const OG_NOEXCEPT;
         
         OG_INLINE OG_CONSTEXPR
         const bool has_graph() const OG_NOEXCEPT {
@@ -114,6 +91,87 @@ public:
     #else
     static_assert(sizeof(Context) == 0x50);
     #endif
+private:
+    static pthread_key_t _current_update_key;
+    uint64_t _counter_4;
+    uint32_t _counter_8;
+    uint64_t _counter_0;
+    bool _counter_9;
+    uint64_t _counter_5;
+    uint64_t _counter_1;
+    uint64_t _counter_2;
+    uint64_t _counter_10;
+    uint64_t _counter_3;
+public:
+    #if OG_OBJC_FOUNDATION
+    static CFTypeRef description(const Graph * _Nullable graph, NSDictionary* dic);
+    #endif /* OG_OBJC_FOUNDATION */
+    
+    // MARK: - pthread related
+    
+    OG_INLINE OG_CONSTEXPR
+    const static pthread_key_t& current_key() OG_NOEXCEPT {
+        return _current_update_key;
+    }
+    
+    Graph() OG_NOEXCEPT;
+    
+    const void value_mark_all() const OG_NOEXCEPT;
+    
+    static void all_start_profiling(uint32_t) OG_NOEXCEPT;
+    static void all_stop_profiling() OG_NOEXCEPT;
+    void start_profiling(uint32_t) OG_NOEXCEPT;
+    void stop_profiling() OG_NOEXCEPT;
+    
+    static void write_to_file(const Graph * _Nullable, const char * _Nullable) OG_NOEXCEPT;
+    
+    const bool thread_is_updating() const OG_NOEXCEPT;
+    const bool is_context_updating(const OG::Graph::Context&) const OG_NOEXCEPT;
+    
+    OG_INLINE OG_CONSTEXPR
+    const uint64_t get_counter_4() const OG_NOEXCEPT {
+        return _counter_4;
+    }
+    
+    OG_INLINE OG_CONSTEXPR
+    const uint32_t get_counter_8() const OG_NOEXCEPT {
+        return _counter_8;
+    }
+    
+    OG_INLINE OG_CONSTEXPR
+    const uint64_t get_counter_0() const OG_NOEXCEPT {
+        return _counter_0;
+    }
+    
+    OG_INLINE OG_CONSTEXPR
+    const bool get_counter_9() const OG_NOEXCEPT {
+        return _counter_9;
+    }
+    
+    OG_INLINE OG_CONSTEXPR
+    const uint64_t get_counter_5() const OG_NOEXCEPT {
+        return _counter_5;
+    }
+    
+    OG_INLINE OG_CONSTEXPR
+    const uint64_t get_counter_1() const OG_NOEXCEPT {
+        return _counter_1;
+    }
+    
+    OG_INLINE OG_CONSTEXPR
+    const uint64_t get_counter_2() const OG_NOEXCEPT {
+        return _counter_2;
+    }
+    
+    OG_INLINE OG_CONSTEXPR
+    const uint64_t get_counter_10() const OG_NOEXCEPT {
+        return _counter_10;
+    }
+    
+    OG_INLINE OG_CONSTEXPR
+    const uint64_t get_counter_3() const OG_NOEXCEPT {
+        return _counter_3;
+    }
 }; /* Graph */
 } /* OG */
 

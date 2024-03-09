@@ -28,3 +28,7 @@ _update_callback(nullptr) {
 OG::Graph::Context::~Context() OG_NOEXCEPT {
     // TODO
 }
+
+const bool OG::Graph::Context::thread_is_updating() const OG_NOEXCEPT {
+    return _graph->thread_is_updating() && _graph->is_context_updating(*this);
+}

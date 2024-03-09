@@ -10,6 +10,7 @@
 
 #include "AGBase.h"
 #include "CFRuntime.h"
+#include "AGCounterQueryType.h"
 
 // Note: Place all structure declaration in a single place to avoid header cycle dependency
 
@@ -88,6 +89,10 @@ AG_REFINED_FOR_SWIFT
 void AGGraphSetUpdateCallback(AGGraphRef graph,
                                const void (*_Nullable function)(const void * _Nullable context AG_SWIFT_CONTEXT) AG_SWIFT_CC(swift),
                                const void * _Nullable context);
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+uint64_t AGGraphGetCounter(AGGraphRef graph, AGCounterQueryType query) AG_SWIFT_NAME(AGGraphRef.counter(self:for:));
 
 AG_EXTERN_C_END
 
