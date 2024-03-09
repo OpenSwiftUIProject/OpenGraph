@@ -16,6 +16,7 @@
 #include "AGChangedValueFlags.h"
 #include "AGCompareValues.h"
 #include "AGComparisonMode.h"
+#include "AGCounterQueryType.h"
 #include "AGDebugServer.h"
 #include "AGGraph.h"
 #include "AGGraphContext.h"

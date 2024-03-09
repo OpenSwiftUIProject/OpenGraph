@@ -153,3 +153,36 @@ void OGGraphSetUpdateCallback(OGGraphRef graph,
     }
     graph->context.set_update_callback(OG::ClosureFunction<void>(function, context));
 }
+
+uint64_t OGGraphGetCounter(OGGraphRef graph, OGCounterQueryType query) {
+    if (graph->context.isInvalid()) {
+        OG::precondition_failure("invalidated graph");
+    }
+    OG::Graph::Context& context = graph->context;
+    switch (query) {
+        case OGCounterQueryType_0:
+            return context.get_graph().get_counter_0();
+        case OGCounterQueryType_1:
+            return context.get_graph().get_counter_1();
+        case OGCounterQueryType_2:
+            return context.get_graph().get_counter_2();
+        case OGCounterQueryType_3:
+            return context.get_graph().get_counter_3();
+        case OGCounterQueryType_4:
+            return context.get_graph().get_counter_4();
+        case OGCounterQueryType_5:
+            return context.get_graph().get_counter_5();
+        case OGCounterQueryType_6:
+            return context.thread_is_updating();
+        case OGCounterQueryType_7:
+            return context.get_graph().thread_is_updating();
+        case OGCounterQueryType_8:
+            return context.get_graph().get_counter_8();
+        case OGCounterQueryType_9:
+            return context.get_graph().get_counter_9();
+        case OGCounterQueryType_10:
+            return context.get_graph().get_counter_10();
+        default:
+            return 0;
+    }
+}

@@ -51,3 +51,17 @@ void OG::Graph::stop_profiling() OG_NOEXCEPT {
 void OG::Graph::write_to_file(const Graph * _Nullable, const char * _Nullable) OG_NOEXCEPT {
     // TODO
 }
+
+const bool OG::Graph::thread_is_updating() const OG_NOEXCEPT {
+    void *current = pthread_getspecific(current_key());
+    if (!current) {
+        return false;
+    }
+    // TODO
+    return false;
+}
+
+const bool OG::Graph::is_context_updating(const OG::Graph::Context&) const OG_NOEXCEPT {
+    // TODO
+    return false;
+}

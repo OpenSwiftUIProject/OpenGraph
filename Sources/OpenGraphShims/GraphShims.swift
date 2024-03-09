@@ -15,6 +15,7 @@ public typealias OGCachedValueOptions = AGCachedValueOptions
 public typealias OGChangedValueFlags = AGChangedValueFlags
 public typealias OGComparisonMode = AGComparisonMode
 public typealias OGComparisonOptions = AGComparisonOptions
+public typealias OGCounterQueryType = AGCounterQueryType
 public typealias OGDebugServer = AGDebugServer
 public typealias OGGraph = AGGraph
 public typealias OGGraphContext = AGGraphContext

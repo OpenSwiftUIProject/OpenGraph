@@ -54,6 +54,7 @@
 #include "OGTargetConditionals.h"
 #include "OGSwiftSupport.h"
 
+#define OG_ENUM CF_ENUM
 #define OG_OPTIONS CF_OPTIONS
 #define OG_EXTERN_C_BEGIN CF_EXTERN_C_BEGIN
 #define OG_EXTERN_C_END CF_EXTERN_C_END

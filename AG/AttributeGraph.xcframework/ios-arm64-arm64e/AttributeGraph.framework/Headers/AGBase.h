@@ -53,6 +53,7 @@
 #endif
 #include "AGSwiftSupport.h"
 
+#define AG_ENUM CF_ENUM
 #define AG_OPTIONS CF_OPTIONS
 #define AG_EXTERN_C_BEGIN CF_EXTERN_C_BEGIN
 #define AG_EXTERN_C_END CF_EXTERN_C_END

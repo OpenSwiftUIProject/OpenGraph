@@ -10,7 +10,16 @@
 
 #include "OGBase.h"
 #include "OGSwiftMetadata.h"
+#include "OGTypeKind.h"
 
 typedef const OGSwiftMetadata *OGTypeID OG_SWIFT_STRUCT;
+
+OG_EXTERN_C_BEGIN
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+OGTypeKind OGTypeGetKind(OGTypeID typeID) OG_SWIFT_NAME(getter:OGTypeID.kind(self:));
+
+OG_EXTERN_C_END
 
 #endif /* OGTypeID_h */

@@ -1,11 +1,11 @@
 //
-//  OGTypeKind.cpp
+//  OGTypeID.cpp
 //
 //
 //  Created by Kyle on 2024/1/7.
 //
 
-#include "OGTypeKind.h"
+#include "OGTypeID.h"
 
 OGTypeKind OGTypeGetKind(OGTypeID typeID) {
     // FIXME: Unimplemented
