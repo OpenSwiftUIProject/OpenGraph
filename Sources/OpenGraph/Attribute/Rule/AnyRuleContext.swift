@@ -3,7 +3,7 @@
 //  OpenGraph
 //
 //  Audited for RELEASE_2021
-//  Status: Blocked by WeakAttribute and OptionalAttribute
+//  Status: Complete
 
 import _OpenGraph
 
@@ -27,13 +27,23 @@ public struct AnyRuleContext {
         }
     }
     
-//    public subscript<V>(weakAttribute: WeakAttribute<V>) -> V? {
-//        get
-//    }
-//
-//    public subscript<V>(optionalAttribute: OptionalAttribute<V>) -> V? {
-//        get
-//    }
+    public subscript<V>(weakAttribute: WeakAttribute<V>) -> V? {
+        weakAttribute.attribute.map { attribute in
+            OGGraphGetInputValue(self.attribute, input: attribute.identifier, type: V.self)
+                .value
+                .assumingMemoryBound(to: V.self)
+                .pointee
+        }
+    }
+    
+    public subscript<V>(optionalAttribute: OptionalAttribute<V>) -> V? {
+        optionalAttribute.attribute.map { attribute in
+            OGGraphGetInputValue(self.attribute, input: attribute.identifier, type: V.self)
+                .value
+                .assumingMemoryBound(to: V.self)
+                .pointee
+        }
+    }
     
     public func valueAndFlags<V>(of input: Attribute<V>, options: OGValueOptions = []) -> (value: V, flags: OGChangedValueFlags) {
         let value = OGGraphGetInputValue(attribute, input: input.identifier, options: options, type: V.self)
