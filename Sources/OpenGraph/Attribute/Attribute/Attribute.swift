@@ -71,7 +71,7 @@ public struct Attribute<Value> {
     }
     
     public var projectedValue: Attribute<Value> {
-        get { Attribute(identifier: identifier) }
+        get { self }
         _modify { yield &self }
     }
 
@@ -120,7 +120,7 @@ public struct Attribute<Value> {
         identifier.mutateBody(as: type, invalidating: invalidating, body)
     }
 
-    public func breadthFirstSearch(options: OGSearchOptions, _ body: (OGAttribute) -> Bool) -> Bool {
+    public func breadthFirstSearch(options: OGSearchOptions = [], _ body: (OGAttribute) -> Bool) -> Bool {
         identifier.breadthFirstSearch(options: options, body)
     }
     
@@ -154,7 +154,7 @@ public struct Attribute<Value> {
     
     public var valueState: OGValueState { identifier.valueState }
     
-    public func valueAndFlags(options: OGValueOptions) -> (value: Value, flags: OGChangedValueFlags) {
+    public func valueAndFlags(options: OGValueOptions = []) -> (value: Value, flags: OGChangedValueFlags) {
         let value = OGGraphGetValue(identifier, options: options, type: Value.self)
         return (
             value.value.assumingMemoryBound(to: Value.self).pointee,
@@ -162,7 +162,7 @@ public struct Attribute<Value> {
         )
     }
     
-    public func changedValue(options: OGValueOptions) -> (value: Value, changed: Bool) {
+    public func changedValue(options: OGValueOptions = []) -> (value: Value, changed: Bool) {
         let value = OGGraphGetValue(identifier, options: options, type: Value.self)
         return (
             value.value.assumingMemoryBound(to: Value.self).pointee,
@@ -184,11 +184,11 @@ public struct Attribute<Value> {
 
     // MARK: - Input
     
-    public func addInput(_ attribute: OGAttribute, options: OGInputOptions, token: Int) {
+    public func addInput(_ attribute: OGAttribute, options: OGInputOptions = [], token: Int) {
         identifier.addInput(attribute, options: options, token: token)
     }
     
-    public func addInput<V>(_ attribute: Attribute<V>, options: OGInputOptions, token: Int) {
+    public func addInput<V>(_ attribute: Attribute<V>, options: OGInputOptions = [], token: Int) {
         identifier.addInput(attribute, options: options, token: token)
     }
     

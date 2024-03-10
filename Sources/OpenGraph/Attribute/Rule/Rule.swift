@@ -54,7 +54,7 @@ extension Rule {
 
 extension Rule where Self: Hashable {
     public func cachedValue(
-        options: OGCachedValueOptions,
+        options: OGCachedValueOptions = [],
         owner: OGAttribute?
     ) -> Value {
         withUnsafePointer(to: self) { pointer in
@@ -69,7 +69,7 @@ extension Rule where Self: Hashable {
     }
     
     public func cachedValueIfExists(
-        options: OGCachedValueOptions,
+        options: OGCachedValueOptions = [],
         owner: OGAttribute?
     ) -> Value? {
         withUnsafePointer(to: self) { bodyPointer in
@@ -80,7 +80,7 @@ extension Rule where Self: Hashable {
     }
 
     public static func _cachedValue(
-        options: OGCachedValueOptions,
+        options: OGCachedValueOptions = [],
         owner: OGAttribute?,
         hashValue: Int, 
         bodyPtr: UnsafeRawPointer, 

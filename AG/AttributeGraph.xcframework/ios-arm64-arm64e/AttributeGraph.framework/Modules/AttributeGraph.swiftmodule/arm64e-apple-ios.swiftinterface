@@ -18,11 +18,11 @@ extension AGAttribute {
 	public static var current: AGAttribute? { get }
 	public func unsafeOffset(at offset: Int) -> AGAttribute
 	public func setFlags(_ newFlags: AGAttributeFlags, mask: AGAttributeFlags)
-	public func addInput(_ attribute: AGAttribute, options: AGInputOptions, token: Swift.Int)
-	public func addInput<Value>(_ attribute: AttributeGraph.Attribute<Value>, options: AGInputOptions, token: Int)
+	public func addInput(_ attribute: AGAttribute, options: AGInputOptions = [], token: Swift.Int)
+	public func addInput<Value>(_ attribute: AttributeGraph.Attribute<Value>, options: AGInputOptions = [], token: Int)
 	public func visitBody<Visitor: AttributeGraph.AttributeBodyVisitor>(_ visitor: inout Visitor);
 	public func mutateBody<Value>(as: Value.Type, invalidating: Swift.Bool, _ body: (inout Value) -> ())
-	public func breadthFirstSearch(options: AGSearchOptions, _: (AGAttribute) -> Swift.Bool) -> Swift.Bool
+	public func breadthFirstSearch(options: AGSearchOptions = [], _: (AGAttribute) -> Swift.Bool) -> Swift.Bool
 	public var _bodyType: Any.Type { get }
 	public var _bodyPointer: UnsafeRawPointer { get }
 	public var valueType: Any.Type { get }
@@ -61,15 +61,15 @@ public struct Attribute<Value> {
 	public func applying<Member>(offset: AttributeGraph.PointerOffset<Value, Member>) -> AttributeGraph.Attribute<Member>
 	public func visitBody<Body: AttributeGraph.AttributeBodyVisitor>(_ visitor: inout Body)
 	public func mutateBody<V>(as type: V.Type, invalidating: Swift.Bool, _ body: (inout V) -> Swift.Void)
-	public func breadthFirstSearch(options: AGSearchOptions, _ body: (AGAttribute) -> Swift.Bool) -> Swift.Bool
+	public func breadthFirstSearch(options: AGSearchOptions = [], _ body: (AGAttribute) -> Swift.Bool) -> Swift.Bool
 
 	public var graph: AGGraph { get }
 	public var subgraph: AGSubgraph { get }
 
 	public var value: Value { unsafeAddress set }
 	public var valueState: AGValueState { get }
-	public func valueAndFlags(options: AGValueOptions) -> (value: Value, flags: AGChangedValueFlags)
-	public func changedValue(options: AGValueOptions) -> (value: Value, changed: Bool)
+	public func valueAndFlags(options: AGValueOptions = []) -> (value: Value, flags: AGChangedValueFlags)
+	public func changedValue(options: AGValueOptions = []) -> (value: Value, changed: Bool)
 	public func setValue(_ value: Value) -> Bool
 	public var hasValue: Bool { get }
 	public func updateValue()
@@ -77,8 +77,8 @@ public struct Attribute<Value> {
 	public func invalidateValue()
 	public func validate()
 
-	public func addInput(_ attribute: AGAttribute, options: AGInputOptions, token: Swift.Int)
-	public func addInput<V>(_ attribute: AttributeGraph.Attribute<V>, options: AGInputOptions, token: Int)
+	public func addInput(_ attribute: AGAttribute, options: AGInputOptions = [], token: Swift.Int)
+	public func addInput<V>(_ attribute: AttributeGraph.Attribute<V>, options: AGInputOptions = [], token: Int)
 
 	public var flags: AGAttributeFlags { get _modify }
 	public func setFlags(_ newFlags: AGAttributeFlags, mask: AGAttributeFlags)
@@ -178,7 +178,7 @@ public struct WeakAttribute<Value> {
 	public subscript<Member>(dynamicMember keyPath: Swift.KeyPath<Value, Member>) -> AttributeGraph.Attribute<Member>? { get }
 	public var attribute: AttributeGraph.Attribute<Value>? { get set _modify }
 	public var value: Value? { get }
-	public func changedValue(options: AGValueOptions) -> (value: Value, changed: Swift.Bool)?
+	public func changedValue(options: AGValueOptions = []) -> (value: Value, changed: Swift.Bool)?
 }
 
 extension AttributeGraph.WeakAttribute: Swift.Hashable {
@@ -226,7 +226,7 @@ public struct OptionalAttribute<Value> {
 	public init(_ weakAttribute: AttributeGraph.WeakAttribute<Value>)
 	public var attribute: AttributeGraph.Attribute<Value>? { get set _modify }
 	public var value: Value? { get }
-	public func changedValue(options: AGValueOptions) -> (value: Value, changed: Bool)?
+	public func changedValue(options: AGValueOptions = []) -> (value: Value, changed: Bool)?
 	public func map<V>(_ body: (AttributeGraph.Attribute<Value>) -> V) -> V?
 	public var wrappedValue: Value? { get }
 	public var projectedValue: Attribute<Value>? { get set _modify }
@@ -266,7 +266,7 @@ public struct IndirectAttribute<Value> {
 		nonmutating set
 		nonmutating _modify
 	}
-	public func changedValue(options: AGValueOptions) -> (value: Value, changed: Bool)
+	public func changedValue(options: AGValueOptions = []) -> (value: Value, changed: Bool)
 	public var wrappedValue: Value {
 		get
 		nonmutating set
@@ -413,17 +413,17 @@ extension AttributeGraph.Rule {
 
 extension AttributeGraph.Rule where Self: Swift.Hashable {
 	public func cachedValueIfExists(
-		options: AGCachedValueOptions,
+		options: AGCachedValueOptions = [],
 		owner: AGAttribute?
 	) -> Value?
 
 	public func cachedValue(
-		options: AGCachedValueOptions,
+		options: AGCachedValueOptions = [],
 		owner: AGAttribute?
 	) -> Value
 
 	public static func _cachedValue(
-		options: AGCachedValueOptions,
+		options: AGCachedValueOptions = [],
 		owner: AGAttribute?,
 		hashValue: Swift.Int,
 		bodyPtr: Swift.UnsafeRawPointer,
@@ -463,8 +463,8 @@ public struct RuleContext<Value> {
 	//    public subscript<V>(optionalAttribute: OptionalAttribute<V>) -> V? { get }
 	public var value: Value { unsafeAddress nonmutating set }
 	public var hasValue: Bool
-	public func valueAndFlags<V>(of input: AttributeGraph.Attribute<V>, options: AGValueOptions) -> (value: V, flags: AGChangedValueFlags)
-	public func changedValue<V>(of input: AttributeGraph.Attribute<V>, options: AGValueOptions) -> (value: V, changed: Swift.Bool)
+	public func valueAndFlags<V>(of input: AttributeGraph.Attribute<V>, options: AGValueOptions = []) -> (value: V, flags: AGChangedValueFlags)
+	public func changedValue<V>(of input: AttributeGraph.Attribute<V>, options: AGValueOptions = []) -> (value: V, changed: Swift.Bool)
 	public func update(body: () -> Void)
 }
 
@@ -478,8 +478,8 @@ public struct AnyRuleContext {
 	public subscript<V>(attribute: Attribute<V>) -> V { unsafeAddress }
 	//    public subscript<V>(weakAttribute: WeakAttribute<V>) -> V? { get }
 	//    public subscript<V>(optionalAttribute: OptionalAttribute<V>) -> V? { get }
-	public func valueAndFlags<V>(of input: AttributeGraph.Attribute<V>, options: AGValueOptions) -> (value: V, flags: AGChangedValueFlags)
-	public func changedValue<V>(of input: AttributeGraph.Attribute<V>, options: AGValueOptions) -> (value: V, changed: Swift.Bool)
+	public func valueAndFlags<V>(of input: AttributeGraph.Attribute<V>, options: AGValueOptions = []) -> (value: V, flags: AGChangedValueFlags)
+	public func changedValue<V>(of input: AttributeGraph.Attribute<V>, options: AGValueOptions = []) -> (value: V, changed: Swift.Bool)
 	public func update(body: () -> Void)
 	public func unsafeCast<V>(to _: V.Type) -> AttributeGraph.RuleContext<V>
 }

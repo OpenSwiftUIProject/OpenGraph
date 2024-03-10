@@ -35,7 +35,7 @@ public struct AnyRuleContext {
 //        get
 //    }
     
-    public func valueAndFlags<V>(of input: Attribute<V>, options: OGValueOptions) -> (value: V, flags: OGChangedValueFlags) {
+    public func valueAndFlags<V>(of input: Attribute<V>, options: OGValueOptions = []) -> (value: V, flags: OGChangedValueFlags) {
         let value = OGGraphGetInputValue(attribute, input: input.identifier, options: options, type: V.self)
         return (
             value.value.assumingMemoryBound(to: V.self).pointee,
@@ -43,7 +43,7 @@ public struct AnyRuleContext {
         )
     }
     
-    public func changedValue<V>(of input: Attribute<V>, options: OGValueOptions) -> (value: V, changed: Bool) {
+    public func changedValue<V>(of input: Attribute<V>, options: OGValueOptions = []) -> (value: V, changed: Bool) {
         let value = OGGraphGetInputValue(attribute, input: input.identifier, options: options, type: V.self)
         return (
             value.value.assumingMemoryBound(to: V.self).pointee,

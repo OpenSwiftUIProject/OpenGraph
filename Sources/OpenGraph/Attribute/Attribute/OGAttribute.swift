@@ -29,11 +29,11 @@ extension OGAttribute {
         flags = flags.subtracting(mask).union(newFlags.intersection(mask))
     }
 
-    public func addInput(_ attribute: OGAttribute, options: OGInputOptions, token: Int) {
+    public func addInput(_ attribute: OGAttribute, options: OGInputOptions = [], token: Int) {
         __OGGraphAddInput(self, attribute, options, token)
     }
 
-    public func addInput<Value>(_ attribute: Attribute<Value>, options: OGInputOptions, token: Int) {
+    public func addInput<Value>(_ attribute: Attribute<Value>, options: OGInputOptions = [], token: Int) {
         addInput(attribute.identifier, options: options, token: token)
     }
     
@@ -48,7 +48,7 @@ extension OGAttribute {
         __OGGraphMutateAttribute(self, OGTypeID(type), invalidating)
     }
     
-    public func breadthFirstSearch(options _: OGSearchOptions, _: (OGAttribute) -> Bool) -> Bool {
+    public func breadthFirstSearch(options _: OGSearchOptions = [], _: (OGAttribute) -> Bool) -> Bool {
         fatalError("TODO")
     }
     
