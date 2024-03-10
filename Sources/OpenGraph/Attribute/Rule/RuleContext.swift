@@ -3,7 +3,7 @@
 //  OpenGraph
 //
 //  Audited for RELEASE_2021
-//  Status: Blocked by WeakAttribute and OptionalAttribute
+//  Status: Complete
 
 import _OpenGraph
 
@@ -23,14 +23,24 @@ public struct RuleContext<Value> {
         }
     }
     
-//    public subscript<V>(weakAttribute: WeakAttribute<V>) -> V? {
-//        get
-//    }
-//
-//    public subscript<V>(optionalAttribute: OptionalAttribute<V>) -> V? {
-//        get
-//    }
-//
+    public subscript<V>(weakAttribute: WeakAttribute<V>) -> V? {
+        weakAttribute.attribute.map { attribute in
+            OGGraphGetInputValue(self.attribute.identifier, input: attribute.identifier, type: V.self)
+                .value
+                .assumingMemoryBound(to: V.self)
+                .pointee
+        }
+    }
+
+    public subscript<V>(optionalAttribute: OptionalAttribute<V>) -> V? {
+        optionalAttribute.attribute.map { attribute in
+            OGGraphGetInputValue(self.attribute.identifier, input: attribute.identifier, type: V.self)
+                .value
+                .assumingMemoryBound(to: V.self)
+                .pointee
+        }
+    }
+
     public var value: Value {
         unsafeAddress {
             OGGraphGetOutputValue()!
