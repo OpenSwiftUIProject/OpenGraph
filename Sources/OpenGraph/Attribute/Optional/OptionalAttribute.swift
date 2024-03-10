@@ -43,7 +43,7 @@ public struct OptionalAttribute<Value> {
     
     public var value: Value? { attribute?.value }
     
-    public func changedValue(options: OGValueOptions) -> (value: Value, changed: Bool)? {
+    public func changedValue(options: OGValueOptions = []) -> (value: Value, changed: Bool)? {
         attribute?.changedValue(options: options)
     }
     

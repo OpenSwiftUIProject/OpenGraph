@@ -47,7 +47,7 @@ public struct IndirectAttribute<Value> {
         nonmutating _modify { yield &Attribute<Value>(identifier: identifier).value }
     }
     
-    public func changedValue(options: OGValueOptions) -> (value: Value, changed: Bool) {
+    public func changedValue(options: OGValueOptions = []) -> (value: Value, changed: Bool) {
         Attribute(identifier: identifier).changedValue(options: options)
     }
     
