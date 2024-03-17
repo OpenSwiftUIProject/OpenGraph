@@ -1,4 +1,4 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 5.10
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import Foundation
@@ -18,10 +18,11 @@ func envEnable(_ key: String, default defaultValue: Bool = false) -> Bool {
 }
 
 let isXcodeEnv = Context.environment["__CFBundleIdentifier"] == "com.apple.dt.Xcode"
+let development = envEnable("OPENGRAPH_DEVELOPMENT", default: false)
 
 var sharedSwiftSettings: [SwiftSetting] = []
 
-let warningsAsErrorsCondition = envEnable("OPENGRAPH_WERROR", default: isXcodeEnv)
+let warningsAsErrorsCondition = envEnable("OPENGRAPH_WERROR", default: isXcodeEnv && development)
 if warningsAsErrorsCondition {
     sharedSwiftSettings.append(.unsafeFlags(["-warnings-as-errors"]))
 }
@@ -125,8 +126,7 @@ if attributeGraphCondition {
 let swiftTestingCondition = envEnable("OPENGRAPH_SWIFT_TESTING", default: true)
 if swiftTestingCondition {
     package.dependencies.append(
-        // Fix it to be 0.3.0 before we bump to Swift 5.10
-        .package(url: "https://github.com/apple/swift-testing", exact: "0.3.0")
+        .package(url: "https://github.com/apple/swift-testing", exact: "0.6.0")
     )
     openGraphTestTarget.dependencies.append(
         .product(name: "Testing", package: "swift-testing")

@@ -12,14 +12,19 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        swift_version: ["5.9.1"]
+        swift_version: ["5.10-SNAPSHOT-2024-03-30-a"] # "5.10-RELEASE" is not release for WASM, tracked via https://github.com/swiftwasm/swift/issues/5570
         os: [ubuntu-22.04]
     runs-on: ${{ matrix.os }}
+    env:
+      OPENGRAPH_WERROR: 1
+      OPENGRAPH_SWIFT_TESTING: 0
+      OPENGRAPH_ATTRIBUTEGRAPH: 0
+      OPENGRAPH_COMPATIBILITY_TEST: 0
     steps:
       - uses: actions/checkout@v4
       - uses: swiftwasm/setup-swiftwasm@v1
         with:
-          swift-version: wasm-${{ matrix.swift_version }}-RELEASE
+          swift-version: wasm-${{ matrix.swift_version }}
       - name: build
         run: |
           swift build --triple wasm32-unknown-wasi

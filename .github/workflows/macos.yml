@@ -13,11 +13,14 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: macos-13
-            xcode-version: "15.2"   # Swift 5.9.2
           - os: macos-14
-            xcode-version: "15.2"   # Swift 5.9.2
+            xcode-version: "15.3"   # Swift 5.10
     runs-on: ${{ matrix.os }}
+    env:
+      OPENGRAPH_WERROR: 1
+      OPENGRAPH_SWIFT_TESTING: 1
+      OPENGRAPH_ATTRIBUTEGRAPH: 0
+      OPENGRAPH_COMPATIBILITY_TEST: 0
     steps:
       - uses: actions/checkout@v4
       - name: Setup Xcode
@@ -30,7 +33,6 @@ jobs:
         run: |
           swift test \
             -c debug \
-            -Xswiftc -warnings-as-errors \
             --enable-code-coverage \
             --build-path .build-test-debug
           xcrun llvm-cov show \
@@ -41,7 +43,6 @@ jobs:
         run: |
           swift test \
             -c release \
-            -Xswiftc -warnings-as-errors \
             --enable-code-coverage \
             --build-path .build-test-release
       - uses: codecov/codecov-action@v3
