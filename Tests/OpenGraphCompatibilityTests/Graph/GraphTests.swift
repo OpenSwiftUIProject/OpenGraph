@@ -76,5 +76,11 @@ struct GraphTests {
             print("Invalidate \(attr)")
         }
     }
+    
+    @Test
+    func counter() {
+        let graph = OGGraph()
+        #expect(graph.mainUpdates == 0)
+    }
     #endif
 }

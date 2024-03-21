@@ -379,6 +379,12 @@ extension AttributeGraph.AGGraph {
 	public static func setUpdateCallback(_ graph: AttributeGraph.AGGraph, callback: (() -> Void)?)
 }
 
+extension AttributeGraph.AGGraph {
+	@_transparent
+	@inline(__always)
+	public var mainUpdates: Swift.Int { Swift.numericCast(counter(for: ._10)) }
+}
+
 // MARK: - AGSubgraph
 
 extension AttributeGraph.AGSubgraph {

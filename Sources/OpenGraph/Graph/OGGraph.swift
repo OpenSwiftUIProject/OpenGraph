@@ -44,3 +44,9 @@ extension OGGraph {
     @_silgen_name("OGGraphSetUpdateCallback")
     public static func setUpdateCallback(_ graph: OGGraph, callback: (() -> Void)?)
 }
+
+extension OGGraph {
+    @_transparent
+    @inline(__always)
+    public var mainUpdates: Int { numericCast(counter(for: ._10)) }
+}
