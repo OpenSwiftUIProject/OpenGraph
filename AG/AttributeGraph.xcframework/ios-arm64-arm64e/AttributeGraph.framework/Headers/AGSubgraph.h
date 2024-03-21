@@ -11,6 +11,7 @@
 #include "AGBase.h"
 #include "AGGraph.h"
 #include "AGAttribute.h"
+#include "AGAttributeFlags.h"
 #include "CFRuntime.h"
 
 AG_ASSUME_NONNULL_BEGIN
@@ -65,6 +66,10 @@ void AGSubgraphApply(AGSubgraphRef cf_subgraph,
                      AGAttributeFlags flags,
                      const void (*function)(const void * _Nullable context AG_SWIFT_CONTEXT, AGAttribute attribute) AG_SWIFT_CC(swift),
                      const void * _Nullable context);
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+void AGSubgraphUpdate(AGSubgraphRef cf_subgraph, AGAttributeFlags flags) AG_SWIFT_NAME(AGSubgraphRef.update(self:flags:));
 
 AG_EXTERN_C_END
 

@@ -135,3 +135,11 @@ void OGSubgraphApply(OGSubgraphRef cf_subgraph,
     }
     return cf_subgraph->subgraph->apply(flags, OG::ClosureFunction<void, OGAttribute>(function, context));
 }
+
+void OGSubgraphUpdate(OGSubgraphRef cf_subgraph, OGAttributeFlags flags) {
+    OG::Subgraph *subgraph = cf_subgraph->subgraph;
+    if (subgraph == nullptr) {
+        return;
+    }
+    // subgraph->update(flags);
+}

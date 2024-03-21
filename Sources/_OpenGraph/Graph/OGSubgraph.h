@@ -11,6 +11,7 @@
 #include "OGBase.h"
 #include "OGGraph.h"
 #include "OGAttribute.h"
+#include "OGAttributeFlags.h"
 #include "../Private/CFRuntime.h"
 
 OG_ASSUME_NONNULL_BEGIN
@@ -65,6 +66,10 @@ void OGSubgraphApply(OGSubgraphRef cf_subgraph,
                      OGAttributeFlags flags,
                      const void (*function)(const void * _Nullable context OG_SWIFT_CONTEXT, OGAttribute attribute) OG_SWIFT_CC(swift),
                      const void * _Nullable context);
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGSubgraphUpdate(OGSubgraphRef cf_subgraph, OGAttributeFlags flags) OG_SWIFT_NAME(OGSubgraphRef.update(self:flags:));
 
 OG_EXTERN_C_END
 
