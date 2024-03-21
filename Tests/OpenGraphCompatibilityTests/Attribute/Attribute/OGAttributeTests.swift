@@ -53,28 +53,28 @@ final class OGAttributeTests: AttributeTestBase {
         // Test mask = []
         attribute.flags = []
         
-        attribute.setFlags([._1], mask: [])
+        attribute.setFlags([.active], mask: [])
         #expect(attribute.flags == [])
         
         attribute.setFlags([.removable], mask: [])
         #expect(attribute.flags == [])
         
-        attribute.setFlags([._1, .invalidatable], mask: [])
+        attribute.setFlags([.active, .invalidatable], mask: [])
         #expect(attribute.flags == [])
     
         // Test mask
         attribute.flags = []
-        attribute.setFlags([._1], mask: [._1])
-        #expect(attribute.flags == [._1])
+        attribute.setFlags([.active], mask: [.active])
+        #expect(attribute.flags == [.active])
         
         attribute.setFlags([.removable], mask: [.removable])
-        #expect(attribute.flags == [._1, .removable])
+        #expect(attribute.flags == [.active, .removable])
         
-        attribute.setFlags([.invalidatable], mask: [._1])
+        attribute.setFlags([.invalidatable], mask: [.active])
         #expect(attribute.flags == [.removable])
         
-        attribute.setFlags([._1, .invalidatable], mask: [._1, .removable, .invalidatable])
-        #expect(attribute.flags == [._1, .invalidatable])
+        attribute.setFlags([.active, .invalidatable], mask: [.active, .removable, .invalidatable])
+        #expect(attribute.flags == [.active, .invalidatable])
     }
     
     @Test

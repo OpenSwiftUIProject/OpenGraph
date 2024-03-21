@@ -1,9 +1,9 @@
 //
 //  OGAttributeFlags.h
+//  _OpenGraph
 //
-//
-//  Created by Kyle on 2024/2/16.
-//
+//  Audited for RELEASE_2021
+//  Status: Complete
 
 #ifndef OGAttributeFlags_h
 #define OGAttributeFlags_h
@@ -12,7 +12,7 @@
 
 typedef OG_OPTIONS(uint32_t, OGAttributeFlags) {
     OGAttributeFlagsDefault = 0,
-    OGAttributeFlags_1 = 1 << 0,
+    OGAttributeFlagsActive = 1 << 0,
     OGAttributeFlagsRemovable = 1 << 1,
     OGAttributeFlagsInvalidatable = 1 << 2,
 };
