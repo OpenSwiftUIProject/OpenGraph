@@ -1,8 +1,5 @@
 //
 //  GraphShims.swift
-//
-//
-//
 
 #if OPENGRAPH_ATTRIBUTEGRAPH
 @_exported import AttributeGraph
