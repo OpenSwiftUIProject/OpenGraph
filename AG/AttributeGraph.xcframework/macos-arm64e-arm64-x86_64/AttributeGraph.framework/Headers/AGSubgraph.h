@@ -71,6 +71,10 @@ AG_EXPORT
 AG_REFINED_FOR_SWIFT
 void AGSubgraphUpdate(AGSubgraphRef cf_subgraph, AGAttributeFlags flags) AG_SWIFT_NAME(AGSubgraphRef.update(self:flags:));
 
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+bool AGSubgraphIsDirty(AGSubgraphRef cf_subgraph, uint32_t unknown) AG_SWIFT_NAME(AGSubgraphRef.isDirty(self:_:));
+
 AG_EXTERN_C_END
 
 AG_ASSUME_NONNULL_END

@@ -143,3 +143,12 @@ void OGSubgraphUpdate(OGSubgraphRef cf_subgraph, OGAttributeFlags flags) {
     }
     // subgraph->update(flags);
 }
+
+bool OGSubgraphIsDirty(OGSubgraphRef cf_subgraph, uint32_t unknown) {
+    OG::Subgraph *subgraph = cf_subgraph->subgraph;
+    if (subgraph == nullptr) {
+        return false;
+    }
+    // TODO
+    return false;
+}
