@@ -13,6 +13,7 @@ extension OGSubgraph {
     }
     
     public func apply<Value>(_ body: () -> Value) -> Value {
+        #if !os(WASI)
         let update = OGGraph.clearUpdate()
         let current = OGSubgraph.current
         defer {
@@ -20,6 +21,9 @@ extension OGSubgraph {
             OGGraph.setUpdate(update)
         }
         return body()
+        #else
+        fatalError("upstream SIL Compiler assert issue")
+        #endif
     }
     
     public func forEach(_ flags: OGAttributeFlags, _ callback: (OGAttribute) -> Void) {
