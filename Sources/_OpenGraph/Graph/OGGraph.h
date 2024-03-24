@@ -94,6 +94,14 @@ OG_EXPORT
 OG_REFINED_FOR_SWIFT
 uint64_t OGGraphGetCounter(OGGraphRef graph, OGCounterQueryType query) OG_SWIFT_NAME(OGGraphRef.counter(self:for:));
 
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGGraphSetUpdate(const void * _Nullable value) OG_SWIFT_NAME(OGGraphRef.setUpdate(_:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+const void * _Nullable OGGraphClearUpdate(void) OG_SWIFT_NAME(OGGraphRef.clearUpdate());
+
 OG_EXTERN_C_END
 
 OG_ASSUME_NONNULL_END

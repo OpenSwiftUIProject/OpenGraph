@@ -52,6 +52,8 @@ public:
     
     void apply(OGAttributeFlags flags, OG::ClosureFunction<void, OGAttribute> body) const OG_NOEXCEPT;
     
+    OGUniqueID add_observer(OG::ClosureFunction<void> observer) const OG_NOEXCEPT;
+    
     // MARK: - Init and deinit
     
     Subgraph(SubgraphObject*, OG::Graph::Context&, OG::AttributeID);

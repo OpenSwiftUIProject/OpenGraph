@@ -389,11 +389,16 @@ extension AttributeGraph.AGGraph {
 	public var mainUpdates: Swift.Int { Swift.numericCast(counter(for: ._10)) }
 }
 
+extension AttributeGraph.AGGraph {
+	public static func withoutUpdate<Value>(_ body: () -> Value) -> Value
+}
+
 // MARK: - AGSubgraph
 
 extension AttributeGraph.AGSubgraph {
-	@_silgen_name("AGSubgraphApply")
-	public static func apply(_ graph: AttributeGraph.AGSubgraph, flags: AGAttributeFlags, callback: @escaping (AGAttribute) -> Void)
+	public func addObserver(_ observer: () -> Void) -> Swift.Int
+	public func apply<Value>(_ body: () -> Value) -> Value
+	public func forEach(_ flags: AGAttributeFlags, _ callback: (AGAttribute) -> Void)
 }
 
 // MARK: - Rule Related

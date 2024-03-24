@@ -12,6 +12,7 @@
 #include "AGGraph.h"
 #include "AGAttribute.h"
 #include "AGAttributeFlags.h"
+#include "AGUniqueID.h"
 #include "CFRuntime.h"
 
 AG_ASSUME_NONNULL_BEGIN
@@ -74,6 +75,12 @@ void AGSubgraphUpdate(AGSubgraphRef cf_subgraph, AGAttributeFlags flags) AG_SWIF
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
 bool AGSubgraphIsDirty(AGSubgraphRef cf_subgraph, uint32_t unknown) AG_SWIFT_NAME(AGSubgraphRef.isDirty(self:_:));
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+AGUniqueID AGSubgraphAddObserver(AGSubgraphRef cf_subgraph,
+                           const void (*function)(const void * _Nullable context AG_SWIFT_CONTEXT) AG_SWIFT_CC(swift),
+                           const void * _Nullable context);
 
 AG_EXTERN_C_END
 

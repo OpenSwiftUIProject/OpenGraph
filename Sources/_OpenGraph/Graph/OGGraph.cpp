@@ -9,6 +9,7 @@
 #include "Graph.hpp"
 #include "../Util/assert.hpp"
 #include "../Data/ClosureFunction.hpp"
+#include <pthread.h>
 
 OGGraphRef OGGraphCreate() {
     return OGGraphCreateShared(nullptr);
@@ -185,4 +186,17 @@ uint64_t OGGraphGetCounter(OGGraphRef graph, OGCounterQueryType query) {
         default:
             return 0;
     }
+}
+
+void OGGraphSetUpdate(const void * _Nullable value) {
+    pthread_setspecific(OG::Graph::current_key(), value);
+}
+
+const void * _Nullable OGGraphClearUpdate(void) {
+    void * value = pthread_getspecific(OG::Graph::current_key());
+    bool isDirty = (uint64_t)value & 0x1;
+    if (value != nullptr && isDirty) {
+        pthread_setspecific(OG::Graph::current_key(), (void *)((uint64_t)value | 0x1));
+    }
+    return value;
 }

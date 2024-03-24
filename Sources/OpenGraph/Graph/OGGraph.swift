@@ -1,8 +1,9 @@
 //
 //  OGGraph.swift
+//  OpenGraph
 //
-//
-//
+//  Audited for RELEASE_2021
+//  Status: WIP
 
 import _OpenGraph
 
@@ -27,16 +28,15 @@ extension OGGraph {
     public static func stopProfiling(_ graph: OGGraph? = nil)
 }
 
-// TODO: Update to use @_extern(c, "xx") after we migrate to Swift 6.0
+// FIXME: migrate to use @_extern(c, "xx") in Swift 6
 // > Also similar to @_silgen_name, but a function declared with @_extern(c) is assumed to use the C ABI, while @_silgen_name assumes the Swift ABI.
 //extension OGGraph {
 //    @_silgen_name("OGGGraphSetInvalidationCallback") // Use Swift ABI(self: x20) ❌, we need C ABI here(self: x0).
 //    public func setInvalidationCallback(_ callback: ((OGAttribute) -> Void)?)
-//    
+//
 //    @_silgen_name("OGGGraphSetUpdateCallback")
 //    public func setUpdateCallback(_ callback: (() -> Void)?)
 //}
-
 extension OGGraph {
     @_silgen_name("OGGraphSetInvalidationCallback")
     public static func setInvalidationCallback(_ graph: OGGraph, callback: ((OGAttribute) -> Void)?)
@@ -49,4 +49,12 @@ extension OGGraph {
     @_transparent
     @inline(__always)
     public var mainUpdates: Int { numericCast(counter(for: ._10)) }
+}
+
+extension OGGraph {
+    public static func withoutUpdate<Value>(_ body: () -> Value) -> Value {
+        let update = clearUpdate()
+        defer { setUpdate(update) }
+        return body()
+    }
 }

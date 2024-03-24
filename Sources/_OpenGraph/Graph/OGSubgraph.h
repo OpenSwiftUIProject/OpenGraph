@@ -12,6 +12,7 @@
 #include "OGGraph.h"
 #include "OGAttribute.h"
 #include "OGAttributeFlags.h"
+#include "OGUniqueID.h"
 #include "../Private/CFRuntime.h"
 
 OG_ASSUME_NONNULL_BEGIN
@@ -74,6 +75,12 @@ void OGSubgraphUpdate(OGSubgraphRef cf_subgraph, OGAttributeFlags flags) OG_SWIF
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
 bool OGSubgraphIsDirty(OGSubgraphRef cf_subgraph, uint32_t unknown) OG_SWIFT_NAME(OGSubgraphRef.isDirty(self:_:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+OGUniqueID OGSubgraphAddObserver(OGSubgraphRef cf_subgraph,
+                           const void (*function)(const void * _Nullable context OG_SWIFT_CONTEXT) OG_SWIFT_CC(swift),
+                           const void * _Nullable context);
 
 OG_EXTERN_C_END
 

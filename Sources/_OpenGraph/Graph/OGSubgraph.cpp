@@ -152,3 +152,13 @@ bool OGSubgraphIsDirty(OGSubgraphRef cf_subgraph, uint32_t unknown) {
     // TODO
     return false;
 }
+
+OGUniqueID OGSubgraphAddObserver(OGSubgraphRef cf_subgraph,
+                                 const void (*function)(const void * _Nullable context OG_SWIFT_CONTEXT) OG_SWIFT_CC(swift),
+                                 const void * _Nullable context) {
+    OG::Subgraph *subgraph = cf_subgraph->subgraph;
+    if (subgraph == nullptr) {
+        OG::precondition_failure("accessing invalidated subgraph");
+    }
+    return subgraph->add_observer(OG::ClosureFunction<void>(function, context));
+}

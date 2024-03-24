@@ -30,3 +30,8 @@ OG::Subgraph::Subgraph(OG::SubgraphObject*, OG::Graph::Context& context, OG::Att
 _context((OGGraphContextStorage &)context){
     // TODO
 }
+
+OGUniqueID OG::Subgraph::add_observer(OG::ClosureFunction<void> observer) const OG_NOEXCEPT {
+    // TODO
+    return OGMakeUniqueID();
+}

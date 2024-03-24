@@ -94,6 +94,14 @@ AG_EXPORT
 AG_REFINED_FOR_SWIFT
 uint64_t AGGraphGetCounter(AGGraphRef graph, AGCounterQueryType query) AG_SWIFT_NAME(AGGraphRef.counter(self:for:));
 
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+void AGGraphSetUpdate(const void * _Nullable value) AG_SWIFT_NAME(AGGraphRef.setUpdate(_:));
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+const void * _Nullable AGGraphClearUpdate(void) AG_SWIFT_NAME(AGGraphRef.clearUpdate());
+
 AG_EXTERN_C_END
 
 AG_ASSUME_NONNULL_END
