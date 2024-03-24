@@ -77,7 +77,7 @@ struct GraphTests {
         }
     }
     
-    @Test
+    @Test(.disabled(if: !compatibilityTestEnabled, "Not implemented on OG"))
     func counter() {
         let graph = OGGraph()
         #expect(graph.mainUpdates == 0)
