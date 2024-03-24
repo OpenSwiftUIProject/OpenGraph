@@ -5,9 +5,9 @@ filepath() {
   [[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
 }
 
-OG_ROOT="$(dirname $(dirname $(filepath $0)))"
+OPENGRAPH_ROOT="$(dirname $(dirname $(filepath $0)))"
 
-cd $OG_ROOT
+cd $OPENGRAPH_ROOT
 
 export OPENGRAPH_SWIFT_TESTING=0
-swift build -Xswiftc -emit-module-interface -Xswiftc -enable-library-evolution
+swift build
