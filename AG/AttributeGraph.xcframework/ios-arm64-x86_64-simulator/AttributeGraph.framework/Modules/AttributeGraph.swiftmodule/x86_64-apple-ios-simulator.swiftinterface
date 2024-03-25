@@ -48,8 +48,10 @@ public struct Attribute<Value> {
 	public init(value: Value)
 	public init(type: Value.Type)
 	public init<Body: AttributeGraph._AttributeBody>(body: Swift.UnsafePointer<Body>, value: Swift.UnsafePointer<Value>?, flags: AGAttributeTypeFlags, update: AttributeUpdateBlock)
-
-	public var wrappedValue: Value { unsafeAddress set }
+	public var wrappedValue: Value {
+		unsafeAddress
+		nonmutating set
+	}
 	public var projectedValue: AttributeGraph.Attribute<Value> { get _modify }
   
     public subscript<Member>(dynamicMember _: Swift.KeyPath<Value, Member>) -> AttributeGraph.Attribute<Member> { get }

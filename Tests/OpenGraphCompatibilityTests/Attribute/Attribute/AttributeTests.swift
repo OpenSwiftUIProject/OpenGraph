@@ -27,10 +27,12 @@ final class AttributeTests: AttributeTestBase {
     func propertyWrapper() {
         @Attribute(value: 0) var value
         #expect(value == 0)
-        #expect(_value.setValue(3) == true)
+        value = 3
         #expect(value == 3)
+        #expect(_value.setValue(4) == true)
+        #expect(value == 4)
         let newAttribute = $value
-        #expect(_value.setValue(5) == true)
+        value = 5
         #expect(newAttribute.wrappedValue == 5)
     }
     
