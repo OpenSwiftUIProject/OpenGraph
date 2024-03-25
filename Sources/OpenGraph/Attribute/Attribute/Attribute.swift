@@ -170,7 +170,7 @@ public struct Attribute<Value> {
         )
     }
     
-    public nonmutating func setValue(_ value: Value) -> Bool {
+    public func setValue(_ value: Value) -> Bool {
         withUnsafePointer(to: value) { valuePointer in
             OGGraphSetValue(identifier, valuePointer: valuePointer)
         }
