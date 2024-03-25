@@ -35,9 +35,11 @@ generate_framework() {
 
     rm -rf ${xcframework_path}/${frmework_name}/${framework_name}/Headers
     rm -rf ${xcframework_path}/${frmework_name}/${framework_name}/Modules
+    rm -rf ${xcframework_path}/${frmework_name}/${framework_name}/Info.plist
 
     cp -rf ${AG_ROOT}/Sources/Headers ${xcframework_path}/${frmework_name}/${framework_name}/
     cp -rf ${AG_ROOT}/Sources/Modules ${xcframework_path}/${frmework_name}/${framework_name}/
+    cp -rf ${AG_ROOT}/Sources/Info.plist ${xcframework_path}/${frmework_name}/${framework_name}/
 
     cd ${xcframework_path}/${frmework_name}/${swiftmodule_path}/
 }
