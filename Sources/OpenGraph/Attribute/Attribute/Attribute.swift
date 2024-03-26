@@ -67,7 +67,7 @@ public struct Attribute<Value> {
                 .value
                 .assumingMemoryBound(to: Value.self)
         }
-        set { _ = setValue(newValue) }
+        nonmutating set { _ = setValue(newValue) }
     }
     
     public var projectedValue: Attribute<Value> {
