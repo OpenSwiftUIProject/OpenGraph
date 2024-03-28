@@ -58,9 +58,9 @@ public:
 };
 } /* OG */
 
-struct OGDebugServerStorage {
+typedef struct OGDebugServerStorage {
     OG::DebugServer debugServer;
-};
+} OGDebugServerStorage;
 
 
 OG_ASSUME_NONNULL_END

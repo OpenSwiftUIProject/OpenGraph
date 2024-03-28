@@ -10,19 +10,19 @@
 
 #include "AGBase.h"
 
-typedef struct AG_BRIDGED_TYPE(id) AGDebugServerStorage * AGDebugServerRef;
-
-struct AGDebugServerStorage;
-
 #if TARGET_OS_DARWIN
 
 AG_ASSUME_NONNULL_BEGIN
+
+typedef struct AGDebugServerStorage AGDebugServerStorage;
+
+typedef const AGDebugServerStorage *AGDebugServer AG_SWIFT_STRUCT;
 
 // MARK: - Exported C functions
 
 AG_EXTERN_C_BEGIN
 AG_EXPORT
-AGDebugServerRef _Nullable AGDebugServerStart(unsigned int mode) AG_SWIFT_NAME(AGDebugServer.start(mode:));
+AGDebugServer _Nullable AGDebugServerStart(unsigned int mode) AG_SWIFT_NAME(AGDebugServer.start(mode:));
 AG_EXPORT
 void AGDebugServerStop(void) AG_SWIFT_NAME(AGDebugServer.stop());
 AG_EXPORT
