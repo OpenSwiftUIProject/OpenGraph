@@ -10,19 +10,19 @@
 
 #include "OGBase.h"
 
-typedef struct OG_BRIDGED_TYPE(id) OGDebugServerStorage * OGDebugServerRef;
-
-struct OGDebugServerStorage;
-
 #if OG_TARGET_OS_DARWIN
 
 OG_ASSUME_NONNULL_BEGIN
+
+typedef struct OGDebugServerStorage OGDebugServerStorage;
+
+typedef const OGDebugServerStorage *OGDebugServer OG_SWIFT_STRUCT;
 
 // MARK: - Exported C functions
 
 OG_EXTERN_C_BEGIN
 OG_EXPORT
-OGDebugServerRef _Nullable OGDebugServerStart(unsigned int mode) OG_SWIFT_NAME(OGDebugServer.start(mode:));
+OGDebugServer _Nullable OGDebugServerStart(unsigned int mode) OG_SWIFT_NAME(OGDebugServer.start(mode:));
 OG_EXPORT
 void OGDebugServerStop(void) OG_SWIFT_NAME(OGDebugServer.stop());
 OG_EXPORT
