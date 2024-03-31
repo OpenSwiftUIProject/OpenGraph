@@ -50,40 +50,38 @@ OGAttribute OGGraphCreateIndirectAttribute2(OGAttribute attribute, uint64_t size
 
 OGAttributeFlags OGGraphGetFlags(OGAttribute attribute) {
     const OG::AttributeID id = OG::AttributeID(attribute);
-    if (!id.isDirect()) {
-        OG::precondition_failure("non-direct attribute id: %u", id);
-    }
+    id.checkIsDirect();
     // TODO: data/table
     return OGAttributeFlagsDefault;
 }
 
 void OGGraphSetFlags(OGAttribute attribute, OGAttributeFlags flags) {
     const OG::AttributeID id = OG::AttributeID(attribute);
-    if (!id.isDirect()) {
-        OG::precondition_failure("non-direct attribute id: %u", id);
-    }
+    id.checkIsDirect();
     // TODO: data/table
 }
 
 void OGGraphAddInput(OGAttribute attribute1, OGAttribute attribute2, OGInputOptions options, long token) {
     const OG::AttributeID id = OG::AttributeID(attribute1);
-    if (!id.isDirect()) {
-        OG::precondition_failure("non-direct attribute id: %u", id);
-    }
+    id.checkIsDirect();
     // TODO: data/table
 }
 
 const OGAttributeInfo OGGraphGetAttributeInfo(OGAttribute attribute) {
     const OG::AttributeID id = OG::AttributeID(attribute);
-    if (!id.isDirect()) {
-        OG::precondition_failure("non-direct attribute id: %u", id);
-    }
+    id.checkIsDirect();
     // TODO
     return { nullptr, nullptr };
 }
 
-void OGGraphMutateAttribute(OGAttribute attribute, const OGTypeID type, bool invalidating) {
-    // TODO
+void OGGraphMutateAttribute(OGAttribute attribute,
+                            const OGTypeID type,
+                            bool invalidating,
+                            const void (*function)(const void * _Nullable context OG_SWIFT_CONTEXT, void *body) OG_SWIFT_CC(swift),
+                            const void * _Nullable context) {
+    const OG::AttributeID id = OG::AttributeID(attribute);
+    id.checkIsDirect();
+    // attribute_modify(AG::data::ptr<AG::Node>, AGSwiftMetadata const*, AG::ClosureFunction<void, void*>, bool
 }
 
 OGAttribute OGGraphGetIndirectDependency(OGAttribute attribute) {

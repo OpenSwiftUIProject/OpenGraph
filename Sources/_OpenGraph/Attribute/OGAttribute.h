@@ -64,7 +64,11 @@ const OGAttributeInfo OGGraphGetAttributeInfo(OGAttribute attribute) OG_SWIFT_NA
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-void OGGraphMutateAttribute(OGAttribute attribute, const OGTypeID type, bool invalidating/*, closure*/);
+void OGGraphMutateAttribute(OGAttribute attribute,
+                            const OGTypeID type,
+                            bool invalidating,
+                            const void (*function)(const void * _Nullable context OG_SWIFT_CONTEXT, void *body) OG_SWIFT_CC(swift),
+                            const void * _Nullable context);
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT

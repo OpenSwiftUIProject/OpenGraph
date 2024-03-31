@@ -10,6 +10,7 @@
 
 #include "OGBase.h"
 #include "OGAttribute.h"
+#include "../Util/assert.hpp"
 
 namespace OG {
 class AttributeID final {
@@ -32,7 +33,7 @@ private:
     }
 public:
     OG_INLINE OG_CONSTEXPR
-    AttributeID(OGAttribute attribute) OG_NOEXCEPT:
+    AttributeID(OGAttribute& attribute) OG_NOEXCEPT:
     _rawValue(attribute) {}
     
     OG_INLINE OG_CONSTEXPR
@@ -60,6 +61,13 @@ public:
     OG_INLINE OG_CONSTEXPR
     const bool isNil() const OG_NOEXCEPT {
         return getKind() == Kind::Nil;
+    }
+    
+    OG_INLINE OG_CONSTEXPR
+    const void checkIsDirect() const OG_NOEXCEPT {
+        if (!isDirect()) {
+            OG::precondition_failure("non-direct attribute id: %u", _rawValue);
+        }
     }
 };
 static_assert(sizeof(AttributeID) == sizeof(uint32_t));

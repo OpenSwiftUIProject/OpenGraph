@@ -43,9 +43,10 @@ extension OGAttribute {
         bodyType._visitBody(&visitor, info.body)
     }
 
-    public func mutateBody<Value>(as type: Value.Type, invalidating: Bool, _: (inout Value) -> Void) {
-        // FIXME: pass body
-        __OGGraphMutateAttribute(self, OGTypeID(type), invalidating)
+    public func mutateBody<Value>(as type: Value.Type, invalidating: Bool, _ body: (inout Value) -> Void) {
+        OGAttribute.mutateAttribute(self, type: OGTypeID(type), invalidating: invalidating) { value in
+            body(&value.assumingMemoryBound(to: Value.self).pointee)
+        }
     }
     
     public func breadthFirstSearch(options _: OGSearchOptions = [], _: (OGAttribute) -> Bool) -> Bool {
@@ -83,3 +84,14 @@ extension OGAttribute: CustomStringConvertible {
 }
 
 public typealias AttributeUpdateBlock = () -> (UnsafeMutableRawPointer, OGAttribute) -> Void
+
+// FIXME: migrate to use @_extern(c, "xx") in Swift 6
+extension OGAttribute {
+    @_silgen_name("OGGraphMutateAttribute")
+    private static func mutateAttribute(
+        _ attribute: OGAttribute,
+        type: OGTypeID,
+        invalidating: Bool,
+        body: (UnsafeMutableRawPointer) -> Void
+    )
+}
