@@ -64,7 +64,11 @@ const AGAttributeInfo AGGraphGetAttributeInfo(AGAttribute attribute) AG_SWIFT_NA
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
-void AGGraphMutateAttribute(AGAttribute attribute, const AGTypeID type, bool invalidating/*, closure*/);
+void AGGraphMutateAttribute(AGAttribute attribute,
+                            const AGTypeID type,
+                            bool invalidating,
+                            const void (*function)(const void * _Nullable context AG_SWIFT_CONTEXT, void *body) AG_SWIFT_CC(swift),
+                            const void * _Nullable context);
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT

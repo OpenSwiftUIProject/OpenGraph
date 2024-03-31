@@ -65,5 +65,13 @@ final class AttributeTests: AttributeTestBase {
         attribute.prefetchValue()
         attribute.invalidateValue()
     }
+    
+    @Test
+    func mutateBodyAPI() {
+        let attribute = Attribute(value: 5)
+        attribute.mutateBody(as: External<Int>.self, invalidating: true) { _ in
+            
+        }
+    }
 }
 #endif
