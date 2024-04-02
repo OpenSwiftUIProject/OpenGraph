@@ -13,11 +13,14 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: macos-13
-            xcode-version: "15.2"   # Swift 5.9.2
           - os: macos-14
-            xcode-version: "15.2"   # Swift 5.9.2
+            xcode-version: "15.3"   # Swift 5.10
     runs-on: ${{ matrix.os }}
+    env:
+      OPENGRAPH_WERROR: 1
+      OPENGRAPH_SWIFT_TESTING: 1
+      OPENGRAPH_ATTRIBUTEGRAPH: 1
+      OPENGRAPH_COMPATIBILITY_TEST: 1
     steps:
       - uses: actions/checkout@v4
       - name: Setup Xcode
@@ -26,19 +29,15 @@ jobs:
           xcode-version: ${{ matrix.xcode-version }}
       - name: Swift version
         run: swift --version
-      - name: Run tests against Apple's AttributeGraph on macOS
+      - name: Run tests against Apple's AttributeGraph on macOS via SwiftPM
         run: |
           swift test \
             --build-path .build-compatibility-test-debug
-        env:
-          OPENGRAPH_ATTRIBUTEGRAPH: 1
-          OPENGRAPH_COMPATIBILITY_TEST: 1 
-      # FIXME: macOS 13 CI issue. Can't reproduce on macOS 14 locally
-      # - name: Run tests against Apple's AttributeGraph on macOS
-      #   run: |
-      #     xcodebuild test \
-      #       -scheme OpenGraph-Package \
-      #       -sdk macosx \
-      #       -destination "platform=macOS"
-      #   env:
-      #     OPENGRAPH_COMPATIBILITY_TEST: 1 
+      - name: Run tests against Apple's AttributeGraph on macOS via Xcode
+        run: |
+          xcodebuild test \
+            -scheme OpenGraph-Package \
+            -sdk macosx \
+            -destination "platform=macOS" \
+            -skipPackagePluginValidation \
+            -skipMacroValidation
