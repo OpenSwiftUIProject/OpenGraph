@@ -171,11 +171,11 @@ OGUniqueID OGSubgraphAddObserver(OGSubgraphRef cf_subgraph,
 #if !OG_TARGET_OS_WASI
 static bool should_record_tree;
 static dispatch_once_t should_record_tree_once;
-#endif
 
 void init_should_record_tree(void *) {
     should_record_tree = OG::get_env("OG_TREE") != 0;
 }
+#endif
 
 bool OGSubgraphShouldRecordTree() {
     #if !OG_TARGET_OS_WASI
