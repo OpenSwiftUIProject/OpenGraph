@@ -82,6 +82,26 @@ OGUniqueID OGSubgraphAddObserver(OGSubgraphRef cf_subgraph,
                            const void (*function)(const void * _Nullable context OG_SWIFT_CONTEXT) OG_SWIFT_CC(swift),
                            const void * _Nullable context);
 
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+bool OGSubgraphShouldRecordTree(void) OG_SWIFT_NAME(getter:OGSubgraphRef.shouldRecordTree());
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGSubgraphSetShouldRecordTree(void) OG_SWIFT_NAME(OGSubgraphRef.setShouldRecordTree());
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGSubgraphBeginTreeElement(OGAttribute attribute, OGTypeID type, uint32_t flags);
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGSubgraphAddTreeValue(OGAttribute attribute, OGTypeID type, const char * key, uint32_t flags);
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGSubgraphEndTreeElement(OGAttribute attribute);
+
 OG_EXTERN_C_END
 
 OG_ASSUME_NONNULL_END

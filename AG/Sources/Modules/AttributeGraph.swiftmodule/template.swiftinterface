@@ -399,6 +399,12 @@ extension AttributeGraph.AGSubgraph {
 	public func forEach(_ flags: AGAttributeFlags, _ callback: (AGAttribute) -> Void)
 }
 
+extension AttributeGraph.AGSubgraph {
+	public static func beginTreeElement<Value>(value: AttributeGraph.Attribute<Value>, flags: Swift.UInt32)
+	public static func endTreeElement<Value>(value: AttributeGraph.Attribute<Value>)
+	public static func addTreeValue<Value>(_ value: AttributeGraph.Attribute<Value>, forKey key: Swift.UnsafePointer<Int8>, flags: Swift.UInt32)
+}
+
 // MARK: - Rule Related
 
 // MARK: - Rule

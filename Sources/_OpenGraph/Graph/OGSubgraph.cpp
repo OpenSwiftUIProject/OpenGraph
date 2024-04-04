@@ -8,9 +8,13 @@
 #include "OGSubgraph.h"
 #include "OGGraph.h"
 #include "Subgraph.hpp"
-#include "../Util/assert.hpp"
-#include <pthread.h>
 #include "OGGraphContext.h"
+#include "../Util/assert.hpp"
+#include "../Util/env.hpp"
+#include <pthread.h>
+#if !OG_TARGET_OS_WASI
+#include <dispatch/dispatch.h>
+#endif
 
 namespace {
 CFRuntimeClass &subgraph_type_id() {
@@ -68,7 +72,7 @@ OGSubgraphRef OGSubgraphCreate2(OGGraphRef cf_graph, OGAttribute attribute) {
 }
 
 _Nullable OGSubgraphRef OGSubgraphGetCurrent() {
-    OG::Subgraph* subgraph = (OG::Subgraph*)pthread_getspecific(OG::Subgraph::current_key());
+    OG::Subgraph *subgraph = OG::Subgraph::get_current();
     if (subgraph == nullptr) {
         return nullptr;
     }
@@ -76,25 +80,26 @@ _Nullable OGSubgraphRef OGSubgraphGetCurrent() {
 }
 
 void OGSubgraphSetCurrent(_Nullable OGSubgraphRef cf_subgraph) {
-    OG::Subgraph* oldSubgraph = (OG::Subgraph*)pthread_getspecific(OG::Subgraph::current_key());
+    OG::Subgraph *old_subgraph = OG::Subgraph::get_current();
     if (cf_subgraph == nullptr) {
-        pthread_setspecific(OG::Subgraph::current_key(), nullptr);
+        OG::Subgraph::set_current(nullptr);
     } else {
-        pthread_setspecific(OG::Subgraph::current_key(), cf_subgraph->subgraph);
-        if (cf_subgraph->subgraph != nullptr) {
+        OG::Subgraph *subgraph = cf_subgraph->subgraph;
+        OG::Subgraph::set_current(subgraph);
+        if (subgraph != nullptr) {
             CFRetain(cf_subgraph);
         }
     }
-    if (oldSubgraph != nullptr) {
-        OGSubgraphRef cf_oldSubgraph = oldSubgraph->to_cf();
-        if (cf_oldSubgraph) {
-            CFRelease(cf_oldSubgraph);
+    if (old_subgraph != nullptr) {
+        OGSubgraphRef old_cf_Subgraph = old_subgraph->to_cf();
+        if (old_cf_Subgraph) {
+            CFRelease(old_cf_Subgraph);
         }
     }
 }
 
 OGGraphContextRef OGSubgraphGetCurrentGraphContext() {
-    OG::Subgraph* subgraph = (OG::Subgraph*)pthread_getspecific(OG::Subgraph::current_key());
+    OG::Subgraph *subgraph = OG::Subgraph::get_current();
     if (subgraph == nullptr) {
         return nullptr;
     }
@@ -161,4 +166,50 @@ OGUniqueID OGSubgraphAddObserver(OGSubgraphRef cf_subgraph,
         OG::precondition_failure("accessing invalidated subgraph");
     }
     return subgraph->add_observer(OG::ClosureFunction<void>(function, context));
+}
+
+#if !OG_TARGET_OS_WASI
+static bool should_record_tree;
+static dispatch_once_t should_record_tree_once;
+
+void init_should_record_tree(void *) {
+    should_record_tree = OG::get_env("OG_TREE") != 0;
+}
+#endif
+
+bool OGSubgraphShouldRecordTree() {
+    #if !OG_TARGET_OS_WASI
+    dispatch_once_f(&should_record_tree_once, NULL, init_should_record_tree);
+    return should_record_tree;
+    #else
+    return false;
+    #endif
+}
+
+void OGSubgraphSetShouldRecordTree() {
+    #if !OG_TARGET_OS_WASI
+    dispatch_once_f(&should_record_tree_once, NULL, init_should_record_tree);
+    should_record_tree = true;
+    #endif
+}
+
+void OGSubgraphBeginTreeElement(OGAttribute attribute, OGTypeID type, uint32_t flags) {
+    OG::Subgraph * subgraph = OG::Subgraph::get_current();
+    if (subgraph) {
+        subgraph->begin_tree(attribute, type, flags);
+    }
+}
+
+void OGSubgraphAddTreeValue(OGAttribute attribute, OGTypeID type, const char * key, uint32_t flags) {
+    OG::Subgraph * subgraph = OG::Subgraph::get_current();
+    if (subgraph) {
+        subgraph->add_tree_value(attribute, type, key, flags);
+    }
+}
+
+void OGSubgraphEndTreeElement(OGAttribute attribute) {
+    OG::Subgraph * subgraph = OG::Subgraph::get_current();
+    if (subgraph) {
+        subgraph->end_tree(attribute);
+    }
 }

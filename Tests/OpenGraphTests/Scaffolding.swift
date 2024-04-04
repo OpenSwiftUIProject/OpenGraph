@@ -1,14 +1,13 @@
 //
 //  Scaffolding.swift
-//
-//
-//
+//  OpenGraphTests
 
 import Testing
 import XCTest
 
-final class AllTests: XCTestCase {
-    func testAll() async {
-        await XCTestScaffold.runAllTests(hostedBy: self)
-    }
-}
+// See https://github.com/apple/swift-testing/issues/329
+//final class AllTests: XCTestCase {
+//    func testAll() async {
+//        await XCTestScaffold.runAllTests(hostedBy: self)
+//    }
+//}
