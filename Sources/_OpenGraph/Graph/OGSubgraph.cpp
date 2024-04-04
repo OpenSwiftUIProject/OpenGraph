@@ -80,19 +80,20 @@ _Nullable OGSubgraphRef OGSubgraphGetCurrent() {
 }
 
 void OGSubgraphSetCurrent(_Nullable OGSubgraphRef cf_subgraph) {
-    OG::Subgraph *oldSubgraph = OG::Subgraph::get_current();
+    OG::Subgraph *old_subgraph = OG::Subgraph::get_current();
     if (cf_subgraph == nullptr) {
         OG::Subgraph::set_current(nullptr);
     } else {
-        OG::Subgraph::set_current(cf_subgraph->subgraph);
-        if (cf_subgraph->subgraph != nullptr) {
+        OG::Subgraph *subgraph = cf_subgraph->subgraph;
+        OG::Subgraph::set_current(subgraph);
+        if (subgraph != nullptr) {
             CFRetain(cf_subgraph);
         }
     }
-    if (oldSubgraph != nullptr) {
-        OGSubgraphRef cf_oldSubgraph = oldSubgraph->to_cf();
-        if (cf_oldSubgraph) {
-            CFRelease(cf_oldSubgraph);
+    if (old_subgraph != nullptr) {
+        OGSubgraphRef old_cf_Subgraph = old_subgraph->to_cf();
+        if (old_cf_Subgraph) {
+            CFRelease(old_cf_Subgraph);
         }
     }
 }
