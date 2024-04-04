@@ -1,8 +1,6 @@
 //
 //  Scaffolding.swift
-//
-//
-//
+//  OpenGraphCompatibilityTests
 
 import Testing
 import XCTest
