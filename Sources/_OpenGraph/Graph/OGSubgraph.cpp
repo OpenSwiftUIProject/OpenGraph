@@ -8,9 +8,13 @@
 #include "OGSubgraph.h"
 #include "OGGraph.h"
 #include "Subgraph.hpp"
-#include "../Util/assert.hpp"
-#include <pthread.h>
 #include "OGGraphContext.h"
+#include "../Util/assert.hpp"
+#include "../Util/env.hpp"
+#include <pthread.h>
+#if !OG_TARGET_OS_WASI
+#include <dispatch/dispatch.h>
+#endif
 
 namespace {
 CFRuntimeClass &subgraph_type_id() {
@@ -161,4 +165,29 @@ OGUniqueID OGSubgraphAddObserver(OGSubgraphRef cf_subgraph,
         OG::precondition_failure("accessing invalidated subgraph");
     }
     return subgraph->add_observer(OG::ClosureFunction<void>(function, context));
+}
+
+#if !OG_TARGET_OS_WASI
+static bool should_record_tree;
+static dispatch_once_t should_record_tree_once;
+#endif
+
+void init_should_record_tree(void *) {
+    should_record_tree = OG::get_env("OG_TREE") != 0;
+}
+
+bool OGSubgraphShouldRecordTree() {
+    #if !OG_TARGET_OS_WASI
+    dispatch_once_f(&should_record_tree_once, NULL, init_should_record_tree);
+    return should_record_tree;
+    #else
+    return false;
+    #endif
+}
+
+void OGSubgraphSetShouldRecordTree() {
+    #if !OG_TARGET_OS_WASI
+    dispatch_once_f(&should_record_tree_once, NULL, init_should_record_tree);
+    should_record_tree = true;
+    #endif
 }
