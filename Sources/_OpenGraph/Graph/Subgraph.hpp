@@ -9,10 +9,11 @@
 #define Subgraph_hpp
 
 #include "OGBase.h"
-#include "../Attribute/AttributeID.hpp"
 #include "Graph.hpp"
-#include <pthread.h>
+#include "../Attribute/AttributeID.hpp"
 #include "../Data/ClosureFunction.hpp"
+#include "../Runtime/metadata.hpp"
+#include <pthread.h>
 
 typedef struct OG_BRIDGED_TYPE(id) OGSubgraphStorage * OGSubgraphRef;
 
@@ -37,13 +38,24 @@ public:
     
     // MARK: - pthread related
     
-    static void make_current_subgraph_key() {
+    OG_INLINE
+    const static void make_current_subgraph_key() OG_NOEXCEPT {
         pthread_key_create(&_current_subgraph_key, nullptr);
     }
     
     OG_INLINE OG_CONSTEXPR
     const static pthread_key_t& current_key() OG_NOEXCEPT {
         return _current_subgraph_key;
+    }
+    
+    OG_INLINE OG_CONSTEXPR
+    static Subgraph *get_current() OG_NOEXCEPT {
+        return (OG::Subgraph*)pthread_getspecific(OG::Subgraph::current_key());
+    }
+    
+    OG_INLINE OG_CONSTEXPR
+    static int set_current(Subgraph *subgraph) OG_NOEXCEPT {
+        return pthread_setspecific(OG::Subgraph::current_key(), subgraph);
     }
     
     // MARK: - Public API
@@ -54,6 +66,10 @@ public:
     
     OGUniqueID add_observer(OG::ClosureFunction<void> observer) const OG_NOEXCEPT;
     
+    void begin_tree(OG::AttributeID id, OG::swift::metadata const *type, uint32_t flags) const OG_NOEXCEPT;
+    void add_tree_value(OG::AttributeID id, OG::swift::metadata const *type, const char* key, uint32_t flags) const OG_NOEXCEPT;
+    void end_tree(OG::AttributeID id) const OG_NOEXCEPT;
+
     // MARK: - Init and deinit
     
     Subgraph(SubgraphObject*, OG::Graph::Context&, OG::AttributeID);

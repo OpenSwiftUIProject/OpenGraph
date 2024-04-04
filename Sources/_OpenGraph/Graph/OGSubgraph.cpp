@@ -72,7 +72,7 @@ OGSubgraphRef OGSubgraphCreate2(OGGraphRef cf_graph, OGAttribute attribute) {
 }
 
 _Nullable OGSubgraphRef OGSubgraphGetCurrent() {
-    OG::Subgraph* subgraph = (OG::Subgraph*)pthread_getspecific(OG::Subgraph::current_key());
+    OG::Subgraph *subgraph = OG::Subgraph::get_current();
     if (subgraph == nullptr) {
         return nullptr;
     }
@@ -80,11 +80,11 @@ _Nullable OGSubgraphRef OGSubgraphGetCurrent() {
 }
 
 void OGSubgraphSetCurrent(_Nullable OGSubgraphRef cf_subgraph) {
-    OG::Subgraph* oldSubgraph = (OG::Subgraph*)pthread_getspecific(OG::Subgraph::current_key());
+    OG::Subgraph *oldSubgraph = OG::Subgraph::get_current();
     if (cf_subgraph == nullptr) {
-        pthread_setspecific(OG::Subgraph::current_key(), nullptr);
+        OG::Subgraph::set_current(nullptr);
     } else {
-        pthread_setspecific(OG::Subgraph::current_key(), cf_subgraph->subgraph);
+        OG::Subgraph::set_current(cf_subgraph->subgraph);
         if (cf_subgraph->subgraph != nullptr) {
             CFRetain(cf_subgraph);
         }
@@ -98,7 +98,7 @@ void OGSubgraphSetCurrent(_Nullable OGSubgraphRef cf_subgraph) {
 }
 
 OGGraphContextRef OGSubgraphGetCurrentGraphContext() {
-    OG::Subgraph* subgraph = (OG::Subgraph*)pthread_getspecific(OG::Subgraph::current_key());
+    OG::Subgraph *subgraph = OG::Subgraph::get_current();
     if (subgraph == nullptr) {
         return nullptr;
     }
@@ -190,4 +190,25 @@ void OGSubgraphSetShouldRecordTree() {
     dispatch_once_f(&should_record_tree_once, NULL, init_should_record_tree);
     should_record_tree = true;
     #endif
+}
+
+void OGSubgraphBeginTreeElement(OGAttribute attribute, OGTypeID type, uint32_t flags) {
+    OG::Subgraph * subgraph = OG::Subgraph::get_current();
+    if (subgraph) {
+        subgraph->begin_tree(attribute, type, flags);
+    }
+}
+
+void OGSubgraphAddTreeValue(OGAttribute attribute, OGTypeID type, const char * key, uint32_t flags) {
+    OG::Subgraph * subgraph = OG::Subgraph::get_current();
+    if (subgraph) {
+        subgraph->add_tree_value(attribute, type, key, flags);
+    }
+}
+
+void OGSubgraphEndTreeElement(OGAttribute attribute) {
+    OG::Subgraph * subgraph = OG::Subgraph::get_current();
+    if (subgraph) {
+        subgraph->end_tree(attribute);
+    }
 }

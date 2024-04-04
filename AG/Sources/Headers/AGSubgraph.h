@@ -90,6 +90,18 @@ AG_EXPORT
 AG_REFINED_FOR_SWIFT
 void AGSubgraphSetShouldRecordTree(void) AG_SWIFT_NAME(AGSubgraphRef.setShouldRecordTree());
 
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+void AGSubgraphBeginTreeElement(AGAttribute attribute, AGTypeID type, uint32_t flags);
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+void AGSubgraphAddTreeValue(AGAttribute attribute, AGTypeID type, const char * key, uint32_t flags);
+
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+void AGSubgraphEndTreeElement(AGAttribute attribute);
+
 AG_EXTERN_C_END
 
 AG_ASSUME_NONNULL_END

@@ -30,17 +30,25 @@ extension OGSubgraph {
     public func forEach(_ flags: OGAttributeFlags, _ callback: (OGAttribute) -> Void) {
         OGSubgraph.apply(self, flags: flags, callback: callback)
     }
-    
-    /*public*/ static func beginTreeElement<A>(value _: Attribute<A>, flags _: UInt32) {
-        fatalError("TODO")
+}
+
+extension OGSubgraph {
+    public static func beginTreeElement<Value>(value: Attribute<Value>, flags: UInt32) {
+        if shouldRecordTree {
+            __OGSubgraphBeginTreeElement(value.identifier, OGTypeID(Value.self), flags)
+        }
     }
     
-    /*public*/ static func addTreeValue<A>(_: Attribute<A>, forKey _: UnsafePointer<Int8>, flags _: UInt32) {
-        fatalError("TODO")
+    public static func addTreeValue<Value>(_ value: Attribute<Value>, forKey key: UnsafePointer<Int8>, flags: UInt32) {
+        if shouldRecordTree {
+            __OGSubgraphAddTreeValue(value.identifier, OGTypeID(Value.self), key, flags)
+        }
     }
     
-    /*public*/ static func endTreeElement<A>(value _: Attribute<A>) {
-        fatalError("TODO")
+    public static func endTreeElement<Value>(value: Attribute<Value>) {
+        if shouldRecordTree {
+            __OGSubgraphEndTreeElement(value.identifier)
+        }
     }
 }
 
