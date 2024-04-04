@@ -20,6 +20,7 @@ extension OGSubgraph {
             OGSubgraph.current = current
             OGGraph.setUpdate(update)
         }
+        OGSubgraph.current = self
         return body()
         #else
         fatalError("upstream SIL Compiler assert issue")
