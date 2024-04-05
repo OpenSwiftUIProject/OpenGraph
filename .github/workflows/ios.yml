@@ -35,10 +35,10 @@ jobs:
             -scheme OpenGraph-Package \
             -configuration Debug \
             -destination "platform=iOS" \
+            -derivedDataPath .build-debug \
             -skipMacroValidation \
             -skipPackagePluginValidation \
-            -derivedDataPath .build-debug
-        # Disable OTHER_SWIFT_FLAGS="-warnings-as-errors" due to remote dependency warning will be treated as error in xcodebuild
+            OTHER_SWIFT_FLAGS="-warnings-as-errors"
       - name: Build and run tests in debug mode with coverage on iOS Simulator
         run: |
           xcodebuild test \
@@ -49,6 +49,7 @@ jobs:
             -derivedDataPath .build-test-debug \
             -skipPackagePluginValidation \
             -skipMacroValidation
+            # OTHER_SWIFT_FLAGS="-warnings-as-errors" Conflicting options '-warnings-as-errors' and '-suppress-warnings'
           profdata_file_path=$(find . -path "*.build-test-debug/Build/ProfileData*Coverage.profdata" -type f)
           xcrun llvm-cov show \
             -instr-profile=$profdata_file_path \
