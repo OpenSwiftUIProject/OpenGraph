@@ -16,10 +16,8 @@ public struct IndirectAttribute<Value> {
     }
     
     public var source: Attribute<Value> {
-        get {
-            Attribute(identifier: __OGGraphGetIndirectAttribute(identifier))
-        }
-        nonmutating set { __OGGraphSetIndirectAttribute(identifier, newValue.identifier) }
+        get { Attribute(identifier: identifier.source) }
+        nonmutating set { identifier.source = newValue.identifier }
         nonmutating _modify {
             var value = source
             yield &value
@@ -29,10 +27,10 @@ public struct IndirectAttribute<Value> {
     
     public var dependency: OGAttribute? {
         get {
-            let dependency = __OGGraphGetIndirectDependency(identifier)
+            let dependency = identifier._indirectDependency
             return dependency == .nil ? nil : dependency
         }
-        nonmutating set {__OGGraphSetIndirectDependency(identifier, newValue ?? .nil) }
+        nonmutating set { identifier._indirectDependency = newValue ?? .nil }
         nonmutating _modify {
             var value = dependency
             yield &value
