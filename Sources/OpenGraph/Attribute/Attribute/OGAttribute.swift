@@ -67,13 +67,13 @@ extension OGAttribute {
 
     public var indirectDependency: OGAttribute? {
         get {
-            let indirectDependency = __OGGraphGetIndirectDependency(self)
+            let indirectDependency = _indirectDependency
             return indirectDependency == .nil ? nil : indirectDependency
         }
         nonmutating set {
-            __OGGraphSetIndirectDependency(self, newValue ?? .nil)
+            _indirectDependency = newValue ?? .nil
         }
-    }
+    }    
 }
 
 // MARK: CustomStringConvertible

@@ -72,19 +72,19 @@ void OGGraphMutateAttribute(OGAttribute attribute,
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-OGAttribute OGGraphGetIndirectDependency(OGAttribute attribute);
+OGAttribute OGGraphGetIndirectDependency(OGAttribute attribute) OG_SWIFT_NAME(getter:OGAttribute._indirectDependency(self:));
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-void OGGraphSetIndirectDependency(OGAttribute attribute1, OGAttribute attribute2);
+void OGGraphSetIndirectDependency(OGAttribute attribute1, OGAttribute attribute2) OG_SWIFT_NAME(setter:OGAttribute._indirectDependency(self:_:));
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-OGAttribute OGGraphGetIndirectAttribute(OGAttribute attribute);
+OGAttribute OGGraphGetIndirectAttribute(OGAttribute attribute) OG_SWIFT_NAME(getter:OGAttribute.source(self:));
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-void OGGraphSetIndirectAttribute(OGAttribute attribute1, OGAttribute attribute2);
+void OGGraphSetIndirectAttribute(OGAttribute attribute1, OGAttribute attribute2) OG_SWIFT_NAME(setter:OGAttribute.source(self:_:));
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT

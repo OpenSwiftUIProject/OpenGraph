@@ -72,19 +72,19 @@ void AGGraphMutateAttribute(AGAttribute attribute,
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
-AGAttribute AGGraphGetIndirectDependency(AGAttribute attribute);
+AGAttribute AGGraphGetIndirectDependency(AGAttribute attribute) AG_SWIFT_NAME(getter:AGAttribute._indirectDependency(self:));
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
-void AGGraphSetIndirectDependency(AGAttribute attribute1, AGAttribute attribute2);
+void AGGraphSetIndirectDependency(AGAttribute attribute1, AGAttribute attribute2) AG_SWIFT_NAME(setter:AGAttribute._indirectDependency(self:_:));
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
-AGAttribute AGGraphGetIndirectAttribute(AGAttribute attribute);
+AGAttribute AGGraphGetIndirectAttribute(AGAttribute attribute) AG_SWIFT_NAME(getter:AGAttribute.source(self:));
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
-void AGGraphSetIndirectAttribute(AGAttribute attribute1, AGAttribute attribute2);
+void AGGraphSetIndirectAttribute(AGAttribute attribute1, AGAttribute attribute2) AG_SWIFT_NAME(setter:AGAttribute.source(self:_:));
 
 AG_EXPORT
 AG_REFINED_FOR_SWIFT
