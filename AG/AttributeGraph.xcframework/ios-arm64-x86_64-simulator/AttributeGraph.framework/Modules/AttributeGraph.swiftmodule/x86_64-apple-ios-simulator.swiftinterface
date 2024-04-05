@@ -26,7 +26,10 @@ extension AGAttribute {
 	public var _bodyType: Any.Type { get }
 	public var _bodyPointer: UnsafeRawPointer { get }
 	public var valueType: Any.Type { get }
-	public var indirectDependency: AGAttribute? { get set }
+	public var indirectDependency: AGAttribute? {
+		get
+		nonmutating set
+	}
 }
 
 extension AGAttribute: Swift.CustomStringConvertible {
