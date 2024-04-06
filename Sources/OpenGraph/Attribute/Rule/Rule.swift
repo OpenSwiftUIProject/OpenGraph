@@ -22,8 +22,8 @@ extension Rule {
         let rule = pointer.assumingMemoryBound(to: Self.self)
         let value = rule.pointee.value
         // Verified for RELEASE_2023
-        withUnsafePointer(to: value) { valuePointer in
-            OGGraphSetOutputValue(valuePointer)
+        withUnsafePointer(to: value) { value in
+            OGGraph.setOutputValue(value)
         }
     }
 
@@ -32,8 +32,8 @@ extension Rule {
             return
         }
         // Verified for RELEASE_2023
-        withUnsafePointer(to: initialValue) { valuePointer in
-            OGGraphSetOutputValue(valuePointer)
+        withUnsafePointer(to: initialValue) { value in
+            OGGraph.setOutputValue(value)
         }
     }
 }
@@ -91,13 +91,3 @@ extension Rule where Self: Hashable {
             .assumingMemoryBound(to: Value.self)
     }
 }
-
-@_silgen_name("OGGraphGetOutputValue")
-@inline(__always)
-@inlinable
-func OGGraphGetOutputValue<Value>() -> UnsafePointer<Value>?
-
-@_silgen_name("OGGraphSetOutputValue")
-@inline(__always)
-@inlinable
-func OGGraphSetOutputValue<Value>(_ valuePointer: UnsafePointer<Value>)

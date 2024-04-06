@@ -58,3 +58,16 @@ extension OGGraph {
         return body()
     }
 }
+
+extension OGGraph {
+    // NOTE: Currently Swift does not support generic computed variable
+    @_silgen_name("OGGraphGetOutputValue")
+    @inline(__always)
+    @inlinable
+    public static func outputValue<Value>() -> UnsafePointer<Value>?
+
+    @_silgen_name("OGGraphSetOutputValue")
+    @inline(__always)
+    @inlinable
+    public static func setOutputValue<Value>(_ value: UnsafePointer<Value>)
+}

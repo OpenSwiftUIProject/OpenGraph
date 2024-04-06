@@ -43,17 +43,17 @@ public struct RuleContext<Value> {
 
     public var value: Value {
         unsafeAddress {
-            OGGraphGetOutputValue()!
+            OGGraph.outputValue()!
         }
         nonmutating set {
-            withUnsafePointer(to: newValue) { valuePointer in
-                OGGraphSetOutputValue(valuePointer)
+            withUnsafePointer(to: newValue) { value in
+                OGGraph.setOutputValue(value)
             }
         }
     }
     
     public var hasValue: Bool {
-        let valuePointer: UnsafePointer<Value>? = OGGraphGetOutputValue()
+        let valuePointer: UnsafePointer<Value>? = OGGraph.outputValue()
         return valuePointer != nil
     }
         

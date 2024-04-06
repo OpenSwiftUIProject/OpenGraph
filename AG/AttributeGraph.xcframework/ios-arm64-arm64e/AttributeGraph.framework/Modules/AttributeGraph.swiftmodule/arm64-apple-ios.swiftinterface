@@ -398,6 +398,18 @@ extension AttributeGraph.AGGraph {
 	public static func withoutUpdate<Value>(_ body: () -> Value) -> Value
 }
 
+extension AttributeGraph.AGGraph {
+	@_silgen_name("AGGraphGetOutputValue")
+	@inline(__always)
+	@inlinable
+	public static func outputValue<Value>() -> Swift.UnsafePointer<Value>?
+
+	@_silgen_name("AGGraphSetOutputValue")
+	@inline(__always)
+	@inlinable
+	public static func setOutputValue<Value>(_ value: Swift.UnsafePointer<Value>)
+}
+
 // MARK: - AGSubgraph
 
 extension AttributeGraph.AGSubgraph {
