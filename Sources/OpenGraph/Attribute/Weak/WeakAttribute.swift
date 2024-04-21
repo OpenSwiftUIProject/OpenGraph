@@ -46,11 +46,6 @@ public struct WeakAttribute<Value> {
     public var attribute: Attribute<Value>? {
         get { base.attribute?.unsafeCast(to: Value.self) }
         set { base.attribute = newValue?.identifier }
-        _modify {
-            var value = attribute
-            yield &value
-            attribute = value
-        }
     }
     
     public var value: Value? {

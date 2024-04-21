@@ -18,11 +18,6 @@ public struct IndirectAttribute<Value> {
     public var source: Attribute<Value> {
         get { Attribute(identifier: identifier.source) }
         nonmutating set { identifier.source = newValue.identifier }
-        nonmutating _modify {
-            var value = source
-            yield &value
-            source = value
-        }
     }
     
     public var dependency: OGAttribute? {
@@ -31,17 +26,11 @@ public struct IndirectAttribute<Value> {
             return dependency == .nil ? nil : dependency
         }
         nonmutating set { identifier._indirectDependency = newValue ?? .nil }
-        nonmutating _modify {
-            var value = dependency
-            yield &value
-            dependency = value
-        }
     }
     
     public var value: Value {
         get { Attribute(identifier: identifier).value }
         nonmutating set { Attribute(identifier: identifier).value = newValue }
-        // FIXME
         nonmutating _modify { yield &Attribute<Value>(identifier: identifier).value }
     }
     

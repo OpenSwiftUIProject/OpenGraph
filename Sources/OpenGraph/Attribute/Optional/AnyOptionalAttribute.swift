@@ -36,11 +36,6 @@ public struct AnyOptionalAttribute {
     public var attribute: OGAttribute? {
         get { identifier == .nil ? nil : identifier }
         set { identifier = newValue ?? .nil }
-        _modify {
-            var value = attribute
-            yield &value
-            attribute = value
-        }
     }
     
     public func map<Value>(_ body: (OGAttribute) -> Value) -> Value? {
