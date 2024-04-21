@@ -10,7 +10,7 @@
 
 #include "../Util/log.hpp"
 #include "../Util/assert.hpp"
-#include "../Graph/GraphDescription.hpp"
+#include "../Graph/OGGraphDescription.h"
 #include "../Graph/Graph.hpp"
 
 #include <iostream>
