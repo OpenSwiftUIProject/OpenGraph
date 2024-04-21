@@ -5,7 +5,7 @@
 //  Created by Kyle on 2024/1/21.
 //
 
-#include "GraphDescription.hpp"
+#include "OGGraphDescription.h"
 #include "OGGraph.h"
 #include "Graph.hpp"
 #include "../Util/assert.hpp"
