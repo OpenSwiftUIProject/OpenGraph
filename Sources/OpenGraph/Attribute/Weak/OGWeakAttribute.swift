@@ -32,11 +32,6 @@ extension OGWeakAttribute {
         set {
             self = OGWeakAttribute(newValue)
         }
-        _modify {
-            var value = attribute
-            yield &value
-            attribute = value
-        }
     }
 }
 

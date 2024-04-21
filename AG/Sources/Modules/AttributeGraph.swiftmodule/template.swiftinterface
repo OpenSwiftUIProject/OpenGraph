@@ -127,11 +127,6 @@ extension AGWeakAttribute {
 		set {
 			self = AGWeakAttribute(newValue)
 		}
-		_modify {
-			var value = attribute
-			yield &value
-			attribute = value
-		}
 	}
 }
 
@@ -175,7 +170,7 @@ public struct WeakAttribute<Value> {
 	public init(_ attribute: AttributeGraph.Attribute<Value>)
 	public init(_ attribute: AttributeGraph.Attribute<Value>?)
 	public var wrappedValue: Value? { get }
-	public var projectedValue: AttributeGraph.Attribute<Value>?{ get set _modify }
+	public var projectedValue: AttributeGraph.Attribute<Value>?{ get set }
 	public subscript<Member>(dynamicMember keyPath: Swift.KeyPath<Value, Member>) -> AttributeGraph.Attribute<Member>? { get }
 	public var attribute: AttributeGraph.Attribute<Value>? { get set _modify }
 	public var value: Value? { get }
@@ -202,7 +197,7 @@ public struct AnyOptionalAttribute {
 	public init<Value>(_ attribute: AttributeGraph.OptionalAttribute<Value>)
 	public var identifier: AGAttribute
 	public static var current: AttributeGraph.AnyOptionalAttribute { get }
-	public var attribute: AGAttribute? { get set _modify }
+	public var attribute: AGAttribute? { get set }
 	public func map<Value>(_ body: (AGAttribute) -> Value) -> Value?
 	public func unsafeCast<Value>(to type: Value.Type) -> AttributeGraph.OptionalAttribute<Value>
 }
@@ -225,7 +220,7 @@ public struct OptionalAttribute<Value> {
 	public init(_ attribute: AttributeGraph.Attribute<Value>)
 	public init(_ attribute: AttributeGraph.Attribute<Value>?)
 	public init(_ weakAttribute: AttributeGraph.WeakAttribute<Value>)
-	public var attribute: AttributeGraph.Attribute<Value>? { get set _modify }
+	public var attribute: AttributeGraph.Attribute<Value>? { get set }
 	public var value: Value? { get }
 	public func changedValue(options: AGValueOptions = []) -> (value: Value, changed: Bool)?
 	public func map<V>(_ body: (AttributeGraph.Attribute<Value>) -> V) -> V?
@@ -260,7 +255,6 @@ public struct IndirectAttribute<Value> {
 	public var dependency: AGAttribute? {
 		get
 		nonmutating set
-		nonmutating _modify
 	}
 	public var value: Value {
 		get
