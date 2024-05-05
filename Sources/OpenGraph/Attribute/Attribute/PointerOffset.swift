@@ -26,7 +26,7 @@ extension PointerOffset {
     }
     
     public static func of(_ member: inout Member) -> PointerOffset {
-        withUnsafePointer(to: member) { memberPointer in
+        withUnsafePointer(to: &member) { memberPointer in
             let offset = UnsafeRawPointer(memberPointer) - UnsafeRawPointer(invalidScenePointer())
             return PointerOffset(byteOffset: offset)
         }
