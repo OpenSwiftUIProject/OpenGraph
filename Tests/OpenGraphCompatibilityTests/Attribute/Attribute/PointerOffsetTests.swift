@@ -1,78 +1,125 @@
 //
 //  PointerOffsetTests.swift
-//
-//
-//
+//  OpenGraphCompatibilityTests
 
+import RealModule
 import Testing
 
 struct PointerOffsetTests {
     @Test
-    func basicInit() {
-        #expect(PointerOffset<Any, Any>(byteOffset: 8).byteOffset == 8)
-        #expect(PointerOffset<Int, Int>().byteOffset == 0)
-        let invalidPointer = PointerOffset<Tuple<Int, Int>, Int>.invalidScenePointer()
-        #expect(MemoryLayout<Tuple<Int, Int>>.stride == 16)
-        #expect(invalidPointer == UnsafeMutablePointer(bitPattern: MemoryLayout<Tuple<Int, Int>>.stride))
+    func plainInitAndProperty() {
+        typealias Base = Tuple<Int, Int>
+        var offset = PointerOffset<Base, Int>(byteOffset: 8)
+        #expect(offset.byteOffset == 8)
+        offset.byteOffset = 0
+        #expect(offset.byteOffset == 0)
     }
-    
+
+    @Test
+    func emptyInit() {
+        #expect(PointerOffset<Void, Void>().byteOffset == 0)
+        #expect(PointerOffset<Int, Int>().byteOffset == 0)
+        #expect(PointerOffset<Any, Any>().byteOffset == 0)
+    }
+
     @Test
     func plusOperator() {
-        let offset1 = PointerOffset<Tuple<Int, Tuple<Int, Int>>, Tuple<Int, Int>>(byteOffset: 8)
-        let offset2 = PointerOffset<Tuple<Int, Int>, Int>(byteOffset: 8)
+        typealias Base = Tuple<Int, Int>
+        typealias Base2 = Tuple<Int, Base>
+        let offset1 = PointerOffset<Base2, Base>(byteOffset: 8)
+        let offset2 = PointerOffset<Base, Int>(byteOffset: 8)
         let result = offset1 + offset2
         #expect(result.byteOffset == 16)
+        #expect(type(of: result) == PointerOffset<Base2, Int>.self)
     }
-    
-    @Test(.disabled("TODO: Add appropriate PointerOffset.of and PointerOffset.offset test case"))
+
+    @Test
+    func invalidScenePointer() {
+        typealias Base = Tuple<Int, Int>
+        let invalidPointer = PointerOffset<Base, Int>.invalidScenePointer()
+        let stride = MemoryLayout<Base>.stride
+        #expect(stride == 16)
+        #expect(invalidPointer == UnsafeMutablePointer(bitPattern: stride))
+    }
+
+    @Test(.bug("#70", relationship: .verifiesFix))
     func ofAndOffset() {
-        var tuple = Tuple(first: 1, second: 2)
-        _ = PointerOffset<Tuple<Int, Int>, Int>.of(&tuple.second)
+        struct Empty {
+            var value: Void
+        }
+
+        func helper<Base, Member>(
+            expectedByteOffset: Int,
+            _: Base.Type,
+            _: Member.Type,
+            _ body: (inout Base) -> PointerOffset<Base, Member>
+        ) {
+            let pointerOffsetType = PointerOffset<Base, Member>.self
+            let offset = pointerOffsetType.offset { invalid in
+                withUnsafeMutablePointer(to: &invalid) { pointer in
+                    #expect(pointer == PointerOffset<Base, Member>.invalidScenePointer())
+                }
+                return body(&invalid)
+            }
+            #expect(offset.byteOffset == expectedByteOffset)
+        }
+
+        helper(expectedByteOffset: 0, Tuple<Int, Int>.self, Void.self) { _ in fatalError("Unreachable") }
+        helper(expectedByteOffset: 0, Tuple<Int, Int>.self, Empty.self) { _ in fatalError("Unreachable") }
+
+        typealias Base = Triple<Int, Int, Empty>
+        helper(expectedByteOffset: 0, Base.self, Int.self) { invalid in
+            .of(&invalid.first)
+        }
+        helper(expectedByteOffset: 8, Base.self, Int.self) { invalid in
+            .of(&invalid.second)
+        }
+        helper(expectedByteOffset: 0, Base.self, Empty.self) { invalid in
+            .of(&invalid.third)
+        }
     }
-    
-    @Test
-    func unsafePointer() {
-        let tuple = Tuple(first: 1, second: 2.0)
-        withUnsafePointer(to: tuple) { pointer in
-            let first = pointer[offset: PointerOffset<Tuple<Int, Double>, Int>(byteOffset: 0)]
-            #expect(first == 1)
-            let second = pointer[offset: PointerOffset<Tuple<Int, Double>, Double>(byteOffset: 8)]
-            #expect(second == 2.0)
+
+    @Test("Extension API between UnsafePointer/UnsafeMutablePointer and PointerOffset")
+    func unsafePointerAndUnsafeMutablePointerExtension() {
+        do {
+            var tuple = Tuple(first: 1, second: 2.0)
+            typealias Base = Tuple<Int, Double>
+            let firstOffset = PointerOffset<Base, Int>(byteOffset: 0)
+            let secondOffset = PointerOffset<Base, Double>(byteOffset: 8)
+            withUnsafeMutablePointer(to: &tuple) { pointer in
+                #expect(pointer[offset: firstOffset] == 1)
+                #expect(pointer[offset: secondOffset] == 2.0)
+
+                pointer[offset: firstOffset] = 3
+                pointer[offset: secondOffset] = 4.0
+            }
+            withUnsafePointer(to: tuple) { pointer in
+                #expect(pointer[offset: firstOffset] == 3)
+                #expect(pointer[offset: secondOffset].isApproximatelyEqual(to: 4.0))
+            }
         }
-        
-        let triple = Triple(first: 0, second: 1, third: 2)
-        withUnsafePointer(to: triple) { pointer in
-            let first = pointer + PointerOffset<Triple<Int, Int, Int>, Int>(byteOffset: 0)
-            #expect(first.pointee == 0)
-            let second = pointer + PointerOffset<Triple<Int, Int, Int>, Int>(byteOffset: 8)
-            #expect(second.pointee == 1)
-            let third = pointer + PointerOffset<Triple<Int, Int, Int>, Int>(byteOffset: 16)
-            #expect(third.pointee == 2)
-        }
-    }
-    
-    @Test
-    func unsafeMutablePointer() {
-        var tuple = Tuple(first: 1, second: 2.0)
-        withUnsafeMutablePointer(to: &tuple) { pointer in
-            let first = pointer[offset: PointerOffset<Tuple<Int, Double>, Int>(byteOffset: 0)]
-            #expect(first == 1)
-            let second = pointer[offset: PointerOffset<Tuple<Int, Double>, Double>(byteOffset: 8)]
-            #expect(second == 2.0)
-            
-            pointer[offset: PointerOffset<Tuple<Int, Double>, Int>(byteOffset: 0)] = 3
-            let newFirst = pointer[offset: PointerOffset<Tuple<Int, Double>, Int>(byteOffset: 0)]
-            #expect(newFirst == 3)
-        }
-        
-        var triple = Triple(first: 0, second: 1, third: 2)
-        withUnsafeMutablePointer(to: &triple) { pointer in
-            let first = pointer + PointerOffset<Triple<Int, Int, Int>, Int>(byteOffset: 0)
-            #expect(first.pointee == 0)
-            let second = pointer + PointerOffset<Triple<Int, Int, Int>, Int>(byteOffset: 8)
-            #expect(second.pointee == 1)
-            let third = pointer + PointerOffset<Triple<Int, Int, Int>, Int>(byteOffset: 16)
-            #expect(third.pointee == 2)
+
+        do {
+            var triple = Triple(first: 0, second: 1, third: 2)
+            typealias Base = Triple<Int, Int, Int>
+
+            let firstOffset = PointerOffset<Base, Int>.offset { .of(&$0.first) }
+            let secondOffset = PointerOffset<Base, Int>.offset { .of(&$0.second) }
+            let thirdOffset = PointerOffset<Base, Int>.offset { .of(&$0.third) }
+            withUnsafeMutablePointer(to: &triple) { pointer in
+                #expect((pointer + firstOffset).pointee == 0)
+                #expect((pointer + secondOffset).pointee == 1)
+                #expect((pointer + thirdOffset).pointee == 2)
+
+                (pointer + firstOffset).pointee = 3
+                (pointer + secondOffset).pointee = 4
+                (pointer + thirdOffset).pointee = 5
+            }
+            withUnsafePointer(to: triple) { pointer in
+                #expect((pointer + firstOffset).pointee == 3)
+                #expect((pointer + secondOffset).pointee == 4)
+                #expect((pointer + thirdOffset).pointee == 5)
+            }
         }
     }
 }
