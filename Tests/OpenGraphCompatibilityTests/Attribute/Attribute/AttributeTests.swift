@@ -73,5 +73,12 @@ final class AttributeTests: AttributeTestBase {
             
         }
     }
+    
+    @Test
+    func flagSetter() {
+        let attribute = Attribute(value: ())
+        attribute.flags = .active
+        #expect(attribute.flags == .active)
+    }
 }
 #endif

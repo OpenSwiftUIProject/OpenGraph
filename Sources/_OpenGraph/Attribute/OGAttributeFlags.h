@@ -15,6 +15,8 @@ typedef OG_OPTIONS(uint32_t, OGAttributeFlags) {
     OGAttributeFlagsActive = 1 << 0,
     OGAttributeFlagsRemovable = 1 << 1,
     OGAttributeFlagsInvalidatable = 1 << 2,
+    
+    OGAttributeFlagsMask = 0xFF,
 };
 
 #endif /* OGAttributeFlags_h */

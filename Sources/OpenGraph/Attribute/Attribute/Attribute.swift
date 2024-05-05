@@ -72,7 +72,7 @@ public struct Attribute<Value> {
     
     public var projectedValue: Attribute<Value> {
         get { self }
-        _modify { yield &self }
+        set { self = newValue }
     }
 
     // MARK: - dynamicMemberLookup
@@ -196,7 +196,7 @@ public struct Attribute<Value> {
 
     public var flags: OGAttributeFlags {
         get { identifier.flags }
-        _modify { yield &identifier.flags }
+        nonmutating set { identifier.flags = newValue }
     }
     
     public func setFlags(_ newFlags: OGAttributeFlags, mask: OGAttributeFlags) {
