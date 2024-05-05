@@ -125,20 +125,26 @@ if attributeGraphCondition {
 // Remove this when swift-testing is 1.0.0
 let swiftTestingCondition = envEnable("OPENGRAPH_SWIFT_TESTING", default: true)
 if swiftTestingCondition {
-    package.dependencies.append(
-        .package(url: "https://github.com/apple/swift-testing", exact: "0.6.0")
-    )
-    openGraphTestTarget.dependencies.append(
-        .product(name: "Testing", package: "swift-testing")
-    )
+    var dependencies = package.dependencies
+    dependencies.append(contentsOf: [
+        .package(url: "https://github.com/apple/swift-testing", exact: "0.6.0"),
+        .package(url: "https://github.com/apple/swift-numerics", from: "1.0.2"),
+    ])
+    package.dependencies = dependencies
+    
+    func addTestDependency(_ target: Target) {
+        var dependencies = target.dependencies
+        dependencies.append(contentsOf: [
+            .product(name: "Testing", package: "swift-testing"),
+            .product(name: "RealModule", package: "swift-numerics"),
+        ])
+        target.dependencies = dependencies
+    }
+    addTestDependency(openGraphTestTarget)
     package.targets.append(openGraphTestTarget)
-    openGraphCompatibilityTestTarget.dependencies.append(
-        .product(name: "Testing", package: "swift-testing")
-    )
+    addTestDependency(openGraphCompatibilityTestTarget)
     package.targets.append(openGraphCompatibilityTestTarget)
-    openGraphTempTestTarget.dependencies.append(
-        .product(name: "Testing", package: "swift-testing")
-    )
+    addTestDependency(openGraphTempTestTarget)
     package.targets.append(openGraphTempTestTarget)
 }
 
