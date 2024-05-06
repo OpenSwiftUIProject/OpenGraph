@@ -104,25 +104,7 @@ struct PointerOffsetTests {
                 #expect(pointer[offset: firstOffset] == 3)
                 #expect(pointer[offset: secondOffset].isApproximatelyEqual(to: 4.0))
             }
-            #if !canImport(Darwin) && !DEBUG
-            // FIXME: The issue only occur on Linux + Release configuration (Swift 5.10)
-            
-            // Uncomment the following withKnownIssue code will make the result back to normal thus causing 5 new issues
-//            withKnownIssue {
-//                withUnsafePointer(to: tuple) { pointer in
-//                    #expect(pointer[offset: firstOffset] == 3)
-//                    #expect(pointer[offset: secondOffset].isApproximatelyEqual(to: 4.0))
-//                }
-//                #expect(tuple.first == 3)
-//                #expect(tuple.second.isApproximatelyEqual(to: 4.0))
-//            }
-            withUnsafePointer(to: tuple) { pointer in
-                #expect(pointer[offset: firstOffset] == 1)
-                #expect(pointer[offset: secondOffset].isApproximatelyEqual(to: 2.0))
-            }
-            #expect(tuple.first == 1)
-            #expect(tuple.second.isApproximatelyEqual(to: 2.0))
-            #else
+            #if !(!canImport(Darwin) && !DEBUG)
             withUnsafePointer(to: tuple) { pointer in
                 #expect(pointer[offset: firstOffset] == 3)
                 #expect(pointer[offset: secondOffset].isApproximatelyEqual(to: 4.0))
@@ -163,29 +145,7 @@ struct PointerOffsetTests {
                 #expect((pointer + secondOffset).pointee == 4)
                 #expect((pointer + thirdOffset).pointee == 5)
             }
-            #if !canImport(Darwin) && !DEBUG
-            // FIXME: The issue only occur on Linux + Release configuration (Swift 5.10)
-            
-            // Uncomment the following withKnownIssue code will make the result back to normal thus causing 7 new issues
-//            withKnownIssue {
-//                withUnsafePointer(to: triple) { pointer in
-//                    #expect((pointer + firstOffset).pointee == 3)
-//                    #expect((pointer + secondOffset).pointee == 4)
-//                    #expect((pointer + thirdOffset).pointee == 5)
-//                }
-//                #expect(triple.first == 3)
-//                #expect(triple.second == 4)
-//                #expect(triple.third == 5)
-//            }
-            withUnsafePointer(to: triple) { pointer in
-                #expect((pointer + firstOffset).pointee == 0)
-                #expect((pointer + secondOffset).pointee == 1)
-                #expect((pointer + thirdOffset).pointee == 2)
-            }
-            #expect(triple.first == 0)
-            #expect(triple.second == 1)
-            #expect(triple.third == 2)
-            #else
+            #if !(!canImport(Darwin) && !DEBUG)
             withUnsafePointer(to: triple) { pointer in
                 #expect((pointer + firstOffset).pointee == 3)
                 #expect((pointer + secondOffset).pointee == 4)
@@ -197,4 +157,28 @@ struct PointerOffsetTests {
             #endif
         }
     }
+    
+    #if !canImport(Darwin) && !DEBUG
+    @Test("Undefined Behavior Issue for PointerOffset", .bug("#73", relationship: .uncoveredBug))
+    func unsafePointerAndUnsafeMutablePointerExtensionUB() {
+        var tuple = Tuple(first: 1, second: 2)
+        typealias Base = Tuple<Int, Int>
+        let firstOffset = PointerOffset<Base, Int>(byteOffset: 0)
+        withUnsafeMutablePointer(to: &tuple) { pointer in
+            #expect(pointer[offset: firstOffset] == 1)
+            pointer[offset: firstOffset] = 3
+        }
+        let unexpectedValue = tuple.first
+        // The value will be unexpected due to UB
+        #expect(unexpectedValue == 1)
+        // The value will be expected after and within a withKnownIssue block
+        withKnownIssue {
+            let expectedValue = tuple.first
+            #expect(expectedValue == 3)
+            Issue.record("To make withKnownIssue pass")
+        }
+        let expectedValue = tuple.first
+        #expect(expectedValue == 3)
+    }
+    #endif
 }
