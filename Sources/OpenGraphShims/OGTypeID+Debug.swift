@@ -43,7 +43,7 @@ extension OGTypeID {
             write(&result, string: "enum \(type) {", level: level)
             _ = forEachField(options: [._4]) { name, offset, type in // anything contains ._4 will work here
                 let fieldName = String(cString: name)
-                write(&result, string: "case \(fieldName)(\(type)) // offset = \(offset)", level: level+1)
+                write(&result, string: "case \(fieldName)(\(type)) // offset = \(offset.hex)", level: level+1)
                 if recursive {
                     OGTypeID(type)._layoutDescription(&result, recursive: true, level: level+1)
                 }
@@ -53,7 +53,7 @@ extension OGTypeID {
         case .optional:
             _ = forEachField(options: [._4]) { name, offset, type in // anything contains ._4 will work here
                 let fieldName = String(cString: name)
-                write(&result, string: "case \(fieldName)(\(type)) // offset = \(offset)", level: level+1)
+                write(&result, string: "case \(fieldName)(\(type)) // offset = \(offset.hex)", level: level+1)
                 if recursive {
                     OGTypeID(type)._layoutDescription(&result, recursive: true, level: level+1)
                 }
@@ -63,7 +63,7 @@ extension OGTypeID {
             write(&result, string: "struct \(type) {", level: level)
             _ = forEachField(options: []) { name, offset, type in // only [] and [._2] will work here
                 let fieldName = String(cString: name)
-                write(&result, string: "var \(fieldName): \(type) // offset = \(offset)", level: level+1)
+                write(&result, string: "var \(fieldName): \(type) // offset = \(offset.hex)", level: level+1)
                 if recursive {
                     OGTypeID(type)._layoutDescription(&result, recursive: true, level: level+1)
                 }
@@ -75,7 +75,8 @@ extension OGTypeID {
             write(&result, string: "class \(type) {", level: level)
             _ = forEachField(options: [._1]) { name, offset, type in // anything contains ._1 will work here
                 let fieldName = String(cString: name)
-                write(&result, string: "var \(fieldName): \(type) // offset = \(offset)", level: level+1)
+                
+                write(&result, string: "var \(fieldName): \(type) // offset = \(offset.hex)", level: level+1)
                 if recursive {
                     OGTypeID(type)._layoutDescription(&result, recursive: true, level: level+1)
                 }
@@ -84,5 +85,11 @@ extension OGTypeID {
             write(&result, string: "}", level: level)
         default: break
         }
+    }
+}
+
+extension Int {
+    fileprivate var hex: String {
+        "0x\(String(format:"%X", self))"
     }
 }

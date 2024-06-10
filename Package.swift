@@ -32,6 +32,15 @@ let openGraphShimsTarget = Target.target(
     swiftSettings: sharedSwiftSettings
 )
 
+let openGraphShimsTestTarget = Target.testTarget(
+    name: "OpenGraphShimsTests",
+    dependencies: [
+        "OpenGraphShims",
+    ],
+    exclude: ["README.md"],
+    swiftSettings: sharedSwiftSettings
+)
+
 let openGraphTestTarget = Target.testTarget(
     name: "OpenGraphTests",
     dependencies: [
@@ -146,6 +155,8 @@ if swiftTestingCondition {
     package.targets.append(openGraphCompatibilityTestTarget)
     addTestDependency(openGraphTempTestTarget)
     package.targets.append(openGraphTempTestTarget)
+    addTestDependency(openGraphShimsTestTarget)
+    package.targets.append(openGraphShimsTestTarget)
 }
 
 let compatibilityTestCondition = envEnable("OPENGRAPH_COMPATIBILITY_TEST")
