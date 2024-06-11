@@ -1,4 +1,4 @@
-// swift-tools-version: 5.10
+// swift-tools-version: 6.0
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import Foundation
@@ -53,10 +53,6 @@ let openGraphCompatibilityTestTarget = Target.testTarget(
     name: "OpenGraphCompatibilityTests",
     exclude: ["README.md"],
     swiftSettings: sharedSwiftSettings
-)
-let openGraphTempTestTarget = Target.testTarget(
-    name: "OpenGraphTempTests",
-    exclude: ["README.md"]
 )
 
 let swiftBinPath = Context.environment["_"] ?? ""
@@ -131,12 +127,10 @@ if attributeGraphCondition {
     openGraphShimsTarget.dependencies.append("OpenGraph")
 }
 
-// Remove this when swift-testing is 1.0.0
-let swiftTestingCondition = envEnable("OPENGRAPH_SWIFT_TESTING", default: true)
+let swiftTestingCondition = true
 if swiftTestingCondition {
     var dependencies = package.dependencies
     dependencies.append(contentsOf: [
-        .package(url: "https://github.com/apple/swift-testing", exact: "0.6.0"),
         .package(url: "https://github.com/apple/swift-numerics", from: "1.0.2"),
     ])
     package.dependencies = dependencies
@@ -144,7 +138,6 @@ if swiftTestingCondition {
     func addTestDependency(_ target: Target) {
         var dependencies = target.dependencies
         dependencies.append(contentsOf: [
-            .product(name: "Testing", package: "swift-testing"),
             .product(name: "RealModule", package: "swift-numerics"),
         ])
         target.dependencies = dependencies
@@ -153,8 +146,6 @@ if swiftTestingCondition {
     package.targets.append(openGraphTestTarget)
     addTestDependency(openGraphCompatibilityTestTarget)
     package.targets.append(openGraphCompatibilityTestTarget)
-    addTestDependency(openGraphTempTestTarget)
-    package.targets.append(openGraphTempTestTarget)
     addTestDependency(openGraphShimsTestTarget)
     package.targets.append(openGraphShimsTestTarget)
 }
@@ -162,14 +153,11 @@ if swiftTestingCondition {
 let compatibilityTestCondition = envEnable("OPENGRAPH_COMPATIBILITY_TEST")
 if compatibilityTestCondition && attributeGraphCondition {
     openGraphCompatibilityTestTarget.dependencies.append("AttributeGraph")
-    openGraphTempTestTarget.dependencies.append("AttributeGraph")
     var swiftSettings: [SwiftSetting] = (openGraphCompatibilityTestTarget.swiftSettings ?? [])
     swiftSettings.append(.define("OPENGRAPH_COMPATIBILITY_TEST"))
     openGraphCompatibilityTestTarget.swiftSettings = swiftSettings
-    openGraphTempTestTarget.swiftSettings = swiftSettings
 } else {
     openGraphCompatibilityTestTarget.dependencies.append("OpenGraph")
-    openGraphTempTestTarget.dependencies.append("OpenGraph")
 }
 
 extension [Platform] {
