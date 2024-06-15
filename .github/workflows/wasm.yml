@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        swift_version: ["5.10-SNAPSHOT-2024-03-30-a"] # "5.10-RELEASE" is not release for WASM, tracked via https://github.com/swiftwasm/swift/issues/5570
+        swift_version: ["5.10.0-RELEASE"]
         os: [ubuntu-22.04]
     runs-on: ${{ matrix.os }}
     env:
