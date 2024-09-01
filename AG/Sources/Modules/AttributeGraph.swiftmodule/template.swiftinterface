@@ -67,7 +67,10 @@ public struct Attribute<Value> {
 	public var graph: AGGraph { get }
 	public var subgraph: AGSubgraph { get }
 
-	public var value: Value { unsafeAddress set }
+	public var value: Value {
+		unsafeAddress
+		nonmutating	set
+	}
 	public var valueState: AGValueState { get }
 	public func valueAndFlags(options: AGValueOptions = []) -> (value: Value, flags: AGChangedValueFlags)
 	public func changedValue(options: AGValueOptions = []) -> (value: Value, changed: Bool)
