@@ -35,7 +35,7 @@ extension OGWeakAttribute {
     }
 }
 
-extension OGWeakAttribute: Hashable {
+extension OGWeakAttribute: @retroactive Hashable {
     @_alwaysEmitIntoClient
     public static func == (lhs: OGWeakAttribute, rhs: OGWeakAttribute) -> Bool {
         lhs.raw_attribute == rhs.raw_attribute && lhs.subgraph_id == rhs.subgraph_id
@@ -53,7 +53,7 @@ extension OGWeakAttribute: Hashable {
     }
 }
 
-extension OGWeakAttribute: CustomStringConvertible {
+extension OGWeakAttribute: @retroactive CustomStringConvertible {
     @_alwaysEmitIntoClient
     public var description: String { attribute?.description ?? "nil" }
 }

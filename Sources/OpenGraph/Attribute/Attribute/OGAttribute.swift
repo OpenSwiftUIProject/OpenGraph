@@ -78,7 +78,7 @@ extension OGAttribute {
 
 // MARK: CustomStringConvertible
 
-extension OGAttribute: CustomStringConvertible {
+extension OGAttribute: @retroactive CustomStringConvertible {
     @inlinable
     public var description: String { "#\(rawValue)" }
 }
