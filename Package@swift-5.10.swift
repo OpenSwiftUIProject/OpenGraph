@@ -1,4 +1,4 @@
-// swift-tools-version: 6.0
+// swift-tools-version: 5.10
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import Foundation
@@ -20,9 +20,7 @@ func envEnable(_ key: String, default defaultValue: Bool = false) -> Bool {
 let isXcodeEnv = Context.environment["__CFBundleIdentifier"] == "com.apple.dt.Xcode"
 let development = envEnable("OPENGRAPH_DEVELOPMENT", default: false)
 
-var sharedSwiftSettings: [SwiftSetting] = [
-    .swiftLanguageMode(.v5),
-]
+var sharedSwiftSettings: [SwiftSetting] = []
 
 let warningsAsErrorsCondition = envEnable("OPENGRAPH_WERROR", default: isXcodeEnv && development)
 if warningsAsErrorsCondition {
@@ -53,9 +51,6 @@ let openGraphTestTarget = Target.testTarget(
 )
 let openGraphCompatibilityTestTarget = Target.testTarget(
     name: "OpenGraphCompatibilityTests",
-    dependencies: [
-        .product(name: "RealModule", package: "swift-numerics"),
-    ],
     exclude: ["README.md"],
     swiftSettings: sharedSwiftSettings
 )
@@ -78,9 +73,6 @@ let package = Package(
     products: [
         .library(name: "OpenGraphShims", targets: ["OpenGraphShims"]),
         .library(name: "OpenGraph", targets: ["OpenGraph"]),
-    ],
-    dependencies: [
-        .package(url: "https://github.com/apple/swift-numerics", from: "1.0.2"),
     ],
     targets: [
         // FIXME: Merge into one target
@@ -110,10 +102,6 @@ let package = Package(
             )
         ),
         openGraphShimsTarget,
-        
-        openGraphTestTarget,
-        openGraphShimsTestTarget,
-        openGraphCompatibilityTestTarget,
     ],
     cxxLanguageStandard: .cxx17
 )
@@ -137,6 +125,32 @@ if attributeGraphCondition {
     openGraphShimsTarget.dependencies.append("AttributeGraph")
 } else {
     openGraphShimsTarget.dependencies.append("OpenGraph")
+}
+
+// Remove this when swift-testing is 1.0.0
+let swiftTestingCondition = envEnable("OPENGRAPH_SWIFT_TESTING", default: true)
+if swiftTestingCondition {
+    var dependencies = package.dependencies
+    dependencies.append(contentsOf: [
+        .package(url: "https://github.com/apple/swift-testing", exact: "0.6.0"),
+        .package(url: "https://github.com/apple/swift-numerics", from: "1.0.2"),
+    ])
+    package.dependencies = dependencies
+    
+    func addTestDependency(_ target: Target) {
+        var dependencies = target.dependencies
+        dependencies.append(contentsOf: [
+            .product(name: "Testing", package: "swift-testing"),
+            .product(name: "RealModule", package: "swift-numerics"),
+        ])
+        target.dependencies = dependencies
+    }
+    addTestDependency(openGraphTestTarget)
+    package.targets.append(openGraphTestTarget)
+    addTestDependency(openGraphCompatibilityTestTarget)
+    package.targets.append(openGraphCompatibilityTestTarget)
+    addTestDependency(openGraphShimsTestTarget)
+    package.targets.append(openGraphShimsTestTarget)
 }
 
 let compatibilityTestCondition = envEnable("OPENGRAPH_COMPATIBILITY_TEST")
