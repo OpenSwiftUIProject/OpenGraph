@@ -12,13 +12,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        os: [macos-14]
+        xcode-version: ["16.0"]   # Swift 6.0
+        ios-version: ["18.0"]
         include:
-          - os: macos-14
-            xcode-version: "15.3"   # Swift 5.10
+          - ios-version: "18.0"
+            ios-simulator-name: "iPhone 16 Pro"
     runs-on: ${{ matrix.os }}
     env:
       OPENGRAPH_WERROR: 1
-      OPENGRAPH_SWIFT_TESTING: 1
       OPENGRAPH_ATTRIBUTEGRAPH: 0
       OPENGRAPH_COMPATIBILITY_TEST: 0
     steps:
@@ -34,7 +36,7 @@ jobs:
           xcodebuild build \
             -scheme OpenGraph-Package \
             -configuration Debug \
-            -destination "platform=iOS" \
+            -destination "platform=iOS Simulator,OS=${{ matrix.ios-version }},name=${{ matrix.ios-simulator-name }}" \
             -derivedDataPath .build-debug \
             -skipMacroValidation \
             -skipPackagePluginValidation \
@@ -44,16 +46,16 @@ jobs:
           xcodebuild test \
             -scheme OpenGraph-Package \
             -configuration Debug \
-            -destination "platform=iOS-Simulator" \
+            -destination "platform=iOS Simulator,OS=${{ matrix.ios-version }},name=${{ matrix.ios-simulator-name }}" \
             -enableCodeCoverage=YES \
             -derivedDataPath .build-test-debug \
             -skipPackagePluginValidation \
             -skipMacroValidation
             # OTHER_SWIFT_FLAGS="-warnings-as-errors" Conflicting options '-warnings-as-errors' and '-suppress-warnings'
-          profdata_file_path=$(find . -path "*.build-test-debug/Build/ProfileData*Coverage.profdata" -type f)
+          profdata_file_path=$(find . -path "./.build-test-debug/Build/ProfileData/*/Coverage.profdata" -type f)
           xcrun llvm-cov show \
             -instr-profile=$profdata_file_path \
-            .build-test-debug/Build/Products/Debug/OpenGraphTests.xctest/Contents/MacOS/OpenGraphTests \
+            .build-test-debug/Build/Products/Debug-iphonesimulator/OpenGraphTests.xctest/OpenGraphTests \
             > coverage.txt
       - uses: codecov/codecov-action@v3
         with:

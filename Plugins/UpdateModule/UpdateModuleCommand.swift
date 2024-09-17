@@ -11,17 +11,16 @@ import Foundation
 struct UpdateModuleCommand: CommandPlugin {
     func performCommand(context: PackagePlugin.PluginContext, arguments: [String]) async throws {
         let process = Process()
-        
-        let path = try context.tool(named: "zsh").path.string
-        let url: URL?
         #if os(macOS)
-        url = if #available(macOS 14, *) {
+        let path: String = try context.tool(named: "zsh").url.path()
+        let url: URL? = if #available(macOS 14, *) {
             URL(filePath: path)
         } else {
             URL(string: "file://\(path)")
         }
         #else
-        url = URL(string: "file://\(path)")
+        let path = try context.tool(named: "zsh").path.string
+        let url = URL(string: "file://\(path)")
         #endif
         process.executableURL = url
         process.arguments = ["AG/update.sh"]

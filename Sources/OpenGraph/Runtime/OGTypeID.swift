@@ -23,7 +23,7 @@ public func OGTypeApplyFields2(
     body: (UnsafePointer<Int8>, Int, Any.Type) -> Bool
 ) -> Bool
 
-extension OGTypeID: Hashable, CustomStringConvertible {
+extension OGTypeID: Swift.Hashable, Swift.CustomStringConvertible {
     @inlinable
     @inline(__always)
     public init(_ type: Any.Type) {
