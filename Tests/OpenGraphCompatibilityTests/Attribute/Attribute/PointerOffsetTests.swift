@@ -42,7 +42,8 @@ struct PointerOffsetTests {
         #expect(invalidPointer == UnsafeMutablePointer(bitPattern: stride))
     }
 
-    @Test(.bug("https://github.com/OpenSwiftUIProject/OpenGraph/issues", id: 70))
+    #if canImport(Darwin)
+    @Test(.bug("https://github.com/OpenSwiftUIProject/OpenGraph/issues", id: 70, "Verify fix"))
     func ofAndOffset() {
         struct Empty {
             var value: Void
@@ -78,6 +79,7 @@ struct PointerOffsetTests {
             .of(&invalid.third)
         }
     }
+    #endif
 
     @Test("Extension API between UnsafePointer/UnsafeMutablePointer and PointerOffset")
     func unsafePointerAndUnsafeMutablePointerExtension() {

@@ -13,8 +13,11 @@ jobs:
       fail-fast: false
       matrix:
         os: [macos-14]
-        xcode-version: [16.0]   # Swift 6.0
-        ios-version: [18.0]
+        xcode-version: ["16.0"]   # Swift 6.0
+        ios-version: ["18.0"]
+        include:
+          - ios-version: "18.0"
+            ios-simulator-name: "iPhone 16 Pro"
     runs-on: ${{ matrix.os }}
     env:
       OPENGRAPH_WERROR: 1
@@ -33,7 +36,7 @@ jobs:
           xcodebuild build \
             -scheme OpenGraph-Package \
             -configuration Debug \
-            -destination "platform=iOS Simulator,OS=${{ matrix.ios-version }}" \
+            -destination "platform=iOS Simulator,OS=${{ matrix.ios-version }},name=${{ matrix.ios-simulator-name }}" \
             -derivedDataPath .build-debug \
             -skipMacroValidation \
             -skipPackagePluginValidation \
@@ -43,7 +46,7 @@ jobs:
           xcodebuild test \
             -scheme OpenGraph-Package \
             -configuration Debug \
-            -destination "platform=iOS Simulator,OS=${{ matrix.ios-version }}" \
+            -destination "platform=iOS Simulator,OS=${{ matrix.ios-version }},name=${{ matrix.ios-simulator-name }}" \
             -enableCodeCoverage=YES \
             -derivedDataPath .build-test-debug \
             -skipPackagePluginValidation \
