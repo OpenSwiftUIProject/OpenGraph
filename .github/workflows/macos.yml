@@ -12,9 +12,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - os: macos-14
-            xcode-version: "16.0"   # Swift 6.0
+        os: [macos-14]
+        xcode-version: [16.0]   # Swift 6.0
     runs-on: ${{ matrix.os }}
     env:
       OPENGRAPH_WERROR: 1
