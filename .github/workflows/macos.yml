@@ -14,11 +14,10 @@ jobs:
       matrix:
         include:
           - os: macos-14
-            xcode-version: "15.3"   # Swift 5.10
+            xcode-version: "16.0"   # Swift 6.0
     runs-on: ${{ matrix.os }}
     env:
       OPENGRAPH_WERROR: 1
-      OPENGRAPH_SWIFT_TESTING: 1
       OPENGRAPH_ATTRIBUTEGRAPH: 0
       OPENGRAPH_COMPATIBILITY_TEST: 0
     steps:
