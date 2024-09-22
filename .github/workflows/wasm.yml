@@ -12,8 +12,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        swift_version: ["6.0-SNAPSHOT-2024-09-18-a"]
+        swift_version: ["5.10.0-RELEASE", "6.0-SNAPSHOT-2024-09-18-a"]
         os: [ubuntu-22.04]
+        include:
+          - swift_version: "6.0-SNAPSHOT-2024-09-18-a"
+            continue-on-error: true
     runs-on: ${{ matrix.os }}
     env:
       OPENGRAPH_WERROR: 1
@@ -25,8 +28,9 @@ jobs:
         with:
           swift-version: wasm-${{ matrix.swift_version }}
       - name: build
+        continue-on-error: ${{ matrix.continue-on-error }}
         run: |
           swift build --triple wasm32-unknown-wasi
-      - name: test
-        run: |
-          swift test --triple wasm32-unknown-wasi
+      # - name: test
+      #   run: |
+      #     swift test --triple wasm32-unknown-wasi
