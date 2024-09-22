@@ -145,7 +145,6 @@ struct PointerOffsetTests {
                 #expect((pointer + secondOffset).pointee == 4)
                 #expect((pointer + thirdOffset).pointee == 5)
             }
-            #if !(!canImport(Darwin) && !DEBUG)
             withUnsafePointer(to: triple) { pointer in
                 #expect((pointer + firstOffset).pointee == 3)
                 #expect((pointer + secondOffset).pointee == 4)
@@ -154,31 +153,6 @@ struct PointerOffsetTests {
             #expect(triple.first == 3)
             #expect(triple.second == 4)
             #expect(triple.third == 5)
-            #endif
         }
     }
-    
-    #if !canImport(Darwin) && !DEBUG
-    @Test("Undefined Behavior Issue for PointerOffset", .bug("#73", relationship: .uncoveredBug))
-    func unsafePointerAndUnsafeMutablePointerExtensionUB() {
-        var tuple = Tuple(first: 1, second: 2)
-        typealias Base = Tuple<Int, Int>
-        let firstOffset = PointerOffset<Base, Int>(byteOffset: 0)
-        withUnsafeMutablePointer(to: &tuple) { pointer in
-            #expect(pointer[offset: firstOffset] == 1)
-            pointer[offset: firstOffset] = 3
-        }
-        let unexpectedValue = tuple.first
-        // The value will be unexpected due to UB
-        #expect(unexpectedValue == 1)
-        // The value will be expected after and within a withKnownIssue block
-        withKnownIssue {
-            let expectedValue = tuple.first
-            #expect(expectedValue == 3)
-            Issue.record("To make withKnownIssue pass")
-        }
-        let expectedValue = tuple.first
-        #expect(expectedValue == 3)
-    }
-    #endif
 }
