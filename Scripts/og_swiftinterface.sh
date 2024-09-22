@@ -9,5 +9,4 @@ OG_ROOT="$(dirname $(dirname $(filepath $0)))"
 
 cd $OG_ROOT
 
-export OPENGRAPH_SWIFT_TESTING=0
 swift build -Xswiftc -emit-module-interface -Xswiftc -enable-library-evolution
