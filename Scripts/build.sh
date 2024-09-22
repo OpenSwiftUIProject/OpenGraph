@@ -9,5 +9,4 @@ OPENGRAPH_ROOT="$(dirname $(dirname $(filepath $0)))"
 
 cd $OPENGRAPH_ROOT
 
-export OPENGRAPH_SWIFT_TESTING=0
 swift build

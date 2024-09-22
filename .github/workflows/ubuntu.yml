@@ -12,11 +12,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        swift_version: ["5.10"]
+        swift_version: ["6.0"]
     runs-on: ubuntu-22.04
     env:
       OPENGRAPH_WERROR: 1
-      OPENGRAPH_SWIFT_TESTING: 1
       OPENGRAPH_ATTRIBUTEGRAPH: 0
       OPENGRAPH_COMPATIBILITY_TEST: 0
     container: swift:${{ matrix.swift_version }}-jammy

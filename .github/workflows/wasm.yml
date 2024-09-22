@@ -12,12 +12,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        swift_version: ["5.10.0-RELEASE"]
+        swift_version: ["5.10.0-RELEASE", "6.0-SNAPSHOT-2024-09-18-a"]
         os: [ubuntu-22.04]
+        include:
+          - swift_version: "6.0-SNAPSHOT-2024-09-18-a"
+            continue-on-error: true
     runs-on: ${{ matrix.os }}
     env:
       OPENGRAPH_WERROR: 1
-      OPENGRAPH_SWIFT_TESTING: 0
       OPENGRAPH_ATTRIBUTEGRAPH: 0
       OPENGRAPH_COMPATIBILITY_TEST: 0
     steps:
@@ -26,9 +28,9 @@ jobs:
         with:
           swift-version: wasm-${{ matrix.swift_version }}
       - name: build
+        continue-on-error: ${{ matrix.continue-on-error }}
         run: |
           swift build --triple wasm32-unknown-wasi
-      # Blocked by upstream support for WASM. See https://github.com/apple/swift-testing/issues/228
       # - name: test
-        # run: |
-          # swift test --triple wasm32-unknown-wasi
+      #   run: |
+      #     swift test --triple wasm32-unknown-wasi
