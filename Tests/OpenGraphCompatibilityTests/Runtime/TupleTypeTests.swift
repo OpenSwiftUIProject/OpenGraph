@@ -1,8 +1,6 @@
 //
 //  TupleTypeTests.swift
-//  
-//
-//
+//  OpenGraphCompatibilityTests
 
 import Testing
 

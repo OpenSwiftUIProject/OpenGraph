@@ -11,3 +11,7 @@ OGTypeKind OGTypeGetKind(OGTypeID typeID) {
     // FIXME: Unimplemented
     return OGTypeKindNone;
 }
+
+const void * OGTypeNominalDescriptor(OGTypeID typeID) {
+    return nullptr;
+}

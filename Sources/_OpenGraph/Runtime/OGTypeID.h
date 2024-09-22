@@ -20,6 +20,10 @@ OG_EXPORT
 OG_REFINED_FOR_SWIFT
 OGTypeKind OGTypeGetKind(OGTypeID typeID) OG_SWIFT_NAME(getter:OGTypeID.kind(self:));
 
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+const void * OGTypeNominalDescriptor(OGTypeID typeID) OG_SWIFT_NAME(getter:OGTypeID.nominalDescriptor(self:));
+
 OG_EXTERN_C_END
 
 #endif /* OGTypeID_h */
