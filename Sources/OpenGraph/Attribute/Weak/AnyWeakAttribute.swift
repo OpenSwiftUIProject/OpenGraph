@@ -1,5 +1,5 @@
 //
-//  OGWeakAttribute.swift
+//  AnyWeakAttribute.swift
 //  OpenGraph
 //
 //  Audited for RELEASE_2021
@@ -7,9 +7,11 @@
 
 import _OpenGraph
 
-extension OGWeakAttribute {
+public typealias AnyWeakAttribute = OGWeakAttribute
+
+extension AnyWeakAttribute {
     @_alwaysEmitIntoClient
-    public init(_ attribute: OGAttribute?) {
+    public init(_ attribute: AnyAttribute?) {
         self = __OGCreateWeakAttribute(attribute ?? .nil)
     }
     
@@ -24,20 +26,20 @@ extension OGWeakAttribute {
     }
     
     @_alwaysEmitIntoClient
-    public var attribute: OGAttribute? {
+    public var attribute: AnyAttribute? {
         get {
             let attribute = __OGWeakAttributeGetAttribute(self)
             return attribute == .nil ? nil : attribute
         }
         set {
-            self = OGWeakAttribute(newValue)
+            self = AnyWeakAttribute(newValue)
         }
     }
 }
 
-extension OGWeakAttribute: Swift.Hashable {
+extension AnyWeakAttribute: Swift.Hashable {
     @_alwaysEmitIntoClient
-    public static func == (lhs: OGWeakAttribute, rhs: OGWeakAttribute) -> Bool {
+    public static func == (lhs: AnyWeakAttribute, rhs: AnyWeakAttribute) -> Bool {
         lhs.raw_attribute == rhs.raw_attribute && lhs.subgraph_id == rhs.subgraph_id
     }
     
@@ -53,7 +55,7 @@ extension OGWeakAttribute: Swift.Hashable {
     }
 }
 
-extension OGWeakAttribute: Swift.CustomStringConvertible {
+extension AnyWeakAttribute: Swift.CustomStringConvertible {
     @_alwaysEmitIntoClient
     public var description: String { attribute?.description ?? "nil" }
 }

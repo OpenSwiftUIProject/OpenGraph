@@ -81,9 +81,9 @@ public struct RuleContext<Value> {
 @_silgen_name("OGGraphGetInputValue")
 @inline(__always)
 @inlinable
-func OGGraphGetInputValue<Value>(_ attribute: OGAttribute, input: OGAttribute, options: OGValueOptions = [], type: Value.Type = Value.self) -> OGValue
+func OGGraphGetInputValue<Value>(_ attribute: AnyAttribute, input: AnyAttribute, options: OGValueOptions = [], type: Value.Type = Value.self) -> OGValue
 
 @_silgen_name("OGGraphWithUpdate")
 @inline(__always)
 @inlinable
-func OGGraphWithUpdate(_ attribute: OGAttribute, body: () -> Void)
+func OGGraphWithUpdate(_ attribute: AnyAttribute, body: () -> Void)

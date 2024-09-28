@@ -15,7 +15,7 @@ final class AnyOptionalAttributeTests: AttributeTestBase {
         let o1 = AnyOptionalAttribute()
         #expect(o1.identifier == .nil)
         
-        let attr = OGAttribute(rawValue: 0x1)
+        let attr = AnyAttribute(rawValue: 0x1)
         let o2 = AnyOptionalAttribute(attr)
         #expect(o2.identifier == attr)
         
@@ -28,7 +28,7 @@ final class AnyOptionalAttributeTests: AttributeTestBase {
         let o1 = AnyOptionalAttribute()
         #expect(o1.attribute == nil)
         
-        let attr = OGAttribute(rawValue: 0x1)
+        let attr = AnyAttribute(rawValue: 0x1)
         let o2 = AnyOptionalAttribute(attr)
         #expect(o2.attribute != nil)
     }
@@ -44,7 +44,7 @@ final class AnyOptionalAttributeTests: AttributeTestBase {
         let o1 = AnyOptionalAttribute()
         #expect(o1.description == "nil")
         
-        let attr = OGAttribute(rawValue: 0x1)
+        let attr = AnyAttribute(rawValue: 0x1)
         let o2 = AnyOptionalAttribute(attr)
         #expect(o2.description == "#1")
     }

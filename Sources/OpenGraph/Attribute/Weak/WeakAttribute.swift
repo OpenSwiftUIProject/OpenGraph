@@ -12,23 +12,23 @@ import _OpenGraph
 @dynamicMemberLookup
 public struct WeakAttribute<Value> {
     @usableFromInline
-    var base: OGWeakAttribute
+    var base: AnyWeakAttribute
     
     @_alwaysEmitIntoClient
-    public init(base: OGWeakAttribute) {
+    public init(base: AnyWeakAttribute) {
         self.base = base
     }
     
     public init() {
-        base = OGWeakAttribute(raw_attribute: OGAttribute(rawValue: 0), subgraph_id: 0)
+        base = AnyWeakAttribute(raw_attribute: AnyAttribute(rawValue: 0), subgraph_id: 0)
     }
     
     public init(_ attribute: Attribute<Value>) {
-        base = OGWeakAttribute(attribute.identifier)
+        base = AnyWeakAttribute(attribute.identifier)
     }
     
     public init(_ attribute: Attribute<Value>?) {
-        base = OGWeakAttribute(attribute?.identifier)
+        base = AnyWeakAttribute(attribute?.identifier)
     }
     
     public var wrappedValue: Value? { value }

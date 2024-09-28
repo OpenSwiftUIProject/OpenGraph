@@ -3,7 +3,6 @@
 
 #if OPENGRAPH_ATTRIBUTEGRAPH
 @_exported import AttributeGraph
-public typealias OGAttribute = AGAttribute
 public typealias OGAttributeFlags = AGAttributeFlags
 public typealias OGAttributeInfo = AGAttributeInfo
 public typealias OGAttributeType = AGAttributeType
@@ -28,7 +27,6 @@ public typealias OGUniqueID = AGUniqueID
 public typealias OGValue = AGValue
 public typealias OGValueOptions = AGValueOptions
 public typealias OGValueState = AGValueState
-public typealias OGWeakAttribute = AGWeakAttribute
 public let attributeGraphEnabled = true
 #else
 @_exported import OpenGraph

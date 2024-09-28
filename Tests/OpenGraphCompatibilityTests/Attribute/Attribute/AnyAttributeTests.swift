@@ -1,8 +1,6 @@
 //
-//  OGAttributeTests.swift
-//
-//
-//
+//  AnyAttributeTests.swift
+//  OpenGraphCompatibilityTests
 
 import Testing
 
@@ -11,25 +9,25 @@ import Testing
 // Report to upstream for investigation when we bump to 5.10
 #if canImport(Darwin)
 @Suite(.disabled(if: !compatibilityTestEnabled, "Attribute is not implemented"))
-final class OGAttributeTests: AttributeTestBase {
+final class AnyAttributeTests: AttributeTestBase {
     @Test
     func constantValue() throws {
-        let attributeNil = OGAttribute.nil
+        let attributeNil = AnyAttribute.nil
         #expect(attributeNil.rawValue == 2)
     }
 
     // FIXME: Strange compile issue on non-ObjectiveC platform
     // Cannot look up associated type for imported conformance:
-    // (struct_type decl=_OpenGraph.(file).OGAttribute)
+    // (struct_type decl=_OpenGraph.(file).AnyAttribute)
     // (associated_type_decl "_ObjectiveCType" access=public overridden=)
     // Please submit a bug report (https://swift.org/contributing/#reporting-bugs) and include the crash backtrace.
     #if canImport(ObjectiveC)
     @Test
     func description() throws {
-        let attribute = OGAttribute(rawValue: 0)
+        let attribute = AnyAttribute(rawValue: 0)
         #expect(attribute.description == "#0")
         
-        let attributeNil = OGAttribute.nil
+        let attributeNil = AnyAttribute.nil
         #expect(attributeNil.description == "#2")
     }
     
@@ -39,15 +37,15 @@ final class OGAttributeTests: AttributeTestBase {
             // The value will not be nil if we run this test case seperately.
             // The value will be nil if we run the whole CompatibilityTests.
             // We need more knowledge to write the test case here.
-            // #expect(OGAttribute.current != nil)
+            // #expect(AnyAttribute.current != nil)
         } else {
-            #expect(OGAttribute.current == nil)
+            #expect(AnyAttribute.current == nil)
         }
     }
     
     @Test
     func setFlags() throws {
-        let attribute = OGAttribute(Attribute(value: 0))
+        let attribute = AnyAttribute(Attribute(value: 0))
         #expect(attribute.flags == [])
         
         // Test mask = []
@@ -91,7 +89,7 @@ final class OGAttributeTests: AttributeTestBase {
         
         await withKnownIssue("Fetch Confirmation value from the body pointer") {
             await confirmation("Visit Body", expectedCount: 1) { confirm in
-                let attribute = OGAttribute(Attribute(value: confirm))
+                let attribute = AnyAttribute(Attribute(value: confirm))
                 var visitor = Visitor()
                 attribute.visitBody(&visitor)
             }

@@ -7,21 +7,21 @@
 
 @frozen
 public struct AnyOptionalAttribute {
-    public var identifier: OGAttribute
+    public var identifier: AnyAttribute
     
     public init() {
         identifier = .nil
     }
     
-    public init(_ attribute: OGAttribute) {
+    public init(_ attribute: AnyAttribute) {
         identifier = attribute
     }
     
-    public init(_ attribute: OGAttribute?) {
+    public init(_ attribute: AnyAttribute?) {
         identifier = attribute ?? .nil
     }
     
-    init(_ weakAttribute: OGWeakAttribute) {
+    init(_ weakAttribute: AnyWeakAttribute) {
         identifier = __OGWeakAttributeGetAttribute(weakAttribute)
     }
     
@@ -33,12 +33,12 @@ public struct AnyOptionalAttribute {
         AnyOptionalAttribute(__OGGraphGetCurrentAttribute())
     }
     
-    public var attribute: OGAttribute? {
+    public var attribute: AnyAttribute? {
         get { identifier == .nil ? nil : identifier }
         set { identifier = newValue ?? .nil }
     }
     
-    public func map<Value>(_ body: (OGAttribute) -> Value) -> Value? {
+    public func map<Value>(_ body: (AnyAttribute) -> Value) -> Value? {
         if let attribute { body(attribute) } else { nil }
     }
     

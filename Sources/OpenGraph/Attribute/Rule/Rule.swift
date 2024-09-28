@@ -18,7 +18,7 @@ public protocol Rule: _AttributeBody {
 extension Rule {
     public static var initialValue: Value? { nil }
 
-    public static func _update(_ pointer: UnsafeMutableRawPointer, attribute _: OGAttribute) {
+    public static func _update(_ pointer: UnsafeMutableRawPointer, attribute _: AnyAttribute) {
         let rule = pointer.assumingMemoryBound(to: Self.self)
         let value = rule.pointee.value
         // Verified for RELEASE_2023
@@ -42,7 +42,7 @@ extension Rule {
 
 extension Rule {
     public var attribute: Attribute<Value> {
-        Attribute<Value>(identifier: OGAttribute.current!)
+        Attribute<Value>(identifier: AnyAttribute.current!)
     }
 
     public var context: RuleContext<Value> {
@@ -55,7 +55,7 @@ extension Rule {
 extension Rule where Self: Hashable {
     public func cachedValue(
         options: OGCachedValueOptions = [],
-        owner: OGAttribute?
+        owner: AnyAttribute?
     ) -> Value {
         withUnsafePointer(to: self) { pointer in
             Self._cachedValue(
@@ -70,7 +70,7 @@ extension Rule where Self: Hashable {
     
     public func cachedValueIfExists(
         options: OGCachedValueOptions = [],
-        owner: OGAttribute?
+        owner: AnyAttribute?
     ) -> Value? {
         withUnsafePointer(to: self) { bodyPointer in
             let value = __OGGraphReadCachedAttributeIfExists(hashValue, OGTypeID(Self.self), bodyPointer, OGTypeID(Value.self), options, owner ?? .nil, false)
@@ -81,7 +81,7 @@ extension Rule where Self: Hashable {
 
     public static func _cachedValue(
         options: OGCachedValueOptions = [],
-        owner: OGAttribute?,
+        owner: AnyAttribute?,
         hashValue: Int, 
         bodyPtr: UnsafeRawPointer, 
         update: AttributeUpdateBlock

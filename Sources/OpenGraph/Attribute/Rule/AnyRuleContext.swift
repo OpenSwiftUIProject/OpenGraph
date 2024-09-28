@@ -9,9 +9,9 @@ import _OpenGraph
 
 @frozen
 public struct AnyRuleContext {
-    public var attribute: OGAttribute
+    public var attribute: AnyAttribute
     
-    public init(attribute: OGAttribute) {
+    public init(attribute: AnyAttribute) {
         self.attribute = attribute
     }
     

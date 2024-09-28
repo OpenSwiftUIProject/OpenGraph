@@ -18,7 +18,7 @@ public protocol StatefulRule: _AttributeBody {
 extension StatefulRule {
     public static var initialValue: Value? { nil }
 
-    public static func _update(_ pointer: UnsafeMutableRawPointer, attribute _: OGAttribute) {
+    public static func _update(_ pointer: UnsafeMutableRawPointer, attribute _: AnyAttribute) {
         pointer.assumingMemoryBound(to: Self.self)
             .pointee
             .updateValue()
@@ -38,7 +38,7 @@ extension StatefulRule {
 
 extension StatefulRule {
     public var attribute: Attribute<Value> {
-        Attribute<Value>(identifier: OGAttribute.current!)
+        Attribute<Value>(identifier: AnyAttribute.current!)
     }
 
     public var context: RuleContext<Value> {
