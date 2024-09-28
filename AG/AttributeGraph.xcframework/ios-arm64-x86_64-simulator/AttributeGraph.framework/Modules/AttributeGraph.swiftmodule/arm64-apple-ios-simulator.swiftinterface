@@ -10,29 +10,31 @@ import _StringProcessing
 
 // MARK: - Attribute Related
 
-// MARK: - AGAttribute
+// MARK: - AnyAttribute
 
-extension AGAttribute {
+public typealias AnyAttribute = AGAttribute
+
+extension AttributeGraph.AnyAttribute {
 	public init<Value>(_ attribute: AttributeGraph.Attribute<Value>)
 	public func unsafeCast<Value>(to type: Value.Type) -> AttributeGraph.Attribute<Value>
-	public static var current: AGAttribute? { get }
-	public func unsafeOffset(at offset: Int) -> AGAttribute
+	public static var current: AnyAttribute? { get }
+	public func unsafeOffset(at offset: Int) -> AnyAttribute
 	public func setFlags(_ newFlags: AGAttributeFlags, mask: AGAttributeFlags)
-	public func addInput(_ attribute: AGAttribute, options: AGInputOptions = [], token: Swift.Int)
+	public func addInput(_ attribute: AnyAttribute, options: AGInputOptions = [], token: Swift.Int)
 	public func addInput<Value>(_ attribute: AttributeGraph.Attribute<Value>, options: AGInputOptions = [], token: Int)
 	public func visitBody<Visitor: AttributeGraph.AttributeBodyVisitor>(_ visitor: inout Visitor);
 	public func mutateBody<Value>(as: Value.Type, invalidating: Swift.Bool, _ body: (inout Value) -> ())
-	public func breadthFirstSearch(options: AGSearchOptions = [], _: (AGAttribute) -> Swift.Bool) -> Swift.Bool
+	public func breadthFirstSearch(options: AGSearchOptions = [], _: (AnyAttribute) -> Swift.Bool) -> Swift.Bool
 	public var _bodyType: Any.Type { get }
 	public var _bodyPointer: UnsafeRawPointer { get }
 	public var valueType: Any.Type { get }
-	public var indirectDependency: AGAttribute? {
+	public var indirectDependency: AnyAttribute? {
 		get
 		nonmutating set
 	}
 }
 
-extension AGAttribute: Swift.CustomStringConvertible {
+extension AttributeGraph.AnyAttribute: Swift.CustomStringConvertible {
 	public var description: Swift.String { get }
 }
 
@@ -110,9 +112,11 @@ extension AttributeGraph.Attribute {
 	public init<R: AttributeGraph.StatefulRule>(_ rule: R) where R.Value == Value
 }
 
-// MARK: - AGWeakAttribute
+// MARK: - AnyWeakAttribute
 
-extension AGWeakAttribute {
+public typealias AnyWeakAttribute = AGWeakAttribute
+
+extension AttributeGraph.AnyWeakAttribute {
 	@_alwaysEmitIntoClient
 	public init(_ attribute: AGAttribute?) {
 		self = __AGCreateWeakAttribute(attribute ?? .nil)
@@ -135,12 +139,12 @@ extension AGWeakAttribute {
 			return attribute == .nil ? nil : attribute
 		}
 		set {
-			self = AGWeakAttribute(newValue)
+			self = AnyWeakAttribute(newValue)
 		}
 	}
 }
 
-extension AGWeakAttribute: Hashable {
+extension AttributeGraph.AnyWeakAttribute: Hashable {
 	@_alwaysEmitIntoClient
 	public func hash(into hasher: inout Swift.Hasher) {
 		hasher.combine(raw_attribute)
@@ -148,7 +152,7 @@ extension AGWeakAttribute: Hashable {
 	}
 
 	@_alwaysEmitIntoClient
-	public static func == (lhs: AGWeakAttribute, rhs: AGWeakAttribute) -> Swift.Bool {
+	public static func == (lhs: AnyWeakAttribute, rhs: AnyWeakAttribute) -> Swift.Bool {
 		lhs.raw_attribute == rhs.raw_attribute && lhs.subgraph_id == rhs.subgraph_id
 	}
 
@@ -158,7 +162,7 @@ extension AGWeakAttribute: Hashable {
 	}
 }
 
-extension AGWeakAttribute: CustomStringConvertible {
+extension AttributeGraph.AnyWeakAttribute: CustomStringConvertible {
 	@_alwaysEmitIntoClient
 	public var description: String {
 		attribute?.description ?? "nil"
@@ -173,9 +177,9 @@ extension AGWeakAttribute: CustomStringConvertible {
 @dynamicMemberLookup
 public struct WeakAttribute<Value> {
 	@usableFromInline
-	internal var base: AGWeakAttribute
+	internal var base: AnyWeakAttribute
 	@_alwaysEmitIntoClient
-	public init(base: AGWeakAttribute) { self.base = base }
+	public init(base: AnyWeakAttribute) { self.base = base }
 	public init()
 	public init(_ attribute: AttributeGraph.Attribute<Value>)
 	public init(_ attribute: AttributeGraph.Attribute<Value>?)

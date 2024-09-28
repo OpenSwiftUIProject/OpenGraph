@@ -37,7 +37,7 @@ final class OptionalAttributeTests: AttributeTestBase {
         let o1 = OptionalAttribute<Void>()
         #expect(o1.description == "nil")
         
-        let attr = OGAttribute(rawValue: 0x1)
+        let attr = AnyAttribute(rawValue: 0x1)
         let o2 = OptionalAttribute(Attribute<Void>(identifier: attr))
         #expect(o2.description == "#1")
     }

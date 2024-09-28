@@ -32,14 +32,14 @@ extension OGGraph {
 // > Also similar to @_silgen_name, but a function declared with @_extern(c) is assumed to use the C ABI, while @_silgen_name assumes the Swift ABI.
 //extension OGGraph {
 //    @_silgen_name("OGGGraphSetInvalidationCallback") // Use Swift ABI(self: x20) ❌, we need C ABI here(self: x0).
-//    public func setInvalidationCallback(_ callback: ((OGAttribute) -> Void)?)
+//    public func setInvalidationCallback(_ callback: ((AnyAttribute) -> Void)?)
 //
 //    @_silgen_name("OGGGraphSetUpdateCallback")
 //    public func setUpdateCallback(_ callback: (() -> Void)?)
 //}
 extension OGGraph {
     @_silgen_name("OGGraphSetInvalidationCallback")
-    public static func setInvalidationCallback(_ graph: OGGraph, callback: ((OGAttribute) -> Void)?)
+    public static func setInvalidationCallback(_ graph: OGGraph, callback: ((AnyAttribute) -> Void)?)
 
     @_silgen_name("OGGraphSetUpdateCallback")
     public static func setUpdateCallback(_ graph: OGGraph, callback: (() -> Void)?)

@@ -4,11 +4,11 @@ import _OpenGraph
 @propertyWrapper
 @dynamicMemberLookup
 public struct Attribute<Value> {
-    public var identifier: OGAttribute
+    public var identifier: AnyAttribute
     
     // MARK: - Initializer
     
-    public init(identifier: OGAttribute) {
+    public init(identifier: AnyAttribute) {
         self.identifier = identifier
     }
 
@@ -120,7 +120,7 @@ public struct Attribute<Value> {
         identifier.mutateBody(as: type, invalidating: invalidating, body)
     }
 
-    public func breadthFirstSearch(options: OGSearchOptions = [], _ body: (OGAttribute) -> Bool) -> Bool {
+    public func breadthFirstSearch(options: OGSearchOptions = [], _ body: (AnyAttribute) -> Bool) -> Bool {
         identifier.breadthFirstSearch(options: options, body)
     }
     
@@ -184,7 +184,7 @@ public struct Attribute<Value> {
 
     // MARK: - Input
     
-    public func addInput(_ attribute: OGAttribute, options: OGInputOptions = [], token: Int) {
+    public func addInput(_ attribute: AnyAttribute, options: OGInputOptions = [], token: Int) {
         identifier.addInput(attribute, options: options, token: token)
     }
     
@@ -237,14 +237,14 @@ private struct AttributeType {
 @_silgen_name("OGGraphCreateAttribute")
 @inline(__always)
 @inlinable
-func OGGraphCreateAttribute(index: Int, body: UnsafeRawPointer, value: UnsafeRawPointer?) -> OGAttribute
+func OGGraphCreateAttribute(index: Int, body: UnsafeRawPointer, value: UnsafeRawPointer?) -> AnyAttribute
 
 @_silgen_name("OGGraphGetValue")
 @inline(__always)
 @inlinable
-func OGGraphGetValue<Value>(_ attribute: OGAttribute, options: OGValueOptions = [], type: Value.Type = Value.self) -> OGValue
+func OGGraphGetValue<Value>(_ attribute: AnyAttribute, options: OGValueOptions = [], type: Value.Type = Value.self) -> OGValue
 
 @_silgen_name("OGGraphSetValue")
 @inline(__always)
 @inlinable
-func OGGraphSetValue<Value>(_ attribute: OGAttribute, valuePointer: UnsafePointer<Value>) -> Bool
+func OGGraphSetValue<Value>(_ attribute: AnyAttribute, valuePointer: UnsafePointer<Value>) -> Bool

@@ -1,5 +1,5 @@
 //
-//  OGAttribute.swift
+//  AnyAttribute.swift
 //  OpenGraph
 //
 //  Audited for RELEASE_2021
@@ -7,7 +7,11 @@
 
 import _OpenGraph
 
-extension OGAttribute {
+public typealias AnyAttribute = OGAttribute
+
+extension AnyAttribute {
+    public typealias Flags = OGAttributeTypeFlags
+
     public init<Value>(_ attribute: Attribute<Value>) {
         self = attribute.identifier
     }
@@ -16,12 +20,12 @@ extension OGAttribute {
         Attribute<Value>(identifier: self)
     }
     
-    public static var current: OGAttribute? {
+    public static var current: AnyAttribute? {
         let current = __OGGraphGetCurrentAttribute()
         return current == .nil ? nil : current
     }
     
-    public func unsafeOffset(at offset: Int) -> OGAttribute {
+    public func unsafeOffset(at offset: Int) -> AnyAttribute {
         create(offset: offset)
     }
 
@@ -29,7 +33,7 @@ extension OGAttribute {
         flags = flags.subtracting(mask).union(newFlags.intersection(mask))
     }
 
-    public func addInput(_ attribute: OGAttribute, options: OGInputOptions = [], token: Int) {
+    public func addInput(_ attribute: AnyAttribute, options: OGInputOptions = [], token: Int) {
         __OGGraphAddInput(self, attribute, options, token)
     }
 
@@ -44,12 +48,12 @@ extension OGAttribute {
     }
 
     public func mutateBody<Value>(as type: Value.Type, invalidating: Bool, _ body: (inout Value) -> Void) {
-        OGAttribute.mutateAttribute(self, type: OGTypeID(type), invalidating: invalidating) { value in
+        AnyAttribute.mutateAttribute(self, type: OGTypeID(type), invalidating: invalidating) { value in
             body(&value.assumingMemoryBound(to: Value.self).pointee)
         }
     }
     
-    public func breadthFirstSearch(options _: OGSearchOptions = [], _: (OGAttribute) -> Bool) -> Bool {
+    public func breadthFirstSearch(options _: OGSearchOptions = [], _: (AnyAttribute) -> Bool) -> Bool {
         fatalError("TODO")
     }
     
@@ -65,7 +69,7 @@ extension OGAttribute {
         info.type.pointee.valueTypeID.type
     }
 
-    public var indirectDependency: OGAttribute? {
+    public var indirectDependency: AnyAttribute? {
         get {
             let indirectDependency = _indirectDependency
             return indirectDependency == .nil ? nil : indirectDependency
@@ -78,18 +82,18 @@ extension OGAttribute {
 
 // MARK: CustomStringConvertible
 
-extension OGAttribute: Swift.CustomStringConvertible {
+extension AnyAttribute: Swift.CustomStringConvertible {
     @inlinable
     public var description: String { "#\(rawValue)" }
 }
 
-public typealias AttributeUpdateBlock = () -> (UnsafeMutableRawPointer, OGAttribute) -> Void
+public typealias AttributeUpdateBlock = () -> (UnsafeMutableRawPointer, AnyAttribute) -> Void
 
 // FIXME: migrate to use @_extern(c, "xx") in Swift 6
-extension OGAttribute {
+extension AnyAttribute {
     @_silgen_name("OGGraphMutateAttribute")
     private static func mutateAttribute(
-        _ attribute: OGAttribute,
+        _ attribute: AnyAttribute,
         type: OGTypeID,
         invalidating: Bool,
         body: (UnsafeMutableRawPointer) -> Void

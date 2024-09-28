@@ -9,7 +9,7 @@
 @propertyWrapper
 @dynamicMemberLookup
 public struct IndirectAttribute<Value> {
-    public let identifier: OGAttribute
+    public let identifier: AnyAttribute
     
     public init(source: Attribute<Value>) {
         identifier = source.identifier.createIndirect(size: UInt64(MemoryLayout<Value>.size))
@@ -20,7 +20,7 @@ public struct IndirectAttribute<Value> {
         nonmutating set { identifier.source = newValue.identifier }
     }
     
-    public var dependency: OGAttribute? {
+    public var dependency: AnyAttribute? {
         get {
             let dependency = identifier._indirectDependency
             return dependency == .nil ? nil : dependency
