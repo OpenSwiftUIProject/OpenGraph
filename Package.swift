@@ -123,7 +123,7 @@ let package = Package(
         // OpenGraph is a C++ & Swift mix target.
         // The SwiftPM support for such usage is still in progress.
         .target(
-            name: "_OpenGraph",
+            name: "OpenGraph_SPI",
             cSettings: [
                 .unsafeFlags(["-I", includePath], .when(platforms: .nonDarwinPlatforms)),
                 .define("__COREFOUNDATION_FORSWIFTFOUNDATIONONLY__", to: "1", .when(platforms: .nonDarwinPlatforms)),
@@ -135,7 +135,7 @@ let package = Package(
         ),
         .target(
             name: "OpenGraph",
-            dependencies: ["_OpenGraph"],
+            dependencies: ["OpenGraph_SPI"],
             swiftSettings: sharedSwiftSettings
         ),
         .plugin(

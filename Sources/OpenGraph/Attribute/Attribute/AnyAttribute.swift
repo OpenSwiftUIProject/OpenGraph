@@ -5,7 +5,7 @@
 //  Audited for RELEASE_2021
 //  Status: API complete
 
-import _OpenGraph
+import OpenGraph_SPI
 
 public typealias AnyAttribute = OGAttribute
 

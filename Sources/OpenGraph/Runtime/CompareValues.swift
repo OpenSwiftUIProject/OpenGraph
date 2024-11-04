@@ -5,7 +5,7 @@
 //  Audited for RELEASE_2021
 //  Status: Complete
 
-import _OpenGraph
+import OpenGraph_SPI
 
 @_silgen_name("OGCompareValues")
 private func OGCompareValues(
