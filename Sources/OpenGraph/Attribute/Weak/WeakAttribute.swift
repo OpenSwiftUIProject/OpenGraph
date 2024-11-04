@@ -49,7 +49,11 @@ public struct WeakAttribute<Value> {
     }
     
     public var value: Value? {
-        attribute?.value
+        OGGraphGetWeakValue(base, type: Value.self)
+            .value
+            // TO BE CONFIRMED
+            .assumingMemoryBound(to: Value?.self)
+            .pointee
     }
     
     public func changedValue(options: OGValueOptions = []) -> (value: Value, changed: Bool)? {
@@ -62,3 +66,8 @@ extension WeakAttribute: Hashable {}
 extension WeakAttribute: CustomStringConvertible {
     public var description: String { base.description }
 }
+
+@_silgen_name("OGGraphGetWeakValue")
+@inline(__always)
+@inlinable
+func OGGraphGetWeakValue<Value>(_ attribute: AnyWeakAttribute, options: OGValueOptions = [], type: Value.Type = Value.self) -> OGValue

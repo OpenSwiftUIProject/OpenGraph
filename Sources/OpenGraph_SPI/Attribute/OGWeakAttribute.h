@@ -28,6 +28,10 @@ OG_EXPORT
 OG_REFINED_FOR_SWIFT
 OGAttribute OGWeakAttributeGetAttribute(OGWeakAttribute weakAttribute);
 
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+OGValue OGGraphGetWeakValue(OGWeakAttribute weakAttribute, OGValueOptions options, OGTypeID type);
+
 OG_EXTERN_C_END
 
 OG_ASSUME_NONNULL_END

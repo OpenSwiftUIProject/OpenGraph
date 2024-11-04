@@ -28,6 +28,10 @@ AG_EXPORT
 AG_REFINED_FOR_SWIFT
 AGAttribute AGWeakAttributeGetAttribute(AGWeakAttribute weakAttribute);
 
+AG_EXPORT
+AG_REFINED_FOR_SWIFT
+AGValue AGGraphGetWeakValue(AGWeakAttribute weakAttribute, AGValueOptions options, AGTypeID type);
+
 AG_EXTERN_C_END
 
 AG_ASSUME_NONNULL_END
