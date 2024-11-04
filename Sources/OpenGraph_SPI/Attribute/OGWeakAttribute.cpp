@@ -16,3 +16,8 @@ OGAttribute OGWeakAttributeGetAttribute(OGWeakAttribute weakAttribute) {
     // TODO
     return OGAttributeNil;
 }
+
+OGValue OGGraphGetWeakValue(OGWeakAttribute weakAttribute, OGValueOptions options, OGTypeID type) {
+    // TODO
+    return {nullptr, false};
+}
