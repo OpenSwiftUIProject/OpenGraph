@@ -1,4 +1,4 @@
-import OpenGraph_SPI
+public import OpenGraph_SPI
 
 @frozen
 @propertyWrapper

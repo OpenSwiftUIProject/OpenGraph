@@ -50,6 +50,7 @@ default:
 }
 
 var sharedSwiftSettings: [SwiftSetting] = [
+    .enableUpcomingFeature("InternalImportsByDefault"),
     .define("OPENGRAPH_RELEASE_\(releaseVersion)"),
     .swiftLanguageMode(.v5),
 ]
@@ -103,14 +104,7 @@ let includePath = SDKPath.appending("/usr/lib/swift")
 
 let package = Package(
     name: "OpenGraph",
-    platforms: [
-        .iOS(.v15),
-        .macOS(.v12),
-        .macCatalyst(.v15),
-        .tvOS(.v15),
-        .watchOS(.v8),
-        .visionOS(.v1),
-    ],
+    platforms: platforms,
     products: [
         .library(name: "OpenGraphShims", targets: ["OpenGraphShims"]),
         .library(name: "OpenGraph", targets: ["OpenGraph"]),

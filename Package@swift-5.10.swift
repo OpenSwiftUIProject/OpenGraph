@@ -20,7 +20,19 @@ func envEnable(_ key: String, default defaultValue: Bool = false) -> Bool {
 let isXcodeEnv = Context.environment["__CFBundleIdentifier"] == "com.apple.dt.Xcode"
 let development = envEnable("OPENGRAPH_DEVELOPMENT", default: false)
 
-var sharedSwiftSettings: [SwiftSetting] = []
+let releaseVersion = Context.environment["OPENGRAPH_TARGET_RELEASE"].flatMap { Int($0) } ?? 2021
+
+var sharedSwiftSettings: [SwiftSetting] = [
+    .enableExperimentalFeature("AccessLevelOnImport"),
+    .enableUpcomingFeature("InternalImportsByDefault"),
+    .define("OPENGRAPH_RELEASE_\(releaseVersion)"),
+]
+
+if releaseVersion >= 2021 {
+    for year in 2021 ... releaseVersion {
+        sharedSwiftSettings.append(.define("OPENGRAPH_SUPPORT_\(year)_API"))
+    }
+}
 
 let warningsAsErrorsCondition = envEnable("OPENGRAPH_WERROR", default: isXcodeEnv && development)
 if warningsAsErrorsCondition {
@@ -79,7 +91,7 @@ let package = Package(
         // OpenGraph is a C++ & Swift mix target.
         // The SwiftPM support for such usage is still in progress.
         .target(
-            name: "_OpenGraph",
+            name: "OpenGraph_SPI",
             cSettings: [
                 .unsafeFlags(["-I", includePath], .when(platforms: .nonDarwinPlatforms)),
                 .define("__COREFOUNDATION_FORSWIFTFOUNDATIONONLY__", to: "1", .when(platforms: .nonDarwinPlatforms)),
@@ -91,7 +103,7 @@ let package = Package(
         ),
         .target(
             name: "OpenGraph",
-            dependencies: ["_OpenGraph"],
+            dependencies: ["OpenGraph_SPI"],
             swiftSettings: sharedSwiftSettings
         ),
         .plugin(
