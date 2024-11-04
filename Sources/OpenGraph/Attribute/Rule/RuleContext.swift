@@ -5,7 +5,7 @@
 //  Audited for RELEASE_2021
 //  Status: Complete
 
-import _OpenGraph
+public import OpenGraph_SPI
 
 @frozen
 public struct RuleContext<Value> {

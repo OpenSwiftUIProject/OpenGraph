@@ -5,7 +5,7 @@
 //
 
 #if OPENGRAPH_COMPATIBILITY_TEST
-@_exported import AttributeGraph
+@_exported public import AttributeGraph
 public typealias OGAttributeFlags = AGAttributeFlags
 public typealias OGAttributeInfo = AGAttributeInfo
 public typealias OGAttributeType = AGAttributeType

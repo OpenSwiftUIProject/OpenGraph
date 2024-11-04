@@ -1,1 +1,1 @@
-@_exported import _OpenGraph
+@_exported public import OpenGraph_SPI

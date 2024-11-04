@@ -5,7 +5,7 @@
 //  Audited for RELEASE_2021
 //  Status: WIP
 
-import _OpenGraph
+public import OpenGraph_SPI
 
 extension OGSubgraph {
     public func addObserver(_ observer: () -> Void) -> Int {

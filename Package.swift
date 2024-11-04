@@ -50,6 +50,7 @@ default:
 }
 
 var sharedSwiftSettings: [SwiftSetting] = [
+    .enableUpcomingFeature("InternalImportsByDefault"),
     .define("OPENGRAPH_RELEASE_\(releaseVersion)"),
     .swiftLanguageMode(.v5),
 ]
@@ -103,14 +104,7 @@ let includePath = SDKPath.appending("/usr/lib/swift")
 
 let package = Package(
     name: "OpenGraph",
-    platforms: [
-        .iOS(.v15),
-        .macOS(.v12),
-        .macCatalyst(.v15),
-        .tvOS(.v15),
-        .watchOS(.v8),
-        .visionOS(.v1),
-    ],
+    platforms: platforms,
     products: [
         .library(name: "OpenGraphShims", targets: ["OpenGraphShims"]),
         .library(name: "OpenGraph", targets: ["OpenGraph"]),
@@ -123,7 +117,7 @@ let package = Package(
         // OpenGraph is a C++ & Swift mix target.
         // The SwiftPM support for such usage is still in progress.
         .target(
-            name: "_OpenGraph",
+            name: "OpenGraph_SPI",
             cSettings: [
                 .unsafeFlags(["-I", includePath], .when(platforms: .nonDarwinPlatforms)),
                 .define("__COREFOUNDATION_FORSWIFTFOUNDATIONONLY__", to: "1", .when(platforms: .nonDarwinPlatforms)),
@@ -135,7 +129,7 @@ let package = Package(
         ),
         .target(
             name: "OpenGraph",
-            dependencies: ["_OpenGraph"],
+            dependencies: ["OpenGraph_SPI"],
             swiftSettings: sharedSwiftSettings
         ),
         .plugin(

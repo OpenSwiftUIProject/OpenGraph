@@ -4,7 +4,7 @@
 //
 //
 
-import _OpenGraph
+public import OpenGraph_SPI
 
 @_silgen_name("OGTupleElementType")
 @inline(__always)

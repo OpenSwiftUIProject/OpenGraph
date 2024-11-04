@@ -5,7 +5,7 @@
 //  Audited for RELEASE_2021
 //  Status: WIP
 
-import _OpenGraph
+public import OpenGraph_SPI
 #if canImport(ObjectiveC)
 import Foundation
 #endif
