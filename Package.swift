@@ -20,9 +20,45 @@ func envEnable(_ key: String, default defaultValue: Bool = false) -> Bool {
 let isXcodeEnv = Context.environment["__CFBundleIdentifier"] == "com.apple.dt.Xcode"
 let development = envEnable("OPENGRAPH_DEVELOPMENT", default: false)
 
+let releaseVersion = Context.environment["OPENGRAPH_TARGET_RELEASE"].flatMap { Int($0) } ?? 2024
+let platforms: [SupportedPlatform] = switch releaseVersion {
+case 2024: // iOS 18.0
+    [
+        .iOS(.v18),
+        .macOS(.v15),
+        .macCatalyst(.v18),
+        .tvOS(.v18),
+        .watchOS(.v10),
+        .visionOS(.v2),
+    ]
+case 2021: // iOS 15.5
+    [
+        .iOS(.v15),
+        .macOS(.v12),
+        .macCatalyst(.v15),
+        .tvOS(.v15),
+        .watchOS(.v7),
+    ]
+default:
+    [
+        .iOS(.v13),
+        .macOS(.v10_15),
+        .macCatalyst(.v13),
+        .tvOS(.v13),
+        .watchOS(.v5),
+    ]
+}
+
 var sharedSwiftSettings: [SwiftSetting] = [
+    .define("OPENGRAPH_RELEASE_\(releaseVersion)"),
     .swiftLanguageMode(.v5),
 ]
+
+if releaseVersion >= 2021 {
+    for year in 2021 ... releaseVersion {
+        sharedSwiftSettings.append(.define("OPENGRAPH_SUPPORT_\(year)_API"))
+    }
+}
 
 let warningsAsErrorsCondition = envEnable("OPENGRAPH_WERROR", default: isXcodeEnv && development)
 if warningsAsErrorsCondition {
@@ -68,11 +104,11 @@ let includePath = SDKPath.appending("/usr/lib/swift")
 let package = Package(
     name: "OpenGraph",
     platforms: [
-        .iOS(.v13),
-        .macOS(.v10_15),
-        .macCatalyst(.v13),
-        .tvOS(.v13),
-        .watchOS(.v6),
+        .iOS(.v15),
+        .macOS(.v12),
+        .macCatalyst(.v15),
+        .tvOS(.v15),
+        .watchOS(.v8),
         .visionOS(.v1),
     ],
     products: [
@@ -139,7 +175,7 @@ if attributeGraphCondition {
     openGraphShimsTarget.dependencies.append("OpenGraph")
 }
 
-let compatibilityTestCondition = envEnable("OPENGRAPH_COMPATIBILITY_TEST")
+let compatibilityTestCondition = envEnable("OPENGRAPH_COMPATIBILITY_TEST", default: true)
 if compatibilityTestCondition && attributeGraphCondition {
     openGraphCompatibilityTestTarget.dependencies.append("AttributeGraph")
     var swiftSettings: [SwiftSetting] = (openGraphCompatibilityTestTarget.swiftSettings ?? [])

@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 # A `realpath` alternative using the default C implementation.
 filepath() {
@@ -6,16 +6,23 @@ filepath() {
 }
 
 AG_ROOT="$(dirname $(filepath $0))"
-xcframework_path="${AG_ROOT}/AttributeGraph.xcframework"
-framework_name=AttributeGraph.framework
 
 reset_framework() {
-    local frmework_name=$1
-    rm -rf ${xcframework_path}/${frmework_name}/${framework_name}/Headers
-    rm -rf ${xcframework_path}/${frmework_name}/${framework_name}/Modules
-    rm -rf ${xcframework_path}/${frmework_name}/${framework_name}/Info.plist
+    local framework_name=$1
+    local arch_name=$2
+
+    local path="${AG_ROOT}/${framework_name}.xcframework/${arch_name}/${framework_name}.framework"
+
+    echo $path
+    
+    rm -rf ${path}/${framework_name}.tbd
+    rm -rf ${path}/Headers
+    rm -rf ${path}/Modules
+    rm -rf ${path}/Info.plist
 }
 
-reset_framework ios-arm64-x86_64-simulator
-reset_framework ios-arm64-arm64e
-reset_framework macos-arm64e-arm64-x86_64
+framework_name=AttributeGraph
+
+reset_framework $framework_name ios-arm64-x86_64-simulator
+reset_framework $framework_name ios-arm64-arm64e
+reset_framework $framework_name macos-arm64e-arm64-x86_64

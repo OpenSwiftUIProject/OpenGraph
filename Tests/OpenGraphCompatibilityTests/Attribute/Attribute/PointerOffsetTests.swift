@@ -39,7 +39,21 @@ struct PointerOffsetTests {
         let invalidPointer = PointerOffset<Base, Int>.invalidScenePointer()
         let stride = MemoryLayout<Base>.stride
         #expect(stride == 16)
-        #expect(invalidPointer == UnsafeMutablePointer(bitPattern: stride))
+        
+        if compatibilityTestEnabled {
+            if #available(iOS 18, macOS 15, *) {
+                #expect(invalidPointer == UnsafeMutablePointer(bitPattern: 0x1))
+            } else {
+                #expect(invalidPointer == UnsafeMutablePointer(bitPattern: stride))
+            }
+        } else {
+            #if OPENGRAPH_RELEASE_2024
+            #expect(invalidPointer == UnsafeMutablePointer(bitPattern: 0x1))
+            #else
+            #expect(invalidPointer == UnsafeMutablePointer(bitPattern: stride))
+            #endif
+        }
+        
     }
 
     @Test(.bug("https://github.com/OpenSwiftUIProject/OpenGraph/issues/70", id: 70, "Verify fix of #70"))

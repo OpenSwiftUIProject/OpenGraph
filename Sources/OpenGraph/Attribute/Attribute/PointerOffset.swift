@@ -22,7 +22,11 @@ extension PointerOffset {
 
 extension PointerOffset {
     public static func invalidScenePointer() -> UnsafeMutablePointer<Base> {
+        #if OPENGRAPH_RELEASE_2024
+        UnsafeMutablePointer(bitPattern: 0x1)!
+        #else
         UnsafeMutablePointer(bitPattern: MemoryLayout<Base>.stride)!
+        #endif
     }
     
     public static func of(_ member: inout Member) -> PointerOffset {
