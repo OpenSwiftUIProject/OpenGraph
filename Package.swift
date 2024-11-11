@@ -17,10 +17,69 @@ func envEnable(_ key: String, default defaultValue: Bool = false) -> Bool {
     }
 }
 
+// MARK: - Env and Config
+
 let isXcodeEnv = Context.environment["__CFBundleIdentifier"] == "com.apple.dt.Xcode"
 let development = envEnable("OPENGRAPH_DEVELOPMENT", default: false)
 
 let releaseVersion = Context.environment["OPENGRAPH_TARGET_RELEASE"].flatMap { Int($0) } ?? 2024
+
+let swiftBinPath = Context.environment["_"] ?? "/usr/bin/swift"
+let swiftBinURL = URL(fileURLWithPath: swiftBinPath)
+let SDKPath = swiftBinURL.deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent().path
+let includePath = SDKPath.appending("/usr/lib/swift")
+
+// MARK: - C/CXX Settings
+
+// Source: https://github.com/swiftlang/swift/blob/main/SwiftCompilerSources/Package.swift
+// To successfully build, you'll need to create a couple of symlinks to an
+// existing Ninja build:
+//
+// cd $OPENGRAPH_SWIFT_TOOLCHAIN_PATH
+// mkdir -p build/Default
+// ln -s build/<Ninja-Build>/llvm-<os+arch> build/Default/llvm
+// ln -s build/<Ninja-Build>/swift-<os+arch> build/Default/swift
+//
+// where <project-root> is the parent directory of the swift repository.
+//
+// FIXME: We may want to consider generating Package.swift as a part of the
+// build.
+
+let swiftToolchainVersion = Context.environment["OPENGRAPH_SWIFT_TOOLCHAIN_VERSION"] ?? ""
+let swiftToolchainPath = Context.environment["OPENGRAPH_SWIFT_TOOLCHAIN_PATH"] ?? ""
+
+var sharedCSettings: [CSetting] = [
+    .unsafeFlags(["-I", includePath], .when(platforms: .nonDarwinPlatforms)),
+    .define("__COREFOUNDATION_FORSWIFTFOUNDATIONONLY__", to: "1", .when(platforms: .nonDarwinPlatforms)),
+]
+
+if !swiftToolchainPath.isEmpty {
+    sharedCSettings.append(
+        .unsafeFlags(
+            [
+                "-static",
+                "-DCOMPILED_WITH_SWIFT",
+                "-DPURE_BRIDGING_MODE",
+                "-UIBOutlet", "-UIBAction", "-UIBInspectable",
+                "-I\(swiftToolchainPath)/swift/include",
+                "-I\(swiftToolchainPath)/swift/stdlib/public/SwiftShims",
+                "-I\(swiftToolchainPath)/llvm-project/llvm/include",
+                "-I\(swiftToolchainPath)/llvm-project/clang/include",
+                "-I\(swiftToolchainPath)/build/Default/swift/include",
+                "-I\(swiftToolchainPath)/build/Default/llvm/include",
+                "-I\(swiftToolchainPath)/build/Default/llvm/tools/clang/include",
+            ]
+        )
+    )
+}
+
+if !swiftToolchainVersion.isEmpty {
+    sharedCSettings.append(
+        .define("OPENGRAPH_SWIFT_TOOLCHAIN_VERSION", to: swiftToolchainVersion)
+    )
+}
+
+// MARK: - Swift Settings
 
 var sharedSwiftSettings: [SwiftSetting] = [
     .enableUpcomingFeature("InternalImportsByDefault"),
@@ -38,6 +97,8 @@ let warningsAsErrorsCondition = envEnable("OPENGRAPH_WERROR", default: isXcodeEn
 if warningsAsErrorsCondition {
     sharedSwiftSettings.append(.unsafeFlags(["-warnings-as-errors"]))
 }
+
+// MARK: - Targets
 
 let openGraphShimsTarget = Target.target(
     name: "OpenGraphShims",
@@ -70,16 +131,14 @@ let openGraphCompatibilityTestTarget = Target.testTarget(
     swiftSettings: sharedSwiftSettings
 )
 
-let swiftBinPath = Context.environment["_"] ?? "/usr/bin/swift"
-let swiftBinURL = URL(fileURLWithPath: swiftBinPath)
-let SDKPath = swiftBinURL.deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent().path
-let includePath = SDKPath.appending("/usr/lib/swift")
+// MARK: - Package
 
 let package = Package(
     name: "OpenGraph",
     products: [
-        .library(name: "OpenGraphShims", targets: ["OpenGraphShims"]),
+        .library(name: "OpenGraph_SPI", targets: ["OpenGraph_SPI"]),
         .library(name: "OpenGraph", targets: ["OpenGraph"]),
+        .library(name: "OpenGraphShims", targets: ["OpenGraphShims"]),
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-numerics", from: "1.0.2"),
@@ -90,14 +149,7 @@ let package = Package(
         // The SwiftPM support for such usage is still in progress.
         .target(
             name: "OpenGraph_SPI",
-            cSettings: [
-                .unsafeFlags(["-I", includePath], .when(platforms: .nonDarwinPlatforms)),
-                .define("__COREFOUNDATION_FORSWIFTFOUNDATIONONLY__", to: "1", .when(platforms: .nonDarwinPlatforms)),
-            ],
-            cxxSettings: [
-                .unsafeFlags(["-I", includePath], .when(platforms: .nonDarwinPlatforms)),
-                .define("__COREFOUNDATION_FORSWIFTFOUNDATIONONLY__", to: "1", .when(platforms: .nonDarwinPlatforms)),
-            ]
+            cSettings: sharedCSettings
         ),
         .target(
             name: "OpenGraph",
