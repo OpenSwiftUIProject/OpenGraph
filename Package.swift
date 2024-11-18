@@ -49,10 +49,56 @@ default:
     ]
 }
 
+// Source: https://github.com/swiftlang/swift/blob/main/SwiftCompilerSources/Package.swift
+// To successfully build, you'll need to create a couple of symlinks to an
+// existing Ninja build:
+//
+// cd $OPENGRAPH_SWIFT_TOOLCHAIN_PATH
+// mkdir -p build/Default
+// ln -s build/<Ninja-Build>/llvm-<os+arch> build/Default/llvm
+// ln -s build/<Ninja-Build>/swift-<os+arch> build/Default/swift
+//
+// where <project-root> is the parent directory of the swift repository.
+//
+// FIXME: We may want to consider generating Package.swift as a part of the
+// build.
+
+let swiftToolchainVersion = Context.environment["OPENGRAPH_SWIFT_TOOLCHAIN_VERSION"] ?? "6.0.2"
+let swiftToolchainPath = Context.environment["OPENGRAPH_SWIFT_TOOLCHAIN_PATH"] ?? "/Volumes/BuildMachine/swift-project"
+
+var sharedCXXSettings: [CXXSetting] = []
+
+if !swiftToolchainPath.isEmpty {
+    sharedCXXSettings.append(
+        .unsafeFlags(
+            [
+                "-static",
+                "-DCOMPILED_WITH_SWIFT",
+                "-DPURE_BRIDGING_MODE",
+                "-UIBOutlet", "-UIBAction", "-UIBInspectable",
+                "-I\(swiftToolchainPath)/swift/include",
+                "-I\(swiftToolchainPath)/swift/stdlib/public/SwiftShims",
+                "-I\(swiftToolchainPath)/llvm-project/llvm/include",
+                "-I\(swiftToolchainPath)/llvm-project/clang/include",
+                "-I\(swiftToolchainPath)/build/Default/swift/include",
+                "-I\(swiftToolchainPath)/build/Default/llvm/include",
+                "-I\(swiftToolchainPath)/build/Default/llvm/tools/clang/include",
+            ]
+        )
+    )
+}
+
+if !swiftToolchainVersion.isEmpty {
+    sharedCXXSettings.append(
+        .define("OPENGRAPH_SWIFT_TOOLCHAIN_VERSION", to: swiftToolchainVersion)
+    )
+}
+
 var sharedSwiftSettings: [SwiftSetting] = [
     .enableUpcomingFeature("InternalImportsByDefault"),
     .define("OPENGRAPH_RELEASE_\(releaseVersion)"),
     .swiftLanguageMode(.v5),
+    .interoperabilityMode(.Cxx),
 ]
 
 if releaseVersion >= 2021 {
@@ -106,8 +152,9 @@ let package = Package(
     name: "OpenGraph",
     platforms: platforms,
     products: [
-        .library(name: "OpenGraphShims", targets: ["OpenGraphShims"]),
+        .library(name: "OpenGraph_SPI", targets: ["OpenGraph_SPI"]),
         .library(name: "OpenGraph", targets: ["OpenGraph"]),
+        .library(name: "OpenGraphShims", targets: ["OpenGraphShims"]),
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-numerics", from: "1.0.2"),
@@ -118,11 +165,7 @@ let package = Package(
         // The SwiftPM support for such usage is still in progress.
         .target(
             name: "OpenGraph_SPI",
-            cSettings: [
-                .unsafeFlags(["-I", includePath], .when(platforms: .nonDarwinPlatforms)),
-                .define("__COREFOUNDATION_FORSWIFTFOUNDATIONONLY__", to: "1", .when(platforms: .nonDarwinPlatforms)),
-            ],
-            cxxSettings: [
+            cxxSettings: sharedCXXSettings + [
                 .unsafeFlags(["-I", includePath], .when(platforms: .nonDarwinPlatforms)),
                 .define("__COREFOUNDATION_FORSWIFTFOUNDATIONONLY__", to: "1", .when(platforms: .nonDarwinPlatforms)),
             ]
