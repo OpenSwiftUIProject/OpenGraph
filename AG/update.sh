@@ -8,7 +8,7 @@ filepath() {
 }
 
 AG_ROOT="$(dirname $(filepath $0))"
-VERSION=RELEASE_2024
+VERSION=${OPENGRAPH_ATTRIBUTEGRAPH_VERSION:-RELEASE_2024}
 
 generate_swiftinterface_header() {
     local target="$1"
