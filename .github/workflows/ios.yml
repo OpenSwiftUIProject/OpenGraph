@@ -59,12 +59,3 @@ jobs:
             -skipPackagePluginValidation \
             -skipMacroValidation
             # OTHER_SWIFT_FLAGS="-warnings-as-errors" Conflicting options '-warnings-as-errors' and '-suppress-warnings'
-          profdata_file_path=$(find . -path "./.build-test-debug/Build/ProfileData/*/Coverage.profdata" -type f)
-          xcrun llvm-cov show \
-            -instr-profile=$profdata_file_path \
-            .build-test-debug/Build/Products/Debug-iphonesimulator/OpenGraphTests.xctest/OpenGraphTests \
-            > coverage.txt
-      - uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          verbose: true
