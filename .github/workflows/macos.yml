@@ -19,12 +19,19 @@ jobs:
       OPENGRAPH_WERROR: 1
       OPENGRAPH_ATTRIBUTEGRAPH: 0
       OPENGRAPH_COMPATIBILITY_TEST: 0
+      OPENGRAPH_USE_LOCAL_DEPS: 1
+      OPENGRAPH_TARGET_RELEASE: 2024
+      DARWIN_PRIVATE_FRAMEWORKS_TARGET_RELEASE: 2024
+      GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v4
       - name: Setup Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: ${{ matrix.xcode-version }}
+      - name: Set up build environment
+        run: Scripts/CI/darwin_setup_build.sh
+        shell: bash
       - name: Swift version
         run: swift --version
       - name: Build and run tests in debug mode with coverage
