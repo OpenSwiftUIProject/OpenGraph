@@ -21,33 +21,6 @@ let isXcodeEnv = Context.environment["__CFBundleIdentifier"] == "com.apple.dt.Xc
 let development = envEnable("OPENGRAPH_DEVELOPMENT", default: false)
 
 let releaseVersion = Context.environment["OPENGRAPH_TARGET_RELEASE"].flatMap { Int($0) } ?? 2024
-let platforms: [SupportedPlatform] = switch releaseVersion {
-case 2024: // iOS 18.0
-    [
-        .iOS(.v18),
-        .macOS(.v15),
-        .macCatalyst(.v18),
-        .tvOS(.v18),
-        .watchOS(.v10),
-        .visionOS(.v2),
-    ]
-case 2021: // iOS 15.5
-    [
-        .iOS(.v15),
-        .macOS(.v12),
-        .macCatalyst(.v15),
-        .tvOS(.v15),
-        .watchOS(.v7),
-    ]
-default:
-    [
-        .iOS(.v13),
-        .macOS(.v10_15),
-        .macCatalyst(.v13),
-        .tvOS(.v13),
-        .watchOS(.v5),
-    ]
-}
 
 var sharedSwiftSettings: [SwiftSetting] = [
     .enableUpcomingFeature("InternalImportsByDefault"),
@@ -104,7 +77,6 @@ let includePath = SDKPath.appending("/usr/lib/swift")
 
 let package = Package(
     name: "OpenGraph",
-    platforms: platforms,
     products: [
         .library(name: "OpenGraphShims", targets: ["OpenGraphShims"]),
         .library(name: "OpenGraph", targets: ["OpenGraph"]),
@@ -132,13 +104,6 @@ let package = Package(
             dependencies: ["OpenGraph_SPI"],
             swiftSettings: sharedSwiftSettings
         ),
-        .plugin(
-            name: "UpdateModule",
-            capability: .command(
-                intent: .custom(verb: "update-module", description: "Update AG xcframework"),
-                permissions: [.writeToPackageDirectory(reason: "Update AG xcframework")]
-            )
-        ),
         openGraphShimsTarget,
         
         openGraphTestTarget,
@@ -148,6 +113,7 @@ let package = Package(
     cxxLanguageStandard: .cxx17
 )
 
+
 #if os(macOS)
 // FIXME: Enable it by default will cause non-iOS/macOS Apple OS build fail currently.
 // Add the corresponding tbd file and framework to fix it.
@@ -155,23 +121,39 @@ let attributeGraphCondition = envEnable("OPENGRAPH_ATTRIBUTEGRAPH", default: tru
 #else
 let attributeGraphCondition = envEnable("OPENGRAPH_ATTRIBUTEGRAPH")
 #endif
+let useLocalDeps = envEnable("OPENGRAPH_USE_LOCAL_DEPS")
+
 if attributeGraphCondition {
-    let attributeGraphProduct = Product.library(name: "AttributeGraph", targets: ["AttributeGraph"])
-    let attributeGraphTarget = Target.binaryTarget(name: "AttributeGraph", path: "AG/AttributeGraph.xcframework")
-    package.products.append(attributeGraphProduct)
-    package.targets.append(attributeGraphTarget)
-    
+    let privateFrameworkRepo: Package.Dependency
+    if useLocalDeps {
+        privateFrameworkRepo = Package.Dependency.package(path: "../DarwinPrivateFrameworks")
+    } else {
+        privateFrameworkRepo = Package.Dependency.package(url: "https://github.com/OpenSwiftUIProject/DarwinPrivateFrameworks.git", branch: "main")
+    }
+    package.dependencies.append(privateFrameworkRepo)
     var swiftSettings: [SwiftSetting] = (openGraphShimsTarget.swiftSettings ?? [])
     swiftSettings.append(.define("OPENGRAPH_ATTRIBUTEGRAPH"))
     openGraphShimsTarget.swiftSettings = swiftSettings
-    openGraphShimsTarget.dependencies.append("AttributeGraph")
+    openGraphShimsTarget.dependencies.append(
+        .product(name: "AttributeGraph", package: "DarwinPrivateFrameworks")
+    )
+    
+    let agVersion = Context.environment["DARWIN_PRIVATE_FRAMEWORKS_TARGET_RELEASE"].flatMap { Int($0) } ?? 2024
+    package.platforms = switch agVersion {
+        case 2024: [.iOS(.v18), .macOS(.v15), .macCatalyst(.v18), .tvOS(.v18), .watchOS(.v10), .visionOS(.v2)]
+        case 2021: [.iOS(.v15), .macOS(.v12), .macCatalyst(.v15), .tvOS(.v15), .watchOS(.v7)]
+        default: nil
+    }
 } else {
     openGraphShimsTarget.dependencies.append("OpenGraph")
 }
 
 let compatibilityTestCondition = envEnable("OPENGRAPH_COMPATIBILITY_TEST")
 if compatibilityTestCondition && attributeGraphCondition {
-    openGraphCompatibilityTestTarget.dependencies.append("AttributeGraph")
+    openGraphCompatibilityTestTarget.dependencies.append(
+        .product(name: "AttributeGraph", package: "DarwinPrivateFrameworks")
+    )
+    
     var swiftSettings: [SwiftSetting] = (openGraphCompatibilityTestTarget.swiftSettings ?? [])
     swiftSettings.append(.define("OPENGRAPH_COMPATIBILITY_TEST"))
     openGraphCompatibilityTestTarget.swiftSettings = swiftSettings
