@@ -18,8 +18,7 @@ clone_checkout_ag() {
 
 update_ag() {
   cd $REPO_ROOT/../DarwinPrivateFrameworks
-  DARWIN_PRIVATE_FRAMEWORKS_TARGET_RELEASE=2021 ./AG/update.sh
-  DARWIN_PRIVATE_FRAMEWORKS_TARGET_RELEASE=2024 ./AG/update.sh
+  swift package update-xcframeworks --allow-writing-to-package-directory
 }
 
 clone_checkout_ag

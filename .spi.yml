@@ -1,5 +1,5 @@
 version: 1
 builder:
   configs:
-    - swift_version: 5.9
+    - swift_version: 6.0
       documentation_targets: [OpenGraph]

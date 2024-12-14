@@ -1,9 +1,6 @@
 //
 //  OGBase.h
-//
-//
-//  Created by Kyle on 2024/1/16.
-//
+//  OpenGraph
 
 #ifndef OGBase_h
 #define OGBase_h

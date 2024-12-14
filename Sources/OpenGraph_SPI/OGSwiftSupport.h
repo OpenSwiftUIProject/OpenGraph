@@ -1,9 +1,6 @@
 //
 //  OGSwiftSupport.h
-//
-//
-//  Created by Kyle on 2024/2/25.
-//
+//  OpenGraph
 
 #ifndef OGSwiftSupport_h
 #define OGSwiftSupport_h
