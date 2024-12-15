@@ -11,7 +11,9 @@ clone_checkout_ag() {
   cd $REPO_ROOT
   revision=$(Scripts/CI/get_revision.sh darwinprivateframeworks)
   cd ..
-  gh repo clone OpenSwiftUIProject/DarwinPrivateFrameworks
+  if [ ! -d DarwinPrivateFrameworks ]; then
+    gh repo clone OpenSwiftUIProject/DarwinPrivateFrameworks
+  fi
   cd DarwinPrivateFrameworks
   git checkout --quiet $revision
 }
