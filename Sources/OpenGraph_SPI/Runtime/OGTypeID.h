@@ -37,11 +37,11 @@ OGTypeKind OGTypeGetKind(OGTypeID typeID) OG_SWIFT_NAME(getter:Metadata.kind(sel
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-void const* OGTypeGetSignature(OGTypeID typeID) OG_SWIFT_NAME(getter:Metadata.signature(self:));
+void const* _Nullable OGTypeGetSignature(OGTypeID typeID) OG_SWIFT_NAME(getter:Metadata.signature(self:));
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-void const* OGTypeGetDescriptor(OGTypeID typeID) OG_SWIFT_NAME(getter:Metadata.descriptor(self:));
+void const* _Nullable OGTypeGetDescriptor(OGTypeID typeID) OG_SWIFT_NAME(getter:Metadata.descriptor(self:));
 
 #endif /* OPENGRAPH_RELEASE */
 
@@ -51,11 +51,11 @@ CFStringRef OGTypeDescription(OGTypeID typeID);
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-void const* OGTypeNominalDescriptor(OGTypeID typeID) OG_SWIFT_NAME(getter:Metadata.nominalDescriptor(self:));
+void const* _Nullable OGTypeNominalDescriptor(OGTypeID typeID) OG_SWIFT_NAME(getter:Metadata.nominalDescriptor(self:));
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-CFStringRef OGTypeNominalDescriptorName(OGTypeID typeID) OG_SWIFT_NAME(getter:Metadata.nominalDescriptorName(self:));
+char const* _Nullable OGTypeNominalDescriptorName(OGTypeID typeID) OG_SWIFT_NAME(getter:Metadata.nominalDescriptorName(self:));
 
 OG_EXTERN_C_END
 

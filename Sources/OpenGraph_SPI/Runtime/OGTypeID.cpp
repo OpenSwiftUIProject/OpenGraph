@@ -14,7 +14,7 @@
 
 OGTypeKind OGTypeGetKind(OGTypeID typeID) {
     #ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
-    OG::swift::metadata const *metadata = reinterpret_cast<OG::swift::metadata const*>(typeID);
+    auto metadata = reinterpret_cast<OG::swift::metadata const*>(typeID);
     switch (metadata->getKind()) {
         case swift::MetadataKind::Class: // 0x0
             return OGTypeKindClass;
@@ -44,7 +44,7 @@ OGTypeKind OGTypeGetKind(OGTypeID typeID) {
 
 void const* OGTypeGetSignature(OGTypeID typeID) {
     #ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
-    OG::swift::metadata const *metadata = reinterpret_cast<OG::swift::metadata const*>(typeID);
+    auto metadata = reinterpret_cast<OG::swift::metadata const*>(typeID);
     // TODO
     return nullptr;
     #else
@@ -53,7 +53,7 @@ void const* OGTypeGetSignature(OGTypeID typeID) {
 }
 void const* OGTypeGetDescriptor(OGTypeID typeID) {
     #ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
-    OG::swift::metadata const *metadata = reinterpret_cast<OG::swift::metadata const*>(typeID);
+    auto metadata = reinterpret_cast<OG::swift::metadata const*>(typeID);
     return metadata->descriptor();
     #else
     return nullptr;
@@ -65,7 +65,7 @@ void const* OGTypeGetDescriptor(OGTypeID typeID) {
 CFStringRef OGTypeDescription(OGTypeID typeID) {
     CFMutableStringRef ref = CFStringCreateMutable(CFAllocatorGetDefault(), 0);
     #ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
-    OG::swift::metadata const *metadata = reinterpret_cast<OG::swift::metadata const*>(typeID);
+    auto metadata = reinterpret_cast<OG::swift::metadata const*>(typeID);
     metadata->append_description(ref);
     #endif
     return ref;
@@ -73,13 +73,23 @@ CFStringRef OGTypeDescription(OGTypeID typeID) {
 
 void const* OGTypeNominalDescriptor(OGTypeID typeID) {
     #ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
-    OG::swift::metadata const *metadata = reinterpret_cast<OG::swift::metadata const*>(typeID);
+    auto metadata = reinterpret_cast<OG::swift::metadata const*>(typeID);
+    
     return metadata->nominal_descriptor();
     #else
     return nullptr;
     #endif
 }
 
-CFStringRef OGTypeNominalDescriptorName(OGTypeID typeID) {
-    // TODO
+char const* OGTypeNominalDescriptorName(OGTypeID typeID) {
+    #ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
+    auto metadata = reinterpret_cast<OG::swift::metadata const*>(typeID);
+    auto nominal_descriptor = metadata->nominal_descriptor();
+    if (nominal_descriptor == nullptr) {
+        return nullptr;
+    }
+    return nominal_descriptor->Name.get();
+    #else
+    return nullptr;
+    #endif
 }

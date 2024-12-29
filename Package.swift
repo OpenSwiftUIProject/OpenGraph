@@ -113,6 +113,7 @@ if warningsAsErrorsCondition {
 
 let openGraphShimsTarget = Target.target(
     name: "OpenGraphShims",
+    cSettings: sharedCSettings,
     swiftSettings: sharedSwiftSettings
 )
 
@@ -122,6 +123,7 @@ let openGraphShimsTestTarget = Target.testTarget(
         "OpenGraphShims",
     ],
     exclude: ["README.md"],
+    cSettings: sharedCSettings,
     swiftSettings: sharedSwiftSettings
 )
 
@@ -131,6 +133,7 @@ let openGraphTestTarget = Target.testTarget(
         "OpenGraph",
     ],
     exclude: ["README.md"],
+    cSettings: sharedCSettings,
     swiftSettings: sharedSwiftSettings
 )
 let openGraphCompatibilityTestTarget = Target.testTarget(
@@ -139,6 +142,7 @@ let openGraphCompatibilityTestTarget = Target.testTarget(
         .product(name: "RealModule", package: "swift-numerics"),
     ],
     exclude: ["README.md"],
+    cSettings: sharedCSettings,
     swiftSettings: sharedSwiftSettings
 )
 
@@ -165,6 +169,7 @@ let package = Package(
         .target(
             name: "OpenGraph",
             dependencies: ["OpenGraph_SPI"],
+            cSettings: sharedCSettings,
             swiftSettings: sharedSwiftSettings
         ),
         openGraphShimsTarget,
