@@ -7,8 +7,6 @@
 
 public import OpenGraph_SPI
 
-public typealias AnyAttribute = OGAttribute
-
 extension AnyAttribute {
     public typealias Flags = OGAttributeTypeFlags
 
