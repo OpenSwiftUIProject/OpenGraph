@@ -1,19 +1,30 @@
 //
 //  metadata.hpp
-//  
+//  OpenGraph_SPI
 //
-//  Created by Kyle on 2024/4/4.
-//
+//  Audited for iOS 18.0
+//  Status: WIP
 
 #ifndef metadata_hpp
 #define metadata_hpp
 
 #include "OGBase.h"
-#include "OGSwiftMetadata.h"
+
+#ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
+#include <swift/Runtime/Metadata.h>
+#endif
 
 namespace OG {
 namespace swift {
-using metadata = OGSwiftMetadata; // FIXME: swift::Metadata
-}
-}
+#ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
+class metadata: public ::swift::Metadata {
+public:
+    void append_description(CFMutableStringRef description) const OG_NOEXCEPT;
+}; /* OG::swift::metadata */
+#else
+class metadata {};
+#endif /* OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED */
+} /* OG::swift */
+} /* OG */
+
 #endif /* metadata_hpp */

@@ -6,6 +6,7 @@
 //
 
 #include "OGTypeID.h"
+#include "metadata.hpp"
 
 #ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
 #include <swift/Runtime/Metadata.h>
@@ -37,6 +38,15 @@ OGTypeKind OGTypeGetKind(OGTypeID typeID) {
     #else
     return OGTypeKindNone;
     #endif
+}
+
+CFStringRef OGTypeDescription(OGTypeID id) {
+    CFMutableStringRef ref = CFStringCreateMutable(CFAllocatorGetDefault(), 0);
+    #ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
+    OG::swift::metadata const *metadata = reinterpret_cast<OG::swift::metadata const*>(id);
+    metadata->append_description(ref);
+    #endif
+    return ref;
 }
 
 const void * OGTypeNominalDescriptor(OGTypeID typeID) {

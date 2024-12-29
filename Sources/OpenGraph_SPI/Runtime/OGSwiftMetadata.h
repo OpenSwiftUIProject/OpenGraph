@@ -1,6 +1,7 @@
 //
 //  OGSwiftMetadata.h
 //  OpenGraph_SPI
+//  
 
 #ifndef OGSwiftMetadata_h
 #define OGSwiftMetadata_h
