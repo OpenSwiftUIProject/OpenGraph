@@ -29,7 +29,6 @@ let includePath = SDKPath.appending("/usr/lib/swift")
 
 var sharedCSettings: [CSetting] = [
     .unsafeFlags(["-I", includePath], .when(platforms: .nonDarwinPlatforms)),
-    .define("__COREFOUNDATION_FORSWIFTFOUNDATIONONLY__", to: "1", .when(platforms: .nonDarwinPlatforms)),
 ]
 
 var sharedSwiftSettings: [SwiftSetting] = [
@@ -164,7 +163,9 @@ let package = Package(
         // The SwiftPM support for such usage is still in progress.
         .target(
             name: "OpenGraph_SPI",
-            cSettings: sharedCSettings
+            cSettings: sharedCSettings + [
+                .define("__COREFOUNDATION_FORSWIFTFOUNDATIONONLY__", to: "1", .when(platforms: .nonDarwinPlatforms)),
+            ]
         ),
         .target(
             name: "OpenGraph",

@@ -9,7 +9,6 @@
 #define OGTupleType_h
 
 #include "OGBase.h"
-#include "OGSwiftMetadata.h"
 #include "OGTypeID.h"
 
 typedef const OGSwiftMetadata *OGTupleType OG_SWIFT_STRUCT;

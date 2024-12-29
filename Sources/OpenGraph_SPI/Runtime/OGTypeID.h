@@ -9,7 +9,6 @@
 #define OGTypeID_h
 
 #include "OGBase.h"
-#include "OGSwiftMetadata.h"
 
 OG_ASSUME_NONNULL_BEGIN
 

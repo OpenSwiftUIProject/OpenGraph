@@ -48,7 +48,7 @@ struct MetadataTests {
         #expect(Metadata(type(of: Int.self)).kind == .metatype)
     }
     
-    #if OPENGRAPH_RELEASE_2024
+    #if OPENGRAPH_SUPPORT_2024_API
     @Test(.enabled(if: swiftToolchainSupported))
     func descriptor() {
         let t1 = Metadata(T1.self).descriptor
