@@ -22,14 +22,22 @@ func envEnable(_ key: String, default defaultValue: Bool = false) -> Bool {
 let isXcodeEnv = Context.environment["__CFBundleIdentifier"] == "com.apple.dt.Xcode"
 let development = envEnable("OPENGRAPH_DEVELOPMENT", default: false)
 
-let releaseVersion = Context.environment["OPENGRAPH_TARGET_RELEASE"].flatMap { Int($0) } ?? 2024
-
 let swiftBinPath = Context.environment["_"] ?? "/usr/bin/swift"
 let swiftBinURL = URL(fileURLWithPath: swiftBinPath)
 let SDKPath = swiftBinURL.deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent().path
 let includePath = SDKPath.appending("/usr/lib/swift")
 
-// MARK: - C/CXX Settings
+var sharedCSettings: [CSetting] = [
+    .unsafeFlags(["-I", includePath], .when(platforms: .nonDarwinPlatforms)),
+    .define("__COREFOUNDATION_FORSWIFTFOUNDATIONONLY__", to: "1", .when(platforms: .nonDarwinPlatforms)),
+]
+
+var sharedSwiftSettings: [SwiftSetting] = [
+    .enableUpcomingFeature("InternalImportsByDefault"),
+    .swiftLanguageMode(.v5),
+]
+
+// MARK: [env] OPENGRAPH_SWIFT_TOOLCHAIN_PATH
 
 // Modified from: https://github.com/swiftlang/swift/blob/main/SwiftCompilerSources/Package.swift
 //
@@ -44,15 +52,7 @@ let includePath = SDKPath.appending("/usr/lib/swift")
 //
 // where <$OPENGRAPH_SWIFT_TOOLCHAIN_PATH> is the parent directory of the swift repository.
 
-let swiftToolchainVersion = Context.environment["OPENGRAPH_SWIFT_TOOLCHAIN_VERSION"] ?? (development ? "6.0.2" : "")
 let swiftToolchainPath = Context.environment["OPENGRAPH_SWIFT_TOOLCHAIN_PATH"] ?? (development ? "/Volumes/BuildMachine/swift-project" : "")
-let swiftToolchainSupported = envEnable("OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED", default: !swiftToolchainVersion.isEmpty)
-
-var sharedCSettings: [CSetting] = [
-    .unsafeFlags(["-I", includePath], .when(platforms: .nonDarwinPlatforms)),
-    .define("__COREFOUNDATION_FORSWIFTFOUNDATIONONLY__", to: "1", .when(platforms: .nonDarwinPlatforms)),
-]
-
 if !swiftToolchainPath.isEmpty {
     sharedCSettings.append(
         .unsafeFlags(
@@ -74,37 +74,35 @@ if !swiftToolchainPath.isEmpty {
     )
 }
 
+// MARK: [env] OPENGRAPH_SWIFT_TOOLCHAIN_VERSION
+
+let swiftToolchainVersion = Context.environment["OPENGRAPH_SWIFT_TOOLCHAIN_VERSION"] ?? (development ? "6.0.2" : "")
 if !swiftToolchainVersion.isEmpty {
     sharedCSettings.append(
         .define("OPENGRAPH_SWIFT_TOOLCHAIN_VERSION", to: swiftToolchainVersion)
     )
 }
 
+// MARK: - [env] OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
+
+let swiftToolchainSupported = envEnable("OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED", default: !swiftToolchainVersion.isEmpty)
 if swiftToolchainSupported {
-    sharedCSettings.append(
-        .define("OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED")
-    )
+    sharedCSettings.append(.define("OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED"))
+    sharedSwiftSettings.append(.define("OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED"))
 }
 
-// MARK: - Swift Settings
+// MARK: - [env] OPENGRAPH_TARGET_RELEASE
 
-var sharedSwiftSettings: [SwiftSetting] = [
-    .enableUpcomingFeature("InternalImportsByDefault"),
-    .define("OPENGRAPH_RELEASE_\(releaseVersion)"),
-    .swiftLanguageMode(.v5),
-]
-
-if swiftToolchainSupported {
-    sharedSwiftSettings.append(
-        .define("OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED")
-    )
-}
-
+let releaseVersion = Context.environment["OPENGRAPH_TARGET_RELEASE"].flatMap { Int($0) } ?? 2024
+sharedCSettings.append(.define("OPENGRAPH_RELEASE", to: "\(releaseVersion)"))
+sharedSwiftSettings.append(.define("OPENGRAPH_RELEASE_\(releaseVersion)"))
 if releaseVersion >= 2021 {
     for year in 2021 ... releaseVersion {
         sharedSwiftSettings.append(.define("OPENGRAPH_SUPPORT_\(year)_API"))
     }
 }
+
+// MARK: - [env] OPENGRAPH_WERROR
 
 let warningsAsErrorsCondition = envEnable("OPENGRAPH_WERROR", default: isXcodeEnv && development)
 if warningsAsErrorsCondition {

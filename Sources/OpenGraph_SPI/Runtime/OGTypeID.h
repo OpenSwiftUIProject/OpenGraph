@@ -27,19 +27,35 @@ typedef OG_ENUM(uint32_t, OGTypeKind) {
     OGTypeKindFunction,
     OGTypeKindExistential,
     OGTypeKindMetatype,
-};
+} OG_SWIFT_NAME(Metadata.Kind);
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-OGTypeKind OGTypeGetKind(OGTypeID typeID) OG_SWIFT_NAME(getter:OGTypeID.kind(self:));
+OGTypeKind OGTypeGetKind(OGTypeID typeID) OG_SWIFT_NAME(getter:Metadata.kind(self:));
+
+#if OPENGRAPH_RELEASE >= 2024
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-CFStringRef OGTypeDescription(OGTypeID type);
+void const* OGTypeGetSignature(OGTypeID typeID) OG_SWIFT_NAME(getter:Metadata.signature(self:));
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-const void * OGTypeNominalDescriptor(OGTypeID typeID) OG_SWIFT_NAME(getter:OGTypeID.nominalDescriptor(self:));
+void const* OGTypeGetDescriptor(OGTypeID typeID) OG_SWIFT_NAME(getter:Metadata.descriptor(self:));
+
+#endif /* OPENGRAPH_RELEASE */
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+CFStringRef OGTypeDescription(OGTypeID typeID);
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void const* OGTypeNominalDescriptor(OGTypeID typeID) OG_SWIFT_NAME(getter:Metadata.nominalDescriptor(self:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+CFStringRef OGTypeNominalDescriptorName(OGTypeID typeID) OG_SWIFT_NAME(getter:Metadata.nominalDescriptorName(self:));
 
 OG_EXTERN_C_END
 

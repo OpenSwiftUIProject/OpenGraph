@@ -19,6 +19,9 @@ namespace swift {
 #ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
 class metadata: public ::swift::Metadata {
 public:
+    void const* descriptor() const OG_NOEXCEPT;
+    void const* nominal_descriptor() const OG_NOEXCEPT;
+    
     void append_description(CFMutableStringRef description) const OG_NOEXCEPT;
 }; /* OG::swift::metadata */
 #else

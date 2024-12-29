@@ -11,6 +11,21 @@
 
 using OG::swift::metadata;
 
+void const* metadata::descriptor() const OG_NOEXCEPT {
+    // TODO
+    return nullptr;
+}
+
+void const* metadata::nominal_descriptor() const OG_NOEXCEPT {
+    void const* descriptor = this->descriptor();
+    if (descriptor == nullptr) {
+        return nullptr;
+    }
+    // TODO
+    return nullptr;
+}
+
+
 void metadata::append_description(CFMutableStringRef description) const OG_NOEXCEPT {
     // TODO
 }

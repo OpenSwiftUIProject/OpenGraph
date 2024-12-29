@@ -1,9 +1,9 @@
 //
 //  OGTypeID.cpp
+//  OpenGraph_SPI
 //
-//
-//  Created by Kyle on 2024/1/7.
-//
+//  Audited for iOS 18.0
+//  Status: WIP
 
 #include "OGTypeID.h"
 #include "metadata.hpp"
@@ -14,23 +14,23 @@
 
 OGTypeKind OGTypeGetKind(OGTypeID typeID) {
     #ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
-    const swift::Metadata *type = reinterpret_cast<const swift::Metadata *>(typeID);
-    switch (type->getKind()) {
-        case swift::MetadataKind::Class:
+    OG::swift::metadata const *metadata = reinterpret_cast<OG::swift::metadata const*>(typeID);
+    switch (metadata->getKind()) {
+        case swift::MetadataKind::Class: // 0x0
             return OGTypeKindClass;
-        case swift::MetadataKind::Struct:
+        case swift::MetadataKind::Struct: // 0x200
             return OGTypeKindStruct;
-        case swift::MetadataKind::Enum:
+        case swift::MetadataKind::Enum: // 0x201
             return OGTypeKindEnum;
-        case swift::MetadataKind::Optional:
+        case swift::MetadataKind::Optional: // 0x202
             return OGTypeKindOptional;
-        case swift::MetadataKind::Tuple:
+        case swift::MetadataKind::Tuple: // 0x301
             return OGTypeKindTuple;
-        case swift::MetadataKind::Function:
+        case swift::MetadataKind::Function: // 0x302
             return OGTypeKindFunction;
-        case swift::MetadataKind::Existential:
+        case swift::MetadataKind::Existential: // 0x303
             return OGTypeKindExistential;
-        case swift::MetadataKind::Metatype:
+        case swift::MetadataKind::Metatype: // 0x304
             return OGTypeKindMetatype;
         default:
             return OGTypeKindNone;
@@ -40,15 +40,46 @@ OGTypeKind OGTypeGetKind(OGTypeID typeID) {
     #endif
 }
 
-CFStringRef OGTypeDescription(OGTypeID id) {
+#if OPENGRAPH_RELEASE >= 2024
+
+void const* OGTypeGetSignature(OGTypeID typeID) {
+    #ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
+    OG::swift::metadata const *metadata = reinterpret_cast<OG::swift::metadata const*>(typeID);
+    // TODO
+    return nullptr;
+    #else
+    return nullptr;
+    #endif
+}
+void const* OGTypeGetDescriptor(OGTypeID typeID) {
+    #ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
+    OG::swift::metadata const *metadata = reinterpret_cast<OG::swift::metadata const*>(typeID);
+    return metadata->descriptor();
+    #else
+    return nullptr;
+    #endif
+}
+
+#endif /* OPENGRAPH_RELEASE */
+
+CFStringRef OGTypeDescription(OGTypeID typeID) {
     CFMutableStringRef ref = CFStringCreateMutable(CFAllocatorGetDefault(), 0);
     #ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
-    OG::swift::metadata const *metadata = reinterpret_cast<OG::swift::metadata const*>(id);
+    OG::swift::metadata const *metadata = reinterpret_cast<OG::swift::metadata const*>(typeID);
     metadata->append_description(ref);
     #endif
     return ref;
 }
 
-const void * OGTypeNominalDescriptor(OGTypeID typeID) {
+void const* OGTypeNominalDescriptor(OGTypeID typeID) {
+    #ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
+    OG::swift::metadata const *metadata = reinterpret_cast<OG::swift::metadata const*>(typeID);
+    return metadata->nominal_descriptor();
+    #else
     return nullptr;
+    #endif
+}
+
+CFStringRef OGTypeNominalDescriptorName(OGTypeID typeID) {
+    // TODO
 }
