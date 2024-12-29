@@ -22,37 +22,36 @@ func envEnable(_ key: String, default defaultValue: Bool = false) -> Bool {
 let isXcodeEnv = Context.environment["__CFBundleIdentifier"] == "com.apple.dt.Xcode"
 let development = envEnable("OPENGRAPH_DEVELOPMENT", default: false)
 
-let releaseVersion = Context.environment["OPENGRAPH_TARGET_RELEASE"].flatMap { Int($0) } ?? 2024
-
 let swiftBinPath = Context.environment["_"] ?? "/usr/bin/swift"
 let swiftBinURL = URL(fileURLWithPath: swiftBinPath)
 let SDKPath = swiftBinURL.deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent().path
 let includePath = SDKPath.appending("/usr/lib/swift")
 
-// MARK: - C/CXX Settings
-
-// Source: https://github.com/swiftlang/swift/blob/main/SwiftCompilerSources/Package.swift
-// To successfully build, you'll need to create a couple of symlinks to an
-// existing Ninja build:
-//
-// cd $OPENGRAPH_SWIFT_TOOLCHAIN_PATH
-// mkdir -p build/Default
-// ln -s build/<Ninja-Build>/llvm-<os+arch> build/Default/llvm
-// ln -s build/<Ninja-Build>/swift-<os+arch> build/Default/swift
-//
-// where <project-root> is the parent directory of the swift repository.
-//
-// FIXME: We may want to consider generating Package.swift as a part of the
-// build.
-
-let swiftToolchainVersion = Context.environment["OPENGRAPH_SWIFT_TOOLCHAIN_VERSION"] ?? ""
-let swiftToolchainPath = Context.environment["OPENGRAPH_SWIFT_TOOLCHAIN_PATH"] ?? ""
-
 var sharedCSettings: [CSetting] = [
     .unsafeFlags(["-I", includePath], .when(platforms: .nonDarwinPlatforms)),
-    .define("__COREFOUNDATION_FORSWIFTFOUNDATIONONLY__", to: "1", .when(platforms: .nonDarwinPlatforms)),
 ]
 
+var sharedSwiftSettings: [SwiftSetting] = [
+    .enableUpcomingFeature("InternalImportsByDefault"),
+    .swiftLanguageMode(.v5),
+]
+
+// MARK: [env] OPENGRAPH_SWIFT_TOOLCHAIN_PATH
+
+// Modified from: https://github.com/swiftlang/swift/blob/main/SwiftCompilerSources/Package.swift
+//
+// Create a couple of symlinks to an existing Ninja build:
+//
+//     ```shell
+//     cd $OPENGRAPH_SWIFT_TOOLCHAIN_PATH
+//     mkdir -p build/Default
+//     ln -s build/<Ninja-Build>/llvm-<os+arch> build/Default/llvm
+//     ln -s build/<Ninja-Build>/swift-<os+arch> build/Default/swift
+//     ```
+//
+// where <$OPENGRAPH_SWIFT_TOOLCHAIN_PATH> is the parent directory of the swift repository.
+
+let swiftToolchainPath = Context.environment["OPENGRAPH_SWIFT_TOOLCHAIN_PATH"] ?? (development ? "/Volumes/BuildMachine/swift-project" : "")
 if !swiftToolchainPath.isEmpty {
     sharedCSettings.append(
         .unsafeFlags(
@@ -68,30 +67,41 @@ if !swiftToolchainPath.isEmpty {
                 "-I\(swiftToolchainPath)/build/Default/swift/include",
                 "-I\(swiftToolchainPath)/build/Default/llvm/include",
                 "-I\(swiftToolchainPath)/build/Default/llvm/tools/clang/include",
+                "-DLLVM_DISABLE_ABI_BREAKING_CHECKS_ENFORCING", // Required to fix LLVM link issue
             ]
         )
     )
 }
 
+// MARK: [env] OPENGRAPH_SWIFT_TOOLCHAIN_VERSION
+
+let swiftToolchainVersion = Context.environment["OPENGRAPH_SWIFT_TOOLCHAIN_VERSION"] ?? (development ? "6.0.2" : "")
 if !swiftToolchainVersion.isEmpty {
     sharedCSettings.append(
         .define("OPENGRAPH_SWIFT_TOOLCHAIN_VERSION", to: swiftToolchainVersion)
     )
 }
 
-// MARK: - Swift Settings
+// MARK: - [env] OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
 
-var sharedSwiftSettings: [SwiftSetting] = [
-    .enableUpcomingFeature("InternalImportsByDefault"),
-    .define("OPENGRAPH_RELEASE_\(releaseVersion)"),
-    .swiftLanguageMode(.v5),
-]
+let swiftToolchainSupported = envEnable("OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED", default: !swiftToolchainVersion.isEmpty)
+if swiftToolchainSupported {
+    sharedCSettings.append(.define("OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED"))
+    sharedSwiftSettings.append(.define("OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED"))
+}
 
+// MARK: - [env] OPENGRAPH_TARGET_RELEASE
+
+let releaseVersion = Context.environment["OPENGRAPH_TARGET_RELEASE"].flatMap { Int($0) } ?? 2024
+sharedCSettings.append(.define("OPENGRAPH_RELEASE", to: "\(releaseVersion)"))
+sharedSwiftSettings.append(.define("OPENGRAPH_RELEASE_\(releaseVersion)"))
 if releaseVersion >= 2021 {
     for year in 2021 ... releaseVersion {
         sharedSwiftSettings.append(.define("OPENGRAPH_SUPPORT_\(year)_API"))
     }
 }
+
+// MARK: - [env] OPENGRAPH_WERROR
 
 let warningsAsErrorsCondition = envEnable("OPENGRAPH_WERROR", default: isXcodeEnv && development)
 if warningsAsErrorsCondition {
@@ -102,6 +112,7 @@ if warningsAsErrorsCondition {
 
 let openGraphShimsTarget = Target.target(
     name: "OpenGraphShims",
+    cSettings: sharedCSettings,
     swiftSettings: sharedSwiftSettings
 )
 
@@ -111,6 +122,7 @@ let openGraphShimsTestTarget = Target.testTarget(
         "OpenGraphShims",
     ],
     exclude: ["README.md"],
+    cSettings: sharedCSettings,
     swiftSettings: sharedSwiftSettings
 )
 
@@ -120,6 +132,7 @@ let openGraphTestTarget = Target.testTarget(
         "OpenGraph",
     ],
     exclude: ["README.md"],
+    cSettings: sharedCSettings,
     swiftSettings: sharedSwiftSettings
 )
 let openGraphCompatibilityTestTarget = Target.testTarget(
@@ -128,6 +141,7 @@ let openGraphCompatibilityTestTarget = Target.testTarget(
         .product(name: "RealModule", package: "swift-numerics"),
     ],
     exclude: ["README.md"],
+    cSettings: sharedCSettings,
     swiftSettings: sharedSwiftSettings
 )
 
@@ -149,11 +163,14 @@ let package = Package(
         // The SwiftPM support for such usage is still in progress.
         .target(
             name: "OpenGraph_SPI",
-            cSettings: sharedCSettings
+            cSettings: sharedCSettings + [
+                .define("__COREFOUNDATION_FORSWIFTFOUNDATIONONLY__", to: "1", .when(platforms: .nonDarwinPlatforms)),
+            ]
         ),
         .target(
             name: "OpenGraph",
             dependencies: ["OpenGraph_SPI"],
+            cSettings: sharedCSettings,
             swiftSettings: sharedSwiftSettings
         ),
         openGraphShimsTarget,

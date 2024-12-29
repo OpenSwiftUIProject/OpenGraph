@@ -196,14 +196,14 @@ void OGSubgraphSetShouldRecordTree() {
 void OGSubgraphBeginTreeElement(OGAttribute attribute, OGTypeID type, uint32_t flags) {
     OG::Subgraph * subgraph = OG::Subgraph::get_current();
     if (subgraph) {
-        subgraph->begin_tree(attribute, type, flags);
+        subgraph->begin_tree(attribute, reinterpret_cast<OG::swift::metadata const*>(type), flags);
     }
 }
 
 void OGSubgraphAddTreeValue(OGAttribute attribute, OGTypeID type, const char * key, uint32_t flags) {
     OG::Subgraph * subgraph = OG::Subgraph::get_current();
     if (subgraph) {
-        subgraph->add_tree_value(attribute, type, key, flags);
+        subgraph->add_tree_value(attribute, reinterpret_cast<OG::swift::metadata const*>(type), key, flags);
     }
 }
 

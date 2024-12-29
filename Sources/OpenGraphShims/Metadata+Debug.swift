@@ -1,5 +1,6 @@
 //
 //  Metadata+Debug.swift
+//  OpenGraphShims
 
 import Foundation
 
