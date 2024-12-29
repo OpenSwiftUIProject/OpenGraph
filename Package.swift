@@ -31,22 +31,22 @@ let includePath = SDKPath.appending("/usr/lib/swift")
 
 // MARK: - C/CXX Settings
 
-// Source: https://github.com/swiftlang/swift/blob/main/SwiftCompilerSources/Package.swift
-// To successfully build, you'll need to create a couple of symlinks to an
-// existing Ninja build:
+// Modified from: https://github.com/swiftlang/swift/blob/main/SwiftCompilerSources/Package.swift
 //
-// cd $OPENGRAPH_SWIFT_TOOLCHAIN_PATH
-// mkdir -p build/Default
-// ln -s build/<Ninja-Build>/llvm-<os+arch> build/Default/llvm
-// ln -s build/<Ninja-Build>/swift-<os+arch> build/Default/swift
+// Create a couple of symlinks to an existing Ninja build:
 //
-// where <project-root> is the parent directory of the swift repository.
+//     ```shell
+//     cd $OPENGRAPH_SWIFT_TOOLCHAIN_PATH
+//     mkdir -p build/Default
+//     ln -s build/<Ninja-Build>/llvm-<os+arch> build/Default/llvm
+//     ln -s build/<Ninja-Build>/swift-<os+arch> build/Default/swift
+//     ```
 //
-// FIXME: We may want to consider generating Package.swift as a part of the
-// build.
+// where <$OPENGRAPH_SWIFT_TOOLCHAIN_PATH> is the parent directory of the swift repository.
 
-let swiftToolchainVersion = Context.environment["OPENGRAPH_SWIFT_TOOLCHAIN_VERSION"] ?? ""
-let swiftToolchainPath = Context.environment["OPENGRAPH_SWIFT_TOOLCHAIN_PATH"] ?? ""
+let swiftToolchainVersion = Context.environment["OPENGRAPH_SWIFT_TOOLCHAIN_VERSION"] ?? (development ? "6.0.2" : "")
+let swiftToolchainPath = Context.environment["OPENGRAPH_SWIFT_TOOLCHAIN_PATH"] ?? (development ? "/Volumes/BuildMachine/swift-project" : "")
+let swiftToolchainSupported = envEnable("OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED", default: !swiftToolchainVersion.isEmpty)
 
 var sharedCSettings: [CSetting] = [
     .unsafeFlags(["-I", includePath], .when(platforms: .nonDarwinPlatforms)),
@@ -68,6 +68,7 @@ if !swiftToolchainPath.isEmpty {
                 "-I\(swiftToolchainPath)/build/Default/swift/include",
                 "-I\(swiftToolchainPath)/build/Default/llvm/include",
                 "-I\(swiftToolchainPath)/build/Default/llvm/tools/clang/include",
+                "-DLLVM_DISABLE_ABI_BREAKING_CHECKS_ENFORCING", // Required to fix LLVM link issue
             ]
         )
     )
@@ -79,6 +80,12 @@ if !swiftToolchainVersion.isEmpty {
     )
 }
 
+if swiftToolchainSupported {
+    sharedCSettings.append(
+        .define("OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED")
+    )
+}
+
 // MARK: - Swift Settings
 
 var sharedSwiftSettings: [SwiftSetting] = [
@@ -86,6 +93,12 @@ var sharedSwiftSettings: [SwiftSetting] = [
     .define("OPENGRAPH_RELEASE_\(releaseVersion)"),
     .swiftLanguageMode(.v5),
 ]
+
+if swiftToolchainSupported {
+    sharedSwiftSettings.append(
+        .define("OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED")
+    )
+}
 
 if releaseVersion >= 2021 {
     for year in 2021 ... releaseVersion {

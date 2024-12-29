@@ -7,12 +7,12 @@
 
 #include "OGTypeID.h"
 
-#ifdef OPENGRAPH_SWIFT_TOOLCHAIN_VERSION
+#ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
 #include <swift/Runtime/Metadata.h>
 #endif
 
 OGTypeKind OGTypeGetKind(OGTypeID typeID) {
-    #ifdef OPENGRAPH_SWIFT_TOOLCHAIN_VERSION
+    #ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
     const swift::Metadata *type = reinterpret_cast<const swift::Metadata *>(typeID);
     switch (type->getKind()) {
         case swift::MetadataKind::Class:
