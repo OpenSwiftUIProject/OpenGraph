@@ -1,5 +1,6 @@
 //
 //  GraphShims.swift
+//  OpenGraphShims
 
 #if OPENGRAPH_ATTRIBUTEGRAPH
 @_exported public import AttributeGraph
@@ -21,7 +22,6 @@ public typealias OGSubgraph = AGSubgraph
 public typealias OGSwiftMetadata = AGSwiftMetadata
 public typealias OGTupleType = AGTupleType
 public typealias OGTypeApplyOptions = AGTypeApplyOptions
-public typealias OGTypeKind = AGTypeKind
 public typealias OGUniqueID = AGUniqueID
 public typealias OGValue = AGValue
 public typealias OGValueOptions = AGValueOptions

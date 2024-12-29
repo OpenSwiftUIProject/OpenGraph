@@ -1,8 +1,6 @@
 //
 //  CompareValuesTests.swift
-//
-//
-//
+//  OpenGraphCompatibilityTests
 
 import Testing
 
