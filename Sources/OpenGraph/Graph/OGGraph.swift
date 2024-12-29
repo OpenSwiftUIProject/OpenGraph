@@ -11,7 +11,7 @@ extension OGGraph {
     public static func typeIndex(
         ctx: OGGraphContext,
         body: _AttributeBody.Type,
-        valueType: OGTypeID,
+        valueType: Metadata,
         flags: OGAttributeTypeFlags,
         update: AttributeUpdateBlock
     ) -> Int {

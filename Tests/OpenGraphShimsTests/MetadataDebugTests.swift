@@ -1,12 +1,12 @@
 //
-//  OGTypeIDDebugTests.swift
+//  MetadataDebugTests.swift
 //  OpenGraphTests
 
 @_spi(Debug) import OpenGraphShims
 import Testing
 
 @Suite(.disabled(if: !attributeGraphEnabled, "forEachField is not implemented for OG"))
-struct OGTypeIDDebugTests {
+struct MetadataDebugTests {
     struct Demo1 {
         var a: Int = .zero
         var b: Double = .zero
@@ -19,7 +19,7 @@ struct OGTypeIDDebugTests {
     
     @Test
     func layout() {
-        #expect(OGTypeID(Demo1.self).layoutDescription == #"""
+        #expect(Metadata(Demo1.self).layoutDescription == #"""
         struct Demo1 {
         \#tvar a: Int // offset = 0x0
         \#tvar b: Double // offset = 0x8
@@ -27,7 +27,7 @@ struct OGTypeIDDebugTests {
         
         """#)
         
-        #expect(OGTypeID(Demo2.self).layoutDescription == #"""
+        #expect(Metadata(Demo2.self).layoutDescription == #"""
         class Demo2 {
         \#tvar a: Int // offset = 0x10
         \#tvar b: Double // offset = 0x18

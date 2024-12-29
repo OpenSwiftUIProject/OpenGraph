@@ -73,7 +73,7 @@ extension Rule where Self: Hashable {
         owner: AnyAttribute?
     ) -> Value? {
         withUnsafePointer(to: self) { bodyPointer in
-            let value = __OGGraphReadCachedAttributeIfExists(hashValue, OGTypeID(Self.self), bodyPointer, OGTypeID(Value.self), options, owner ?? .nil, false)
+            let value = __OGGraphReadCachedAttributeIfExists(hashValue, Metadata(Self.self), bodyPointer, Metadata(Value.self), options, owner ?? .nil, false)
             guard let value else { return nil }
             return value.assumingMemoryBound(to: Value.self).pointee
         }
@@ -87,7 +87,7 @@ extension Rule where Self: Hashable {
         update: AttributeUpdateBlock
     ) -> UnsafePointer<Value> {
         // TODO: pass closure here
-        __OGGraphReadCachedAttribute(hashValue, OGTypeID(Self.self), bodyPtr, OGTypeID(Value.self), options, owner ?? .nil, false)
+        __OGGraphReadCachedAttribute(hashValue, Metadata(Self.self), bodyPtr, Metadata(Value.self), options, owner ?? .nil, false)
             .assumingMemoryBound(to: Value.self)
     }
 }

@@ -21,5 +21,5 @@ extension External: _AttributeBody {
 // MARK: CustomStringConvertible
 
 extension External: CustomStringConvertible {
-    public var description: String { OGTypeID(Value.self).description }
+    public var description: String { Metadata(Value.self).description }
 }

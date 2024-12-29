@@ -8,7 +8,7 @@ public import OpenGraph_SPI
 
 @_silgen_name("OGTupleElementType")
 @inline(__always)
-private func OGTupleElementType(_ tupleType: OGTupleType, index: Int) -> OGTypeID
+private func OGTupleElementType(_ tupleType: OGTupleType, index: Int) -> Metadata
 
 // TODO
 extension OGTupleType {

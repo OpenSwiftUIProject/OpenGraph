@@ -1,5 +1,5 @@
 //
-//  OGTypeID.swift
+//  Metadata.swift
 //  OpenGraph
 //
 //  Audited for RELEASE_2021
@@ -23,7 +23,7 @@ public func OGTypeApplyFields2(
     body: (UnsafePointer<Int8>, Int, Any.Type) -> Bool
 ) -> Bool
 
-extension OGTypeID: Swift.Hashable, Swift.CustomStringConvertible {
+extension Metadata: Swift.Hashable, Swift.CustomStringConvertible {
     @inlinable
     @inline(__always)
     public init(_ type: Any.Type) {

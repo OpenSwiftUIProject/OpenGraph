@@ -22,7 +22,6 @@ public typealias OGSwiftMetadata = AGSwiftMetadata
 public typealias OGTupleType = AGTupleType
 public typealias OGTypeApplyOptions = AGTypeApplyOptions
 public typealias OGTypeKind = AGTypeKind
-public typealias OGTypeID = AGTypeID
 public typealias OGUniqueID = AGUniqueID
 public typealias OGValue = AGValue
 public typealias OGValueOptions = AGValueOptions

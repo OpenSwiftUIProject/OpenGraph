@@ -1,9 +1,6 @@
 //
 //  OGSwiftMetadata.h
-//
-//
-//  Created by Kyle on 2024/1/8.
-//
+//  OpenGraph_SPI
 
 #ifndef OGSwiftMetadata_h
 #define OGSwiftMetadata_h
