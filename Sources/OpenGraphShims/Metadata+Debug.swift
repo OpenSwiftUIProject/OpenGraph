@@ -1,10 +1,10 @@
 //
-//  OGTypeID+Debug.swift
+//  Metadata+Debug.swift
 
 import Foundation
 
 @_spi(Debug)
-extension OGTypeID {
+extension Metadata {
     public struct Option {
         let maxLevel: Int
         let ignoreStdlib: Bool
@@ -45,7 +45,7 @@ extension OGTypeID {
                 let fieldName = String(cString: name)
                 write(&result, string: "case \(fieldName)(\(type)) // offset = \(offset.hex)", level: level+1)
                 if recursive {
-                    OGTypeID(type)._layoutDescription(&result, recursive: true, level: level+1)
+                    Metadata(type)._layoutDescription(&result, recursive: true, level: level+1)
                 }
                 return true
             }
@@ -55,7 +55,7 @@ extension OGTypeID {
                 let fieldName = String(cString: name)
                 write(&result, string: "case \(fieldName)(\(type)) // offset = \(offset.hex)", level: level+1)
                 if recursive {
-                    OGTypeID(type)._layoutDescription(&result, recursive: true, level: level+1)
+                    Metadata(type)._layoutDescription(&result, recursive: true, level: level+1)
                 }
                 return true
             }
@@ -65,7 +65,7 @@ extension OGTypeID {
                 let fieldName = String(cString: name)
                 write(&result, string: "var \(fieldName): \(type) // offset = \(offset.hex)", level: level+1)
                 if recursive {
-                    OGTypeID(type)._layoutDescription(&result, recursive: true, level: level+1)
+                    Metadata(type)._layoutDescription(&result, recursive: true, level: level+1)
                 }
                 return true
             }
@@ -78,7 +78,7 @@ extension OGTypeID {
                 
                 write(&result, string: "var \(fieldName): \(type) // offset = \(offset.hex)", level: level+1)
                 if recursive {
-                    OGTypeID(type)._layoutDescription(&result, recursive: true, level: level+1)
+                    Metadata(type)._layoutDescription(&result, recursive: true, level: level+1)
                 }
                 return true
             }

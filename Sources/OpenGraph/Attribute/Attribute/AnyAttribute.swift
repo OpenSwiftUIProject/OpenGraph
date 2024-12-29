@@ -46,7 +46,7 @@ extension AnyAttribute {
     }
 
     public func mutateBody<Value>(as type: Value.Type, invalidating: Bool, _ body: (inout Value) -> Void) {
-        AnyAttribute.mutateAttribute(self, type: OGTypeID(type), invalidating: invalidating) { value in
+        AnyAttribute.mutateAttribute(self, type: Metadata(type), invalidating: invalidating) { value in
             body(&value.assumingMemoryBound(to: Value.self).pointee)
         }
     }
@@ -92,7 +92,7 @@ extension AnyAttribute {
     @_silgen_name("OGGraphMutateAttribute")
     private static func mutateAttribute(
         _ attribute: AnyAttribute,
-        type: OGTypeID,
+        type: Metadata,
         invalidating: Bool,
         body: (UnsafeMutableRawPointer) -> Void
     )

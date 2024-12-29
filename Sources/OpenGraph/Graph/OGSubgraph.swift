@@ -35,13 +35,13 @@ extension OGSubgraph {
 extension OGSubgraph {
     public static func beginTreeElement<Value>(value: Attribute<Value>, flags: UInt32) {
         if shouldRecordTree {
-            __OGSubgraphBeginTreeElement(value.identifier, OGTypeID(Value.self), flags)
+            __OGSubgraphBeginTreeElement(value.identifier, Metadata(Value.self), flags)
         }
     }
     
     public static func addTreeValue<Value>(_ value: Attribute<Value>, forKey key: UnsafePointer<Int8>, flags: UInt32) {
         if shouldRecordTree {
-            __OGSubgraphAddTreeValue(value.identifier, OGTypeID(Value.self), key, flags)
+            __OGSubgraphAddTreeValue(value.identifier, Metadata(Value.self), key, flags)
         }
     }
     

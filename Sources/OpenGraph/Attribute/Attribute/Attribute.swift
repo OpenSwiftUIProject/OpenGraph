@@ -51,7 +51,7 @@ public struct Attribute<Value> {
         let index = OGGraph.typeIndex(
             ctx: context,
             body: Body.self,
-            valueType: OGTypeID(Value.self),
+            valueType: Metadata(Value.self),
             flags: flags,
             update: update
         )
@@ -180,7 +180,7 @@ public struct Attribute<Value> {
     public func updateValue() { identifier.updateValue() }
     public func prefetchValue() { identifier.prefetchValue() }
     public func invalidateValue() { identifier.invalidateValue() }
-    public func validate() { identifier.verify(type: OGTypeID(Value.self)) }
+    public func validate() { identifier.verify(type: Metadata(Value.self)) }
 
     // MARK: - Input
     
