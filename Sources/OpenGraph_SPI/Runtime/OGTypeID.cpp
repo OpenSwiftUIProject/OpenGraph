@@ -40,7 +40,7 @@ OGTypeKind OGTypeGetKind(OGTypeID typeID) {
     #endif
 }
 
-#if OPENGRAPH_RELEASE >= 2024
+#if OPENGRAPH_RELEASE >= OPENGRAPH_RELEASE_2024
 
 void const* OGTypeGetSignature(OGTypeID typeID) {
     #ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED

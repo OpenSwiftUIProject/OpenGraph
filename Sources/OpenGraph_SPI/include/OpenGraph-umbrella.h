@@ -1,11 +1,3 @@
-#ifndef FOUNDATION_EXPORT
-#if defined(__cplusplus)
-#define FOUNDATION_EXPORT extern "C"
-#else
-#define FOUNDATION_EXPORT extern
-#endif
-#endif
-
 #include "OGAttribute.h"
 #include "OGAttributeFlags.h"
 #include "OGAttributeInfo.h"
@@ -32,7 +24,8 @@
 #include "OGValue.h"
 #include "OGValueOptions.h"
 #include "OGValueState.h"
+#include "OGVersion.h"
 #include "OGWeakAttribute.h"
 
-FOUNDATION_EXPORT double AGAttributeVersionNumber;
-FOUNDATION_EXPORT const unsigned char AGAttributeVersionString[];
+OG_EXPORT double OpenGraphVersionNumber;
+OG_EXPORT const unsigned char OpenGraphVersionString[];

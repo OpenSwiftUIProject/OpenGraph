@@ -138,7 +138,7 @@ let openGraphTestTarget = Target.testTarget(
 let openGraphCompatibilityTestTarget = Target.testTarget(
     name: "OpenGraphCompatibilityTests",
     dependencies: [
-        .product(name: "RealModule", package: "swift-numerics"),
+        .product(name: "Numerics", package: "swift-numerics"),
     ],
     exclude: ["README.md"],
     cSettings: sharedCSettings,

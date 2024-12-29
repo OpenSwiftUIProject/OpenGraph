@@ -9,6 +9,7 @@
 #define OGTypeID_h
 
 #include "OGBase.h"
+#include "OGVersion.h"
 
 OG_ASSUME_NONNULL_BEGIN
 
@@ -35,7 +36,7 @@ OG_EXPORT
 OG_REFINED_FOR_SWIFT
 OGTypeKind OGTypeGetKind(OGTypeID typeID) OG_SWIFT_NAME(getter:Metadata.kind(self:));
 
-#if OPENGRAPH_RELEASE >= 2024
+#if OPENGRAPH_RELEASE >= OPENGRAPH_RELEASE_2024
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
