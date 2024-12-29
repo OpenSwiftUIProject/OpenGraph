@@ -12,10 +12,8 @@
 
 OG_ASSUME_NONNULL_BEGIN
 
-struct OGSwiftMetadata {};
-typedef struct OGSwiftMetadata OGSwiftMetadata;
-
-OG_EXTERN_C_BEGIN
+typedef struct OGSwiftMetadata {
+} OGSwiftMetadata;
 
 typedef const OGSwiftMetadata *OGTypeID OG_SWIFT_STRUCT OG_SWIFT_NAME(Metadata);
 
@@ -30,6 +28,8 @@ typedef OG_ENUM(uint32_t, OGTypeKind) {
     OGTypeKindExistential,
     OGTypeKindMetatype,
 } OG_SWIFT_NAME(Metadata.Kind);
+
+OG_EXTERN_C_BEGIN
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
