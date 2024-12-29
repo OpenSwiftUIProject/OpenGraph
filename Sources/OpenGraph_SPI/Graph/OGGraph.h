@@ -22,7 +22,7 @@ struct OGGraphStorage;
 struct OGGraphContextStorage;
 struct OGSubgraphStorage;
 
-typedef uint32_t OGAttribute __attribute((swift_newtype(struct)));
+typedef uint32_t OGAttribute OG_SWIFT_STRUCT OG_SWIFT_NAME(AnyAttribute);
 
 OG_ASSUME_NONNULL_BEGIN
 
