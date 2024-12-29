@@ -13,6 +13,9 @@
 
 OG_ASSUME_NONNULL_BEGIN
 
+struct OGSwiftMetadata {};
+typedef struct OGSwiftMetadata OGSwiftMetadata;
+
 OG_EXTERN_C_BEGIN
 
 typedef const OGSwiftMetadata *OGTypeID OG_SWIFT_STRUCT OG_SWIFT_NAME(Metadata);
