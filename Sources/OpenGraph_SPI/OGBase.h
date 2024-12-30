@@ -5,8 +5,6 @@
 #ifndef OGBase_h
 #define OGBase_h
 
-#include "OGVersion.h"
-
 #if DEBUG
 #define OG_ASSERTION
 #else
@@ -14,13 +12,13 @@
 #endif
 
 #if __has_attribute(cold)
-#define __cold          __attribute__((__cold__))
+#define __cold __attribute__((__cold__))
 #else
 #define __cold
 #endif
 
 #if __has_attribute(noreturn)
-#define __dead2         __attribute__((__noreturn__))
+#define __dead2 __attribute__((__noreturn__))
 #else
 #define __dead2
 #endif
@@ -45,11 +43,11 @@
 #define OG_CONSTEXPR
 #endif
 
-#include <CoreFoundation/CoreFoundation.h>
-#include <stdint.h>
-#include <stdbool.h>
-#include "OGTargetConditionals.h"
 #include "OGSwiftSupport.h"
+#include "OGTargetConditionals.h"
+#include <CoreFoundation/CoreFoundation.h>
+#include <stdbool.h>
+#include <stdint.h>
 
 #define OG_ENUM CF_ENUM
 #define OG_OPTIONS CF_OPTIONS
