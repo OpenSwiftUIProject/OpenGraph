@@ -144,6 +144,15 @@ let openGraphCompatibilityTestTarget = Target.testTarget(
     cSettings: sharedCSettings,
     swiftSettings: sharedSwiftSettings
 )
+let openGraphSPICompatibilityTestTarget = Target.testTarget(
+    name: "OpenGraph_SPICompatibilityTests",
+    dependencies: [
+        .product(name: "Numerics", package: "swift-numerics"),
+    ],
+    exclude: ["README.md"],
+    cSettings: sharedCSettings,
+    swiftSettings: sharedSwiftSettings
+)
 
 // MARK: - Package
 
@@ -178,6 +187,7 @@ let package = Package(
         openGraphTestTarget,
         openGraphShimsTestTarget,
         openGraphCompatibilityTestTarget,
+        openGraphSPICompatibilityTestTarget,
     ],
     cxxLanguageStandard: .cxx17
 )
@@ -192,6 +202,26 @@ let attributeGraphCondition = envEnable("OPENGRAPH_ATTRIBUTEGRAPH")
 #endif
 let useLocalDeps = envEnable("OPENGRAPH_USE_LOCAL_DEPS")
 
+extension Target {
+    func addAGSettings() {
+        dependencies.append(
+            .product(name: "AttributeGraph", package: "DarwinPrivateFrameworks")
+        )
+        var swiftSettings = swiftSettings ?? []
+        swiftSettings.append(.define("OPENGRAPH_ATTRIBUTEGRAPH"))
+        self.swiftSettings = swiftSettings
+    }
+    
+    func addCompatibilitySettings() {
+        dependencies.append(
+            .product(name: "AttributeGraph", package: "DarwinPrivateFrameworks")
+        )
+        var swiftSettings = swiftSettings ?? []
+        swiftSettings.append(.define("OPENGRAPH_COMPATIBILITY_TEST"))
+        self.swiftSettings = swiftSettings
+    }
+}
+
 if attributeGraphCondition {
     let privateFrameworkRepo: Package.Dependency
     if useLocalDeps {
@@ -200,12 +230,7 @@ if attributeGraphCondition {
         privateFrameworkRepo = Package.Dependency.package(url: "https://github.com/OpenSwiftUIProject/DarwinPrivateFrameworks.git", branch: "main")
     }
     package.dependencies.append(privateFrameworkRepo)
-    var swiftSettings: [SwiftSetting] = (openGraphShimsTarget.swiftSettings ?? [])
-    swiftSettings.append(.define("OPENGRAPH_ATTRIBUTEGRAPH"))
-    openGraphShimsTarget.swiftSettings = swiftSettings
-    openGraphShimsTarget.dependencies.append(
-        .product(name: "AttributeGraph", package: "DarwinPrivateFrameworks")
-    )
+    openGraphShimsTarget.addAGSettings()
     
     let agVersion = Context.environment["DARWIN_PRIVATE_FRAMEWORKS_TARGET_RELEASE"].flatMap { Int($0) } ?? 2024
     package.platforms = switch agVersion {
@@ -219,15 +244,11 @@ if attributeGraphCondition {
 
 let compatibilityTestCondition = envEnable("OPENGRAPH_COMPATIBILITY_TEST")
 if compatibilityTestCondition && attributeGraphCondition {
-    openGraphCompatibilityTestTarget.dependencies.append(
-        .product(name: "AttributeGraph", package: "DarwinPrivateFrameworks")
-    )
-    
-    var swiftSettings: [SwiftSetting] = (openGraphCompatibilityTestTarget.swiftSettings ?? [])
-    swiftSettings.append(.define("OPENGRAPH_COMPATIBILITY_TEST"))
-    openGraphCompatibilityTestTarget.swiftSettings = swiftSettings
+    openGraphCompatibilityTestTarget.addCompatibilitySettings()
+    openGraphSPICompatibilityTestTarget.addCompatibilitySettings()
 } else {
     openGraphCompatibilityTestTarget.dependencies.append("OpenGraph")
+    openGraphSPICompatibilityTestTarget.dependencies.append("OpenGraph_SPI")
 }
 
 extension [Platform] {

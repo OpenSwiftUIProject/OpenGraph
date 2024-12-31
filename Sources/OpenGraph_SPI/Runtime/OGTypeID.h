@@ -3,7 +3,7 @@
 //  OpenGraph_SPI
 //
 //  Audited for iOS 18.0
-//  Status: WIP
+//  Status: Complete
 
 #ifndef OGTypeID_h
 #define OGTypeID_h
@@ -14,11 +14,11 @@
 OG_ASSUME_NONNULL_BEGIN
 
 typedef struct OGSwiftMetadata {
-} OGSwiftMetadata;
+} OGSwiftMetadata OG_SWIFT_NAME(_Metadata);
 
 typedef const OGSwiftMetadata *OGTypeID OG_SWIFT_STRUCT OG_SWIFT_NAME(Metadata);
 
-typedef OG_ENUM(uint32_t, OGTypeKind) {
+typedef OG_CLOSED_ENUM(uint32_t, OGTypeKind) {
     OGTypeKindNone,
     OGTypeKindClass,
     OGTypeKindStruct,

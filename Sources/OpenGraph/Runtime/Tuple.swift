@@ -1,17 +1,18 @@
 //
 //  OGTupleType.swift
+//  OpenGraph
 //
-//
-//
+//  Audited for iOS 18.0
+//  Status: WIP
 
 public import OpenGraph_SPI
 
 @_silgen_name("OGTupleElementType")
 @inline(__always)
-private func OGTupleElementType(_ tupleType: OGTupleType, index: Int) -> Metadata
+private func OGTupleElementType(_ tupleType: TupleType, index: Int) -> Metadata
 
 // TODO
-extension OGTupleType {
+extension TupleType {
     public init(_ type: [Any.Type]) {
         fatalError("TODO")
     }
