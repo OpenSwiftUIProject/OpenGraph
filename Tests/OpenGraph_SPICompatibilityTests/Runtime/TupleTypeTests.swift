@@ -4,18 +4,12 @@
 
 import Testing
 
-@Suite(.disabled(if: !compatibilityTestEnabled, "OGTupleType is not implemented"))
+@Suite(.enabled(if: swiftToolchainSupported))
 struct TupleTypeTests {
     @Test
-    func example() {
-        let value = (3, 5.0)
-        let tupleType = TupleType(type(of: value))
-        #expect(tupleType.count == 2)
-        #expect(tupleType.size == 16)
-        #expect(tupleType.type(at: 0) == Int.self)
-        #expect(tupleType.offset(at: 0) == 0)
-        
-        #expect(tupleType.type(at: 1) == Double.self)
-        #expect(tupleType.offset(at: 1) == 8)
+    func newTupleType() {
+        let elements: [Metadata] = [Metadata(Int.self), Metadata(Double.self), Metadata(String.self)]
+        let tupleType = TupleType(count: 3, elements: elements)
+        #expect(tupleType.rawValue == Metadata((Int, Double, String).self).rawValue)
     }
 }

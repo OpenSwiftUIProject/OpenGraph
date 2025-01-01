@@ -248,7 +248,7 @@ if compatibilityTestCondition && attributeGraphCondition {
     openGraphSPICompatibilityTestTarget.addCompatibilitySettings()
 } else {
     openGraphCompatibilityTestTarget.dependencies.append("OpenGraph")
-    openGraphSPICompatibilityTestTarget.dependencies.append("OpenGraph_SPI")
+    openGraphSPICompatibilityTestTarget.dependencies.append("OpenGraph")
 }
 
 extension [Platform] {

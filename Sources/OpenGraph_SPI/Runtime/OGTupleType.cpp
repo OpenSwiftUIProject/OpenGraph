@@ -137,16 +137,18 @@ size_t OGTupleElementOffsetChecked(OGTupleType tuple_type, size_t index, OGTypeI
     #endif
 }
 
-void *update(void* dst, const void *src, const OG::swift::metadata * metadata, OGTupleTypeCopyMode mode) {
+void *update(void* dst_ptr, const void *src_ptr, const OG::swift::metadata * metadata, OGTupleTypeCopyMode mode) {
+    auto dst = reinterpret_cast<swift::OpaqueValue *>(dst_ptr);
+    auto src = reinterpret_cast<swift::OpaqueValue *>(const_cast<void *>(src_ptr));
     switch (mode) {
         case OGTupleTypeCopyModeAssignCopy:
-            return metadata->vw_assignWithCopy(dst, src, metadata);
+            return metadata->vw_assignWithCopy(dst, src);
         case OGTupleTypeCopyModeInitCopy:
-            return metadata->vw_initializeWithCopy(dst, src, metadata);
+            return metadata->vw_initializeWithCopy(dst, src);
         case OGTupleTypeCopyModeAssignTake:
-            return metadata->vw_assignWithTake(dst, src, metadata);
+            return metadata->vw_assignWithTake(dst, src);
         case OGTupleTypeCopyModeInitTake:
-            return metadata->vw_initializeWithTake(dst, src, metadata);
+            return metadata->vw_initializeWithTake(dst, src);
         default:
             OG::precondition_failure("unknown copy options: %d", mode);
     }
@@ -207,7 +209,7 @@ void *OGTupleGetElement(OGTupleType tuple_type, const void* tuple_value, size_t 
 void OGTupleDestory(OGTupleType tuple_type, void *value) {
     #ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
     auto metadata = reinterpret_cast<OG::swift::metadata const*>(tuple_type);
-    metadata->vw_destroy(value, metadata);
+    metadata->vw_destroy(reinterpret_cast<swift::OpaqueValue *>(value));
     #endif
 }
 
@@ -218,7 +220,7 @@ void OGTupleDestoryElement(OGTupleType tuple_type, void *value, size_t index) {
         if (index != 0) {
             OG::precondition_failure("index out of range: %d", index);
         }
-        metadata->vw_destroy(value, metadata);
+        metadata->vw_destroy(reinterpret_cast<swift::OpaqueValue *>(value));
     }
     auto tuple_metadata = reinterpret_cast<const swift::TupleTypeMetadata *>(metadata);
     if (tuple_metadata->NumElements <= index) {
@@ -226,6 +228,6 @@ void OGTupleDestoryElement(OGTupleType tuple_type, void *value, size_t index) {
     }
     auto element = tuple_metadata->getElement(unsigned(index));
     auto element_type = element.Type;
-    element_type->vw_destroy((intptr_t)value + index, element_type);
+    element_type->vw_destroy(reinterpret_cast<swift::OpaqueValue *>((intptr_t)value + index));
     #endif
 }
