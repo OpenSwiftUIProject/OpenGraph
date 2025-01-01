@@ -27,7 +27,7 @@ extension Metadata: Swift.Hashable, Swift.CustomStringConvertible {
     @inlinable
     @inline(__always)
     public init(_ type: Any.Type) {
-        self.init(rawValue: unsafeBitCast(type, to: UnsafePointer<OGSwiftMetadata>.self))
+        self.init(rawValue: unsafeBitCast(type, to: UnsafePointer<_Metadata>.self))
     }
     
     @inlinable

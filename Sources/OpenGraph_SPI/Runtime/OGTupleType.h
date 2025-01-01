@@ -22,19 +22,15 @@ typedef OG_CLOSED_ENUM(uint32_t, OGTupleCopyOptions) {
     OGTupleCopyOptionsInitTake = 3
 } OG_SWIFT_NAME(TupleType.CopyOptions);
 
-struct OGUnsafeTuple {
+typedef struct OG_SWIFT_NAME(UnsafeTuple) OGUnsafeTuple {
     OGTupleType type;
     const void *value;
-} OG_SWIFT_NAME(UnsafeTuple);
+} OGUnsafeTuple;
 
-typedef struct OGUnsafeTuple OGUnsafeTuple;
-
-struct OGUnsafeMutableTuple {
+typedef struct OG_SWIFT_NAME(UnsafeMutableTuple) OGUnsafeMutableTuple {
     OGTupleType type;
     void *value;
-} OG_SWIFT_NAME(UnsafeMutableTuple);
-
-typedef struct OGUnsafeMutableTuple OGUnsafeMutableTuple;
+} OGUnsafeMutableTuple;
 
 OG_EXTERN_C_BEGIN
 
