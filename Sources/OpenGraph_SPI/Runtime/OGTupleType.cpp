@@ -137,24 +137,24 @@ size_t OGTupleElementOffsetChecked(OGTupleType tuple_type, size_t index, OGTypeI
     #endif
 }
 
-void *update(void* dst_ptr, const void *src_ptr, const OG::swift::metadata * metadata, OGTupleTypeCopyMode mode) {
+void *update(void* dst_ptr, const void *src_ptr, const OG::swift::metadata * metadata, OGTupleCopyOptions mode) {
     auto dst = reinterpret_cast<swift::OpaqueValue *>(dst_ptr);
     auto src = reinterpret_cast<swift::OpaqueValue *>(const_cast<void *>(src_ptr));
     switch (mode) {
-        case OGTupleTypeCopyModeAssignCopy:
+        case OGTupleCopyOptionsAssignCopy:
             return metadata->vw_assignWithCopy(dst, src);
-        case OGTupleTypeCopyModeInitCopy:
+        case OGTupleCopyOptionsInitCopy:
             return metadata->vw_initializeWithCopy(dst, src);
-        case OGTupleTypeCopyModeAssignTake:
+        case OGTupleCopyOptionsAssignTake:
             return metadata->vw_assignWithTake(dst, src);
-        case OGTupleTypeCopyModeInitTake:
+        case OGTupleCopyOptionsInitTake:
             return metadata->vw_initializeWithTake(dst, src);
         default:
             OG::precondition_failure("unknown copy options: %d", mode);
     }
 }
 
-void *OGTupleSetElement(OGTupleType tuple_type, void* tuple_value, size_t index, const void *element_value, OGTypeID check_type, OGTupleTypeCopyMode mode) {
+void *OGTupleSetElement(OGTupleType tuple_type, void* tuple_value, size_t index, const void *element_value, OGTypeID check_type, OGTupleCopyOptions mode) {
     #ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
     auto metadata = reinterpret_cast<OG::swift::metadata const*>(tuple_type);
     if (metadata->getKind() != swift::MetadataKind::Tuple) {
@@ -180,7 +180,7 @@ void *OGTupleSetElement(OGTupleType tuple_type, void* tuple_value, size_t index,
     #endif
 }
 
-void *OGTupleGetElement(OGTupleType tuple_type, const void* tuple_value, size_t index, void *element_value, OGTypeID check_type, OGTupleTypeCopyMode mode) {
+void *OGTupleGetElement(OGTupleType tuple_type, void* tuple_value, size_t index, void *element_value, OGTypeID check_type, OGTupleCopyOptions mode) {
     #ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
     auto metadata = reinterpret_cast<OG::swift::metadata const*>(tuple_type);
     if (metadata->getKind() != swift::MetadataKind::Tuple) {

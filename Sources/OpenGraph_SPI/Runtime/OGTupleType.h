@@ -15,12 +15,12 @@ OG_ASSUME_NONNULL_BEGIN
 
 typedef const OGSwiftMetadata *OGTupleType OG_SWIFT_STRUCT OG_SWIFT_NAME(TupleType);
 
-typedef OG_CLOSED_ENUM(uint32_t, OGTupleTypeCopyMode) {
-    OGTupleTypeCopyModeAssignCopy = 0,
-    OGTupleTypeCopyModeInitCopy = 1,
-    OGTupleTypeCopyModeAssignTake = 2,
-    OGTupleTypeCopyModeInitTake = 3
-} OG_SWIFT_NAME(TupleType.CopyMode);
+typedef OG_CLOSED_ENUM(uint32_t, OGTupleCopyOptions) {
+    OGTupleCopyOptionsAssignCopy = 0,
+    OGTupleCopyOptionsInitCopy = 1,
+    OGTupleCopyOptionsAssignTake = 2,
+    OGTupleCopyOptionsInitTake = 3
+} OG_SWIFT_NAME(TupleType.CopyOptions);
 
 typedef struct OGUnsafeTuple {
     OGTupleType type;
@@ -56,19 +56,19 @@ size_t OGTupleElementSize(OGTupleType tuple_type, size_t index) OG_SWIFT_NAME(Tu
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-size_t OGTupleElementOffset(OGTupleType tuple_type, size_t index) OG_SWIFT_NAME(TupleType.offset(self:at:));
+size_t OGTupleElementOffset(OGTupleType tuple_type, size_t index) OG_SWIFT_NAME(TupleType.elementOffset(self:at:));
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-size_t OGTupleElementOffsetChecked(OGTupleType tuple_type, size_t index, OGTypeID check_type) OG_SWIFT_NAME(TupleType.offset(self:at:type:));
+size_t OGTupleElementOffsetChecked(OGTupleType tuple_type, size_t index, OGTypeID check_type) OG_SWIFT_NAME(TupleType.elementOffset(self:at:type:));
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-void *OGTupleSetElement(OGTupleType tuple_type, void* tuple_value, size_t index, const void *element_value, OGTypeID check_type, OGTupleTypeCopyMode mode);
+void *OGTupleSetElement(OGTupleType tuple_type, void* tuple_value, size_t index, const void *element_value, OGTypeID check_type, OGTupleCopyOptions mode);
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-void *OGTupleGetElement(OGTupleType tuple_type, const void* tuple_value, size_t index, void *element_value, OGTypeID check_type, OGTupleTypeCopyMode mode);
+void *OGTupleGetElement(OGTupleType tuple_type, void* tuple_value, size_t index, void *element_value, OGTypeID check_type, OGTupleCopyOptions mode);
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
