@@ -137,10 +137,10 @@ size_t OGTupleElementOffsetChecked(OGTupleType tuple_type, size_t index, OGTypeI
     #endif
 }
 
-void *update(void* dst_ptr, const void *src_ptr, const OG::swift::metadata * metadata, OGTupleCopyOptions mode) {
+void *update(void* dst_ptr, const void *src_ptr, const OG::swift::metadata * metadata, OGTupleCopyOptions options) {
     auto dst = reinterpret_cast<swift::OpaqueValue *>(dst_ptr);
     auto src = reinterpret_cast<swift::OpaqueValue *>(const_cast<void *>(src_ptr));
-    switch (mode) {
+    switch (options) {
         case OGTupleCopyOptionsAssignCopy:
             return metadata->vw_assignWithCopy(dst, src);
         case OGTupleCopyOptionsInitCopy:
@@ -150,11 +150,11 @@ void *update(void* dst_ptr, const void *src_ptr, const OG::swift::metadata * met
         case OGTupleCopyOptionsInitTake:
             return metadata->vw_initializeWithTake(dst, src);
         default:
-            OG::precondition_failure("unknown copy options: %d", mode);
+            OG::precondition_failure("unknown copy options: %d", options);
     }
 }
 
-void *OGTupleSetElement(OGTupleType tuple_type, void* tuple_value, size_t index, const void *element_value, OGTypeID check_type, OGTupleCopyOptions mode) {
+void *OGTupleSetElement(OGTupleType tuple_type, void* tuple_value, size_t index, const void *element_value, OGTypeID check_type, OGTupleCopyOptions options) {
     #ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
     auto metadata = reinterpret_cast<OG::swift::metadata const*>(tuple_type);
     if (metadata->getKind() != swift::MetadataKind::Tuple) {
@@ -164,7 +164,7 @@ void *OGTupleSetElement(OGTupleType tuple_type, void* tuple_value, size_t index,
         if (reinterpret_cast<OGTypeID>(metadata) != check_type) {
             OG::precondition_failure("element type mismatch");
         }
-        return update(tuple_value, element_value, metadata, mode);
+        return update(tuple_value, element_value, metadata, options);
     }
     auto tuple_metadata = reinterpret_cast<const swift::TupleTypeMetadata *>(metadata);
     if (tuple_metadata->NumElements <= index) {
@@ -174,13 +174,13 @@ void *OGTupleSetElement(OGTupleType tuple_type, void* tuple_value, size_t index,
     if (reinterpret_cast<OGTypeID>(element.Type) != check_type) {
         OG::precondition_failure("element type mismatch");
     }
-    return update((void *)((intptr_t)tuple_value + index), element_value, metadata, mode);
+    return update((void *)(element.findIn(reinterpret_cast<swift::OpaqueValue *>(tuple_value))), element_value, reinterpret_cast<const OG::swift::metadata *>(element.Type), options);
     #else
     return nullptr;
     #endif
 }
 
-void *OGTupleGetElement(OGTupleType tuple_type, void* tuple_value, size_t index, void *element_value, OGTypeID check_type, OGTupleCopyOptions mode) {
+void *OGTupleGetElement(OGTupleType tuple_type, void* tuple_value, size_t index, void *element_value, OGTypeID check_type, OGTupleCopyOptions options) {
     #ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
     auto metadata = reinterpret_cast<OG::swift::metadata const*>(tuple_type);
     if (metadata->getKind() != swift::MetadataKind::Tuple) {
@@ -190,7 +190,7 @@ void *OGTupleGetElement(OGTupleType tuple_type, void* tuple_value, size_t index,
         if (reinterpret_cast<OGTypeID>(metadata) != check_type) {
             OG::precondition_failure("element type mismatch");
         }
-        return update(element_value, tuple_value, metadata, mode);
+        return update(element_value, tuple_value, metadata, options);
     }
     auto tuple_metadata = reinterpret_cast<const swift::TupleTypeMetadata *>(metadata);
     if (tuple_metadata->NumElements <= index) {
@@ -200,7 +200,7 @@ void *OGTupleGetElement(OGTupleType tuple_type, void* tuple_value, size_t index,
     if (reinterpret_cast<OGTypeID>(element.Type) != check_type) {
         OG::precondition_failure("element type mismatch");
     }
-    return update(element_value, (const void *)((intptr_t)tuple_value + index), metadata, mode);
+    return update(element_value, (const void *)(element.findIn(reinterpret_cast<swift::OpaqueValue *>(tuple_value))), reinterpret_cast<const OG::swift::metadata *>(element.Type), options);
     #else
     return nullptr;
     #endif

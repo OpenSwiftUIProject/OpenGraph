@@ -44,3 +44,6 @@ extension TupleType {
         __OGTupleGetElement(self, tupleValue, index, dstValue, Metadata(T.self), options)
     }
 }
+
+@_silgen_name("OGTupleWithBuffer")
+public func withUnsafeTuple(of type: TupleType, count: Int, _ body: (UnsafeMutableTuple) -> ())

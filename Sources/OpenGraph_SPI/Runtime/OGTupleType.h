@@ -22,15 +22,19 @@ typedef OG_CLOSED_ENUM(uint32_t, OGTupleCopyOptions) {
     OGTupleCopyOptionsInitTake = 3
 } OG_SWIFT_NAME(TupleType.CopyOptions);
 
-typedef struct OGUnsafeTuple {
+struct OGUnsafeTuple {
     OGTupleType type;
     const void *value;
-} OGUnsafeTuple OG_SWIFT_NAME(UnsafeTuple);
+} OG_SWIFT_NAME(UnsafeTuple);
 
-typedef struct OGUnsafeMutableTuple {
+typedef struct OGUnsafeTuple OGUnsafeTuple;
+
+struct OGUnsafeMutableTuple {
     OGTupleType type;
     void *value;
-} OGUnsafeMutableTuple OG_SWIFT_NAME(UnsafeMutableTuple);
+} OG_SWIFT_NAME(UnsafeMutableTuple);
+
+typedef struct OGUnsafeMutableTuple OGUnsafeMutableTuple;
 
 OG_EXTERN_C_BEGIN
 
@@ -77,6 +81,10 @@ void OGTupleDestory(OGTupleType tuple_type, void *buffer) OG_SWIFT_NAME(TupleTyp
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
 void OGTupleDestoryElement(OGTupleType tuple_type, void *buffer, size_t index) OG_SWIFT_NAME(TupleType.destory(self:_:at:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGTupleWithBuffer(OGTupleType tuple_type, size_t count, const void (*_Nullable function)(const void * _Nullable context OG_SWIFT_CONTEXT) OG_SWIFT_CC(swift), const void * _Nullable context);
 
 OG_EXTERN_C_END
 
