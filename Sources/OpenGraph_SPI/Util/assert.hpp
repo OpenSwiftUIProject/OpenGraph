@@ -1,9 +1,6 @@
 //
 //  assert.hpp
-//  
-//
-//  Created by Kyle on 2024/1/21.
-//
+//  OpenGraph_SPI
 
 #ifndef assert_hpp
 #define assert_hpp
