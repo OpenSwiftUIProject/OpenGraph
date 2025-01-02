@@ -72,11 +72,11 @@ void *OGTupleGetElement(OGTupleType tuple_type, void* tuple_value, size_t index,
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-void OGTupleDestory(OGTupleType tuple_type, void *buffer) OG_SWIFT_NAME(TupleType.destory(self:_:));
+void OGTupleDestroy(OGTupleType tuple_type, void *buffer) OG_SWIFT_NAME(TupleType.destroy(self:_:));
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-void OGTupleDestoryElement(OGTupleType tuple_type, void *buffer, size_t index) OG_SWIFT_NAME(TupleType.destory(self:_:at:));
+void OGTupleDestroyElement(OGTupleType tuple_type, void *buffer, size_t index) OG_SWIFT_NAME(TupleType.destroy(self:_:at:));
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT

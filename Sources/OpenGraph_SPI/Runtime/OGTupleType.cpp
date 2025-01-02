@@ -206,14 +206,14 @@ void *OGTupleGetElement(OGTupleType tuple_type, void* tuple_value, size_t index,
     #endif
 }
 
-void OGTupleDestory(OGTupleType tuple_type, void *value) {
+void OGTupleDestroy(OGTupleType tuple_type, void *value) {
     #ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
     auto metadata = reinterpret_cast<OG::swift::metadata const*>(tuple_type);
     metadata->vw_destroy(reinterpret_cast<swift::OpaqueValue *>(value));
     #endif
 }
 
-void OGTupleDestoryElement(OGTupleType tuple_type, void *value, size_t index) {
+void OGTupleDestroyElement(OGTupleType tuple_type, void *value, size_t index) {
     #ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
     auto metadata = reinterpret_cast<OG::swift::metadata const*>(tuple_type);
     if (metadata->getKind() != swift::MetadataKind::Tuple) {

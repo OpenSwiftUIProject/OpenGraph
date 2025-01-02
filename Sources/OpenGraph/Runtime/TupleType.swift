@@ -93,11 +93,11 @@ extension UnsafeMutableTuple {
     }
     
     public func deinitialize() {
-        type.destory(value)
+        type.destroy(value)
     }
     
     public func deinitialize(at index: Int) {
-        type.destory(value, at: index)
+        type.destroy(value, at: index)
     }
 
     public func deallocate(initialized: Bool) {
