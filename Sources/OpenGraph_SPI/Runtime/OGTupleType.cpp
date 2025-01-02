@@ -87,7 +87,7 @@ size_t OGTupleElementSize(OGTupleType tuple_type, size_t index) {
     auto element = tuple_metadata->getElement(unsigned(index));
     return element.Type->vw_size();
     #else
-    return nullptr;
+    return 0;
     #endif
 }
 
@@ -107,7 +107,7 @@ size_t OGTupleElementOffset(OGTupleType tuple_type, size_t index) {
     auto element = tuple_metadata->getElement(unsigned(index));
     return element.Offset;
     #else
-    return nullptr;
+    return 0;
     #endif
 }
 
@@ -133,10 +133,11 @@ size_t OGTupleElementOffsetChecked(OGTupleType tuple_type, size_t index, OGTypeI
     }
     return element.Offset;
     #else
-    return nullptr;
+    return 0;
     #endif
 }
 
+#ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
 void *update(void* dst_ptr, const void *src_ptr, const OG::swift::metadata * metadata, OGTupleCopyOptions options) {
     auto dst = reinterpret_cast<swift::OpaqueValue *>(dst_ptr);
     auto src = reinterpret_cast<swift::OpaqueValue *>(const_cast<void *>(src_ptr));
@@ -153,6 +154,7 @@ void *update(void* dst_ptr, const void *src_ptr, const OG::swift::metadata * met
             OG::precondition_failure("unknown copy options: %d", options);
     }
 }
+#endif
 
 void *OGTupleSetElement(OGTupleType tuple_type, void* tuple_value, size_t index, const void *element_value, OGTypeID check_type, OGTupleCopyOptions options) {
     #ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
