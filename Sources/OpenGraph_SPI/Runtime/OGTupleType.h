@@ -80,7 +80,7 @@ void OGTupleDestoryElement(OGTupleType tuple_type, void *buffer, size_t index) O
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-void OGTupleWithBuffer(OGTupleType tuple_type, size_t count, const void (*_Nullable function)(const void * _Nullable context OG_SWIFT_CONTEXT) OG_SWIFT_CC(swift), const void * _Nullable context);
+void OGTupleWithBuffer(OGTupleType tuple_type, size_t count, const void (* function)(const OGUnsafeMutableTuple mutableTuple, const void * context OG_SWIFT_CONTEXT) OG_SWIFT_CC(swift), const void *context);
 
 OG_EXTERN_C_END
 

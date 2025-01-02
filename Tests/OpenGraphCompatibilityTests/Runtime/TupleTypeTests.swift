@@ -100,23 +100,31 @@ struct TupleTypeTests {
 }
 
 @Suite(.enabled(if: swiftToolchainSupported))
-struct UnsafeTupleTests {
-}
-
-@Suite(.enabled(if: swiftToolchainSupported))
 struct UnsafeMutableTupleTests {
     class T1 {
         var a = 0
-        var b: Double = 0
     }
     
     struct T2 {
-        var a: Int = 0
-        var b: Double = 0
+        var a = 0
     }
     
-    enum T3 {
-        case a, b
+    @Test
+    func buffer() {
+        withUnsafeTuple(of: TupleType([T1.self, T2.self]), count: 1) { mutableTuple in
+            let ref = T1()
+            ref.a = 1
+            mutableTuple.initialize(at: 0, to: ref)
+            mutableTuple.initialize(at: 1, to: T2(a: 2))
+            
+            let tuple = UnsafeTuple(type: mutableTuple.type, value: mutableTuple.value)
+            let t1 = tuple[0] as T1
+            let t2 = tuple[1] as T2
+            
+            #expect(t1 === ref)
+            #expect(t1.a == 1)
+            #expect(t2.a == 2)
+        }
     }
     
     @Test
@@ -131,12 +139,9 @@ struct UnsafeMutableTupleTests {
         let t2 = T2(a: 2)
         mutableTuple.initialize(at: 0, to: t1)
         mutableTuple.initialize(at: 1, to: t2)
-
-        let retrievedT1: T1 = mutableTuple[0]
-        let retrievedT2: T2 = mutableTuple[1]
         
-        #expect(retrievedT1.a == 1)
-        #expect(retrievedT2.a == 2)
+        #expect((mutableTuple[0] as T1).a == 1)
+        #expect((mutableTuple[1] as T2).a == 2)
         
         mutableTuple.deinitialize()
     }

@@ -53,7 +53,10 @@ extension UnsafeTuple {
     public var indices: Range<Int> { type.indices }
     
     public func address<T>(as _: T.Type = T.self) -> UnsafePointer<T> {
-        value.assumingMemoryBound(to: T.self)
+        guard type.type == T.self else {
+            preconditionFailure()
+        }
+        return value.assumingMemoryBound(to: T.self)
     }
     
     public func address<T>(of index: Int, as _: T.Type = T.self) -> UnsafePointer<T> {
@@ -109,7 +112,10 @@ extension UnsafeMutableTuple {
     public var indices: Range<Int> { type.indices }
     
     public func address<T>(as _: T.Type = T.self) -> UnsafeMutablePointer<T> {
-        value.assumingMemoryBound(to: T.self)
+        guard type.type == T.self else {
+            preconditionFailure()
+        }
+        return value.assumingMemoryBound(to: T.self)
     }
     
     public func address<T>(of index: Int, as _: T.Type = T.self) -> UnsafeMutablePointer<T> {
@@ -119,11 +125,11 @@ extension UnsafeMutableTuple {
     
     public subscript<T>() -> T {
         unsafeAddress { UnsafePointer(address(as: T.self)) }
-        unsafeMutableAddress { address(as: T.self) }
+        nonmutating unsafeMutableAddress { address(as: T.self) }
     }
     
     public subscript<T>(_ index: Int) -> T {
         unsafeAddress { UnsafePointer(address(of: index, as: T.self)) }
-        unsafeMutableAddress { address(of: index, as: T.self) }
+        nonmutating unsafeMutableAddress { address(of: index, as: T.self) }
     }
 }

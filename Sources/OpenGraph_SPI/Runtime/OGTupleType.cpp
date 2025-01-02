@@ -231,3 +231,27 @@ void OGTupleDestoryElement(OGTupleType tuple_type, void *value, size_t index) {
     element_type->vw_destroy(reinterpret_cast<swift::OpaqueValue *>((intptr_t)value + index));
     #endif
 }
+
+void OGTupleWithBuffer(OGTupleType tuple_type, size_t count, const void (* function)(const OGUnsafeMutableTuple mutableTuple, const void * context OG_SWIFT_CONTEXT) OG_SWIFT_CC(swift), const void *context) {
+    #ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
+    auto metadata = reinterpret_cast<OG::swift::metadata const*>(tuple_type);
+    auto buffer_size = metadata->vw_stride() * count;
+    OGUnsafeMutableTuple tuple;
+    tuple.type = tuple_type;
+    if (buffer_size <= 0x1000) {
+        char buffer[buffer_size];
+        bzero(buffer, buffer_size);
+        // NOTE: If you use buffer out of the scope, the stack may be malformed.
+        // So we need to call function in this scope.
+        function(tuple, context);
+    } else {
+        void *buffer = malloc_type_malloc(buffer_size, 0x100004077774924);
+        if (buffer == nullptr) {
+            OG::precondition_failure("memory allocation failure");
+        }
+        tuple.value = buffer;
+        function(tuple, context);
+        free(buffer);
+    }
+    #endif
+}
