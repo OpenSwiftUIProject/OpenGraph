@@ -30,6 +30,14 @@ typedef OG_CLOSED_ENUM(uint32_t, OGTypeKind) {
     OGTypeKindMetatype,
 } OG_SWIFT_NAME(Metadata.Kind);
 
+#if OPENGRAPH_RELEASE >= OPENGRAPH_RELEASE_2024
+
+typedef struct OG_SWIFT_NAME(Signature) OGTypeSignature {
+    uint32_t bytes[5];
+} OGTypeSignature;
+
+#endif
+
 OG_EXTERN_C_BEGIN
 
 OG_EXPORT
@@ -40,7 +48,7 @@ OGTypeKind OGTypeGetKind(OGTypeID typeID) OG_SWIFT_NAME(getter:Metadata.kind(sel
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-void const* _Nullable OGTypeGetSignature(OGTypeID typeID) OG_SWIFT_NAME(getter:Metadata.signature(self:));
+OGTypeSignature const OGTypeGetSignature(OGTypeID typeID) OG_SWIFT_NAME(getter:Metadata.signature(self:));
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
