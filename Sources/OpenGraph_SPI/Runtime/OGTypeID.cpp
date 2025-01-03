@@ -42,13 +42,13 @@ OGTypeKind OGTypeGetKind(OGTypeID typeID) {
 
 #if OPENGRAPH_RELEASE >= OPENGRAPH_RELEASE_2024
 
-void const* OGTypeGetSignature(OGTypeID typeID) {
+OGTypeSignature const OGTypeGetSignature(OGTypeID typeID) {
     #ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
     auto metadata = reinterpret_cast<OG::swift::metadata const*>(typeID);
     // TODO
-    return nullptr;
+    return OGTypeSignature{};
     #else
-    return nullptr;
+    return OGTypeSignature{};
     #endif
 }
 void const* OGTypeGetDescriptor(OGTypeID typeID) {
