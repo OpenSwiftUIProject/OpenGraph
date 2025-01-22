@@ -66,4 +66,4 @@ typedef struct OGDebugServerStorage {
 OG_ASSUME_NONNULL_END
 
 #endif /* OG_TARGET_OS_DARWIN */
-#endif /* og_debug_server_ hpp */
+#endif /* og_debug_server_hpp */
