@@ -200,3 +200,10 @@ const void * _Nullable OGGraphClearUpdate(void) {
     }
     return value;
 }
+
+void OGGraphSetNeedsUpdate(OGGraphRef graph) {
+    if (graph->context.isInvalid()) {
+        OG::precondition_failure("invalidated graph");
+    }
+    // graph->context->set_needs_update();
+}
