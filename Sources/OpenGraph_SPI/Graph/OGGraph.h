@@ -102,6 +102,10 @@ OG_EXPORT
 OG_REFINED_FOR_SWIFT
 const void * _Nullable OGGraphClearUpdate(void) OG_SWIFT_NAME(OGGraphRef.clearUpdate());
 
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGGraphSetNeedsUpdate(OGGraphRef graph) OG_SWIFT_NAME(OGGraphRef.setNeedsUpdate(self:));
+
 OG_EXTERN_C_END
 
 OG_ASSUME_NONNULL_END
