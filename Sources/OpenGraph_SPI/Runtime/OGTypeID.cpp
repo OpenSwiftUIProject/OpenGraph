@@ -7,6 +7,7 @@
 
 #include "OGTypeID.h"
 #include "metadata.hpp"
+#include "../Util/assert.hpp"
 
 #ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
 #include <swift/Runtime/Metadata.h>
@@ -40,6 +41,81 @@ OGTypeKind OGTypeGetKind(OGTypeID typeID) {
     #endif
 }
 
+void OGTypeApplyFields(const void *type, const void *block, void *context) {
+    // TODO
+    return;
+}
+
+bool OGTypeApplyFields2(const void *type, OGTypeApplyOptions options, const void *block, void *context) {
+    // TODO
+    return false;
+}
+
+#if OPENGRAPH_RELEASE >= OPENGRAPH_RELEASE_2024
+
+uint32_t OGTypeGetEnumTag(OGTypeID typeID, const void *value) {
+    #ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
+    auto metadata = reinterpret_cast<OG::swift::metadata const*>(typeID);
+    auto vwt = metadata->getValueWitnesses();
+    if (!swift::EnumValueWitnessTable::classof(vwt)) {
+        OG::precondition_failure("not an enum type: %s", metadata->name(false).data);
+    }
+    auto enum_vwt = static_cast<const swift::EnumValueWitnessTable *>(vwt);
+    return enum_vwt->getEnumTag(static_cast<const swift::OpaqueValue *>(value), metadata);
+    #else
+    return 0;
+    #endif
+}
+
+void OGTypeProjectEnumData(OGTypeID typeID, void *value) {
+    #ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
+    auto metadata = reinterpret_cast<OG::swift::metadata const*>(typeID);
+    auto vwt = metadata->getValueWitnesses();
+    if (!swift::EnumValueWitnessTable::classof(vwt)) {
+        OG::precondition_failure("not an enum type: %s", metadata->name(false).data);
+    }
+    auto enum_vwt = static_cast<const swift::EnumValueWitnessTable *>(vwt);
+    enum_vwt->destructiveProjectEnumData(static_cast<swift::OpaqueValue *>(value), metadata);
+    #else
+    return;
+    #endif
+}
+
+void OGTypeInjectEnumTag(OGTypeID typeID, uint32_t tag, void *value) {
+    #ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
+    auto metadata = reinterpret_cast<OG::swift::metadata const*>(typeID);
+    auto vwt = metadata->getValueWitnesses();
+    if (!swift::EnumValueWitnessTable::classof(vwt)) {
+        OG::precondition_failure("not an enum type: %s", metadata->name(false).data);
+    }
+    auto enum_vwt = static_cast<const swift::EnumValueWitnessTable *>(vwt);
+    return enum_vwt->destructiveInjectEnumTag(static_cast<swift::OpaqueValue *>(value), tag, metadata);
+    #else
+    return;
+    #endif
+}
+
+#endif /* OPENGRAPH_RELEASE */
+
+bool OGTypeApplyEnumData() {
+    // TODO
+    return false;
+}
+
+bool OGTypeApplyMutableEnumData() {
+    // TODO
+    return false;
+}
+
+CFStringRef OGTypeDescription(OGTypeID typeID) {
+    CFMutableStringRef ref = CFStringCreateMutable(CFAllocatorGetDefault(), 0);
+    #ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
+    auto metadata = reinterpret_cast<OG::swift::metadata const*>(typeID);
+    metadata->append_description(ref);
+    #endif
+    return ref;
+}
+
 #if OPENGRAPH_RELEASE >= OPENGRAPH_RELEASE_2024
 
 OGTypeSignature const OGTypeGetSignature(OGTypeID typeID) {
@@ -61,15 +137,6 @@ void const* OGTypeGetDescriptor(OGTypeID typeID) {
 }
 
 #endif /* OPENGRAPH_RELEASE */
-
-CFStringRef OGTypeDescription(OGTypeID typeID) {
-    CFMutableStringRef ref = CFStringCreateMutable(CFAllocatorGetDefault(), 0);
-    #ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
-    auto metadata = reinterpret_cast<OG::swift::metadata const*>(typeID);
-    metadata->append_description(ref);
-    #endif
-    return ref;
-}
 
 void const* OGTypeNominalDescriptor(OGTypeID typeID) {
     #ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
