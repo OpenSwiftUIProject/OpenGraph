@@ -63,6 +63,10 @@ void OGSubgraphAddChild(OGSubgraphRef parent, OGSubgraphRef child) OG_SWIFT_NAME
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
+void OGSubgraphRemoveChild(OGSubgraphRef parent, OGSubgraphRef child) OG_SWIFT_NAME(OGSubgraphRef.removeChild(self:_:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
 void OGSubgraphApply(OGSubgraphRef cf_subgraph,
                      OGAttributeFlags flags,
                      const void (*function)(const void * _Nullable context OG_SWIFT_CONTEXT, OGAttribute attribute) OG_SWIFT_CC(swift),
