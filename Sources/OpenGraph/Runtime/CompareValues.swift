@@ -22,7 +22,7 @@ public func compareValues<Value>(_ lhs: Value, _ rhs: Value, mode: OGComparisonM
 public func compareValues<Value>(_ lhs: Value, _ rhs: Value, options: OGComparisonOptions) -> Bool {
     withUnsafePointer(to: lhs) { p1 in
         withUnsafePointer(to: rhs) { p2 in
-            OGCompareValues(lhs: p1, rhs: p2, type: Value.self, options: options)
+            OGCompareValues(lhs: p1, rhs: p2, type: Value.self, options: .init(rawValue: options.rawValue | 0x100))
         }
     }
 }
