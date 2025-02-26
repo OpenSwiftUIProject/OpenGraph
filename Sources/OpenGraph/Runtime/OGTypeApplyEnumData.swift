@@ -4,7 +4,9 @@
 //
 //
 
+// #if SWIFT_PACKAGE
 // public import OpenGraph_SPI
+// #endif
 
 @discardableResult
 public func withUnsafePointerToEnumCase<T>(

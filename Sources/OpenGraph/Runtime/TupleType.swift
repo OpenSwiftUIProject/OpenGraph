@@ -5,7 +5,9 @@
 //  Audited for iOS 18.0
 //  Status: WIP
 
+#if SWIFT_PACKAGE
 public import OpenGraph_SPI
+#endif
 
 // MARK: TupleType
 

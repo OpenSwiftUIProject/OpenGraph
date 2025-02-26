@@ -1,4 +1,6 @@
+#if SWIFT_PACKAGE
 public import OpenGraph_SPI
+#endif
 
 @frozen
 @propertyWrapper

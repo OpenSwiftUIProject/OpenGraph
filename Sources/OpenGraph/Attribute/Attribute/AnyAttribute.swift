@@ -5,7 +5,9 @@
 //  Audited for RELEASE_2021
 //  Status: API complete
 
+#if SWIFT_PACKAGE
 public import OpenGraph_SPI
+#endif
 
 extension AnyAttribute {
     public typealias Flags = OGAttributeTypeFlags

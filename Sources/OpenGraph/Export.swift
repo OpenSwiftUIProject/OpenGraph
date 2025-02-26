@@ -1,4 +1,7 @@
-@_exported public import OpenGraph_SPI
+#if SWIFT_PACKAGE
+@_exported
+public import OpenGraph_SPI
+#endif
 
 // Align the constant define behavior
 #if OPENGRAPH_RELEASE_2024

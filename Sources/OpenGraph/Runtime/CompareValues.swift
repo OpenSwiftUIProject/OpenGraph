@@ -5,7 +5,9 @@
 //  Audited for RELEASE_2021
 //  Status: Complete
 
+#if SWIFT_PACKAGE
 public import OpenGraph_SPI
+#endif
 
 @_silgen_name("OGCompareValues")
 private func OGCompareValues(

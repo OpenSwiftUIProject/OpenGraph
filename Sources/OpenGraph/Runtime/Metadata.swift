@@ -5,7 +5,9 @@
 //  Audited for RELEASE_2021
 //  Status: WIP
 
+#if SWIFT_PACKAGE
 public import OpenGraph_SPI
+#endif
 #if canImport(ObjectiveC)
 import Foundation
 #endif
