@@ -8,12 +8,12 @@
 #ifndef OGSubgraph_h
 #define OGSubgraph_h
 
-#include "OGBase.h"
-#include "OGGraph.h"
-#include "OGAttribute.h"
-#include "OGAttributeFlags.h"
-#include "OGUniqueID.h"
-#include "../Private/CFRuntime.h"
+#include <OpenGraph/OGBase.h>
+#include <OpenGraph/OGGraph.h>
+#include <OpenGraph/OGAttribute.h>
+#include <OpenGraph/OGAttributeFlags.h>
+#include <OpenGraph/OGUniqueID.h>
+#include <OpenGraph/CFRuntime.h>
 
 OG_ASSUME_NONNULL_BEGIN
 

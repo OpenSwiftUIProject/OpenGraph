@@ -2,8 +2,8 @@
 //  OGVersion.c
 //  OpenGraph
 
-#include "OGBase.h"
-#include "OGVersion.h"
+#include <OpenGraph/OGBase.h>
+#include <OpenGraph/OGVersion.h>
 
 #if OPENGRAPH_RELEASE == OPENGRAPH_RELEASE_2024
 const double OpenGraphVersionNumber __attribute__ ((used)) = (double)6.0;

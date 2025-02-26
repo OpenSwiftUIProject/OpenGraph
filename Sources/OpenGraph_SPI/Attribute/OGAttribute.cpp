@@ -5,7 +5,7 @@
 //  Created by Kyle on 2024/2/16.
 //
 
-#include "OGAttribute.h"
+#include <OpenGraph/OGAttribute.h>
 #include "AttributeID.hpp"
 #include "../Attribute/AttributeID.hpp"
 #include "../Util/assert.hpp"

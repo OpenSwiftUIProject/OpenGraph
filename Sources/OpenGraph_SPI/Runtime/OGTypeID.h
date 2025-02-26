@@ -8,8 +8,8 @@
 #ifndef OGTypeID_h
 #define OGTypeID_h
 
-#include "OGBase.h"
-#include "OGVersion.h"
+#include <OpenGraph/OGBase.h>
+#include <OpenGraph/OGVersion.h>
 
 OG_ASSUME_NONNULL_BEGIN
 

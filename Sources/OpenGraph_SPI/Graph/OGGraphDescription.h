@@ -8,7 +8,7 @@
 #ifndef OGGraphDescription_h
 #define OGGraphDescription_h
 
-#include "OGBase.h"
+#include <OpenGraph/OGBase.h>
 
 OG_ASSUME_NONNULL_BEGIN
 

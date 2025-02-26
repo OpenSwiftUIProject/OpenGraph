@@ -8,8 +8,8 @@
 #ifndef OGTupleType_h
 #define OGTupleType_h
 
-#include "OGBase.h"
-#include "OGTypeID.h"
+#include <OpenGraph/OGBase.h>
+#include <OpenGraph/OGTypeID.h>
 
 OG_ASSUME_NONNULL_BEGIN
 

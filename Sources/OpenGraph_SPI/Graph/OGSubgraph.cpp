@@ -5,10 +5,10 @@
 //  Created by Kyle on 2024/2/15.
 //
 
-#include "OGSubgraph.h"
-#include "OGGraph.h"
+#include <OpenGraph/OGSubgraph.h>
+#include <OpenGraph/OGGraph.h>
 #include "Subgraph.hpp"
-#include "OGGraphContext.h"
+#include <OpenGraph/OGGraphContext.h>
 #include "../Util/assert.hpp"
 #include "../Util/env.hpp"
 #include <pthread.h>

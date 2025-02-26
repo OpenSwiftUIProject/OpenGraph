@@ -8,7 +8,7 @@
 #ifndef vector_hpp
 #define vector_hpp
 
-#include "OGBase.h"
+#include <OpenGraph/OGBase.h>
 #include "wrap_iter.hpp"
 #include "realloc_vector.hpp"
 #include <cstdio>
@@ -146,6 +146,7 @@ OG_CONSTEXPR OG_INLINE
 typename OG::vector<_Tp, 0, _SizeType>::const_iterator OG::vector<_Tp, 0, _SizeType>::begin() const OG_NOEXCEPT
 {
     // TODO
+    exit(0);
 }
 
 template <class _Tp, class _SizeType>
@@ -153,6 +154,7 @@ OG_CONSTEXPR OG_INLINE
 typename OG::vector<_Tp, 0, _SizeType>::const_iterator OG::vector<_Tp, 0, _SizeType>::end() const OG_NOEXCEPT
 {
     // TODO
+    exit(0);
 }
 
 }

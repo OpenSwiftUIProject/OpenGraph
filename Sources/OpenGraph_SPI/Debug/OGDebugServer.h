@@ -8,7 +8,7 @@
 #ifndef OGDebugServer_h
 #define OGDebugServer_h
 
-#include "OGBase.h"
+#include <OpenGraph/OGBase.h>
 
 #if OG_TARGET_OS_DARWIN
 

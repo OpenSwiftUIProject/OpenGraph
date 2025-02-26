@@ -8,7 +8,7 @@
 #ifndef OGComparisonMode_h
 #define OGComparisonMode_h
 
-#include "OGBase.h"
+#include <OpenGraph/OGBase.h>
 
 typedef OG_OPTIONS(uint32_t, OGComparisonMode) {
     OGComparisonMode_0 = 0,

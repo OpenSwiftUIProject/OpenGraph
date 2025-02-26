@@ -8,7 +8,7 @@
 #ifndef Subgraph_hpp
 #define Subgraph_hpp
 
-#include "OGBase.h"
+#include <OpenGraph/OGBase.h>
 #include "Graph.hpp"
 #include "../Attribute/AttributeID.hpp"
 #include "../Data/ClosureFunction.hpp"

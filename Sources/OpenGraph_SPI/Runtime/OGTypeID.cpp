@@ -5,7 +5,7 @@
 //  Audited for iOS 18.0
 //  Status: WIP
 
-#include "OGTypeID.h"
+#include <OpenGraph/OGTypeID.h>
 #include "metadata.hpp"
 #include "../Util/assert.hpp"
 

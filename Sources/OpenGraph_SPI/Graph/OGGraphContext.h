@@ -8,8 +8,8 @@
 #ifndef OGGraphContext_h
 #define OGGraphContext_h
 
-#include "OGBase.h"
-#include "OGGraph.h"
+#include <OpenGraph/OGBase.h>
+#include <OpenGraph/OGGraph.h>
 
 // MARK: - Exported C functions
 

@@ -8,9 +8,9 @@
 #ifndef Graph_hpp
 #define Graph_hpp
 
-#include "OGBase.h"
-#include "OGGraph.h"
-#include "../Private/CFRuntime.h"
+#include <OpenGraph/OGBase.h>
+#include <OpenGraph/OGGraph.h>
+#include <OpenGraph/CFRuntime.h>
 #include "../Data/ClosureFunction.hpp"
 #include "../Data/OGUniqueID.h"
 

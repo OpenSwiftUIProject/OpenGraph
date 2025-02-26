@@ -8,7 +8,7 @@
 #ifndef OGChangedValueFlags_h
 #define OGChangedValueFlags_h
 
-#include "OGBase.h"
+#include <OpenGraph/OGBase.h>
 
 typedef OG_OPTIONS(uint32_t, OGChangedValueFlags) {
     OGChangedValueFlags_0 = 0,

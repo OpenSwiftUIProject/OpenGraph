@@ -8,7 +8,7 @@
 #ifndef OGAttributeTypeFlags_h
 #define OGAttributeTypeFlags_h
 
-#include "OGBase.h"
+#include <OpenGraph/OGBase.h>
 
 typedef OG_OPTIONS(uint32_t, OGAttributeTypeFlags) {
     OGAttributeTypeFlagsDefault = 0,

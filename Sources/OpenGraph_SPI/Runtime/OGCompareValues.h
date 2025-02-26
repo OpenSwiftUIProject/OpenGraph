@@ -8,8 +8,8 @@
 #ifndef OGCompareValues_h
 #define OGCompareValues_h
 
-#include "OGBase.h"
-#include "OGComparisonMode.h"
+#include <OpenGraph/OGBase.h>
+#include <OpenGraph/OGComparisonMode.h>
 
 OG_EXTERN_C_BEGIN
 OG_EXPORT

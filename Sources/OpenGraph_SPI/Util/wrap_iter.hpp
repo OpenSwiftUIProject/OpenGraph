@@ -40,7 +40,7 @@ public:
     typedef typename std::iterator_traits<iterator_type>::reference         reference;
     typedef typename std::iterator_traits<iterator_type>::iterator_category iterator_category;
 #if _LIBCPP_STD_VER >= 20
-    typedef contiguous_iterator_tag                                    iterator_concept;
+    typedef std::contiguous_iterator_tag                                    iterator_concept;
 #endif
 
 private:

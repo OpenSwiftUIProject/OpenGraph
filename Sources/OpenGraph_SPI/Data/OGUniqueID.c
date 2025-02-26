@@ -5,7 +5,7 @@
 //  Created by Kyle on 2023/10/9.
 //
 
-#include "OGUniqueID.h"
+#include <OpenGraph/OGUniqueID.h>
 #include <stdatomic.h>
 
 OGUniqueID OGMakeUniqueID(void) {

@@ -43,8 +43,8 @@
 #define OG_CONSTEXPR
 #endif
 
-#include "OGSwiftSupport.h"
-#include "OGTargetConditionals.h"
+#include <OpenGraph/OGSwiftSupport.h>
+#include <OpenGraph/OGTargetConditionals.h>
 #include <CoreFoundation/CoreFoundation.h>
 #include <stdbool.h>
 #include <stdint.h>

@@ -8,7 +8,7 @@
 #ifndef OGMakeUniqueID_h
 #define OGMakeUniqueID_h
 
-#include "OGBase.h"
+#include <OpenGraph/OGBase.h>
 typedef long long OGUniqueID;
 
 OG_EXTERN_C_BEGIN
