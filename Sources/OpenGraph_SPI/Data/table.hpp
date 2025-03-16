@@ -6,7 +6,7 @@
 #define table_hpp
 
 #include "OGBase.h"
-#include "../Util/vector.hpp"
+#include "../Vector/vector.hpp"
 #include <mach/vm_types.h>
 #include <bitset>
 #include <os/lock.h>
