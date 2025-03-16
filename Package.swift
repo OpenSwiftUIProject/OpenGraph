@@ -189,7 +189,7 @@ let package = Package(
         openGraphCompatibilityTestTarget,
         openGraphSPICompatibilityTestTarget,
     ],
-    cxxLanguageStandard: .cxx17
+    cxxLanguageStandard: .cxx20
 )
 
 

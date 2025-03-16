@@ -165,7 +165,8 @@ void OG::DebugServer::accept_handler(void *_Nullable context) {
         return;
     }
     fcntl(server->sockfd, F_SETFD, O_WRONLY);
-    server->connections.push_back(std::unique_ptr<Connection>(new Connection(server, sockfd)));
+    // FIXME: Link issue about vector
+    // server->connections.push_back(std::unique_ptr<Connection>(new Connection(server, sockfd)));
 }
 
 CFURLRef _Nullable OG::DebugServer::copy_url() const {
@@ -225,7 +226,8 @@ void OG::DebugServer::close_connection(OG::DebugServer::Connection *connection) 
     auto it = connections.begin();
     for (; it != connections.end(); it++) {
         if (it->get() == connection) {
-            connections.pop_back();
+            // FIXME: Link issue about vector
+            // connections.pop_back();
             return;
         }
     }
