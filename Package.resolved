@@ -1,6 +1,15 @@
 {
-  "originHash" : "aa0fd2e35b551c5a0558c96a63275f3b05620dac86f000f4bc0c1db36eddbed0",
+  "originHash" : "d43345559ce871dfac696d75debbb6ef8eb9847633d21700cf588679576e0e82",
   "pins" : [
+    {
+      "identity" : "abseil-cpp-swiftpm",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/firebase/abseil-cpp-SwiftPM.git",
+      "state" : {
+        "revision" : "24832c3bb8d03f0bd8c35e52069ecb8d2166dfe9",
+        "version" : "0.20240722.2"
+      }
+    },
     {
       "identity" : "darwinprivateframeworks",
       "kind" : "remoteSourceControl",

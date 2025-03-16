@@ -165,6 +165,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-numerics", from: "1.0.2"),
+        .package(url: "https://github.com/firebase/abseil-cpp-SwiftPM", exact: "0.20240722.2"),
     ],
     targets: [
         // FIXME: Merge into one target
@@ -172,6 +173,9 @@ let package = Package(
         // The SwiftPM support for such usage is still in progress.
         .target(
             name: "OpenGraph_SPI",
+            dependencies: [
+                .product(name: "abseil", package: "abseil-cpp-SwiftPM"),
+            ],
             cSettings: sharedCSettings + [
                 .define("__COREFOUNDATION_FORSWIFTFOUNDATIONONLY__", to: "1", .when(platforms: .nonDarwinPlatforms)),
             ]
