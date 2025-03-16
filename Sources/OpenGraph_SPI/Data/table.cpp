@@ -4,10 +4,12 @@
 //
 //  Audited for iOS 18.0
 //  Status: WIP
+//  Modified from https://github.com/jcmosc/Compute/blob/0a6b21a4cdeb9bbdd95e7e914c4e18bed37a2456/Sources/ComputeCxx/Data/Table.cpp [MIT License]
 
 #include "table.hpp"
 #include "page.hpp"
-#include "page.hpp"
+#include "page_const.hpp"
+#include "zone.hpp"
 #include "../Util/assert.hpp"
 #include <sys/mman.h>
 #include <malloc/malloc.h>
@@ -81,36 +83,157 @@ void table::grow_region() OG_NOEXCEPT {
     _data_capacity = new_size + page_size;
 }
 
-void table::make_pages_reusable(uint32_t page_index, bool flag) OG_NOEXCEPT {
-    precondition_failure("TODO");
+void table::make_pages_reusable(uint32_t page_index, bool reusable) OG_NOEXCEPT {
+    static constexpr uint32_t mapped_pages_size = page_size * pages_per_map; // 64 * 512 = 0x8000
+    void *mapped_pages_address = reinterpret_cast<void *>(region_base() + ((page_index * page_size) & ~(mapped_pages_size - 1)));
+    int advice = reusable ? MADV_FREE_REUSABLE : MADV_FREE_REUSE;
+    madvise(mapped_pages_address, mapped_pages_size, advice);
+    static bool unmap_reusable = []() -> bool {
+        char *result = getenv("OG_UNMAP_REUSABLE");
+        if (result) {
+            return atoi(result) != 0;
+        }
+        return false;
+    }();
+    if (unmap_reusable) {
+        int protection = reusable ? PROT_NONE : (PROT_READ | PROT_WRITE);
+        mprotect(mapped_pages_address, mapped_pages_size, protection);
+    }
+    _reusable_pages_num += reusable ? mapped_pages_size : -mapped_pages_size;
 }
 
-ptr<page> table::alloc_page(zone *zone, uint32_t size) OG_NOEXCEPT {
-    precondition_failure("TODO");
+// TO BE AUDITED
+ptr<page> table::alloc_page(zone *zone, uint32_t needed_size) OG_NOEXCEPT {
+    lock();
+
+    uint32_t needed_pages = (needed_size + page_mask) / page_size;
+
+    // assume we'll have to append a new page
+    uint32_t new_page_index = _page_maps.size() * pages_per_map;
+
+    // scan for consecutive free pages
+    if (!_page_maps.empty() && _used_pages_num <= _page_maps.size() * pages_per_map) {
+
+        uint32_t start_map_index = _map_search_start;
+        for (int i = 0; i < _page_maps.size(); i++) {
+            int map_index = start_map_index + i;
+            if (map_index >= _page_maps.size()) {
+                map_index -= _page_maps.size(); // wrap around
+            }
+
+            page_map_type free_pages_map = _page_maps[map_index].flip();
+            while (free_pages_map.any()) {
+
+                int candidate_bit = std::countr_zero(static_cast<uint64_t>(free_pages_map.to_ullong()));
+
+                // scan ahead to find enough consecutive free pages
+                bool found = false;
+                if (needed_pages > 1) {
+                    for (int j = 1; j < needed_pages; j++) {
+                        int next_page_index = (map_index * pages_per_map) + candidate_bit + j;
+                        int next_map_index = next_page_index / pages_per_map;
+                        if (next_map_index == _page_maps.size()) {
+                            // There are not enough maps, but the trailing pages are contiguous so this page is
+                            // usable
+                            found = true;
+                            break;
+                        }
+                        if (_page_maps[next_map_index].test(next_page_index % pages_per_map)) {
+                            // next page is used, remove this page from free_pages_map
+                            free_pages_map.reset(candidate_bit);
+                            break;
+                        }
+                    }
+                    found = true;
+                } else {
+                    // only need one page
+                    found = true;
+                }
+
+                if (found) {
+                    new_page_index = (map_index * pages_per_map) + candidate_bit;
+                    _map_search_start = map_index;
+                    break;
+                }
+            }
+        }
+    }
+
+    // update maps
+    for (int i = 0; i < needed_pages; i++) {
+        uint32_t page_index = new_page_index + i;
+        uint32_t map_index = page_index / pages_per_map;
+
+        if (map_index == _page_maps.size()) {
+            _page_maps.push_back(0);
+            _page_metadata_maps.push_back(0);
+        } else if (_page_maps[map_index] == 0) {
+            make_pages_reusable(page_index, false);
+        }
+
+        _page_maps[map_index].set(page_index % pages_per_map);
+        if (i == 0) {
+            _page_metadata_maps[map_index].set(page_index % pages_per_map);
+        }
+    }
+
+    _used_pages_num += needed_pages;
+
+    uint32_t new_region_size = (new_page_index + needed_pages) * page_size;
+    while (region_capacity() < new_region_size) {
+        grow_region();
+    }
+
+    // ptr offsets are "one"-based, so that we can treat 0 as null.
+    ptr<page> new_page = ptr<page>((new_page_index + 1) * page_size);
+    new_page->zone = zone;
+    new_page->previous = nullptr;
+    new_page->total = (needed_size + page_mask) & page_alignment;
+    new_page->in_use = sizeof(page);
+    unlock();
+    return new_page;
 }
 
+// TO BE AUDITED
 void table::dealloc_page_locked(ptr<page> page) OG_NOEXCEPT {
-    precondition_failure("TODO");
+    int32_t total_bytes = page->total;
+    int32_t num_pages = total_bytes / page_size;
+
+    _used_pages_num -= num_pages;
+
+    // convert the page address (starts at 512) to an index (starts at 0)
+    int32_t page_index = (page / page_size) - 1;
+    for (int32_t i = 0; i != num_pages; i += 1) {
+
+        int32_t next_page_index = page_index + i;
+        int32_t next_map_index = next_page_index / pages_per_map;
+
+        _page_maps[next_map_index].reset(next_page_index % pages_per_map);
+        if (i == 0) {
+            _page_metadata_maps[next_map_index].reset(next_page_index % pages_per_map);
+        }
+
+        if (_page_maps[next_map_index].none()) {
+            make_pages_reusable(next_page_index, true);
+        }
+    }
 }
 
+// TO BE AUDITED
 uint64_t table::raw_page_seed(ptr<page> page) OG_NOEXCEPT {
-    precondition_failure("TODO");
-//    page.assert_valid();
-//
-//    lock();
-//
-//    uint32_t page_index = (page / page_size) - 1;
-//    uint32_t map_index = page_index / pages_per_map;
-//
-//    uint64_t result = 0;
-//    if (map_index < _page_metadata_maps.size() && _page_metadata_maps[map_index].test(page_index % page_size)) {
-//        auto raw_zone_info = page->zone->info().to_raw_value();
-//        result = raw_zone_info | (1 < 8);
-//    }
-//
-//    unlock();
-//
-//    return result;
+    page.assert_valid(*this);
+    lock();
+    uint32_t page_index = (page / page_size) - 1;
+    uint32_t map_index = page_index / pages_per_map;
+
+    // FIXME
+    uint64_t result = 0;
+    if (map_index < _page_metadata_maps.size() && _page_metadata_maps[map_index].test(page_index % page_size)) {
+        auto raw_zone_info = page->zone->info().to_raw_value();
+        result = raw_zone_info | (1 < 8);
+    }
+    unlock();
+    return result;
 }
 
 void table::print() const OG_NOEXCEPT {

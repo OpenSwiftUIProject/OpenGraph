@@ -27,7 +27,7 @@ Currently, this project is in early development.
 
 ## Credits
 
-Part of the Graph implementation is from https://github.com/jcmosc/Compute
+OpenGraph_SPI's Data, Graph, Vector and more is modified based on [Compute](https://github.com/jcmosc/Compute)'s implementations.
 
 ## License
 

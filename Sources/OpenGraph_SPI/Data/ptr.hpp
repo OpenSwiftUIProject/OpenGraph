@@ -36,9 +36,9 @@ public:
     OG_INLINE OG_CONSTEXPR ptr(difference_type offset = 0) : _offset(offset){};
     OG_INLINE OG_CONSTEXPR ptr(nullptr_t){};
 
-    OG_INLINE OG_CONSTEXPR
-    void assert_valid() const {
-        if (_offset >= shared_table().data_capacity()) {
+    OG_INLINE
+    void assert_valid(table t = shared_table()) const {
+        if (t.data_capacity() <= _offset) {
             precondition_failure("invalid data offset: %u", _offset);
         }
     }

@@ -59,7 +59,7 @@ public:
 
     void grow_region() OG_NOEXCEPT;
 
-    void make_pages_reusable(uint32_t page_index, bool flag) OG_NOEXCEPT;
+    void make_pages_reusable(uint32_t page_index, bool reusable) OG_NOEXCEPT;
 
     ptr<page> alloc_page(zone *zone, uint32_t size) OG_NOEXCEPT;
 
