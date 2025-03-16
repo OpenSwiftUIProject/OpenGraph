@@ -25,9 +25,7 @@ public:
 public:
     static table &ensure_shared();
     static table &shared();
-    
-    table();
-    
+
     OG_INLINE OG_CONSTEXPR
     vm_address_t data_base() const OG_NOEXCEPT { return _data_base; };
 
@@ -52,10 +50,25 @@ public:
     OG_INLINE OG_CONSTEXPR
     uint32_t reusable_pages_num() const OG_NOEXCEPT { return _reusable_pages_num; };
 
-    void print() const OG_NOEXCEPT;
+    OG_INLINE OG_CONSTEXPR
+    uint32_t make_zone_id() {
+        _zones_num += 1;
+        return _zones_num;
+    }
+
+    table();
 
     void grow_region() OG_NOEXCEPT;
 
+    void make_pages_reusable(uint32_t page_index, bool flag) OG_NOEXCEPT;
+
+    ptr<page> alloc_page(zone *zone, uint32_t size) OG_NOEXCEPT;
+
+    void dealloc_page_locked(ptr<page> page) OG_NOEXCEPT;
+
+    uint64_t raw_page_seed(ptr<page> page) OG_NOEXCEPT;
+
+    void print() const OG_NOEXCEPT;
 private:
     /// _region_base - page_size
     vm_address_t _data_base;
@@ -79,11 +92,12 @@ private:
 
     using remapped_region = std::pair<vm_address_t, int64_t>;
     vector<remapped_region, 0, uint32_t> _remapped_regions = {};
-//
+
     constexpr static unsigned int pages_per_map = 64;
-//    using page_map_type = std::bitset<pages_per_map>;
-//    vector<page_map_type, 0, uint32_t> _page_maps = {};
-//    vector<page_map_type, 0, uint32_t> _page_metadata_maps = {};
+
+    using page_map_type = std::bitset<pages_per_map>;
+    vector<page_map_type, 0, uint32_t> _page_maps = {};
+    vector<page_map_type, 0, uint32_t> _page_metadata_maps = {};
 
 }; /* table */
 
