@@ -13,7 +13,7 @@
 #include <mach/vm_types.h>
 #include <bitset>
 #include <os/lock.h>
-#include "page.hpp"
+#include "page_const.hpp"
 
 OG_ASSUME_NONNULL_BEGIN
 
@@ -33,44 +33,70 @@ private:
     template <typename U> friend class ptr;
 
 public:
-    ptr(difference_type offset = 0) : _offset(offset){};
-    ptr(nullptr_t){};
+    OG_INLINE OG_CONSTEXPR ptr(difference_type offset = 0) : _offset(offset){};
+    OG_INLINE OG_CONSTEXPR ptr(nullptr_t){};
 
+    OG_INLINE OG_CONSTEXPR
     void assert_valid() const {
         if (_offset >= table::shared().data_capacity()) {
             precondition_failure("invalid data offset: %u", _offset);
         }
     }
 
-    element_type *_Nonnull get() const noexcept {
+    OG_INLINE OG_CONSTEXPR
+    element_type *_Nonnull get() const OG_NOEXCEPT {
         assert(_offset != 0);
         return reinterpret_cast<element_type *>(table::shared().data_base() + _offset);
     }
 
-    ptr<page> page_ptr() const noexcept { return ptr<page>(_offset & page_alignment); }
+    OG_INLINE OG_CONSTEXPR
+    ptr<page> page_ptr() const OG_NOEXCEPT { return ptr<page>(_offset & page_alignment); }
 
-    difference_type page_relative_offset() const noexcept { return _offset & page_mask; }
+    OG_INLINE OG_CONSTEXPR
+    difference_type page_relative_offset() const OG_NOEXCEPT { return _offset & page_mask; }
 
     template <typename U> ptr<U> aligned(difference_type alignment_mask = sizeof(difference_type) - 1) const {
         return ptr<U>((_offset + alignment_mask) & ~alignment_mask);
     };
 
-    operator bool() const noexcept { return _offset != 0; };
-    std::add_lvalue_reference_t<T> operator*() const noexcept { return *get(); };
-    T *_Nonnull operator->() const noexcept { return get(); };
+    OG_INLINE OG_CONSTEXPR
+    operator bool() const OG_NOEXCEPT { return _offset != 0; };
 
-    bool operator==(nullptr_t) const noexcept { return _offset == 0; };
-    bool operator!=(nullptr_t) const noexcept { return _offset != 0; };
+    OG_INLINE OG_CONSTEXPR
+    std::add_lvalue_reference_t<T> operator*() const OG_NOEXCEPT { return *get(); };
 
-    bool operator<(difference_type offset) const noexcept { return _offset < offset; };
-    bool operator<=(difference_type offset) const noexcept { return _offset <= offset; };
-    bool operator>(difference_type offset) const noexcept { return _offset > offset; };
-    bool operator>=(difference_type offset) const noexcept { return _offset >= offset; };
+    OG_INLINE OG_CONSTEXPR
+    T *_Nonnull operator->() const OG_NOEXCEPT { return get(); };
 
-    template <typename U> ptr<U> operator+(difference_type shift) const noexcept { return ptr(_offset + shift); };
-    template <typename U> ptr<U> operator-(difference_type shift) const noexcept { return ptr(_offset - shift); };
+    OG_INLINE OG_CONSTEXPR
+    bool operator==(nullptr_t) const OG_NOEXCEPT { return _offset == 0; };
 
-    template <typename U> difference_type operator-(const ptr<U> &other) const noexcept {
+    OG_INLINE OG_CONSTEXPR
+    bool operator!=(nullptr_t) const OG_NOEXCEPT { return _offset != 0; };
+
+    OG_INLINE OG_CONSTEXPR
+    bool operator<(difference_type offset) const OG_NOEXCEPT { return _offset < offset; };
+
+    OG_INLINE OG_CONSTEXPR
+    bool operator<=(difference_type offset) const OG_NOEXCEPT { return _offset <= offset; };
+
+    OG_INLINE OG_CONSTEXPR
+    bool operator>(difference_type offset) const OG_NOEXCEPT { return _offset > offset; };
+
+    OG_INLINE OG_CONSTEXPR
+    bool operator>=(difference_type offset) const OG_NOEXCEPT { return _offset >= offset; };
+
+    template <typename U>
+    OG_INLINE OG_CONSTEXPR
+    ptr<U> operator+(difference_type shift) const OG_NOEXCEPT { return ptr(_offset + shift); };
+
+    template <typename U>
+    OG_INLINE OG_CONSTEXPR
+    ptr<U> operator-(difference_type shift) const OG_NOEXCEPT { return ptr(_offset - shift); };
+
+    template <typename U>
+    OG_INLINE OG_CONSTEXPR
+    difference_type operator-(const ptr<U> &other) const OG_NOEXCEPT {
         return _offset - other._offset;
     };
 }; /* ptr */
