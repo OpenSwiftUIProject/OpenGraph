@@ -22,7 +22,7 @@ OG::Graph::Graph() OG_NOEXCEPT {
     // Tracked via https://github.com/swiftwasm/swift/issues/5565
     #if !OG_TARGET_OS_WASI
     static dispatch_once_t make_keys;
-    dispatch_once_f(&make_keys, nullptr, [](void *context){
+    dispatch_once_f(&make_keys, nullptr, [](void * _Nullable context){
         pthread_key_create(&_current_update_key, nullptr);
         OG::Subgraph::make_current_subgraph_key();
     });
