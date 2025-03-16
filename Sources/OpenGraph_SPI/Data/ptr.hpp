@@ -38,7 +38,7 @@ public:
 
     OG_INLINE OG_CONSTEXPR
     void assert_valid() const {
-        if (_offset >= table::shared().data_capacity()) {
+        if (_offset >= shared_table().data_capacity()) {
             precondition_failure("invalid data offset: %u", _offset);
         }
     }
@@ -46,7 +46,7 @@ public:
     OG_INLINE OG_CONSTEXPR
     element_type *_Nonnull get() const OG_NOEXCEPT {
         assert(_offset != 0);
-        return reinterpret_cast<element_type *>(table::shared().data_base() + _offset);
+        return reinterpret_cast<element_type *>(shared_table().data_base() + _offset);
     }
 
     OG_INLINE OG_CONSTEXPR

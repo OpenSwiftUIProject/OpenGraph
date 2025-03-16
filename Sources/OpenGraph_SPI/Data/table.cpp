@@ -18,8 +18,6 @@ void *OGGraphVMRegionBaseAddress;
 namespace OG {
 namespace data {
 
-uint8_t _shared_table_bytes[sizeof(table) / sizeof(uint8_t)] = {};
-
 malloc_zone_t *_Nullable _malloc_zone;
 
 table &table::ensure_shared() {
@@ -27,12 +25,9 @@ table &table::ensure_shared() {
     dispatch_once_f(&once, nullptr, [](void *_Nullable context){
          new (_shared_table_bytes) table();
     });
-    return shared();
+    return shared_table();
 }
 
-table &table::shared() { return *reinterpret_cast<data::table *>(&_shared_table_bytes); }
-
-// FIXME
 table::table() {
     constexpr vm_size_t initial_size = 32 * pages_per_map * page_size;
     _region_capacity = initial_size;
