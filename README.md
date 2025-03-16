@@ -25,6 +25,10 @@ The project is for the following purposes:
 
 Currently, this project is in early development.
 
+## Credits
+
+Part of the Graph implementation is from https://github.com/jcmosc/Compute
+
 ## License
 
 See LICENSE file - MIT
