@@ -24,7 +24,6 @@ public:
 
 public:
     static table &ensure_shared();
-    static table &shared();
 
     OG_INLINE OG_CONSTEXPR
     vm_address_t data_base() const OG_NOEXCEPT { return _data_base; };
@@ -98,8 +97,14 @@ private:
     using page_map_type = std::bitset<pages_per_map>;
     vector<page_map_type, 0, uint32_t> _page_maps = {};
     vector<page_map_type, 0, uint32_t> _page_metadata_maps = {};
-
 }; /* table */
+
+static uint8_t _shared_table_bytes[sizeof(table) / sizeof(uint8_t)] = {};
+
+OG_INLINE
+static table &shared_table() {
+    return *reinterpret_cast<data::table *>(&_shared_table_bytes);
+}
 
 } /* data */
 } /* OG */

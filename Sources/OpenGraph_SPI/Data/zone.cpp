@@ -11,13 +11,13 @@ namespace OG {
 namespace data {
 
 void zone::clear() OG_NOEXCEPT {
-    table::shared().lock();
+    shared_table().lock();
     while (last_page()) {
         auto page = last_page();
         _last_page = page->previous;
-        table::shared().dealloc_page_locked(page);
+        shared_table().dealloc_page_locked(page);
     }
-    table::shared().unlock();
+    shared_table().unlock();
 }
 
 ptr<void> zone::alloc_slow(uint32_t size, uint32_t alignment_mask) OG_NOEXCEPT {
@@ -41,12 +41,12 @@ ptr<void> zone::alloc_slow(uint32_t size, uint32_t alignment_mask) OG_NOEXCEPT {
 
     ptr<page> new_page;
     if (size <= page_size / 2) {
-        new_page = table::shared().alloc_page(this, page_size);
+        new_page = shared_table().alloc_page(this, page_size);
         new_page->previous = _last_page;
         _last_page = new_page;
     } else {
         uint32_t aligned_size = ((sizeof(page) + size) + alignment_mask) & ~alignment_mask;
-        new_page = table::shared().alloc_page(this, aligned_size);
+        new_page = shared_table().alloc_page(this, aligned_size);
         if (_last_page) {
             // It's less likely we will be able to alloc unused bytes from this page,
             // so insert it before the last page.

@@ -159,9 +159,8 @@ let openGraphSPICompatibilityTestTarget = Target.testTarget(
 let package = Package(
     name: "OpenGraph",
     products: [
-        .library(name: "OpenGraph_SPI", targets: ["OpenGraph_SPI"]),
-        .library(name: "OpenGraph", targets: ["OpenGraph"]),
-        .library(name: "OpenGraphShims", targets: ["OpenGraphShims"]),
+        .library(name: "OpenGraph", type: .dynamic, targets: ["OpenGraph", "OpenGraph_SPI"]),
+        .library(name: "OpenGraphShims", type: .dynamic, targets: ["OpenGraph", "OpenGraph_SPI", "OpenGraphShims"]),
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-numerics", from: "1.0.2"),
