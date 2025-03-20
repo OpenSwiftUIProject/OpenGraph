@@ -26,13 +26,13 @@ public func OGTypeApplyFields2(
 extension Metadata: Swift.Hashable, Swift.CustomStringConvertible {
     @inlinable
     @inline(__always)
-    public init(_ type: Any.Type) {
+    public init(_ type: any Any.Type) {
         self.init(rawValue: unsafeBitCast(type, to: UnsafePointer<_Metadata>.self))
     }
     
     @inlinable
     @inline(__always)
-    public var type: Any.Type {
+    public var type: any Any.Type {
         unsafeBitCast(rawValue, to: Any.Type.self)
     }
     

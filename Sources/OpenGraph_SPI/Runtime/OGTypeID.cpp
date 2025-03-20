@@ -141,7 +141,6 @@ void const* OGTypeGetDescriptor(OGTypeID typeID) {
 void const* OGTypeNominalDescriptor(OGTypeID typeID) {
     #ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
     auto metadata = reinterpret_cast<OG::swift::metadata const*>(typeID);
-    
     return metadata->nominal_descriptor();
     #else
     return nullptr;
