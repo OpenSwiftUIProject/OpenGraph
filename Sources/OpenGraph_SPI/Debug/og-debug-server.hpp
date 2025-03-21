@@ -11,7 +11,7 @@
 #include "OGBase.h"
 #if OG_TARGET_OS_DARWIN
 #include "OGDebugServer.h"
-#include "../Util/vector.hpp"
+#include "../Vector/vector.hpp"
 #include <dispatch/dispatch.h>
 #include <memory>
 
@@ -66,4 +66,4 @@ typedef struct OGDebugServerStorage {
 OG_ASSUME_NONNULL_END
 
 #endif /* OG_TARGET_OS_DARWIN */
-#endif /* og_debug_server_ hpp */
+#endif /* og_debug_server_hpp */
