@@ -196,11 +196,12 @@ ptr<page> table::alloc_page(zone *zone, uint32_t needed_size) OG_NOEXCEPT {
 
 // TO BE AUDITED
 void table::dealloc_page_locked(ptr<page> page) OG_NOEXCEPT {
-    int32_t total_bytes = page->total;
+    int32_t total_bytes = page.get(_data_base)->total;
     int32_t num_pages = total_bytes / page_size;
-
     _used_pages_num -= num_pages;
-
+    if (total_bytes < page_size) {
+        return;
+    }
     // convert the page address (starts at 512) to an index (starts at 0)
     int32_t page_index = (page / page_size) - 1;
     for (int32_t i = 0; i != num_pages; i += 1) {
@@ -221,19 +222,23 @@ void table::dealloc_page_locked(ptr<page> page) OG_NOEXCEPT {
 
 // TO BE AUDITED
 uint64_t table::raw_page_seed(ptr<page> page) OG_NOEXCEPT {
-    page.assert_valid(*this);
+    page.assert_valid(_data_capacity);
     lock();
-    uint32_t page_index = (page / page_size) - 1;
+    uint32_t page_index = page.page_index();
     uint32_t map_index = page_index / pages_per_map;
-
-    // FIXME
     uint64_t result = 0;
+    uint32_t w21 = 0;
+    uint32_t w22 = 0;
+    // FIXME
     if (map_index < _page_metadata_maps.size() && _page_metadata_maps[map_index].test(page_index % page_size)) {
-        auto raw_zone_info = page->zone->info().to_raw_value();
-        result = raw_zone_info | (1 < 8);
+        auto info = page->zone->info();
+        // FIXME
+        w22 = info.to_raw_value() & 0xffffff00;
+        w21 = info.to_raw_value() & 0x000000ff;
+        result = uint64_t(1) << 32;
     }
     unlock();
-    return result;
+    return result || uint64_t(w22 || w21);
 }
 
 void table::print() const OG_NOEXCEPT {

@@ -37,20 +37,23 @@ public:
     OG_INLINE OG_CONSTEXPR ptr(nullptr_t){};
 
     OG_INLINE
-    void assert_valid(table t = shared_table()) const {
-        if (t.data_capacity() <= _offset) {
+    void assert_valid(uint32_t capacity = shared_table().data_capacity()) const {
+        if (capacity <= _offset) {
             precondition_failure("invalid data offset: %u", _offset);
         }
     }
 
-    OG_INLINE OG_CONSTEXPR
-    element_type *_Nonnull get() const OG_NOEXCEPT {
+    OG_INLINE
+    element_type *_Nonnull get(vm_address_t base = shared_table().data_base()) const OG_NOEXCEPT {
         assert(_offset != 0);
-        return reinterpret_cast<element_type *>(shared_table().data_base() + _offset);
+        return reinterpret_cast<element_type *>(base + _offset);
     }
 
     OG_INLINE OG_CONSTEXPR
     ptr<page> page_ptr() const OG_NOEXCEPT { return ptr<page>(_offset & page_alignment); }
+
+    OG_INLINE OG_CONSTEXPR
+    uint32_t page_index() const OG_NOEXCEPT { return (_offset >> page_mask_bits) - 1; }
 
     OG_INLINE OG_CONSTEXPR
     difference_type page_relative_offset() const OG_NOEXCEPT { return _offset & page_mask; }

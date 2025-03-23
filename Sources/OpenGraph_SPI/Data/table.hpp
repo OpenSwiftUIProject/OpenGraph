@@ -50,6 +50,12 @@ public:
     uint32_t reusable_pages_num() const OG_NOEXCEPT { return _reusable_pages_num; };
 
     OG_INLINE OG_CONSTEXPR
+    uint32_t map_search_start() const OG_NOEXCEPT { return _map_search_start; };
+
+    OG_INLINE OG_CONSTEXPR
+    uint32_t zones_num() const OG_NOEXCEPT { return _zones_num; };
+
+    OG_INLINE OG_CONSTEXPR
     uint32_t make_zone_id() {
         _zones_num += 1;
         return _zones_num;
@@ -92,7 +98,7 @@ private:
     using remapped_region = std::pair<vm_address_t, int64_t>;
     vector<remapped_region, 0, uint32_t> _remapped_regions = {};
 
-    constexpr static unsigned int pages_per_map = 64;
+    OG_CONSTEXPR static unsigned int pages_per_map = 64;
 
     using page_map_type = std::bitset<pages_per_map>;
     vector<page_map_type, 0, uint32_t> _page_maps = {};
