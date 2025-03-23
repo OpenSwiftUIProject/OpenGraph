@@ -9,7 +9,6 @@
 #define realloc_vector_hpp
 
 #include "OGBase.h"
-#include <stdio.h>
 
 OG_ASSUME_NONNULL_BEGIN
 

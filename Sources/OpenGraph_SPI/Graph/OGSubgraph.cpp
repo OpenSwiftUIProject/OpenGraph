@@ -176,7 +176,7 @@ OGUniqueID OGSubgraphAddObserver(OGSubgraphRef cf_subgraph,
 static bool should_record_tree;
 static dispatch_once_t should_record_tree_once;
 
-void init_should_record_tree(void *) {
+void init_should_record_tree(void * _Nullable context) {
     should_record_tree = OG::get_env("OG_TREE") != 0;
 }
 #endif
