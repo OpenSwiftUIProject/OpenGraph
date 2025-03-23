@@ -9,7 +9,11 @@
 #include "../Util/assert.hpp"
 
 #include <algorithm>
+#if OG_TARGET_OS_DARWIN
 #include <malloc/malloc.h>
+#else
+#include <malloc.h>
+#endif /* OG_TARGET_OS_DARWIN */
 #include <memory>
 #include <cassert>
 
@@ -34,7 +38,11 @@ void *realloc_vector(void *buffer, void *stack_buffer, size_type stack_size, siz
         return nullptr;
     }
 
+    #if OG_TARGET_OS_DARWIN
     size_t new_size_bytes = malloc_good_size(preferred_new_size * element_size_bytes);
+    #else
+    size_t new_size_bytes = malloc_good_size(preferred_new_size * element_size_bytes);
+    #endif
     size_type new_size = new_size_bytes / element_size_bytes;
     if (new_size == *size) {
         // nothing to do
@@ -172,7 +180,11 @@ void *realloc_vector(void *buffer, size_type *size, size_type preferred_new_size
         return nullptr;
     }
 
+    #if OG_TARGET_OS_DARWIN
     size_t new_size_bytes = malloc_good_size(preferred_new_size * element_size);
+    #else
+    size_t new_size_bytes = preferred_new_size * element_size;
+    #endif
     size_type new_size = (size_type)(new_size_bytes / element_size);
     if (new_size == *size) {
         // nothing to do

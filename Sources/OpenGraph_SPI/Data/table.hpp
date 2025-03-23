@@ -7,9 +7,17 @@
 
 #include "OGBase.h"
 #include "../Vector/vector.hpp"
+#if OG_TARGET_OS_DARWIN
 #include <mach/vm_types.h>
+#else
+typedef uintptr_t               vm_size_t;
+typedef uintptr_t               vm_offset_t;
+typedef vm_offset_t             vm_address_t;
+#endif
 #include <bitset>
+#if OG_TARGET_OS_DARWIN
 #include <os/lock.h>
+#endif
 
 namespace OG {
 namespace data {
@@ -32,10 +40,18 @@ public:
     vm_address_t region_base() const OG_NOEXCEPT { return _region_base; };
 
     OG_INLINE OG_CONSTEXPR
-    void lock() const OG_NOEXCEPT { return os_unfair_lock_lock(&_lock); };
+    void lock() const OG_NOEXCEPT {
+        #if OG_TARGET_OS_DARWIN
+        return os_unfair_lock_lock(&_lock);
+        #endif
+    };
 
     OG_INLINE OG_CONSTEXPR
-    void unlock() const OG_NOEXCEPT { return os_unfair_lock_unlock(&_lock); };
+    void unlock() const OG_NOEXCEPT {
+        #if OG_TARGET_OS_DARWIN
+        return os_unfair_lock_unlock(&_lock);
+        #endif
+    };
 
     OG_INLINE OG_CONSTEXPR
     uint32_t region_capacity() const OG_NOEXCEPT { return _region_capacity; };
@@ -80,7 +96,9 @@ private:
 
     vm_address_t _region_base;
 
+    #if OG_TARGET_OS_DARWIN
     mutable os_unfair_lock _lock = OS_UNFAIR_LOCK_INIT;
+    #endif
 
     uint32_t _region_capacity;
 

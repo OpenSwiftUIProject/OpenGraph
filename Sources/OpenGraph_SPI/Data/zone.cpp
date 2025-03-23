@@ -6,6 +6,11 @@
 #include "table.hpp"
 #include "page.hpp"
 #include "../Util/assert.hpp"
+#if OG_TARGET_OS_DARWIN
+#include <malloc/malloc.h>
+#else
+#include <malloc.h>
+#endif
 
 namespace OG {
 namespace data {
@@ -96,7 +101,11 @@ void zone::print() const OG_NOEXCEPT {
     unsigned long num_persistent_buffers = _malloc_buffers.size();
     size_t malloc_total_size = 0;
     for (auto &element : _malloc_buffers) {
+        #if OG_TARGET_OS_DARWIN
         malloc_total_size += malloc_size(element.get());
+        #else
+        malloc_total_size += malloc_usable_size(element.get());
+        #endif
     }
     double malloc_total_size_kb = malloc_total_size / 1024.0;
 

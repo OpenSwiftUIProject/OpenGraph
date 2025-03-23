@@ -12,15 +12,25 @@
 #include "zone.hpp"
 #include "../Util/assert.hpp"
 #include <sys/mman.h>
+#include <dispatch/dispatch.h>
+#if OG_TARGET_OS_DARWIN
 #include <malloc/malloc.h>
+#else
+#include <malloc.h>
+#endif
+
+#if OG_TARGET_OS_DARWIN
 #include <mach/mach.h>
+#endif
 
 void *OGGraphVMRegionBaseAddress;
 
 namespace OG {
 namespace data {
 
+#if OG_TARGET_OS_DARWIN
 malloc_zone_t *_Nullable _malloc_zone;
+#endif
 
 table &table::ensure_shared() {
     static dispatch_once_t once;
@@ -41,14 +51,19 @@ table::table() {
     }
     _data_base = reinterpret_cast<vm_address_t>(region) - page_size;
     _data_capacity = initial_size + page_size;
+    #if OG_TARGET_OS_DARWIN
     if (_malloc_zone == nullptr) {
         malloc_zone_t *zone = malloc_create_zone(0, 0);
         _malloc_zone = zone;
         malloc_set_zone_name(zone, "OpenGraph graph data");
     }
+    #else
+    precondition_failure("not implemented");
+    #endif
 }
 
 void table::grow_region() OG_NOEXCEPT {
+    #if OG_TARGET_OS_DARWIN
     uint32_t new_size = 4 * _region_capacity;
     // Check size does not exceed 32 bits
     if (new_size <= _region_capacity) {
@@ -81,9 +96,13 @@ void table::grow_region() OG_NOEXCEPT {
     _region_base = reinterpret_cast<vm_address_t>(new_region);
     _region_capacity = new_size;
     _data_capacity = new_size + page_size;
+    #else
+    precondition_failure("not implemented");
+    #endif
 }
 
 void table::make_pages_reusable(uint32_t page_index, bool reusable) OG_NOEXCEPT {
+    #if OG_TARGET_OS_DARWIN
     static constexpr uint32_t mapped_pages_size = page_size * pages_per_map; // 64 * 512 = 0x8000
     void *mapped_pages_address = reinterpret_cast<void *>(region_base() + ((page_index * page_size) & ~(mapped_pages_size - 1)));
     int advice = reusable ? MADV_FREE_REUSABLE : MADV_FREE_REUSE;
@@ -100,6 +119,9 @@ void table::make_pages_reusable(uint32_t page_index, bool reusable) OG_NOEXCEPT 
         mprotect(mapped_pages_address, mapped_pages_size, protection);
     }
     _reusable_pages_num += reusable ? mapped_pages_size : -mapped_pages_size;
+    #else
+    precondition_failure("not implemented");
+    #endif
 }
 
 // TO BE AUDITED
@@ -242,13 +264,13 @@ uint64_t table::raw_page_seed(ptr<page> page) OG_NOEXCEPT {
 }
 
 void table::print() const OG_NOEXCEPT {
-    os_unfair_lock_lock(&_lock);
+    lock();
     fprintf(stderr, "data::table %p:\n  %.2fKB allocated, %.2fKB used, %.2fKB reusable.\n",
             this,
             double(_region_capacity - page_size) / 1024.0,
             double(this->used_pages_num()) / 1024.0,
             double(_reusable_pages_num) / 1024.0);
-    os_unfair_lock_unlock(&_lock);
+    unlock();
 }
 
 } /* data */

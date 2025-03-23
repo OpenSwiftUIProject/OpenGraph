@@ -10,9 +10,7 @@
 
 #include "OGBase.h"
 #include "table.hpp"
-#include <mach/vm_types.h>
 #include <bitset>
-#include <os/lock.h>
 #include "page_const.hpp"
 
 OG_ASSUME_NONNULL_BEGIN
@@ -34,7 +32,7 @@ private:
 
 public:
     OG_INLINE OG_CONSTEXPR ptr(difference_type offset = 0) : _offset(offset){};
-    OG_INLINE OG_CONSTEXPR ptr(nullptr_t){};
+    OG_INLINE OG_CONSTEXPR ptr(std::nullptr_t){};
 
     OG_INLINE
     void assert_valid(uint32_t capacity = shared_table().data_capacity()) const {
@@ -72,10 +70,10 @@ public:
     T *_Nonnull operator->() const OG_NOEXCEPT { return get(); };
 
     OG_INLINE OG_CONSTEXPR
-    bool operator==(nullptr_t) const OG_NOEXCEPT { return _offset == 0; };
+    bool operator==(std::nullptr_t) const OG_NOEXCEPT { return _offset == 0; };
 
     OG_INLINE OG_CONSTEXPR
-    bool operator!=(nullptr_t) const OG_NOEXCEPT { return _offset != 0; };
+    bool operator!=(std::nullptr_t) const OG_NOEXCEPT { return _offset != 0; };
 
     OG_INLINE OG_CONSTEXPR
     bool operator<(difference_type offset) const OG_NOEXCEPT { return _offset < offset; };
