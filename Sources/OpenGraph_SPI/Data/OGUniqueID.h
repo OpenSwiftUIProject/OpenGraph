@@ -1,15 +1,15 @@
 //
 //  OGMakeUniqueID.h
-//  
+//  OpenGraph_SPI
 //
-//  Created by Kyle on 2023/10/9.
-//
+//  Audited for iOS 18.0
+//  Status: Complete
 
 #ifndef OGMakeUniqueID_h
 #define OGMakeUniqueID_h
 
 #include "OGBase.h"
-typedef long long OGUniqueID;
+typedef long OGUniqueID;
 
 OG_EXTERN_C_BEGIN
 OG_EXPORT
