@@ -29,6 +29,7 @@ let includePath = SDKPath.appending("/usr/lib/swift")
 
 var sharedCSettings: [CSetting] = [
     .unsafeFlags(["-I", includePath], .when(platforms: .nonDarwinPlatforms)),
+    .define("NDEBUG", .when(configuration: .release)),
 ]
 
 var sharedSwiftSettings: [SwiftSetting] = [
@@ -110,26 +111,53 @@ if warningsAsErrorsCondition {
 
 // MARK: - Targets
 
+let openGraphTarget = Target.target(
+    name: "OpenGraph",
+    dependencies: ["OpenGraph_SPI"],
+    cSettings: sharedCSettings,
+    swiftSettings: sharedSwiftSettings
+)
+// FIXME: Merge into one target
+// OpenGraph is a C++ & Swift mix target.
+// The SwiftPM support for such usage is still in progress.
+let openGraphSPITarget = Target.target(
+    name: "OpenGraph_SPI",
+    cSettings: sharedCSettings + [
+        .define("__COREFOUNDATION_FORSWIFTFOUNDATIONONLY__", to: "1", .when(platforms: .nonDarwinPlatforms)),
+    ]
+)
 let openGraphShimsTarget = Target.target(
     name: "OpenGraphShims",
     cSettings: sharedCSettings,
     swiftSettings: sharedSwiftSettings
 )
 
-let openGraphShimsTestTarget = Target.testTarget(
-    name: "OpenGraphShimsTests",
-    dependencies: [
-        "OpenGraphShims",
-    ],
-    exclude: ["README.md"],
-    cSettings: sharedCSettings,
-    swiftSettings: sharedSwiftSettings
-)
+// MARK: - Test Targets
 
 let openGraphTestTarget = Target.testTarget(
     name: "OpenGraphTests",
     dependencies: [
         "OpenGraph",
+    ],
+    exclude: ["README.md"],
+    cSettings: sharedCSettings,
+    swiftSettings: sharedSwiftSettings
+)
+let openGraphSPITestTarget = Target.testTarget(
+    name: "OpenGraph_SPITests",
+    dependencies: [
+        "OpenGraph_SPI",
+    ],
+    exclude: ["README.md"],
+    cSettings: sharedCSettings + [
+        .headerSearchPath("../../Sources/OpenGraph_SPI"),
+    ],
+    swiftSettings: sharedSwiftSettings
+)
+let openGraphShimsTestTarget = Target.testTarget(
+    name: "OpenGraphShimsTests",
+    dependencies: [
+        "OpenGraphShims",
     ],
     exclude: ["README.md"],
     cSettings: sharedCSettings,
@@ -166,24 +194,12 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-numerics", from: "1.0.2"),
     ],
     targets: [
-        // FIXME: Merge into one target
-        // OpenGraph is a C++ & Swift mix target.
-        // The SwiftPM support for such usage is still in progress.
-        .target(
-            name: "OpenGraph_SPI",
-            cSettings: sharedCSettings + [
-                .define("__COREFOUNDATION_FORSWIFTFOUNDATIONONLY__", to: "1", .when(platforms: .nonDarwinPlatforms)),
-            ]
-        ),
-        .target(
-            name: "OpenGraph",
-            dependencies: ["OpenGraph_SPI"],
-            cSettings: sharedCSettings,
-            swiftSettings: sharedSwiftSettings
-        ),
+        openGraphTarget,
+        openGraphSPITarget,
         openGraphShimsTarget,
         
         openGraphTestTarget,
+        openGraphSPITestTarget,
         openGraphShimsTestTarget,
         openGraphCompatibilityTestTarget,
         openGraphSPICompatibilityTestTarget,
