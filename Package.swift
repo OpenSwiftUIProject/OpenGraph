@@ -35,6 +35,7 @@ var sharedCSettings: [CSetting] = [
 var sharedSwiftSettings: [SwiftSetting] = [
     .enableUpcomingFeature("InternalImportsByDefault"),
     .swiftLanguageMode(.v5),
+    .unsafeFlags(["-enable-library-evolution"]),
 ]
 
 // MARK: [env] OPENGRAPH_SWIFT_TOOLCHAIN_PATH
@@ -107,6 +108,18 @@ if releaseVersion >= 2021 {
 let warningsAsErrorsCondition = envEnable("OPENGRAPH_WERROR", default: isXcodeEnv && development)
 if warningsAsErrorsCondition {
     sharedSwiftSettings.append(.unsafeFlags(["-warnings-as-errors"]))
+}
+
+// MARK: - [env] OPENGRAPH_LIBRARY_EVOLUTION
+
+#if os(macOS)
+let libraryEvolutionCondition = envEnable("OPENGRAPH_LIBRARY_EVOLUTION", default: true)
+#else
+let libraryEvolutionCondition = envEnable("OPENGRAPH_LIBRARY_EVOLUTION")
+#endif
+
+if libraryEvolutionCondition {
+    sharedSwiftSettings.append(.unsafeFlags(["-enable-library-evolution"]))
 }
 
 // MARK: - Targets
