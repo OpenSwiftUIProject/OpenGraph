@@ -34,8 +34,8 @@ var sharedCSettings: [CSetting] = [
 
 var sharedSwiftSettings: [SwiftSetting] = [
     .enableUpcomingFeature("InternalImportsByDefault"),
+    .enableExperimentalFeature("Extern"),
     .swiftLanguageMode(.v5),
-    .unsafeFlags(["-enable-library-evolution"]),
 ]
 
 // MARK: [env] OPENGRAPH_SWIFT_TOOLCHAIN_PATH
@@ -119,6 +119,7 @@ let libraryEvolutionCondition = envEnable("OPENGRAPH_LIBRARY_EVOLUTION")
 #endif
 
 if libraryEvolutionCondition {
+    // NOTE:  -enable-library-evolution is not supported on `swift build` yet.
     sharedSwiftSettings.append(.unsafeFlags(["-enable-library-evolution"]))
 }
 
