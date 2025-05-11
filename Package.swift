@@ -35,7 +35,6 @@ var sharedCSettings: [CSetting] = [
 var sharedSwiftSettings: [SwiftSetting] = [
     .enableUpcomingFeature("InternalImportsByDefault"),
     .swiftLanguageMode(.v5),
-    .unsafeFlags(["-enable-library-evolution"]),
 ]
 
 // MARK: [env] OPENGRAPH_SWIFT_TOOLCHAIN_PATH
