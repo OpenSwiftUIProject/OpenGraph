@@ -35,8 +35,6 @@ jobs:
       - name: Swift version
         run: swift --version
       - name: Build and run tests in debug mode with coverage
-        env:
-          OPENGRAPH_LIBRARY_EVOLUTION: 0
         run: |
           swift test \
             -c debug \
@@ -47,8 +45,6 @@ jobs:
             .build-test-debug/debug/OpenGraphPackageTests.xctest/Contents/MacOS/OpenGraphPackageTests \
             > coverage.txt
       - name: Build and run tests in release mode
-        env:
-          OPENGRAPH_LIBRARY_EVOLUTION: 0
         run: |
           swift test \
             -c release \
