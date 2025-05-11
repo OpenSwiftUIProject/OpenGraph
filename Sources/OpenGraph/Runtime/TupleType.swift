@@ -75,15 +75,15 @@ extension UnsafeTuple {
 
 // MARK: - UnsafeMutableTuple
 
-@_silgen_name("swift_slowAlloc")
-private func slowAlloc(_ size: Int, _ alignMask: Int) -> UnsafeMutableRawPointer
-
-@_silgen_name("swift_slowDealloc")
-private func slowDealloc(_ ptr: UnsafeMutableRawPointer, _ size: Int, _ alignMask: Int)
-
 extension UnsafeMutableTuple {
     public init(with tupleType: TupleType) {
-        self.init(type: tupleType, value: slowAlloc(tupleType.size, -1))
+        self.init(
+            type: tupleType,
+            value: UnsafeMutableRawPointer.allocate(
+                byteCount: tupleType.size,
+                alignment: -1
+            )
+        )
     }
     
     public func initialize<T>(at index: Int, to element: T) {
@@ -104,7 +104,7 @@ extension UnsafeMutableTuple {
         if initialized {
             deinitialize()
         }
-        slowDealloc(value, -1, -1)
+        value.deallocate()
     }
     
     public var count: Int { type.count }

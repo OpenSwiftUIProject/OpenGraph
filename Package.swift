@@ -34,6 +34,7 @@ var sharedCSettings: [CSetting] = [
 
 var sharedSwiftSettings: [SwiftSetting] = [
     .enableUpcomingFeature("InternalImportsByDefault"),
+    .enableExperimentalFeature("Extern"),
     .swiftLanguageMode(.v5),
 ]
 
