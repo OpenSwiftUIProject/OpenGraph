@@ -15,12 +15,10 @@ cd $OPENGRAPH_ROOT
 # Copy to template file
 cp .build/debug/OpenGraph.build/OpenGraph.swiftinterface ./template.swiftinterface
 
-# Process the template file
-# 1. Remove the first 5 lines
-# 2. Remove all references of "OpenGraph_SPI."
-# 3. Replace all references of "OpenGraph" to "AttributeGraph"
-# 4. Replace all references of "OG" to "AG"
 sed -i '' '1,5d' ./template.swiftinterface
+sed -i '' '1i\
+@_exported public import AttributeGraph
+' ./template.swiftinterface
 sed -i '' 's/OpenGraph_SPI\.//g' ./template.swiftinterface
 sed -i '' 's/OpenGraph/AttributeGraph/g' ./template.swiftinterface
 sed -i '' 's/OG/AG/g' ./template.swiftinterface
