@@ -7,7 +7,7 @@
 
 public import OpenGraph_SPI
 #if canImport(ObjectiveC)
-import Foundation
+public import Foundation
 #endif
 
 @_silgen_name("OGTypeApplyFields")
@@ -40,7 +40,7 @@ extension Metadata: Swift.Hashable, Swift.CustomStringConvertible {
     @inline(__always)
     public var description: String {
         #if canImport(ObjectiveC)
-        __OGTypeDescription(self).takeUnretainedValue() as String
+        __OGTypeDescription(self).takeUnretainedValue() as NSString as String
         #else
         fatalError("Unimplemented")
         #endif
