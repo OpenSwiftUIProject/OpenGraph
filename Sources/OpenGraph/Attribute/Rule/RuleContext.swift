@@ -8,7 +8,7 @@
 public import OpenGraph_SPI
 
 @frozen
-public struct RuleContext<Value> {
+public struct RuleContext<Value>: Equatable {
     public var attribute: Attribute<Value>
 
     public init(attribute: Attribute<Value>) {
