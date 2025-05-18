@@ -19,7 +19,7 @@ extension TupleType {
     public init(_ type: Any.Type) {
         self.init(rawValue: unsafeBitCast(type, to: UnsafePointer<_Metadata>.self))
     }
-    
+
     @_transparent
     public var isEmpty: Bool { count == 0 }
 
@@ -36,7 +36,7 @@ extension TupleType {
         elementType(at: index).type
     }
 
-    @_transparent    
+    @_transparent
     public func offset<T>(at index: Int, as type: T.Type) -> Int {
         elementOffset(at: index, type: Metadata(type))
     }
@@ -46,39 +46,48 @@ extension TupleType {
         __OGTupleSetElement(self, tupleValue, index, srcValue, Metadata(T.self), options)
     }
 
-    @_transparent    
+    @_transparent
     public func getElement<T>(in tupleValue: UnsafeMutableRawPointer, at index: Int, to dstValue: UnsafeMutablePointer<T>, options: CopyOptions) {
         __OGTupleGetElement(self, tupleValue, index, dstValue, Metadata(T.self), options)
     }
 }
 
 @_silgen_name("OGTupleWithBuffer")
-public func withUnsafeTuple(of type: TupleType, count: Int, _ body: (UnsafeMutableTuple) -> ())
+public func withUnsafeTuple(of type: TupleType, count: Int, _ body: (UnsafeMutableTuple) -> Void)
 
 // MARK: - UnsafeTuple
 
 extension UnsafeTuple {
+    @_transparent
     public var count: Int { type.count }
+
+    @_transparent
     public var isEmpty: Bool { type.isEmpty }
+
+    @_transparent
     public var indices: Range<Int> { type.indices }
-    
+
+    @_transparent
     public func address<T>(as _: T.Type = T.self) -> UnsafePointer<T> {
         guard type.type == T.self else {
             preconditionFailure()
         }
         return value.assumingMemoryBound(to: T.self)
     }
-    
+
+    @_transparent
     public func address<T>(of index: Int, as _: T.Type = T.self) -> UnsafePointer<T> {
         value.advanced(by: type.elementOffset(at: index, type: Metadata(T.self)))
             .assumingMemoryBound(to: T.self)
     }
-    
+
     public subscript<T>() -> T {
+        @_transparent
         unsafeAddress { address(as: T.self) }
     }
-    
+
     public subscript<T>(_ index: Int) -> T {
+        @_transparent
         unsafeAddress { address(of: index, as: T.self) }
     }
 }
@@ -96,19 +105,19 @@ extension UnsafeMutableTuple {
             )
         )
     }
-    
+
     @_transparent
     public func initialize<T>(at index: Int, to element: T) {
         withUnsafePointer(to: element) { elementPointer in
             type.setElement(in: value, at: index, from: elementPointer, options: .initCopy)
         }
     }
-    
+
     @_transparent
     public func deinitialize() {
         type.destroy(value)
     }
-    
+
     @_transparent
     public func deinitialize(at index: Int) {
         type.destroy(value, at: index)
@@ -121,7 +130,7 @@ extension UnsafeMutableTuple {
         }
         value.deallocate()
     }
-    
+
     @_transparent
     public var count: Int { type.count }
 
@@ -130,7 +139,7 @@ extension UnsafeMutableTuple {
 
     @_transparent
     public var indices: Range<Int> { type.indices }
-    
+
     @_transparent
     public func address<T>(as _: T.Type = T.self) -> UnsafeMutablePointer<T> {
         guard type.type == T.self else {
@@ -138,22 +147,24 @@ extension UnsafeMutableTuple {
         }
         return value.assumingMemoryBound(to: T.self)
     }
-    
+
     @_transparent
     public func address<T>(of index: Int, as _: T.Type = T.self) -> UnsafeMutablePointer<T> {
         value.advanced(by: type.elementOffset(at: index, type: Metadata(T.self)))
             .assumingMemoryBound(to: T.self)
     }
-    
-    @_transparent
+
     public subscript<T>() -> T {
+        @_transparent
         unsafeAddress { UnsafePointer(address(as: T.self)) }
+        @_transparent
         nonmutating unsafeMutableAddress { address(as: T.self) }
     }
-    
-    @_transparent
+
     public subscript<T>(_ index: Int) -> T {
+        @_transparent
         unsafeAddress { UnsafePointer(address(of: index, as: T.self)) }
+        @_transparent
         nonmutating unsafeMutableAddress { address(of: index, as: T.self) }
     }
 }
