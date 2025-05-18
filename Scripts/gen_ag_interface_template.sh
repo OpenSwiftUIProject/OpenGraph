@@ -9,16 +9,12 @@ OPENGRAPH_ROOT="$(dirname $(dirname $(filepath $0)))"
 
 cd $OPENGRAPH_ROOT
 
-# Build the swiftinterface file
-./Scripts/build_swiftinterface.sh
+swift build -c release -Xswiftc -emit-module-interface -Xswiftc -enable-library-evolution -Xswiftc -no-verify-emitted-module-interface -Xswiftc -package-name -Xswiftc OpenGraph -Xswiftc -Osize
 
-# Copy to template file
-cp .build/debug/OpenGraph.build/OpenGraph.swiftinterface ./template.swiftinterface
+cp .build/release/Modules/OpenGraph.swiftinterface ./template.swiftinterface
 
-sed -i '' '1,5d' ./template.swiftinterface
-sed -i '' '1i\
-@_exported public import AttributeGraph
-' ./template.swiftinterface
+sed -i '' '1,4d' ./template.swiftinterface
+sed -i '' 's/@_exported public import AttributeGraph/@_exported public import OpenGraph_SPI/g' ./template.swiftinterface
 sed -i '' 's/OpenGraph_SPI\.//g' ./template.swiftinterface
 sed -i '' 's/OpenGraph/AttributeGraph/g' ./template.swiftinterface
 sed -i '' 's/OG/AG/g' ./template.swiftinterface
