@@ -1,8 +1,6 @@
 //
 //  FocusTests.swift
-//  
-//
-//
+//  OpenGraphCompatibilityTests
 
 import Testing
 

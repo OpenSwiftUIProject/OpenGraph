@@ -1,8 +1,6 @@
 //
 //  AttributeTests.swift
-//
-//
-//
+//  OpenGraphCompatibilityTests
 
 import Testing
 

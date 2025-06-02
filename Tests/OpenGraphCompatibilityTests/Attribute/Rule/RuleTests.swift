@@ -1,8 +1,6 @@
 //
 //  RuleTests.swift
-//
-//
-//
+//  OpenGraphCompatibilityTests
 
 import Testing
 
