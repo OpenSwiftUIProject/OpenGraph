@@ -1,8 +1,6 @@
 //
 //  ExternalTests.swift
-//  
-//
-//
+//  OpenGraphCompatibilityTests
 
 import Testing
 

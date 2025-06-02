@@ -14,7 +14,9 @@ public struct External<Value> {
 
 extension External: _AttributeBody {
     public static var comparisonMode: OGComparisonMode { ._3 }
+
     public static var flags: OGAttributeTypeFlags { [] }
+
     public static func _update(_: UnsafeMutableRawPointer, attribute _: AnyAttribute) {}
 }
 

@@ -5,7 +5,8 @@
 //  Audited for RELEASE_2021
 //  Status: Complete
 
-public struct Focus<Root, Value> {
+@frozen
+public struct Focus<Root, Value>: Rule, CustomStringConvertible {
     public var root: Attribute<Root>
     public var keyPath: KeyPath<Root, Value>
     
@@ -13,17 +14,10 @@ public struct Focus<Root, Value> {
         self.root = root
         self.keyPath = keyPath
     }
-}
 
-// MARK: - Rule
-
-extension Focus: Rule {
     public var value: Value { root.value[keyPath: keyPath] }
+
     public static var flags: OGAttributeTypeFlags { [] }
-}
 
-// MARK: CustomStringConvertible
-
-extension Focus: CustomStringConvertible {
     public var description: String { "• \(Metadata(Value.self).description)" }
 }

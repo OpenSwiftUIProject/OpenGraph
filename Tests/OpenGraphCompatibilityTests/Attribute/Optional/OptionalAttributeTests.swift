@@ -1,9 +1,6 @@
 //
 //  OptionalAttributeTests.swift
-//
-//
-//  Created by Kyle on 2024/3/3.
-//
+//  OpenGraphCompatibilityTests
 
 import Testing
 
