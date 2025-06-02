@@ -21,5 +21,5 @@ public struct Map<Source, Value>: Rule, CustomStringConvertible {
 
     public static var flags: OGAttributeTypeFlags { [] }
 
-    public var description: String { "TODO" }
+    public var description: String { "λ \(Value.self)" }
 }
