@@ -8,9 +8,9 @@
 #include "og-debug-server.hpp"
 #if OG_TARGET_OS_DARWIN
 
+#include "OGGraphDescription.h"
 #include "../Util/log.hpp"
 #include "../Util/assert.hpp"
-#include "../Graph/OGGraphDescription.h"
 #include "../Graph/Graph.hpp"
 
 #include <iostream>
