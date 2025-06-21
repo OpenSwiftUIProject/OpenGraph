@@ -1,1 +1,25 @@
-../Runtime/OGComparisonMode.h
+//
+//  OGComparisonMode.h
+//  OpenGraph_SPI
+
+#ifndef OGComparisonMode_h
+#define OGComparisonMode_h
+
+#include "OGBase.h"
+
+typedef OG_OPTIONS(uint32_t, OGComparisonMode) {
+    OGComparisonMode_0 = 0,
+    OGComparisonMode_1 = 1 << 0,
+    OGComparisonMode_2 = 1 << 1,
+    OGComparisonMode_3 = OGComparisonMode_1 | OGComparisonMode_2,
+};
+
+typedef OG_OPTIONS(uint32_t, OGComparisonOptions) {
+    OGComparisonOptions_0 = 0,
+    OGComparisonOptions_1 = 1 << 0,
+    OGComparisonOptions_2 = 1 << 1,
+    OGComparisonOptions_3 = OGComparisonOptions_1 | OGComparisonOptions_2,
+};
+
+#endif /* OGComparisonMode_h */
+
