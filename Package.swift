@@ -196,15 +196,6 @@ let openGraphCompatibilityTestTarget = Target.testTarget(
     cSettings: sharedCSettings,
     swiftSettings: sharedSwiftSettings
 )
-let openGraphSPICompatibilityTestTarget = Target.testTarget(
-    name: "OpenGraph_SPICompatibilityTests",
-    dependencies: [
-        .product(name: "Numerics", package: "swift-numerics"),
-    ],
-    exclude: ["README.md"],
-    cSettings: sharedCSettings,
-    swiftSettings: sharedSwiftSettings
-)
 
 // MARK: - Package
 
@@ -226,7 +217,6 @@ let package = Package(
         openGraphSPITestTarget,
         openGraphShimsTestTarget,
         openGraphCompatibilityTestTarget,
-        openGraphSPICompatibilityTestTarget,
     ],
     cxxLanguageStandard: .cxx20
 )
@@ -278,10 +268,8 @@ if attributeGraphCondition {
 let compatibilityTestCondition = envEnable("OPENGRAPH_COMPATIBILITY_TEST")
 if compatibilityTestCondition && attributeGraphCondition {
     openGraphCompatibilityTestTarget.addCompatibilitySettings()
-    openGraphSPICompatibilityTestTarget.addCompatibilitySettings()
 } else {
     openGraphCompatibilityTestTarget.dependencies.append("OpenGraph")
-    openGraphSPICompatibilityTestTarget.dependencies.append("OpenGraph")
 }
 
 extension [Platform] {
