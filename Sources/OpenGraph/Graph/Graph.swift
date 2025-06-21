@@ -1,5 +1,5 @@
 //
-//  OGGraph.swift
+//  Graph.swift
 //  OpenGraph
 //
 //  Audited for RELEASE_2021
@@ -7,9 +7,9 @@
 
 public import OpenGraph_SPI
 
-extension OGGraph {
+extension Graph {
     public static func typeIndex(
-        ctx: OGGraphContext,
+        ctx: GraphContext,
         body: _AttributeBody.Type,
         valueType: Metadata,
         flags: OGAttributeTypeFlags,
@@ -20,12 +20,12 @@ extension OGGraph {
     }
 }
 
-extension OGGraph {
+extension Graph {
     @_silgen_name("OGGraphStartProfiling")
-    public static func startProfiling(_ graph: OGGraph? = nil)
+    public static func startProfiling(_ graph: Graph? = nil)
 
     @_silgen_name("OGGraphStopProfiling")
-    public static func stopProfiling(_ graph: OGGraph? = nil)
+    public static func stopProfiling(_ graph: Graph? = nil)
 }
 
 // FIXME: migrate to use @_extern(c, "xx") in Swift 6
@@ -37,21 +37,21 @@ extension OGGraph {
 //    @_silgen_name("OGGGraphSetUpdateCallback")
 //    public func setUpdateCallback(_ callback: (() -> Void)?)
 //}
-extension OGGraph {
+extension Graph {
     @_silgen_name("OGGraphSetInvalidationCallback")
-    public static func setInvalidationCallback(_ graph: OGGraph, callback: ((AnyAttribute) -> Void)?)
+    public static func setInvalidationCallback(_ graph: Graph, callback: ((AnyAttribute) -> Void)?)
 
     @_silgen_name("OGGraphSetUpdateCallback")
-    public static func setUpdateCallback(_ graph: OGGraph, callback: (() -> Void)?)
+    public static func setUpdateCallback(_ graph: Graph, callback: (() -> Void)?)
 }
 
-extension OGGraph {
+extension Graph {
     @_transparent
     @inline(__always)
     public var mainUpdates: Int { numericCast(counter(for: ._10)) }
 }
 
-extension OGGraph {
+extension Graph {
     public static func withoutUpdate<Value>(_ body: () -> Value) -> Value {
         let update = clearUpdate()
         defer { setUpdate(update) }
@@ -59,7 +59,7 @@ extension OGGraph {
     }
 }
 
-extension OGGraph {
+extension Graph {
     // NOTE: Currently Swift does not support generic computed variable
     @_silgen_name("OGGraphGetOutputValue")
     @inline(__always)

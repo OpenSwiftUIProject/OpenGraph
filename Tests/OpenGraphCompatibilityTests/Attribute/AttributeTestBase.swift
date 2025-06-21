@@ -8,17 +8,17 @@ import Testing
 
 /// Base class for Attribute Related test case
 class AttributeTestBase {
-    private static let sharedGraph = OGGraph()
-    private var graph: OGGraph
-    private var subgraph: OGSubgraph
+    private static let sharedGraph = Graph()
+    private var graph: Graph
+    private var subgraph: Subgraph
     
     init() {
-        graph = OGGraph(shared: Self.sharedGraph)
-        subgraph = OGSubgraph(graph: graph)
-        OGSubgraph.current = subgraph
+        graph = Graph(shared: Self.sharedGraph)
+        subgraph = Subgraph(graph: graph)
+        Subgraph.current = subgraph
     }
     
     deinit {
-        OGSubgraph.current = nil
+        Subgraph.current = nil
     }
 }

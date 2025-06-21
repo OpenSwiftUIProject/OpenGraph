@@ -8,7 +8,7 @@ import Testing
 struct GraphDescriptionTests {
     @Test
     func format() {
-        #expect(OGGraph.descriptionFormat.takeUnretainedValue() as String == "format")
+        #expect(Graph.descriptionFormat.takeUnretainedValue() as String == "format")
     }
 }
 #endif
