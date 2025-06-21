@@ -1,8 +1,6 @@
 //
 //  GraphTests.swift
-//
-//
-//
+//  OpenGraphCompatibilityTests
 
 import Testing
 import Foundation
