@@ -2,10 +2,6 @@
 //  Graph+Debug.swift
 //  OpenGraphShims
 
-// FIXME: Update name in OpenGraph
-public typealias Graph = OGGraph
-public typealias Subgraph = OGSubgraph
-
 #if canImport(Darwin)
 
 import Foundation

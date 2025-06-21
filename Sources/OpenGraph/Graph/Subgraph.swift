@@ -1,5 +1,5 @@
 //
-//  OGSubgraph.swift
+//  Subgraph.swift
 //  OpenGraph
 //
 //  Audited for RELEASE_2021
@@ -7,20 +7,20 @@
 
 public import OpenGraph_SPI
 
-extension OGSubgraph {
+extension Subgraph {
     public func addObserver(_ observer: () -> Void) -> Int {
-        OGSubgraph.addObserver(self, observer: observer)
+        Subgraph.addObserver(self, observer: observer)
     }
     
     public func apply<Value>(_ body: () -> Value) -> Value {
         #if !os(WASI)
-        let update = OGGraph.clearUpdate()
-        let current = OGSubgraph.current
+        let update = Graph.clearUpdate()
+        let current = Subgraph.current
         defer {
-            OGSubgraph.current = current
-            OGGraph.setUpdate(update)
+            Subgraph.current = current
+            Graph.setUpdate(update)
         }
-        OGSubgraph.current = self
+        Subgraph.current = self
         return body()
         #else
         fatalError("upstream SIL Compiler assert issue")
@@ -28,11 +28,11 @@ extension OGSubgraph {
     }
     
     public func forEach(_ flags: OGAttributeFlags, _ callback: (AnyAttribute) -> Void) {
-        OGSubgraph.apply(self, flags: flags, callback: callback)
+        Subgraph.apply(self, flags: flags, callback: callback)
     }
 }
 
-extension OGSubgraph {
+extension Subgraph {
     public static func beginTreeElement<Value>(value: Attribute<Value>, flags: UInt32) {
         if shouldRecordTree {
             __OGSubgraphBeginTreeElement(value.identifier, Metadata(Value.self), flags)
@@ -53,10 +53,10 @@ extension OGSubgraph {
 }
 
 // FIXME: migrate to use @_extern(c, "xx") in Swift 6
-extension OGSubgraph {
+extension Subgraph {
     @_silgen_name("OGSubgraphApply")
-    private static func apply(_ graph: OGSubgraph, flags: OGAttributeFlags, callback: (AnyAttribute) -> Void)
+    private static func apply(_ graph: Subgraph, flags: OGAttributeFlags, callback: (AnyAttribute) -> Void)
     
     @_silgen_name("OGSubgraphAddObserver")
-    private static func addObserver(_ graph: OGSubgraph, observer: () -> Void) -> Int
+    private static func addObserver(_ graph: Subgraph, observer: () -> Void) -> Int
 }

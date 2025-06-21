@@ -9,21 +9,21 @@ struct SubgraphTests {
     func shouldRecordTree() {
         let key = compatibilityTestEnabled ? "AG_TREE" : "OG_TREE"
         setenv(key, "0", 1)
-        #expect(OGSubgraph.shouldRecordTree == false)
+        #expect(Subgraph.shouldRecordTree == false)
         
-        OGSubgraph.setShouldRecordTree()
-        #expect(OGSubgraph.shouldRecordTree == true)
+        Subgraph.setShouldRecordTree()
+        #expect(Subgraph.shouldRecordTree == true)
     }
     
     @Test
     func treeElementAPICheck() {
-        let graph = OGGraph()
-        let subgraph = OGSubgraph(graph: graph)
+        let graph = Graph()
+        let subgraph = Subgraph(graph: graph)
         subgraph.apply {
             let value = Attribute(value: ())
-            OGSubgraph.beginTreeElement(value: value, flags: 0)
-            OGSubgraph.addTreeValue(value, forKey: "", flags: 0)
-            OGSubgraph.endTreeElement(value: value)
+            Subgraph.beginTreeElement(value: value, flags: 0)
+            Subgraph.addTreeValue(value, forKey: "", flags: 0)
+            Subgraph.endTreeElement(value: value)
         }
     }
 }

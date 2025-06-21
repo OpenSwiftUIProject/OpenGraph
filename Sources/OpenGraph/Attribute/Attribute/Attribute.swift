@@ -45,10 +45,10 @@ public struct Attribute<Value> {
         // See https://github.com/swiftwasm/swift/issues/5569
         fatalError("Swift 5.9.1 Compiler issue - type mismatch of Unmanaged<OGGraphContext> and OGGraphContext")
         #else
-        guard let context = OGSubgraph.currentGraphContext else {
+        guard let context = Subgraph.currentGraphContext else {
             fatalError("attempting to create attribute with no subgraph: \(Value.self)")
         }
-        let index = OGGraph.typeIndex(
+        let index = Graph.typeIndex(
             ctx: context,
             body: Body.self,
             valueType: Metadata(Value.self),
@@ -126,14 +126,14 @@ public struct Attribute<Value> {
     
     // MARK: - Graph
     
-    public var graph: OGGraph {
+    public var graph: Graph {
         #if os(WASI)
         fatalError("Compiler Bug")
         #else
         identifier.graph
         #endif
     }
-    public var subgraph: OGSubgraph {
+    public var subgraph: Subgraph {
         #if os(WASI)
         fatalError("Compiler Bug")
         #else

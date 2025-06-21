@@ -29,7 +29,7 @@ extension StatefulRule {
             return
         }
         withUnsafePointer(to: initialValue) { value in
-            OGGraph.setOutputValue(value)
+            Graph.setOutputValue(value)
         }
     }
 }
@@ -46,7 +46,7 @@ extension StatefulRule {
     }
     
     public var value: Value {
-        unsafeAddress { OGGraph.outputValue()! }
+        unsafeAddress { Graph.outputValue()! }
         nonmutating set { context.value = newValue }
     }
     

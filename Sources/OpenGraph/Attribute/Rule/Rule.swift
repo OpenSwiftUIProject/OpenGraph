@@ -23,7 +23,7 @@ extension Rule {
         let value = rule.pointee.value
         // Verified for RELEASE_2023
         withUnsafePointer(to: value) { value in
-            OGGraph.setOutputValue(value)
+            Graph.setOutputValue(value)
         }
     }
 
@@ -33,7 +33,7 @@ extension Rule {
         }
         // Verified for RELEASE_2023
         withUnsafePointer(to: initialValue) { value in
-            OGGraph.setOutputValue(value)
+            Graph.setOutputValue(value)
         }
     }
 }

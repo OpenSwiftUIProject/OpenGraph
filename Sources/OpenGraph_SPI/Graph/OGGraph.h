@@ -1,9 +1,6 @@
 //
 //  OGGraph.h
-//
-//
-//  Created by Kyle on 2024/2/5.
-//
+//  OpenGraph_SPI
 
 #ifndef OGGraph_h
 #define OGGraph_h
@@ -14,9 +11,9 @@
 
 // Note: Place all structure declaration in a single place to avoid header cycle dependency
 
-typedef struct OG_BRIDGED_TYPE(id) OGGraphStorage * OGGraphRef;
-typedef struct OG_BRIDGED_TYPE(id) OGGraphContextStorage * OGGraphContextRef;
-typedef struct OG_BRIDGED_TYPE(id) OGSubgraphStorage * OGSubgraphRef;
+typedef struct OG_BRIDGED_TYPE(id) OGGraphStorage * OGGraphRef OG_SWIFT_NAME(Graph);
+typedef struct OG_BRIDGED_TYPE(id) OGSubgraphStorage * OGSubgraphRef OG_SWIFT_NAME(Subgraph);
+typedef struct OG_BRIDGED_TYPE(id) OGGraphContextStorage * OGGraphContextRef OG_SWIFT_NAME(GraphContext);
 
 struct OGGraphStorage;
 struct OGGraphContextStorage;
