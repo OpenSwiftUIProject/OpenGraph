@@ -43,6 +43,8 @@
 #define OG_CONSTEXPR
 #endif
 
+#define OG_COUNTED_BY(N) __counted_by(N)
+
 #include "OGSwiftSupport.h"
 #include "OGTargetConditionals.h"
 #include <CoreFoundation/CoreFoundation.h>
