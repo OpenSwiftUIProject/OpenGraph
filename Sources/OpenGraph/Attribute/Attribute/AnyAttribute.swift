@@ -62,7 +62,7 @@ extension AnyAttribute {
     public var _bodyPointer: UnsafeRawPointer {
         info.body
     }
-    
+
     public var valueType: Any.Type {
         info.type.pointee.valueTypeID.type
     }
@@ -96,4 +96,11 @@ extension AnyAttribute {
         invalidating: Bool,
         body: (UnsafeMutableRawPointer) -> Void
     )
+}
+
+extension [AnyAttribute] {
+    @_transparent
+    public var anyInputsChanged: Bool {
+        __OGGraphAnyInputsChanged(self, count)
+    }
 }
