@@ -43,6 +43,10 @@
 #define OG_CONSTEXPR
 #endif
 
+#if __has_include(<ptrcheck.h>) // Fix conflict define issue of the SDK
+#include <ptrcheck.h>
+#define OG_COUNTED_BY(N) __counted_by(N)
+#else
 #if !defined(__counted_by)
 #if __has_attribute(__counted_by__)
 #define __counted_by(N) __attribute__((__counted_by__(N)))
@@ -50,8 +54,8 @@
 #define __counted_by(N)
 #endif
 #endif
-
 #define OG_COUNTED_BY(N) __counted_by(N)
+#endif
 
 #include "OGSwiftSupport.h"
 #include "OGTargetConditionals.h"
