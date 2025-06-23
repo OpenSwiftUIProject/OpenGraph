@@ -103,9 +103,10 @@ OG_EXPORT
 OG_REFINED_FOR_SWIFT
 void OGGraphSetNeedsUpdate(OGGraphRef graph) OG_SWIFT_NAME(OGGraphRef.setNeedsUpdate(self:));
 
+// TODO: Add OG_COUNTED_BY later https://github.com/OpenSwiftUIProject/OpenGraph/issues/130
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-bool OGGraphAnyInputsChanged(const OGAttribute *inputs OG_COUNTED_BY(count), size_t count);
+bool OGGraphAnyInputsChanged(const OGAttribute *inputs, size_t count);
 
 OG_EXTERN_C_END
 
