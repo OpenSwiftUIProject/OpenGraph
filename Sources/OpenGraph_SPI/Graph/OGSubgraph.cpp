@@ -128,6 +128,10 @@ OGGraphRef OGSubgraphGetGraph(OGSubgraphRef cf_subgraph) {
 }
 
 void OGSubgraphAddChild(OGSubgraphRef parent, OGSubgraphRef child) {
+    OGSubgraphAddChild2(parent, child, 0);
+}
+
+void OGSubgraphAddChild2(OGSubgraphRef parent, OGSubgraphRef child, uint8_t tag) {
     // TODO
 }
 
