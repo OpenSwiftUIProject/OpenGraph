@@ -60,6 +60,10 @@ void OGSubgraphAddChild(OGSubgraphRef parent, OGSubgraphRef child) OG_SWIFT_NAME
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
+void OGSubgraphAddChild2(OGSubgraphRef parent, OGSubgraphRef child, uint8_t tag) OG_SWIFT_NAME(OGSubgraphRef.addChild(self:_:tag:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
 void OGSubgraphRemoveChild(OGSubgraphRef parent, OGSubgraphRef child) OG_SWIFT_NAME(OGSubgraphRef.removeChild(self:_:));
 
 OG_EXPORT
