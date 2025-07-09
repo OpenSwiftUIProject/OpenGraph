@@ -203,7 +203,7 @@ let package = Package(
     name: "OpenGraph",
     products: [
         .library(name: "OpenGraph", type: .dynamic, targets: ["OpenGraph", "OpenGraph_SPI"]),
-        .library(name: "OpenGraphShims", type: .dynamic, targets: ["OpenGraph", "OpenGraph_SPI", "OpenGraphShims"]),
+        .library(name: "OpenGraphShims", type: .dynamic, targets: ["OpenGraphShims"]),
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-numerics", from: "1.0.2"),
@@ -239,11 +239,26 @@ extension Target {
         swiftSettings.append(.define("OPENGRAPH_COMPATIBILITY_TEST"))
         self.swiftSettings = swiftSettings
     }
+
+    func addComputeSettings() {
+        dependencies.append(
+            .product(name: "Compute", package: "Compute")
+        )
+        var swiftSettings = swiftSettings ?? []
+        swiftSettings.append(.define("OPENGRAPH_COMPUTE"))
+        swiftSettings.append(.interoperabilityMode(.Cxx))
+        self.swiftSettings = swiftSettings
+
+        var linkerSettings = linkerSettings ?? []
+        linkerSettings.append(.linkedLibrary("swiftDemangle"))
+        self.linkerSettings = linkerSettings
+    }
 }
 
 let useLocalDeps = envEnable("OPENGRAPH_USE_LOCAL_DEPS")
 
-let attributeGraphCondition = envEnable("OPENGRAPH_ATTRIBUTEGRAPH", default: buildForDarwinPlatform && !isSPIDocGenerationBuild)
+let attributeGraphCondition = envEnable("OPENGRAPH_ATTRIBUTEGRAPH", default: false)
+let computeCondition = envEnable("OPENGRAPH_COMPUTE", default: true)
 
 if attributeGraphCondition {
     let privateFrameworkRepo: Package.Dependency
@@ -261,6 +276,12 @@ if attributeGraphCondition {
         case 2021: [.iOS(.v15), .macOS(.v12), .macCatalyst(.v15), .tvOS(.v15), .watchOS(.v7)]
         default: nil
     }
+} else if computeCondition {
+    let computeRepo = Package.Dependency.package(path: "../Compute")
+    package.dependencies.append(computeRepo)
+    openGraphShimsTarget.addComputeSettings()
+
+    package.platforms = [.iOS(.v18), .macOS(.v15), .macCatalyst(.v18), .tvOS(.v18), .watchOS(.v10), .visionOS(.v2)]
 } else {
     openGraphShimsTarget.dependencies.append("OpenGraph")
 }
