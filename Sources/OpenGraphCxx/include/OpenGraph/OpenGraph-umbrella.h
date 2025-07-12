@@ -6,6 +6,7 @@
 #include <OpenGraph/OGBase.h>
 #include <OpenGraph/OGCachedValueOptions.h>
 #include <OpenGraph/OGChangedValueFlags.h>
+#include <OpenGraph/OGClosure.h>
 #include <OpenGraph/OGComparison.h>
 #include <OpenGraph/OGCounterQueryType.h>
 #include <OpenGraph/OGDebugServer.h>

@@ -8,7 +8,7 @@
 #include <OpenGraph/OGBase.h>
 
 typedef OG_OPTIONS(uint32_t, OGChangedValueFlags) {
-    OGChangedValueFlags_1 = 1 << 0,
+    OGChangedValueFlagsChanged = 1 << 0,
     OGChangedValueFlagsRequiresMainThread = 1 << 1,
 };
 

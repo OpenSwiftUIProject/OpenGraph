@@ -8,8 +8,9 @@
 #include <OpenGraph/OGBase.h>
 
 typedef OG_OPTIONS(uint32_t, OGSearchOptions) {
-    OGSearchOptions_0 = 0,
-    OGSearchOptions_1 = 1,
+    OGSearchOptionsSearchInputs = 1 << 0,
+    OGSearchOptionsSearchOutputs = 1 << 1,
+    OGSearchOptionsTraverseGraphContexts = 1 << 2,
 };
 
 #endif /* Header_h */

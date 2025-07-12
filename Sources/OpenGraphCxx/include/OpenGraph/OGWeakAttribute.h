@@ -11,9 +11,11 @@
 OG_ASSUME_NONNULL_BEGIN
 
 typedef struct OGWeakAttribute {
-    const OGAttribute raw_attribute;
-    const uint32_t subgraph_id;
-} OGWeakAttribute;
+    struct {
+        OGAttribute identifier;
+        uint32_t seed;
+    } _details;
+} OGWeakAttribute OG_SWIFT_NAME(AnyWeakAttribute);
 
 OG_EXTERN_C_BEGIN
 

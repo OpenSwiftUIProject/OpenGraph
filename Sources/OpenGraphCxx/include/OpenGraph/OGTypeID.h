@@ -33,16 +33,16 @@ typedef OG_CLOSED_ENUM(uint32_t, OGTypeKind) {
 } OG_SWIFT_NAME(Metadata.Kind);
 
 typedef OG_OPTIONS(uint32_t, OGTypeApplyOptions) {
-    OGTypeApplyOptions_0 = 0,
-    OGTypeApplyOptions_1 = 1 << 0,
-    OGTypeApplyOptions_2 = 1 << 1,
-    OGTypeApplyOptions_4 = 1 << 2,
+    OGTypeApplyOptionsEnumerateStructFields = 0,
+    OGTypeApplyOptionsEnumerateClassFields = 1 << 0,
+    OGTypeApplyOptionsContinueAfterUnknownField = 1 << 1,
+    OGTypeApplyOptionsEnumerateEnumCases = 1 << 2,
 };
 
 #if OPENGRAPH_RELEASE >= OPENGRAPH_RELEASE_2024
 
 typedef struct OG_SWIFT_NAME(Signature) OGTypeSignature {
-    uint32_t bytes[5];
+    uint8_t bytes[20];
 } OGTypeSignature;
 
 #endif

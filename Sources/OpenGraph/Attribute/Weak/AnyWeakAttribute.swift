@@ -14,7 +14,7 @@ extension AnyWeakAttribute {
     public init(_ attribute: AnyAttribute?) {
         self = __OGCreateWeakAttribute(attribute ?? .nil)
     }
-    
+
     @_alwaysEmitIntoClient
     public init<Value>(_ weakAttribute: WeakAttribute<Value>) {
         self = weakAttribute.base
@@ -40,13 +40,13 @@ extension AnyWeakAttribute {
 extension AnyWeakAttribute: Swift.Hashable {
     @_alwaysEmitIntoClient
     public static func == (lhs: AnyWeakAttribute, rhs: AnyWeakAttribute) -> Bool {
-        lhs.raw_attribute == rhs.raw_attribute && lhs.subgraph_id == rhs.subgraph_id
+        lhs._details.identifier == rhs._details.identifier && lhs._details.seed == rhs._details.seed
     }
     
     @_alwaysEmitIntoClient
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(raw_attribute)
-        hasher.combine(subgraph_id)
+        hasher.combine(_details.identifier)
+        hasher.combine(_details.seed)
     }
     
     @_alwaysEmitIntoClient
