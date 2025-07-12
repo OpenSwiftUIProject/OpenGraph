@@ -6,19 +6,19 @@
 #include "OGComparisonPrivate.h"
 
 const void *OGComparisonStateGetDestination(OGComparisonState state) {
-    return state->destination;
+    return ((const OGComparisonStateStorage *)state)->destination;
 }
 
 const void *OGComparisonStateGetSource(OGComparisonState state) {
-    return state->source;
+    return ((const OGComparisonStateStorage *)state)->source;
 }
 
 OGFieldRange OGComparisonStateGetFieldRange(OGComparisonState state) {
-    return state->field_range;
+    return ((const OGComparisonStateStorage *)state)->field_range;
 }
 
 OGTypeID OGComparisonStateGetFieldType(OGComparisonState state) {
-    return state->field_type;
+    return ((const OGComparisonStateStorage *)state)->field_type;
 }
 
 bool OGCompareValues(const void *lhs, const void *rhs, OGTypeID type, OGComparisonOptions options) {
