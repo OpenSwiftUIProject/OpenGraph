@@ -10,7 +10,7 @@
 
 #include <OpenGraph/OGBase.h>
 
-typedef OG_OPTIONS(uint32_t, OGAttributeFlags) {
+typedef OG_OPTIONS(uint8_t, OGAttributeFlags) {
     OGAttributeFlagsDefault = 0,
     OGAttributeFlagsActive = 1 << 0,
     OGAttributeFlagsRemovable = 1 << 1,

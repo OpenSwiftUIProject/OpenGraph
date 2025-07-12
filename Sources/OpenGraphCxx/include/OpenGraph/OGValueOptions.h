@@ -8,9 +8,10 @@
 #include <OpenGraph/OGBase.h>
 
 typedef OG_OPTIONS(uint32_t, OGValueOptions) {
-    OGValueOptions_0 = 0,
-    OGValueOptions_1 = 1,
-    OGValueOptions_2 = 2,
+    OGValueOptionsNone = 0,
+    OGValueOptionsInputOptionsMask = 0x03,
+
+    OGValueOptionsIncrementGraphVersion = 1 << 2, // AsTopLevelOutput
 };
 
 #endif /* OGValueOptions_h */

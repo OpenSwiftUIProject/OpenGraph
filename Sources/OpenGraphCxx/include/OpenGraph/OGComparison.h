@@ -56,7 +56,7 @@ typedef OG_OPTIONS(uint32_t, OGComparisonOptions) {
 
     OGComparisonOptionsCopyOnWrite = 1 << 8,
     OGComparisonOptionsFetchLayoutsSynchronously = 1 << 9,
-    OGComparisonOptionsReportFailures = 1ul << 31, // -1 signed int
+    OGComparisonOptionsTraceCompareFailed = 1ul << 31, // -1 signed int
 } OG_SWIFT_NAME(ComparisonOptions);
 
 OG_EXPORT

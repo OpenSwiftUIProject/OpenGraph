@@ -49,7 +49,7 @@ extension AnyAttribute {
     
     // FIXME: Use AttributeType instead
     public func visitBody<Body: AttributeBodyVisitor>(_ visitor: inout Body) {
-        let bodyType = info.type.advanced(by: 1).pointee.typeID.type as! _AttributeBody.Type
+        let bodyType = info.type.advanced(by: 1).pointee.self_id.type as! _AttributeBody.Type
         bodyType._visitBody(&visitor, info.body)
     }
 
@@ -68,7 +68,7 @@ extension AnyAttribute {
     }
     
     public var _bodyType: Any.Type {
-        info.type.pointee.typeID.type
+        info.type.pointee.self_id.type
     }
 
     public var _bodyPointer: UnsafeRawPointer {
@@ -76,7 +76,7 @@ extension AnyAttribute {
     }
 
     public var valueType: Any.Type {
-        info.type.pointee.valueTypeID.type
+        info.type.pointee.value_id.type
     }
 
     public var indirectDependency: AnyAttribute? {
