@@ -40,25 +40,25 @@ OG_EXTERN_C_BEGIN
 typedef struct OGFieldRange {
     size_t offset;
     size_t size;
-} OGFieldRange;
+} OGFieldRange OG_SWIFT_STRUCT OG_SWIFT_NAME(FieldRange);
 
-typedef struct OGComparisonStateStorage *OGComparisonState;
-
-OG_EXPORT
-OG_REFINED_FOR_SWIFT
-const void *OGComparisonStateGetDestination(OGComparisonState state);
+typedef const void *OGComparisonState OG_SWIFT_STRUCT OG_SWIFT_NAME(ComparisonState);
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-const void *OGComparisonStateGetSource(OGComparisonState state);
+const void *OGComparisonStateGetDestination(OGComparisonState state) OG_SWIFT_NAME(getter:OGComparisonState.destination(self:));
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-OGFieldRange OGComparisonStateGetFieldRange(OGComparisonState state);
+const void *OGComparisonStateGetSource(OGComparisonState state) OG_SWIFT_NAME(getter:OGComparisonState.source(self:));
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-OGTypeID OGComparisonStateGetFieldType(OGComparisonState state);
+OGFieldRange OGComparisonStateGetFieldRange(OGComparisonState state) OG_SWIFT_NAME(getter:OGComparisonState.fieldRange(self:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+OGTypeID OGComparisonStateGetFieldType(OGComparisonState state) OG_SWIFT_NAME(getter:OGComparisonState.fieldType(self:));
 
 typedef OG_ENUM(uint8_t, OGComparisonMode) {
     OGComparisonModeBitwise = 0,
