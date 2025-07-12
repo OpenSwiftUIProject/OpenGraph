@@ -15,7 +15,7 @@ final class ExternalTests: AttributeTestBase {
         let type = External<Int>.self
         let externalInt = type.init()
         #expect(externalInt.description == "Int")
-        #expect(type.comparisonMode == ._3)
+        #expect(type.comparisonMode == .equatableAlways)
         #expect(type.flags == [])
     }
 }

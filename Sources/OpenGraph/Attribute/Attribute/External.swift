@@ -13,7 +13,7 @@ public struct External<Value> {
 // MARK: - _AttributeBody
 
 extension External: _AttributeBody {
-    public static var comparisonMode: OGComparisonMode { ._3 }
+    public static var comparisonMode: ComparisonMode { .equatableAlways }
 
     public static var flags: OGAttributeTypeFlags { [] }
 

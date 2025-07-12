@@ -11,7 +11,7 @@ public protocol _AttributeBody {
     static func _destroySelf(_ pointer: UnsafeMutableRawPointer)
     static var _hasDestroySelf: Bool { get }
     static func _updateDefault(_ pointer: UnsafeMutableRawPointer)
-    static var comparisonMode: OGComparisonMode { get }
+    static var comparisonMode: ComparisonMode { get }
     static var flags: OGAttributeTypeFlags { get }
 }
 
@@ -21,7 +21,7 @@ extension _AttributeBody {
     public static func _destroySelf(_ pointer: UnsafeMutableRawPointer) {}
     public static var _hasDestroySelf: Bool { false }
     public static func _updateDefault(_ pointer: UnsafeMutableRawPointer) {}
-    public static var comparisonMode: OGComparisonMode { ._2 }
+    public static var comparisonMode: ComparisonMode { .equatableUnlessPOD }
     public static var flags: OGAttributeTypeFlags { .mainThread }
 }
 
