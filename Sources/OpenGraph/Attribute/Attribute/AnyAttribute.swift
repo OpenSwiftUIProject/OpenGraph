@@ -16,8 +16,6 @@ private func OGGraphMutateAttribute(
 )
 
 extension AnyAttribute {
-    public typealias Flags = OGAttributeTypeFlags
-
     public init<Value>(_ attribute: Attribute<Value>) {
         self = attribute.identifier
     }
@@ -35,7 +33,7 @@ extension AnyAttribute {
         create(offset: offset)
     }
 
-    public func setFlags(_ newFlags: OGAttributeFlags, mask: OGAttributeFlags) {
+    public func setFlags(_ newFlags: Subgraph.Flags, mask: Subgraph.Flags) {
         flags = flags.subtracting(mask).union(newFlags.intersection(mask))
     }
 

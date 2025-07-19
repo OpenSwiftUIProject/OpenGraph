@@ -19,7 +19,7 @@ public struct Map<Source, Value>: Rule, CustomStringConvertible {
 
     public var value: Value { body(arg.value) }
 
-    public static var flags: OGAttributeTypeFlags { [] }
+    public static var flags: Flags { [] }
 
     public var description: String { "λ \(Value.self)" }
 }

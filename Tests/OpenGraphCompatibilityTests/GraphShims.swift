@@ -4,10 +4,8 @@
 
 #if OPENGRAPH_COMPATIBILITY_TEST
 @_exported public import AttributeGraph
-public typealias OGAttributeFlags = AGAttributeFlags
 public typealias OGAttributeInfo = AGAttributeInfo
 public typealias OGAttributeType = AGAttributeType
-public typealias OGAttributeTypeFlags = AGAttributeTypeFlags
 public typealias OGCachedValueOptions = AGCachedValueOptions
 public typealias OGChangedValueFlags = AGChangedValueFlags
 public typealias OGCounterQueryType = AGCounterQueryType
