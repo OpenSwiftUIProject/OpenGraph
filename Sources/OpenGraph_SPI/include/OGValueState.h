@@ -9,7 +9,7 @@
 
 OG_ASSUME_NONNULL_BEGIN
 
-typedef CF_OPTIONS(uint8_t, OGValueState) {
+typedef OG_OPTIONS(uint8_t, OGValueState) {
     OGValueStateNone = 0,
     OGValueStateDirty = 1 << 0,
     OGValueStatePending = 1 << 1,
