@@ -15,7 +15,7 @@ typedef struct OGWeakAttribute {
         OGAttribute identifier;
         uint32_t seed;
     } _details;
-} OGWeakAttribute;
+} OGWeakAttribute OG_SWIFT_NAME(AnyWeakAttribute);
 
 OG_EXTERN_C_BEGIN
 
