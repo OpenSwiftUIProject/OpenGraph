@@ -21,13 +21,13 @@ typedef struct OGAttributeVTable {
     CFStringRef _Nullable (*_Nullable self_description)(const OGAttributeType *, const void *);
     CFStringRef _Nullable (*_Nullable value_description)(const OGAttributeType *, const void *);
     void (*_Nullable update_default)(const OGAttributeType *, void *);
-} AGAttributeVTable;
+} OGAttributeVTable OG_SWIFT_NAME(_AttributeVTable);
 
 typedef struct OGAttributeType {
     OGTypeID self_id;
     OGTypeID value_id;
     OGClosureStorage update;
-    const AGAttributeVTable *vtable;
+    const OGAttributeVTable *vtable;
     OGAttributeTypeFlags flags;
 
     uint32_t internal_offset;
