@@ -37,7 +37,7 @@ public struct Attribute<Value> {
     public init<Body: _AttributeBody>(
         body: UnsafePointer<Body>,
         value: UnsafePointer<Value>?,
-        flags: OGAttributeTypeFlags = [],
+        flags: Flags = [],
         update: AttributeUpdateBlock
     ) {
         #if os(WASI)
@@ -194,12 +194,12 @@ public struct Attribute<Value> {
     
     // MARK: - Flags
 
-    public var flags: OGAttributeFlags {
+    public var flags: Subgraph.Flags {
         get { identifier.flags }
         nonmutating set { identifier.flags = newValue }
     }
     
-    public func setFlags(_ newFlags: OGAttributeFlags, mask: OGAttributeFlags) {
+    public func setFlags(_ newFlags: Subgraph.Flags, mask: Subgraph.Flags) {
         identifier.setFlags(newFlags, mask: mask)
     }
 }
@@ -226,12 +226,6 @@ extension Attribute {
             Attribute(body: pointer, value: nil) { R._update }
         }
     }
-}
-
-// TODO:
-private struct AttributeType {
-    var graphType: OGAttributeType
-    var type: _AttributeBody.Type
 }
 
 @_silgen_name("OGGraphCreateAttribute")

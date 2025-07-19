@@ -48,7 +48,7 @@ OGAttributeFlags OGGraphGetFlags(OGAttribute attribute) {
     const OG::AttributeID id = OG::AttributeID(attribute);
     id.checkIsDirect();
     // TODO: data/table
-    return OGAttributeFlagsDefault;
+    return OGAttributeFlagsNone;
 }
 
 void OGGraphSetFlags(OGAttribute attribute, OGAttributeFlags flags) {

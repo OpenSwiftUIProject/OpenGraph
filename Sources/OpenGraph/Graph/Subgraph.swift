@@ -9,7 +9,7 @@ public import OpenGraphCxx
 
 extension Subgraph {
     public func addObserver(_ observer: () -> Void) -> Int {
-        OGSubgraphAddObserver(self, observer: observer)
+        Subgraph.addObserver(self, observer: observer)
     }
     
     public func apply<Value>(_ body: () -> Value) -> Value {
@@ -27,8 +27,8 @@ extension Subgraph {
         #endif
     }
     
-    public func forEach(_ flags: OGAttributeFlags, _ callback: (AnyAttribute) -> Void) {
-        OGSubgraphApply(self, flags: flags, callback: callback)
+    public func forEach(_ flags: Subgraph.Flags, _ callback: (AnyAttribute) -> Void) {
+        Subgraph.apply(self, flags: flags, callback: callback)
     }
 }
 
@@ -52,15 +52,11 @@ extension Subgraph {
     }
 }
 
-@_silgen_name("OGSubgraphApply")
-private func OGSubgraphApply(
-    _ graph: Subgraph,
-    flags: OGAttributeFlags,
-    callback: (AnyAttribute) -> Void
-)
-
-@_silgen_name("OGSubgraphAddObserver")
-private func OGSubgraphAddObserver(
-    _ graph: Subgraph,
-    observer: () -> Void
-) -> Int
+// FIXME: migrate to use @_extern(c, "xx") in Swift 6
+extension Subgraph {
+    @_silgen_name("OGSubgraphApply")
+    private static func apply(_ graph: Subgraph, flags: Subgraph.Flags, callback: (AnyAttribute) -> Void)
+    
+    @_silgen_name("OGSubgraphAddObserver")
+    private static func addObserver(_ graph: Subgraph, observer: () -> Void) -> Int
+}

@@ -81,7 +81,7 @@ void OGSubgraphUpdate(OGSubgraphRef cf_subgraph, OGAttributeFlags flags) OG_SWIF
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-bool OGSubgraphIsDirty(OGSubgraphRef cf_subgraph, uint32_t unknown) OG_SWIFT_NAME(OGSubgraphRef.isDirty(self:_:));
+bool OGSubgraphIsDirty(OGSubgraphRef cf_subgraph, OGAttributeFlags flags) OG_SWIFT_NAME(OGSubgraphRef.isDirty(self:flags:));
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
