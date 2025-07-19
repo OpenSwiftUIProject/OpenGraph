@@ -12,7 +12,7 @@ extension Graph {
         ctx: GraphContext,
         body: _AttributeBody.Type,
         valueType: Metadata,
-        flags: OGAttributeTypeFlags,
+        flags: AttributeType.Flags,
         update: AttributeUpdateBlock
     ) -> Int {
         // TODO: __AGGraphInternAttributeType

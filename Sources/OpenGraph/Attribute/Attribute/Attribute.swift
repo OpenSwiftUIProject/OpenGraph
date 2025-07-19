@@ -37,7 +37,7 @@ public struct Attribute<Value> {
     public init<Body: _AttributeBody>(
         body: UnsafePointer<Body>,
         value: UnsafePointer<Value>?,
-        flags: OGAttributeTypeFlags = [],
+        flags: AttributeType.Flags = [],
         update: AttributeUpdateBlock
     ) {
         #if os(WASI)
@@ -226,12 +226,6 @@ extension Attribute {
             Attribute(body: pointer, value: nil) { R._update }
         }
     }
-}
-
-// TODO:
-private struct AttributeType {
-    var graphType: OGAttributeType
-    var type: _AttributeBody.Type
 }
 
 @_silgen_name("OGGraphCreateAttribute")

@@ -8,7 +8,7 @@
 public import OpenGraph_SPI
 
 extension AnyAttribute {
-    public typealias Flags = OGAttributeTypeFlags
+    public typealias Flags = AttributeType.Flags
 
     public init<Value>(_ attribute: Attribute<Value>) {
         self = attribute.identifier
