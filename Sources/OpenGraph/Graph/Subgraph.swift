@@ -27,7 +27,7 @@ extension Subgraph {
         #endif
     }
     
-    public func forEach(_ flags: OGAttributeFlags, _ callback: (AnyAttribute) -> Void) {
+    public func forEach(_ flags: Subgraph.Flags, _ callback: (AnyAttribute) -> Void) {
         Subgraph.apply(self, flags: flags, callback: callback)
     }
 }
@@ -55,7 +55,7 @@ extension Subgraph {
 // FIXME: migrate to use @_extern(c, "xx") in Swift 6
 extension Subgraph {
     @_silgen_name("OGSubgraphApply")
-    private static func apply(_ graph: Subgraph, flags: OGAttributeFlags, callback: (AnyAttribute) -> Void)
+    private static func apply(_ graph: Subgraph, flags: Subgraph.Flags, callback: (AnyAttribute) -> Void)
     
     @_silgen_name("OGSubgraphAddObserver")
     private static func addObserver(_ graph: Subgraph, observer: () -> Void) -> Int
