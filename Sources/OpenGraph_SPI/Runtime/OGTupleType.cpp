@@ -243,6 +243,7 @@ void OGTupleWithBuffer(OGTupleType tuple_type, size_t count, const void (* funct
     if (buffer_size <= 0x1000) {
         char buffer[buffer_size];
         bzero(buffer, buffer_size);
+        tuple.value = buffer;
         // NOTE: If you use buffer out of the scope, the stack may be malformed.
         // So we need to call function in this scope.
         function(tuple, context);
