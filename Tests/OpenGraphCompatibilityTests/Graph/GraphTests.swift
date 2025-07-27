@@ -41,7 +41,7 @@ struct GraphTests {
     @Test(.disabled(if: !compatibilityTestEnabled, "Not implemented on OG"))
     func graphDescriptionDict() throws {
         let description = try #require(Graph.description(nil, options: ["format": "graph/dict"] as NSDictionary))
-        let dic = description.takeUnretainedValue() as! Dictionary<String, AnyHashable>
+        let dic = description as! Dictionary<String, AnyHashable>
         #expect(dic["version"] as? UInt32 == 2)
         #expect((dic["graphs"] as? NSArray)?.count == 0)
     }
@@ -53,7 +53,7 @@ struct GraphTests {
         #expect(Graph.description(nil, options: options) == nil)
         let graph = Graph()
         let description = try #require(Graph.description(graph, options: options))
-        let dotGraph = description.takeUnretainedValue() as! String
+        let dotGraph = description as! String
         let expectedEmptyDotGraph = #"""
         digraph {
         }

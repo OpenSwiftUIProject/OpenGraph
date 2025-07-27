@@ -23,6 +23,8 @@ typedef uint32_t OGAttribute OG_SWIFT_STRUCT OG_SWIFT_NAME(AnyAttribute);
 
 OG_ASSUME_NONNULL_BEGIN
 
+OG_IMPLICIT_BRIDGING_ENABLED
+
 // MARK: - Exported C functions
 
 OG_EXTERN_C_BEGIN
@@ -117,6 +119,8 @@ bool OGGraphAnyInputsChanged(const OGAttribute *inputs, size_t count);
 #endif
 
 OG_EXTERN_C_END
+
+OG_IMPLICIT_BRIDGING_DISABLED
 
 OG_ASSUME_NONNULL_END
 

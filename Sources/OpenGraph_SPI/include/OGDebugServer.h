@@ -11,6 +11,8 @@
 
 OG_ASSUME_NONNULL_BEGIN
 
+OG_IMPLICIT_BRIDGING_ENABLED
+
 typedef struct OGDebugServerStorage OGDebugServerStorage;
 
 typedef const OGDebugServerStorage *OGDebugServer OG_SWIFT_STRUCT;
@@ -27,6 +29,8 @@ CFURLRef _Nullable OGDebugServerCopyURL(void) OG_SWIFT_NAME(OGDebugServer.copyUR
 OG_EXPORT
 void OGDebugServerRun(int timeout) OG_SWIFT_NAME(OGDebugServer.run(timeout:));
 OG_EXTERN_C_END
+
+OG_IMPLICIT_BRIDGING_DISABLED
 
 OG_ASSUME_NONNULL_END
 

@@ -13,7 +13,7 @@ extension Graph {
         guard let description = Graph.description(nil, options: options) else {
             return nil
         }
-        guard let dictionary = description.takeUnretainedValue() as? NSDictionary else {
+        guard let dictionary = description as? NSDictionary else {
             return nil
         }
         return dictionary as? [String: Any]
@@ -30,7 +30,7 @@ extension Graph {
         else {
             return nil
         }
-        return description.takeUnretainedValue() as? String
+        return description as? String
     }
 }
 

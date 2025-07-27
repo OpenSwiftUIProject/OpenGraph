@@ -13,6 +13,8 @@
 
 OG_ASSUME_NONNULL_BEGIN
 
+OG_IMPLICIT_BRIDGING_ENABLED
+
 typedef struct OG_SWIFT_NAME(_Metadata) OGSwiftMetadata {
 } OGSwiftMetadata;
 
@@ -113,6 +115,8 @@ OG_REFINED_FOR_SWIFT
 char const* _Nullable OGTypeNominalDescriptorName(OGTypeID typeID) OG_SWIFT_NAME(getter:Metadata.nominalDescriptorName(self:));
 
 OG_EXTERN_C_END
+
+OG_IMPLICIT_BRIDGING_DISABLED
 
 OG_ASSUME_NONNULL_END
 

@@ -4,8 +4,8 @@
 
 import Testing
 
-// *** Program crashed: Bad pointer dereference at 0x00000007eff1c01b ***
 #if canImport(Darwin)
+@Suite(.enabled(if: compatibilityTestEnabled))
 final class WeakAttributeTests: AttributeTestBase {
     @Test
     func initTest() {

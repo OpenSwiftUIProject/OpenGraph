@@ -5,6 +5,8 @@
 import Testing
 
 #if canImport(Darwin)
+
+@Suite(.enabled(if: compatibilityTestEnabled))
 final class AnyWeakAttributeTests: AttributeTestBase {
     @Test
     func basic() {
