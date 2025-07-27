@@ -1,11 +1,11 @@
 //
-//  PointerOffsetTests.swift
+//  PointerOffsetCompatibilityTests.swift
 //  OpenGraphCompatibilityTests
 
 import RealModule
 import Testing
 
-struct PointerOffsetTests {
+struct PointerOffsetCompatibilityTests {
     @Test
     func plainInitAndProperty() {
         typealias Base = Tuple<Int, Int>

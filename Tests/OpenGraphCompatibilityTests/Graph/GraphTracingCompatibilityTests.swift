@@ -1,10 +1,10 @@
 //
-//  GraphTracingTests.swift
+//  GraphTracingCompatibilityTests.swift
 //  OpenGraphCompatibilityTests
 
 import Testing
 
-struct GraphTracingTests {
+struct GraphTracingCompatibilityTests {
     @Test
     func tracing() {
         let graph = Graph()

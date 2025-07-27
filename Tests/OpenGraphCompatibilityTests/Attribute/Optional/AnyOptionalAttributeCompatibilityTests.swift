@@ -1,12 +1,12 @@
 //
-//  AnyOptionalAttributeTests.swift
+//  AnyOptionalAttributeCompatibilityTests.swift
 //  OpenGraphCompatibilityTests
 
 import Testing
 
 #if canImport(Darwin)
 @Suite(.disabled(if: !compatibilityTestEnabled, "AnyOptionalAttribute is not implemented"))
-final class AnyOptionalAttributeTests: AttributeTestBase {
+final class AnyOptionalAttributeCompatibilityTests: AttributeTestBase {
     @Test
     func basicInit() {
         let o1 = AnyOptionalAttribute()

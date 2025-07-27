@@ -1,10 +1,10 @@
 //
-//  RuleTests.swift
+//  RuleCompatibilityTests.swift
 //  OpenGraphCompatibilityTests
 
 import Testing
 
-struct RuleTests {
+struct RuleCompatibilityTests {
     @Test
     func ruleInitialValue() throws {
         struct A: Rule {

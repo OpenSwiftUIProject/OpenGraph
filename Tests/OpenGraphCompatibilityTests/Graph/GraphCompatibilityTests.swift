@@ -1,11 +1,11 @@
 //
-//  GraphTests.swift
+//  GraphCompatibilityTests.swift
 //  OpenGraphCompatibilityTests
 
 import Testing
 import Foundation
 
-struct GraphTests {
+struct GraphCompatibilityTests {
     @Test
     func graphCreate() throws {
         _ = Graph()

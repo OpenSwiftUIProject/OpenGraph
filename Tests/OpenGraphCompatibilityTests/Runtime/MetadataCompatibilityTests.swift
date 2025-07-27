@@ -1,11 +1,11 @@
 //
-//  MetadataTests.swift
+//  MetadataCompatibilityTests.swift
 //  OpenGraphCompatibilityTests
 
 import Testing
 
 @Suite(.enabled(if: swiftToolchainSupported))
-struct MetadataTests {
+struct MetadataCompatibilityTests {
     class T1 {
         var a = 0
         var b: Double = 0
@@ -153,9 +153,9 @@ struct MetadataTests {
 
     @Test(.disabled(if: !compatibilityTestEnabled, "Metadata is not implemented"))
     func description() {
-        #expect(Metadata(T1.self).description == "MetadataTests.T1")
-        #expect(Metadata(T2.self).description == "MetadataTests.T2")
-        #expect(Metadata(T3.self).description == "MetadataTests.T3")
+        #expect(Metadata(T1.self).description == "MetadataCompatibilityTests.T1")
+        #expect(Metadata(T2.self).description == "MetadataCompatibilityTests.T2")
+        #expect(Metadata(T3.self).description == "MetadataCompatibilityTests.T3")
     }
     
     @Test(.disabled(if: !compatibilityTestEnabled, "Metadata is not implemented"))

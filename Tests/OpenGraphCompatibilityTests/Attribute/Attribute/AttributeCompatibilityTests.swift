@@ -1,12 +1,12 @@
 //
-//  AttributeTests.swift
+//  AttributeCompatibilityTests.swift
 //  OpenGraphCompatibilityTests
 
 import Testing
 
 #if canImport(Darwin)
 @Suite(.disabled(if: !compatibilityTestEnabled, "Attribute is not implemented"))
-final class AttributeTests: AttributeTestBase {
+final class AttributeCompatibilityTests: AttributeTestBase {
     @Test
     func initWithValue() {
         let intAttribute = Attribute(value: 0)

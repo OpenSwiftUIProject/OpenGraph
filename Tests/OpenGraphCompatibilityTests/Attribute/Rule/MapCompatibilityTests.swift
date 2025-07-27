@@ -1,11 +1,11 @@
 //
-//  MapTests.swift
+//  MapCompatibilityTests.swift
 //  OpenGraphCompatibilityTests
 
 import Testing
 
 @Suite(.disabled(if: !compatibilityTestEnabled))
-final class MapTests: AttributeTestBase {
+final class MapCompatibilityTests: AttributeTestBase {
     @Test
     func description() throws {
         let map = Map(.init(value: 2)) { $0.description }
