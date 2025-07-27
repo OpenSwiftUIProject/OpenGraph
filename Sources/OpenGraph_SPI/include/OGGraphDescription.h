@@ -6,6 +6,7 @@
 #define OGGraphDescription_h
 
 #include "OGBase.h"
+#include "OGGraph.h"
 
 OG_ASSUME_NONNULL_BEGIN
 
@@ -28,6 +29,18 @@ static const CFStringRef OGDescriptionFormatDictionary OG_SWIFT_NAME(OGGraphRef.
 static const CFStringRef OGDescriptionAllGraphs OG_SWIFT_NAME(OGGraphRef.descriptionAllGraphs) = CFSTR("all_graphs");
 
 #endif
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGGraphArchiveJSON(char const * _Nullable name) OG_SWIFT_NAME(OGGraphRef.archiveJSON(name:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGGraphArchiveJSON2(char const * _Nullable name, uint8_t options) OG_SWIFT_NAME(OGGraphRef.archiveJSON(name:options:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+_Nullable CFTypeRef OGGraphDescription(_Nullable OGGraphRef graph, CFDictionaryRef options) OG_SWIFT_NAME(OGGraphRef.description(_:options:));
 
 OG_EXTERN_C_END
 

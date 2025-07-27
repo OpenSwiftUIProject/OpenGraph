@@ -6,6 +6,7 @@
 //  Status: WIP
 
 public import OpenGraph_SPI
+import Foundation
 
 extension Graph {
     public static func typeIndex(
@@ -70,4 +71,28 @@ extension Graph {
     @inline(__always)
     @inlinable
     public static func setOutputValue<Value>(_ value: UnsafePointer<Value>)
+}
+
+extension Graph {
+    public func archiveJSON(name: String?) {
+        let options: NSDictionary = [
+            Graph.descriptionFormat: "graph/dict",
+            Graph.descriptionIncludeValues: true,
+        ]
+        guard let description = Graph.description(self, options: options) else { // FIXME
+            return
+        }
+        var name = name ?? "graph"
+        name.append(".ag-json")
+        let path = (NSTemporaryDirectory() as NSString).appendingPathComponent(name)
+        guard let data = try? JSONSerialization.data(withJSONObject: description, options: []) else {
+            return
+        }
+        let url = URL(fileURLWithPath: path)
+        do {
+            try data.write(to: url, options: [])
+            print("Wrote graph data to \"\(path)\".")
+        } catch {
+        }
+    }
 }
