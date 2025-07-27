@@ -40,7 +40,7 @@ extension Metadata: Swift.Hashable, Swift.CustomStringConvertible {
     @inline(__always)
     public var description: String {
         #if canImport(ObjectiveC)
-        __OGTypeDescription(self).takeUnretainedValue() as NSString as String
+        __OGTypeDescription(self) as NSString as String
         #else
         fatalError("Unimplemented")
         #endif

@@ -12,7 +12,7 @@
 
 #if OG_OBJC_FOUNDATION
 #include <Foundation/Foundation.h>
-CFStringRef OGDescriptionFormat = CFSTR("format");
+const CFStringRef OGDescriptionFormat = CFSTR("format");
 
 CFTypeRef OG::Graph::description(const Graph * _Nullable graph, NSDictionary* dic) {
     // TODO
