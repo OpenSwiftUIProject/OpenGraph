@@ -83,7 +83,7 @@ extension Graph {
             Graph.descriptionFormat: "graph/dict",
             Graph.descriptionIncludeValues: true,
         ]
-        guard let description = Graph.description(self, options: options) else { // FIXME
+        guard let description = Graph.description(self, options: options) as? [String: Any] else {
             return
         }
         var name = name ?? "graph"
