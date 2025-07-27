@@ -1,11 +1,11 @@
 //
-//  MetadataTests.swift
+//  MetadataCompatibilityTests.swift
 //  OpenGraphCompatibilityTests
 
 import Testing
 
 @Suite(.enabled(if: swiftToolchainSupported))
-struct MetadataTests {
+struct MetadataCompatibilityTests {
     class T1 {
         var a = 0
         var b: Double = 0

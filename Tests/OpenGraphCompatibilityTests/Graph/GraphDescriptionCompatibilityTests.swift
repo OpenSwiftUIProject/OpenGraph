@@ -1,11 +1,11 @@
 //
-//  GraphDescriptionTests.swift
+//  GraphDescriptionCompatibilityTests.swift
 //  OpenGraphCompatibilityTests
 
 import Testing
 
 #if canImport(Darwin)
-struct GraphDescriptionTests {
+struct GraphDescriptionCompatibilityTests {
     @Test
     func format() {
         #expect(Graph.descriptionFormat as String == "format")

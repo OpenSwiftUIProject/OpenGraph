@@ -1,12 +1,12 @@
 //
-//  FocusTests.swift
+//  FocusCompatibilityTests.swift
 //  OpenGraphCompatibilityTests
 
 import Testing
 
 #if canImport(Darwin)
 @Suite(.disabled(if: !compatibilityTestEnabled, "Attribute is not implemented"))
-final class FocusTests: AttributeTestBase {
+final class FocusCompatibilityTests: AttributeTestBase {
     struct Demo {
         var a: Int
         var b: Double
