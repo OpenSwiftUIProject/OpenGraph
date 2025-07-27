@@ -9,16 +9,17 @@ import Foundation
 @_spi(Debug)
 extension Graph {
     public var dict: [String: Any]? {
-        let options = [
-            Graph.descriptionFormat: Graph.descriptionFormatDictionary
-        ] as NSDictionary
-        guard let description = Graph.description(nil, options: options) else {
-            return nil
-        }
-        guard let dictionary = description as? NSDictionary else {
-            return nil
-        }
-        return dictionary as? [String: Any]
+//        let options = [
+//            Graph.descriptionFormat: Graph.descriptionFormatDictionary
+//        ] as NSDictionary
+//        guard let description = Graph.description(nil, options: options) else {
+//            return nil
+//        }
+//        guard let dictionary = description as? NSDictionary else {
+//            return nil
+//        }
+//        return dictionary as? [String: Any]
+        nil
     }
 
     // style:
@@ -27,14 +28,15 @@ extension Graph {
     // color:
     // - red: is_changed
     public var dot: String? {
-        let options = [
-            Graph.descriptionFormat: Graph.descriptionFormatDot
-        ] as NSDictionary
-        guard let description = Graph.description(self, options: options)
-        else {
-            return nil
-        }
-        return description as? String
+        nil
+//        let options = [
+//            Graph.descriptionFormat: Graph.descriptionFormatDot
+//        ] as NSDictionary
+//        guard let description = Graph.description(self, options: options)
+//        else {
+//            return nil
+//        }
+//        return description as? String
     }
 }
 

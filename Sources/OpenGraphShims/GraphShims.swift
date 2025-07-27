@@ -21,6 +21,9 @@ public typealias OGValueOptions = AGValueOptions
 public typealias OGValueState = AGValueState
 public let attributeGraphEnabled = true
 public let swiftToolchainSupported = true
+#elseif OPENGRAPH_COMPUTE
+@_exported import Compute
+//typealias Graph = AGGraph
 #else
 @_exported import OpenGraph
 public let attributeGraphEnabled = false
