@@ -6,7 +6,6 @@
 //  Status: WIP
 
 public import OpenGraph_SPI
-import Foundation
 
 extension Graph {
     public static func typeIndex(
@@ -73,8 +72,13 @@ extension Graph {
     public static func setOutputValue<Value>(_ value: UnsafePointer<Value>)
 }
 
+#if canImport(Darwin)
+import Foundation
+#endif
+
 extension Graph {
     public func archiveJSON(name: String?) {
+        #if canImport(Darwin)
         let options: NSDictionary = [
             Graph.descriptionFormat: "graph/dict",
             Graph.descriptionIncludeValues: true,
@@ -94,5 +98,6 @@ extension Graph {
             print("Wrote graph data to \"\(path)\".")
         } catch {
         }
+        #endif
     }
 }
