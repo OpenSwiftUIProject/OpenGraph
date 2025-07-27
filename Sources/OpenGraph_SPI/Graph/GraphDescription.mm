@@ -1,9 +1,6 @@
 //
 //  GraphDescription.mm
-//
-//
-//  Created by Kyle on 2024/1/21.
-//
+//  OpenGraph_SPI
 
 #include "OGGraphDescription.h"
 #include "OGGraph.h"
@@ -22,16 +19,6 @@ CFTypeRef OG::Graph::description(const Graph * _Nullable graph, NSDictionary* di
     // For "format": "graph/dict" - NSMutableDictionray
     // For "format": "graph/dot" - NSMutableString
     return NULL;
-}
-
-CFTypeRef OGGraphDescription(OGGraphRef graph, CFDictionaryRef options) {
-    if (graph == nullptr) {
-        return OG::Graph::description(nullptr, (__bridge NSDictionary*)options);
-    }
-    if (graph->context.isInvalid()) {
-        OG::precondition_failure("invalidated graph");
-    }
-    return OG::Graph::description(&graph->context.get_graph(), (__bridge NSDictionary*)options);
 }
 
 #endif /* OG_OBJC_FOUNDATION */
