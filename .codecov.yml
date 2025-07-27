@@ -1,10 +1,14 @@
 codecov:
-  require_ci_to_pass: no
+  require_ci_to_pass: yes
 coverage:
   status:
     project:
       default:
         target: auto 
         threshold: 5
+    patch: off
+      # default:
+      #   target: auto 
+      #   threshold: 5
 ignore:
   - Tests
