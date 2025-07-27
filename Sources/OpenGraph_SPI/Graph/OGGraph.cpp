@@ -41,10 +41,6 @@ OGGraphRef OGGraphCreateShared(OGGraphRef storage) {
     return instance;
 }
 
-void OGGraphArchiveJSON(char const * _Nullable name) {
-    OG::Graph::write_to_file(nullptr, name);
-}
-
 namespace {
 CFRuntimeClass &graph_type_id() {
     static auto dealloc = [](const void* ptr) {

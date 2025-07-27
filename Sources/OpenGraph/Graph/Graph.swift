@@ -71,3 +71,33 @@ extension Graph {
     @inlinable
     public static func setOutputValue<Value>(_ value: UnsafePointer<Value>)
 }
+
+#if canImport(Darwin)
+import Foundation
+#endif
+
+extension Graph {
+    public func archiveJSON(name: String?) {
+        #if canImport(Darwin)
+        let options: NSDictionary = [
+            Graph.descriptionFormat: "graph/dict",
+            Graph.descriptionIncludeValues: true,
+        ]
+        guard let description = Graph.description(self, options: options) as? [String: Any] else {
+            return
+        }
+        var name = name ?? "graph"
+        name.append(".ag-json")
+        let path = (NSTemporaryDirectory() as NSString).appendingPathComponent(name)
+        guard let data = try? JSONSerialization.data(withJSONObject: description, options: []) else {
+            return
+        }
+        let url = URL(fileURLWithPath: path)
+        do {
+            try data.write(to: url, options: [])
+            print("Wrote graph data to \"\(path)\".")
+        } catch {
+        }
+        #endif
+    }
+}

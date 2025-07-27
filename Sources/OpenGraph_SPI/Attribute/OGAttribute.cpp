@@ -11,7 +11,7 @@
 #include "../Util/assert.hpp"
 #include <optional>
 
-const OGAttribute OGAttributeNil = OGAttribute(OG::AttributeID::Kind::Nil);
+const OGAttribute OGAttributeNil = OGAttribute(OG::AttributeID::Kind::Null);
 
 OGAttribute OGGraphGetCurrentAttribute() {
     // TODO

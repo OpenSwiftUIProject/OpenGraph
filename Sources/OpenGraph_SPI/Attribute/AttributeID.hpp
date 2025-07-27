@@ -22,7 +22,7 @@ public:
     enum class Kind: uint8_t {
         Direct = 0x0,
         Indirect = 0x1,
-        Nil = 0x2,
+        Null = 0x2,
     };
 private:
     uint32_t _rawValue;
@@ -59,8 +59,8 @@ public:
     }
     
     OG_INLINE OG_CONSTEXPR
-    const bool isNil() const OG_NOEXCEPT {
-        return getKind() == Kind::Nil;
+    const bool isNull() const OG_NOEXCEPT {
+        return getKind() == Kind::Null;
     }
     
     OG_INLINE OG_CONSTEXPR

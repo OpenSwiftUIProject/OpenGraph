@@ -1,23 +1,22 @@
 //
 //  Graph.cpp
-//  
-//
-//  Created by Kyle on 2024/1/18.
-//
+//  OpenGraph_SPI
 
 #include "Graph.hpp"
 #include "Subgraph.hpp"
+#include "OGGraphDescription.h"
 
 #if !OG_TARGET_OS_WASI
 #include <dispatch/dispatch.h>
 #endif
+
 #include <pthread.h>
 
 pthread_key_t OG::Graph::_current_update_key;
 
 OG::Graph::Graph() OG_NOEXCEPT {
     // TODO
-    
+
     // libdispatch is not supported on WASI
     // Tracked via https://github.com/swiftwasm/swift/issues/5565
     #if !OG_TARGET_OS_WASI
@@ -27,7 +26,7 @@ OG::Graph::Graph() OG_NOEXCEPT {
         OG::Subgraph::make_current_subgraph_key();
     });
     #endif
-    
+
     // TODO
 }
 
@@ -45,10 +44,6 @@ void OG::Graph::start_profiling(uint32_t) OG_NOEXCEPT {
     // TODO
 }
 void OG::Graph::stop_profiling() OG_NOEXCEPT {
-    // TODO
-}
-
-void OG::Graph::write_to_file(const Graph * _Nullable, const char * _Nullable) OG_NOEXCEPT {
     // TODO
 }
 
