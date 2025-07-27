@@ -42,11 +42,15 @@ OGGraphRef OGGraphCreateShared(OGGraphRef storage) {
 }
 
 void OGGraphArchiveJSON(char const * _Nullable name) {
+    #if OG_OBJC_FOUNDATION
     OG::Graph::write_to_file(nullptr, name, 0);
+    #endif
 }
 
 void OGGraphArchiveJSON2(char const * _Nullable name, uint8_t options) {
+    #if OG_OBJC_FOUNDATION
     OG::Graph::write_to_file(nullptr, name, options);
+    #endif
 }
 
 namespace {

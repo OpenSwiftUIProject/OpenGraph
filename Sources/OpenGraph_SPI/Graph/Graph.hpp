@@ -1,9 +1,7 @@
 //
 //  Graph.hpp
-//
-//
-//  Created by Kyle on 2024/1/18.
-//
+//  OpenGraph_SPI
+
 
 #ifndef Graph_hpp
 #define Graph_hpp
@@ -122,9 +120,11 @@ public:
     static void all_stop_profiling() OG_NOEXCEPT;
     void start_profiling(uint32_t) OG_NOEXCEPT;
     void stop_profiling() OG_NOEXCEPT;
-    
+
+    #if OG_OBJC_FOUNDATION
     static void write_to_file(const Graph * _Nullable, const char * _Nullable, uint8_t) OG_NOEXCEPT;
-    
+    #endif
+
     const bool thread_is_updating() const OG_NOEXCEPT;
     const bool is_context_updating(const OG::Graph::Context&) const OG_NOEXCEPT;
     
