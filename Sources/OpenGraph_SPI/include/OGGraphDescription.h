@@ -24,7 +24,7 @@ const CFStringRef OGDescriptionIncludeValues OG_SWIFT_NAME(OGGraphRef.descriptio
 
 static const CFStringRef OGDescriptionFormatDot OG_SWIFT_NAME(OGGraphRef.descriptionFormatDot) = CFSTR("graph/dot");
 
-static const CFStringRef OGDescriptionFormatDictionary OG_SWIFT_NAME(OGGraphRef.descriptionFormatDictionary) = CFSTR("graph/dictionary");
+static const CFStringRef OGDescriptionFormatDictionary OG_SWIFT_NAME(OGGraphRef.descriptionFormatDictionary) = CFSTR("graph/dict");
 
 static const CFStringRef OGDescriptionAllGraphs OG_SWIFT_NAME(OGGraphRef.descriptionAllGraphs) = CFSTR("all_graphs");
 
