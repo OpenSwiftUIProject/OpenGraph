@@ -11,8 +11,11 @@
 #include "../Util/assert.hpp"
 
 #if OG_OBJC_FOUNDATION
+
 #include <Foundation/Foundation.h>
+
 const CFStringRef OGDescriptionFormat = CFSTR("format");
+const CFStringRef OGDescriptionIncludeValues = CFSTR("include-values");
 
 CFTypeRef OG::Graph::description(const Graph * _Nullable graph, NSDictionary* dic) {
     // TODO

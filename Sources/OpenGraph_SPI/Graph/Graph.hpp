@@ -123,7 +123,7 @@ public:
     void start_profiling(uint32_t) OG_NOEXCEPT;
     void stop_profiling() OG_NOEXCEPT;
     
-    static void write_to_file(const Graph * _Nullable, const char * _Nullable) OG_NOEXCEPT;
+    static void write_to_file(const Graph * _Nullable, const char * _Nullable, uint8_t) OG_NOEXCEPT;
     
     const bool thread_is_updating() const OG_NOEXCEPT;
     const bool is_context_updating(const OG::Graph::Context&) const OG_NOEXCEPT;

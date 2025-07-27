@@ -147,6 +147,9 @@ let openGraphSPITarget = Target.target(
     name: "OpenGraph_SPI",
     cSettings: sharedCSettings + [
         .define("__COREFOUNDATION_FORSWIFTFOUNDATIONONLY__", to: "1", .when(platforms: .nonDarwinPlatforms)),
+    ],
+    linkerSettings: [
+        .linkedLibrary("z"),
     ]
 )
 let openGraphShimsTarget = Target.target(
