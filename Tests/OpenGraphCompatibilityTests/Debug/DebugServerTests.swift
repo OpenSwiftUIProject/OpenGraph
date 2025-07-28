@@ -1,8 +1,6 @@
 //
 //  DebugServerTests.swift
-//
-//
-//
+//  OpenGraphCompatibilityTests
 
 #if canImport(Darwin)
 import CoreFoundation
@@ -22,12 +20,11 @@ struct DebugServerTests {
     // Or we can disable SIP on the target darwinOS and run `sudo sysctl kern.osvariant_status=xx` to workaround
     @Test(
         .disabled(if: compatibilityTestEnabled, "Skip on AG due to internal_diagnostics check"),
-        .disabled(if: !compatibilityTestEnabled, "Skip on OG due to OGReference crash on CLI test")
     )
     func testMode1() throws {
         _ = try #require(OGDebugServer.start(mode: 1))
         let url = try #require(OGDebugServer.copyURL())
-        let urlString = (url.takeRetainedValue() as URL).absoluteString
+        let urlString = (url as URL).absoluteString
         #expect(urlString.hasPrefix("graph://"))
         OGDebugServer.run(timeout: 1)
     }

@@ -1,5 +1,5 @@
 //
-//  ExternalTests.swift
+//  ExternalCompatibilityTests.swift
 //  OpenGraphCompatibilityTests
 
 import Testing
@@ -9,7 +9,7 @@ import Testing
 // Report to upstream for investigation when we bump to 5.10
 #if canImport(Darwin)
 @Suite(.disabled(if: !compatibilityTestEnabled, "Attribute is not implemented"))
-final class ExternalTests: AttributeTestBase {
+final class ExternalCompatibilityTests: AttributeTestBase {
     @Test
     func example() throws {
         let type = External<Int>.self

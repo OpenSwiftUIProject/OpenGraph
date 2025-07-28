@@ -1,11 +1,11 @@
 //
-//  TupleTypeTests.swift
+//  TupleTypeCompatibilityTests.swift
 //  OpenGraphCompatibilityTests
 
 import Testing
 
 @Suite(.enabled(if: swiftToolchainSupported))
-struct TupleTypeTests {
+struct TupleTypeCompatibilityTests {
     class T1 {
         var a = 0
         var b: Double = 0
@@ -141,7 +141,7 @@ struct TupleTypeTests {
 }
 
 @Suite(.enabled(if: swiftToolchainSupported))
-struct UnsafeMutableTupleTests {
+struct UnsafeMutableTupleCompatibilityTests {
     class T1 {
         var a = 0
     }

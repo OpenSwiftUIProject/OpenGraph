@@ -202,7 +202,7 @@ CFDataRef _Nullable OG::DebugServer::receive(Connection *, OGDebugServerMessageH
             NSString *command = dic[@"command"];
             if ([command isEqual:@"graph/description"]) {
                 NSMutableDictionary *mutableDic = [NSMutableDictionary dictionaryWithDictionary:dic];
-                mutableDic[(__bridge NSString *)OGDescriptionFormat] = @"graph/dict";
+                mutableDic[(__bridge NSString *)OGDescriptionFormat] = (__bridge NSString *)OGDescriptionFormatDictionary;
                 CFTypeRef description = OG::Graph::description(nullptr, mutableDic);
                 if (description) {
                     NSData *descriptionData = [NSJSONSerialization dataWithJSONObject:(__bridge id)description options:0 error:NULL];

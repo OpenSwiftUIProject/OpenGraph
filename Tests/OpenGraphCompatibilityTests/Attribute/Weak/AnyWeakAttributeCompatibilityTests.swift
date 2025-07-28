@@ -1,11 +1,13 @@
 //
-//  AnyWeakAttributeTests.swift
+//  AnyWeakAttributeCompatibilityTests.swift
 //  OpenGraphCompatibilityTests
 
 import Testing
 
 #if canImport(Darwin)
-final class AnyWeakAttributeTests: AttributeTestBase {
+
+@Suite(.enabled(if: compatibilityTestEnabled))
+final class AnyWeakAttributeCompatibilityTests: AttributeTestBase {
     @Test
     func basic() {
         let w1 = AnyWeakAttribute(nil)

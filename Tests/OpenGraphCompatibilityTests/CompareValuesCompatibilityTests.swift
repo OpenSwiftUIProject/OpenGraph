@@ -1,11 +1,11 @@
 //
-//  CompareValuesTests.swift
+//  CompareValuesCompatibilityTests.swift
 //  OpenGraphCompatibilityTests
 
 import Testing
 
 @Suite(.disabled(if: !compatibilityTestEnabled, "OGCompareValues is not implemented"))
-struct CompareValuesTests {
+struct CompareValuesCompatibilityTests {
     @Test
     func intCompare() throws {
         #expect(compareValues(1, 1) == true)

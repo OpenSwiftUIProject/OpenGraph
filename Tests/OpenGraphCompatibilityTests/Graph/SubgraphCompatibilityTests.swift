@@ -1,10 +1,11 @@
 //
-//  SubgraphTests.swift
+//  SubgraphCompatibilityTests.swift
 //  OpenGraphCompatibilityTests
 
 import Testing
 
-struct SubgraphTests {
+@Suite(.enabled(if: compatibilityTestEnabled))
+struct SubgraphCompatibilityTests {
     @Test
     func shouldRecordTree() {
         let key = compatibilityTestEnabled ? "AG_TREE" : "OG_TREE"

@@ -1,12 +1,12 @@
 //
-//  WeakAttributeTests.swift
+//  WeakAttributeCompatibilityTests.swift
 //  OpenGraphCompatibilityTests
 
 import Testing
 
-// *** Program crashed: Bad pointer dereference at 0x00000007eff1c01b ***
 #if canImport(Darwin)
-final class WeakAttributeTests: AttributeTestBase {
+@Suite(.enabled(if: compatibilityTestEnabled))
+final class WeakAttributeCompatibilityTests: AttributeTestBase {
     @Test
     func initTest() {
         let _ = WeakAttribute<Int>()

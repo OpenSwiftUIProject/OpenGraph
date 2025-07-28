@@ -1,10 +1,10 @@
 //
-//  UniqueIDTests.swift
+//  UniqueIDCompatibilityTests.swift
 //  OpenGraphCompatibilityTests
 
 import Testing
 
-struct UniqueIDTests {
+struct UniqueIDCompatibilityTests {
     @Test
     func uniqueID() throws {
         let initialID = makeUniqueID()

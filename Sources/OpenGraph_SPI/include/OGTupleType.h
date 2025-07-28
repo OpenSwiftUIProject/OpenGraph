@@ -13,6 +13,8 @@
 
 OG_ASSUME_NONNULL_BEGIN
 
+OG_IMPLICIT_BRIDGING_ENABLED
+
 typedef const OGSwiftMetadata *OGTupleType OG_SWIFT_STRUCT OG_SWIFT_NAME(TupleType);
 
 typedef OG_CLOSED_ENUM(uint32_t, OGTupleCopyOptions) {
@@ -83,6 +85,8 @@ OG_REFINED_FOR_SWIFT
 void OGTupleWithBuffer(OGTupleType tuple_type, size_t count, const void (* function)(const OGUnsafeMutableTuple mutableTuple, const void * context OG_SWIFT_CONTEXT) OG_SWIFT_CC(swift), const void *context);
 
 OG_EXTERN_C_END
+
+OG_IMPLICIT_BRIDGING_DISABLED
 
 OG_ASSUME_NONNULL_END
 

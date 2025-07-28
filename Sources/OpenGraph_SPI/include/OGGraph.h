@@ -23,6 +23,8 @@ typedef uint32_t OGAttribute OG_SWIFT_STRUCT OG_SWIFT_NAME(AnyAttribute);
 
 OG_ASSUME_NONNULL_BEGIN
 
+OG_IMPLICIT_BRIDGING_ENABLED
+
 // MARK: - Exported C functions
 
 OG_EXTERN_C_BEGIN
@@ -34,14 +36,6 @@ OGGraphRef OGGraphCreate(void) OG_SWIFT_NAME(OGGraphRef.init());
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
 OGGraphRef OGGraphCreateShared(_Nullable OGGraphRef graph) OG_SWIFT_NAME(OGGraphRef.init(shared:));
-
-OG_EXPORT
-OG_REFINED_FOR_SWIFT
-void OGGraphArchiveJSON(char const * _Nullable name) OG_SWIFT_NAME(OGGraphRef.archiveJSON(name:));
-
-OG_EXPORT
-OG_REFINED_FOR_SWIFT
-_Nullable CFTypeRef OGGraphDescription(_Nullable OGGraphRef graph, CFDictionaryRef options) OG_SWIFT_NAME(OGGraphRef.description(_:options:));
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
@@ -117,6 +111,8 @@ bool OGGraphAnyInputsChanged(const OGAttribute *inputs, size_t count);
 #endif
 
 OG_EXTERN_C_END
+
+OG_IMPLICIT_BRIDGING_DISABLED
 
 OG_ASSUME_NONNULL_END
 

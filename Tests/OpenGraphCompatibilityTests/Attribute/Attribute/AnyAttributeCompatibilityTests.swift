@@ -1,5 +1,5 @@
 //
-//  AnyAttributeTests.swift
+//  AnyAttributeCompatibilityTests.swift
 //  OpenGraphCompatibilityTests
 
 import Testing
@@ -9,7 +9,7 @@ import Testing
 // Report to upstream for investigation when we bump to 5.10
 #if canImport(Darwin)
 @Suite(.disabled(if: !compatibilityTestEnabled, "Attribute is not implemented"))
-final class AnyAttributeTests: AttributeTestBase {
+final class AnyAttributeCompatibilityTests: AttributeTestBase {
     @Test
     func constantValue() throws {
         let attributeNil = AnyAttribute.nil

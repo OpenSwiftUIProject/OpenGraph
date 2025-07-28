@@ -11,6 +11,7 @@
 #include "OGDebugServer.h"
 #include "OGGraph.h"
 #include "OGGraphContext.h"
+#include "OGGraphDescription.h"
 #include "OGGraphTracing.h"
 #include "OGInputOptions.h"
 #include "OGSearchOptions.h"

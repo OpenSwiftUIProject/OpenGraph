@@ -35,6 +35,8 @@
 
 OG_ASSUME_NONNULL_BEGIN
 
+OG_IMPLICIT_BRIDGING_ENABLED
+
 OG_EXTERN_C_BEGIN
 
 typedef struct OGFieldRange {
@@ -97,6 +99,8 @@ OG_REFINED_FOR_SWIFT
 void OGOverrideComparisonForTypeDescriptor(void *descriptor, OGComparisonMode mode);
 
 OG_EXTERN_C_END
+
+OG_IMPLICIT_BRIDGING_DISABLED
 
 OG_ASSUME_NONNULL_END
 

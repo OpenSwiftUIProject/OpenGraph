@@ -1,12 +1,12 @@
 //
-//  IndirectAttributeTests.swift
+//  IndirectAttributeCompatibilityTests.swift
 //  OpenGraphCompatibilityTests
 
 import Testing
 
 #if canImport(Darwin)
 @Suite(.disabled(if: !compatibilityTestEnabled, "IndirectAttribute is not implemented"))
-final class IndirectAttributeTests: AttributeTestBase {
+final class IndirectAttributeCompatibilityTests: AttributeTestBase {
     @Test
     func basic() {
         let source = Attribute(value: 0)

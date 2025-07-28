@@ -1,11 +1,11 @@
 //
-//  GraphTests.swift
+//  GraphCompatibilityTests.swift
 //  OpenGraphCompatibilityTests
 
 import Testing
 import Foundation
 
-struct GraphTests {
+struct GraphCompatibilityTests {
     @Test
     func graphCreate() throws {
         _ = Graph()
@@ -40,8 +40,13 @@ struct GraphTests {
     
     @Test(.disabled(if: !compatibilityTestEnabled, "Not implemented on OG"))
     func graphDescriptionDict() throws {
-        let description = try #require(Graph.description(nil, options: ["format": "graph/dict"] as NSDictionary))
-        let dic = description.takeUnretainedValue() as! Dictionary<String, AnyHashable>
+        let description = try #require(Graph.description(
+            nil,
+            options: [
+                Graph.descriptionFormat: Graph.descriptionFormatDictionary
+            ] as NSDictionary
+        ))
+        let dic = description as! Dictionary<String, AnyHashable>
         #expect(dic["version"] as? UInt32 == 2)
         #expect((dic["graphs"] as? NSArray)?.count == 0)
     }
@@ -49,11 +54,11 @@ struct GraphTests {
     @Test(.disabled(if: !compatibilityTestEnabled, "Not implemented on OG"))
     func graphDescriptionDot() throws {
         let options = NSMutableDictionary()
-        options["format"] = "graph/dot"
+        options[Graph.descriptionFormat] = Graph.descriptionFormatDot
         #expect(Graph.description(nil, options: options) == nil)
         let graph = Graph()
         let description = try #require(Graph.description(graph, options: options))
-        let dotGraph = description.takeUnretainedValue() as! String
+        let dotGraph = description as! String
         let expectedEmptyDotGraph = #"""
         digraph {
         }
