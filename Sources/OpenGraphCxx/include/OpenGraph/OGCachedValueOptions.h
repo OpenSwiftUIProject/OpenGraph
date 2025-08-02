@@ -5,7 +5,7 @@
 #ifndef OGCachedValueOptions_h
 #define OGCachedValueOptions_h
 
-#include <OpenGraphC/OGBase.h>
+#include <OpenGraph/OGBase.h>
 
 typedef OG_OPTIONS(uint32_t, OGCachedValueOptions) {
     OGCachedValueOptions_0 = 0,

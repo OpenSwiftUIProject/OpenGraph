@@ -29,9 +29,9 @@
 #ifndef OGComparisonPrivate_h
 #define OGComparisonPrivate_h
 
-#include <OpenGraphC/OGBase.h>
-#include <OpenGraphC/OGComparison.h>
-#include <OpenGraphC/OGTypeID.h>
+#include <OpenGraph/OGBase.h>
+#include <OpenGraph/OGComparison.h>
+#include <OpenGraph/OGTypeID.h>
 
 OG_ASSUME_NONNULL_BEGIN
 

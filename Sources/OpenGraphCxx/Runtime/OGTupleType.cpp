@@ -5,7 +5,7 @@
 //  Audited for iOS 18.0
 //  Status: Complete
 
-#include <OpenGraphC/OGTupleType.h>
+#include <OpenGraph/OGTupleType.h>
 #include <OpenGraphCxx/Runtime/metadata.hpp>
 #include <OpenGraphCxx/Util/assert.hpp>
 

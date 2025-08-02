@@ -5,7 +5,7 @@
 #ifndef page_hpp
 #define page_hpp
 
-#include <OpenGraphC/OGBase.h>
+#include <OpenGraph/OGBase.h>
 #include <OpenGraphCxx/Data/ptr.hpp>
 
 namespace OG {

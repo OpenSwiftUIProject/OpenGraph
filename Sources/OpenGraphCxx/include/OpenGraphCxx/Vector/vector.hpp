@@ -8,7 +8,7 @@
 #ifndef vector_hpp
 #define vector_hpp
 
-#include <OpenGraphC/OGBase.h>
+#include <OpenGraph/OGBase.h>
 #include <concepts>
 #include <iterator>
 #include <memory>

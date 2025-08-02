@@ -8,7 +8,7 @@
 #ifndef metadata_hpp
 #define metadata_hpp
 
-#include <OpenGraphC/OGBase.h>
+#include <OpenGraph/OGBase.h>
 
 #ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
 #include <swift/Runtime/Metadata.h>

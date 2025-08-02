@@ -8,7 +8,7 @@
 #ifndef ClosureFunction_hpp
 #define ClosureFunction_hpp
 
-#include <OpenGraphC/OGBase.h>
+#include <OpenGraph/OGBase.h>
 #include <functional>
 
 OG_ASSUME_NONNULL_BEGIN

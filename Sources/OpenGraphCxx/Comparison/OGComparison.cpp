@@ -2,7 +2,7 @@
 //  OGCompareValues.cpp
 //  OpenGraphCxx
 
-#include <OpenGraphC/OGComparison.h>
+#include <OpenGraph/OGComparison.h>
 #include <OpenGraphCxx/Comparison/OGComparisonPrivate.h>
 
 const void *OGComparisonStateGetDestination(OGComparisonState state) {

@@ -5,7 +5,7 @@
 //  Created by Kyle on 2024/2/15.
 //
 
-#include <OpenGraphC/OGGraph.h>
+#include <OpenGraph/OGGraph.h>
 #include <OpenGraphCxx/Graph/Graph.hpp>
 #include <OpenGraphCxx/Util/assert.hpp>
 #include <OpenGraphCxx/Data/ClosureFunction.hpp>
