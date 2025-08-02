@@ -4,7 +4,7 @@
 //
 //
 
-// public import OpenGraph_SPI
+// public import OpenGraphCxx
 
 @discardableResult
 public func withUnsafePointerToEnumCase<T>(

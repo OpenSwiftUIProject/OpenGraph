@@ -5,7 +5,7 @@
 //  Audited for RELEASE_2021
 //  Status: Complete
 
-public import OpenGraph_SPI
+public import OpenGraphCxx
 
 public protocol Rule: _AttributeBody {
     associatedtype Value

@@ -136,7 +136,7 @@ if libraryEvolutionCondition {
 
 let openGraphTarget = Target.target(
     name: "OpenGraph",
-    dependencies: ["OpenGraph_SPI"],
+    dependencies: ["OpenGraphCxx"],
     cSettings: sharedCSettings,
     swiftSettings: sharedSwiftSettings
 )
@@ -144,7 +144,7 @@ let openGraphTarget = Target.target(
 // OpenGraph is a C++ & Swift mix target.
 // The SwiftPM support for such usage is still in progress.
 let openGraphSPITarget = Target.target(
-    name: "OpenGraph_SPI",
+    name: "OpenGraphCxx",
     cSettings: sharedCSettings + [
         .define("__COREFOUNDATION_FORSWIFTFOUNDATIONONLY__", to: "1", .when(platforms: .nonDarwinPlatforms)),
     ],
@@ -170,14 +170,11 @@ let openGraphTestTarget = Target.testTarget(
     swiftSettings: sharedSwiftSettings
 )
 let openGraphSPITestTarget = Target.testTarget(
-    name: "OpenGraph_SPITests",
+    name: "OpenGraphCxxTests",
     dependencies: [
-        "OpenGraph_SPI",
+        "OpenGraphCxx",
     ],
     exclude: ["README.md"],
-    cSettings: sharedCSettings + [
-        .headerSearchPath("../../Sources/OpenGraph_SPI"),
-    ],
     swiftSettings: sharedSwiftSettings + [.interoperabilityMode(.Cxx)]
 )
 let openGraphShimsTestTarget = Target.testTarget(
@@ -204,8 +201,8 @@ let openGraphCompatibilityTestTarget = Target.testTarget(
 let package = Package(
     name: "OpenGraph",
     products: [
-        .library(name: "OpenGraph", type: .dynamic, targets: ["OpenGraph", "OpenGraph_SPI"]),
-        .library(name: "OpenGraphShims", type: .dynamic, targets: ["OpenGraph", "OpenGraph_SPI", "OpenGraphShims"]),
+        .library(name: "OpenGraph", type: .dynamic, targets: ["OpenGraph", "OpenGraphCxx"]),
+        .library(name: "OpenGraphShims", type: .dynamic, targets: ["OpenGraph", "OpenGraphCxx", "OpenGraphShims"]),
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-numerics", from: "1.0.2"),
