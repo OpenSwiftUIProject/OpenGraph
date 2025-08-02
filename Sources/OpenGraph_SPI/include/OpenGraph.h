@@ -16,6 +16,7 @@
 #include "OGInputOptions.h"
 #include "OGSearchOptions.h"
 #include "OGSubgraph.h"
+#include "OGTrace.h"
 #include "OGTupleType.h"
 #include "OGTypeID.h"
 #include "OGUniqueID.h"

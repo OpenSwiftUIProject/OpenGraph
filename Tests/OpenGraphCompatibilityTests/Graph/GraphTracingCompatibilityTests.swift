@@ -8,13 +8,13 @@ struct GraphTracingCompatibilityTests {
     @Test
     func tracing() {
         let graph = Graph()
-        Graph.startTracing(graph, options: [])
+        Graph.startTracing(graph, flags: [])
         Graph.stopTracing(graph)
     }
 
     @Test
     func tracingAll() {
-        Graph.startTracing(nil, options: [])
+        Graph.startTracing(nil, flags: [])
         Graph.stopTracing(nil)
     }
 
