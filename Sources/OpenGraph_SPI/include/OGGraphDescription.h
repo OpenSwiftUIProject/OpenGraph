@@ -44,7 +44,7 @@ void OGGraphArchiveJSON(char const * _Nullable name) OG_SWIFT_NAME(OGGraphRef.ar
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-void OGGraphArchiveJSON2(char const * _Nullable name, uint8_t options) OG_SWIFT_NAME(OGGraphRef.archiveJSON(name:options:));
+void OGGraphArchiveJSON2(char const * _Nullable name, bool exclude_values) OG_SWIFT_NAME(OGGraphRef.archiveJSON(name:excludeValues:));
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
