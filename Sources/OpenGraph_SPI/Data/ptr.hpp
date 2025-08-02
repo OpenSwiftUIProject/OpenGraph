@@ -9,7 +9,7 @@
 #define ptr_hpp
 
 #include "OGBase.h"
-#include "table.hpp"
+#include "OpenGraphCxx/table.hpp"
 #include <bitset>
 #include "page_const.hpp"
 

@@ -3,7 +3,7 @@
 //  OpenGraph_SPI
 
 #include "zone.hpp"
-#include "table.hpp"
+#include <OpenGraphCxx/table.hpp>
 #include "page.hpp"
 #include "../Util/assert.hpp"
 #if OG_TARGET_OS_DARWIN

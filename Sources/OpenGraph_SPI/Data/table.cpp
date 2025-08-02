@@ -6,7 +6,7 @@
 //  Status: WIP
 //  Modified from https://github.com/jcmosc/Compute/blob/0a6b21a4cdeb9bbdd95e7e914c4e18bed37a2456/Sources/ComputeCxx/Data/Table.cpp [MIT License]
 
-#include "table.hpp"
+#include <OpenGraphCxx/table.hpp>
 #include "page.hpp"
 #include "page_const.hpp"
 #include "zone.hpp"
