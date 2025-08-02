@@ -6,7 +6,7 @@
 //
 
 #include "OGDebugServer.h"
-#include "og-debug-server.hpp"
+#include <OpenGraphCxx/DebugServer/og-debug-server.hpp>
 
 #if OG_TARGET_OS_DARWIN
 

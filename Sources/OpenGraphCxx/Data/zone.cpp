@@ -2,10 +2,10 @@
 //  zone.cpp
 //  OpenGraphCxx
 
-#include "zone.hpp"
+#include <OpenGraphCxx/Data/zone.hpp>
 #include <OpenGraphCxx/Data/table.hpp>
-#include "page.hpp"
-#include "../Util/assert.hpp"
+#include <OpenGraphCxx/Data/page.hpp>
+#include <OpenGraphCxx/Util/assert.hpp>
 #if OG_TARGET_OS_DARWIN
 #include <malloc/malloc.h>
 #else

@@ -5,7 +5,7 @@
 //  Audited for iOS 18.0
 //  Status: WIP
 
-#include "metadata.hpp"
+#include <OpenGraphCxx/Runtime/metadata.hpp>
 
 #ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
 

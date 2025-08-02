@@ -5,7 +5,7 @@
 //  Created by Kyle on 2024/2/15.
 //
 
-#include "Subgraph.hpp"
+#include <OpenGraphCxx/Graph/Subgraph.hpp>
 #include "OGSubgraph.h"
 
 pthread_key_t OG::Subgraph::_current_subgraph_key;

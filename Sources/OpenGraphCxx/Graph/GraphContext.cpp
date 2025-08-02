@@ -5,9 +5,9 @@
 //  Created by Kyle on 2024/2/16.
 //
 
-#include "Graph.hpp"
+#include <OpenGraphCxx/Graph/Graph.hpp>
 #include "OGGraph.h"
-#include "../Util/assert.hpp"
+#include <OpenGraphCxx/Util/assert.hpp>
 
 OG::Graph::Context &OG::Graph::Context::from_cf(OGGraphRef storage) OG_NOEXCEPT {
     if (storage->context.isInvalid()) {

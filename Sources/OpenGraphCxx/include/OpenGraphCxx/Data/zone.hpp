@@ -6,7 +6,7 @@
 #define zone_hpp
 
 #include "OGBase.h"
-#include "ptr.hpp"
+#include <OpenGraphCxx/Data/ptr.hpp>
 
 namespace OG {
 namespace data {

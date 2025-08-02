@@ -7,10 +7,10 @@
 
 #include "OGSubgraph.h"
 #include "OGGraph.h"
-#include "Subgraph.hpp"
+#include <OpenGraphCxx/Graph/Subgraph.hpp>
 #include "OGGraphContext.h"
-#include "../Util/assert.hpp"
-#include "../Util/env.hpp"
+#include <OpenGraphCxx/Util/assert.hpp>
+#include <OpenGraphCxx/Util/env.hpp>
 #include <pthread.h>
 #if !OG_TARGET_OS_WASI
 #include <dispatch/dispatch.h>

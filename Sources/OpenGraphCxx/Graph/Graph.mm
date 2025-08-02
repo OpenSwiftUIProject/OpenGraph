@@ -2,7 +2,7 @@
 //  Graph.mm
 //  OpenGraphCxx
 
-#include "Graph.hpp"
+#include <OpenGraphCxx/Graph/Graph.hpp>
 #include "OGGraphDescription.h"
 
 #if OG_OBJC_FOUNDATION

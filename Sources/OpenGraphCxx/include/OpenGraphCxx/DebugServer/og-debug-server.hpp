@@ -11,7 +11,7 @@
 #include "OGBase.h"
 #if OG_TARGET_OS_DARWIN
 #include "OGDebugServer.h"
-#include "../Vector/vector.hpp"
+#include <OpenGraphCxx/Vector/vector.hpp>
 #include <dispatch/dispatch.h>
 #include <memory>
 

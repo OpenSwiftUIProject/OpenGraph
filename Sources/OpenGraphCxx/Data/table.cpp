@@ -7,10 +7,10 @@
 //  Modified from https://github.com/jcmosc/Compute/blob/0a6b21a4cdeb9bbdd95e7e914c4e18bed37a2456/Sources/ComputeCxx/Data/Table.cpp [MIT License]
 
 #include <OpenGraphCxx/Data/table.hpp>
-#include "page.hpp"
-#include "page_const.hpp"
-#include "zone.hpp"
-#include "../Util/assert.hpp"
+#include <OpenGraphCxx/Data/page.hpp>
+#include <OpenGraphCxx/Data/page_const.hpp>
+#include <OpenGraphCxx/Data/zone.hpp>
+#include <OpenGraphCxx/Util/assert.hpp>
 #include <sys/mman.h>
 #include <dispatch/dispatch.h>
 #if OG_TARGET_OS_DARWIN

@@ -6,9 +6,9 @@
 //
 
 #include "OGGraph.h"
-#include "Graph.hpp"
-#include "../Util/assert.hpp"
-#include "../Data/ClosureFunction.hpp"
+#include <OpenGraphCxx/Graph/Graph.hpp>
+#include <OpenGraphCxx/Util/assert.hpp>
+#include <OpenGraphCxx/Data/ClosureFunction.hpp>
 #include <pthread.h>
 
 OGGraphRef OGGraphCreate() {

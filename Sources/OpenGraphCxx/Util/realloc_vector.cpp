@@ -5,8 +5,8 @@
 //  Created by Kyle on 2024/1/17.
 //
 
-#include "realloc_vector.hpp"
-#include "assert.hpp"
+#include <OpenGraphCxx/Util/realloc_vector.hpp>
+#include <OpenGraphCxx/Util/assert.hpp>
 
 #if OG_TARGET_OS_DARWIN
 #include <malloc/malloc.h>

@@ -5,7 +5,7 @@
 //  Created by Kyle on 2024/1/12.
 //  Audited for 2021 Release
 
-#include "log.hpp"
+#include <OpenGraphCxx/Util/log.hpp>
 
 #if OG_TARGET_OS_DARWIN
 

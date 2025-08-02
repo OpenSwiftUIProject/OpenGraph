@@ -6,8 +6,8 @@
 //  Status: Complete
 
 #include "OGTupleType.h"
-#include "metadata.hpp"
-#include "../Util/assert.hpp"
+#include <OpenGraphCxx/Runtime/metadata.hpp>
+#include <OpenGraphCxx/Util/assert.hpp>
 
 #ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
 #include <swift/Runtime/Metadata.h>

@@ -11,7 +11,7 @@
 #include "OGBase.h"
 #include <OpenGraphCxx/Data/table.hpp>
 #include <bitset>
-#include "page_const.hpp"
+#include <OpenGraphCxx/Data/page_const.hpp>
 
 OG_ASSUME_NONNULL_BEGIN
 

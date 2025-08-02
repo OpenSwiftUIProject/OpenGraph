@@ -6,7 +6,7 @@
 #define table_hpp
 
 #include "OGBase.h"
-#include "../Vector/vector.hpp"
+#include <OpenGraphCxx/Vector/vector.hpp>
 #if OG_TARGET_OS_DARWIN
 #include <mach/vm_types.h>
 #else

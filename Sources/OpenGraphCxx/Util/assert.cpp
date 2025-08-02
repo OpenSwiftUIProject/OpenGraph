@@ -5,8 +5,8 @@
 //  Created by Kyle on 2024/1/21.
 //
 
-#include "assert.hpp"
-#include "log.hpp"
+#include <OpenGraphCxx/Util/assert.hpp>
+#include <OpenGraphCxx/Util/log.hpp>
 
 #include <stdio.h>
 #include <stdlib.h>

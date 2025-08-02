@@ -5,8 +5,8 @@
 //  Status: Complete
 //  Modified from https://github.com/jcmosc/Compute/blob/00dfebc2c5852144ac5aada8ebe896b78e5f622a/Sources/ComputeCxx/Vector/Vector.tpp [MIT Lisence]
 
-#include "vector.hpp"
-#include "../Util/assert.hpp"
+#include <OpenGraphCxx/Vector/vector.hpp>
+#include <OpenGraphCxx/Util/assert.hpp>
 
 #include <algorithm>
 #if OG_TARGET_OS_DARWIN

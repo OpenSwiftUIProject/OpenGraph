@@ -2,8 +2,8 @@
 //  Graph.cpp
 //  OpenGraphCxx
 
-#include "Graph.hpp"
-#include "Subgraph.hpp"
+#include <OpenGraphCxx/Graph/Graph.hpp>
+#include <OpenGraphCxx/Graph/Subgraph.hpp>
 #include "OGGraphDescription.h"
 
 #if !OG_TARGET_OS_WASI
