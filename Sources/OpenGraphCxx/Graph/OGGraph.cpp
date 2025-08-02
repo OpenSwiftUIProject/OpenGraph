@@ -158,13 +158,13 @@ uint64_t OGGraphGetCounter(OGGraphRef graph, OGCounterQueryType query) {
     }
     OG::Graph::Context& context = graph->context;
     switch (query) {
-        case OGCounterQueryTypeNodeCount:
+        case OGCounterQueryTypeNodes:
             return context.get_graph().get_counter_0();
-        case OGCounterQueryTypeTransactionCount:
+        case OGCounterQueryTypeTransactions:
             return context.get_graph().get_counter_1();
-        case OGCounterQueryTypeUpdateCount:
+        case OGCounterQueryTypeUpdates:
             return context.get_graph().get_counter_2();
-        case OGCounterQueryTypeChangeCount:
+        case OGCounterQueryTypeChanges:
             return context.get_graph().get_counter_3();
         case OGCounterQueryTypeContextID:
             return context.get_graph().get_counter_4();
@@ -178,7 +178,7 @@ uint64_t OGGraphGetCounter(OGGraphRef graph, OGCounterQueryType query) {
             return context.get_graph().get_counter_8();
         case OGCounterQueryTypeNeedsUpdate:
             return context.get_graph().get_counter_9();
-        case OGCounterQueryTypeMainThreadUpdateCount:
+        case OGCounterQueryTypeMainThreadUpdates:
             return context.get_graph().get_counter_10();
         default:
             return 0;
