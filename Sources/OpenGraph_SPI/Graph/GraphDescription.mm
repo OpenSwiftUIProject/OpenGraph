@@ -13,6 +13,8 @@
 
 const CFStringRef OGDescriptionFormat = CFSTR("format");
 const CFStringRef OGDescriptionIncludeValues = CFSTR("include-values");
+const CFStringRef OGDescriptionTruncationLimit = CFSTR("truncation-limit");
+const CFStringRef OGDescriptionMaxFrames = CFSTR("max-frames");
 
 CFTypeRef OG::Graph::description(const Graph * _Nullable graph, NSDictionary* dic) {
     // TODO
