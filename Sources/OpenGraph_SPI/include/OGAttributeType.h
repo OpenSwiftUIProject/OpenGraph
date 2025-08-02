@@ -23,7 +23,7 @@ typedef struct OGAttributeVTable {
     void (*_Nullable update_default)(const OGAttributeType *, void *);
 } OGAttributeVTable OG_SWIFT_NAME(_AttributeVTable);
 
-typedef struct OG_SWIFT_NAME(AttributeType) OGAttributeType {
+typedef struct OGAttributeType {
     OGTypeID self_id;
     OGTypeID value_id;
     OGClosureStorage update;
@@ -37,7 +37,7 @@ typedef struct OG_SWIFT_NAME(AttributeType) OGAttributeType {
         OGTypeID type_id;
         const void *witness_table;
     } body_conformance;
-} OGAttributeType;
+} OGAttributeType OG_SWIFT_NAME(_AttributeType);
 
 OG_ASSUME_NONNULL_END
 
