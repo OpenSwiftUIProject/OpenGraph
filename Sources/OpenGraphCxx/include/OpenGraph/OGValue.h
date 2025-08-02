@@ -5,7 +5,7 @@
 #ifndef OGValue_h
 #define OGValue_h
 
-#include <OpenGraphC/OGBase.h>
+#include <OpenGraph/OGBase.h>
 
 OG_ASSUME_NONNULL_BEGIN
 

@@ -3,7 +3,7 @@
 //  OpenGraphCxx
 
 #include <OpenGraphCxx/Graph/Graph.hpp>
-#include <OpenGraphC/OGGraphDescription.h>
+#include <OpenGraph/OGGraphDescription.h>
 
 #if OG_OBJC_FOUNDATION
 #include <Foundation/Foundation.h>

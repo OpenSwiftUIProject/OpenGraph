@@ -8,8 +8,8 @@
 #ifndef OGAttributeInfo_h
 #define OGAttributeInfo_h
 
-#include <OpenGraphC/OGBase.h>
-#include <OpenGraphC/OGAttributeType.h>
+#include <OpenGraph/OGBase.h>
+#include <OpenGraph/OGAttributeType.h>
 
 OG_ASSUME_NONNULL_BEGIN
 

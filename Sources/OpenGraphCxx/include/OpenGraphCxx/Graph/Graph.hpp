@@ -6,10 +6,10 @@
 #ifndef Graph_hpp
 #define Graph_hpp
 
-#include <OpenGraphC/OGBase.h>
-#include <OpenGraphC/OGGraph.h>
-#include <OpenGraphC/OGUniqueID.h>
-#include <OpenGraphC/Private/CFRuntime.h>
+#include <OpenGraph/OGBase.h>
+#include <OpenGraph/OGGraph.h>
+#include <OpenGraph/OGUniqueID.h>
+#include <OpenGraph/Private/CFRuntime.h>
 #include <OpenGraphCxx/Data/ClosureFunction.hpp>
 
 OG_ASSUME_NONNULL_BEGIN

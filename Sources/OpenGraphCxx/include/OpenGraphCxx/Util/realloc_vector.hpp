@@ -8,7 +8,7 @@
 #ifndef realloc_vector_hpp
 #define realloc_vector_hpp
 
-#include <OpenGraphC/OGBase.h>
+#include <OpenGraph/OGBase.h>
 
 OG_ASSUME_NONNULL_BEGIN
 

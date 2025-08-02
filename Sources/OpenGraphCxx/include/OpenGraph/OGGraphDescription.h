@@ -5,8 +5,8 @@
 #ifndef OGGraphDescription_h
 #define OGGraphDescription_h
 
-#include <OpenGraphC/OGBase.h>
-#include <OpenGraphC/OGGraph.h>
+#include <OpenGraph/OGBase.h>
+#include <OpenGraph/OGGraph.h>
 
 OG_ASSUME_NONNULL_BEGIN
 

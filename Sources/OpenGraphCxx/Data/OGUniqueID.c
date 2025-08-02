@@ -5,7 +5,7 @@
 //  Audited for iOS 18.0
 //  Status: Complete
 
-#include <OpenGraphC/OGUniqueID.h>
+#include <OpenGraph/OGUniqueID.h>
 #include <stdatomic.h>
 
 OGUniqueID OGMakeUniqueID(void) {
