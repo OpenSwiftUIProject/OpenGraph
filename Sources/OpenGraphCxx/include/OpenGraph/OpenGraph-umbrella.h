@@ -17,6 +17,7 @@
 #include <OpenGraph/OGInputOptions.h>
 #include <OpenGraph/OGSearchOptions.h>
 #include <OpenGraph/OGSubgraph.h>
+#include <OpenGraph/OGTrace.h>
 #include <OpenGraph/OGTupleType.h>
 #include <OpenGraph/OGTypeID.h>
 #include <OpenGraph/OGUniqueID.h>
