@@ -42,7 +42,7 @@ extension Metadata {
         switch kind {
         case .enum:
             write(&result, string: "enum \(type) {", level: level)
-            _ = forEachField(options: [._4]) { name, offset, type in // anything contains ._4 will work here
+            _ = forEachField(options: [.enumerateEnumCases]) { name, offset, type in // anything contains ._4 will work here
                 let fieldName = String(cString: name)
                 write(&result, string: "case \(fieldName)(\(type)) // offset = \(offset.hex)", level: level+1)
                 if recursive {
@@ -52,7 +52,7 @@ extension Metadata {
             }
             write(&result, string: "}", level: level)
         case .optional:
-            _ = forEachField(options: [._4]) { name, offset, type in // anything contains ._4 will work here
+            _ = forEachField(options: [.enumerateEnumCases]) { name, offset, type in // anything contains ._4 will work here
                 let fieldName = String(cString: name)
                 write(&result, string: "case \(fieldName)(\(type)) // offset = \(offset.hex)", level: level+1)
                 if recursive {
@@ -74,7 +74,7 @@ extension Metadata {
         case .tuple: break
         case .class:
             write(&result, string: "class \(type) {", level: level)
-            _ = forEachField(options: [._1]) { name, offset, type in // anything contains ._1 will work here
+            _ = forEachField(options: [.enumerateClassFields]) { name, offset, type in // anything contains ._1 will work here
                 let fieldName = String(cString: name)
                 
                 write(&result, string: "var \(fieldName): \(type) // offset = \(offset.hex)", level: level+1)
