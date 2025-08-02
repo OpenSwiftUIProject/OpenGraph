@@ -120,7 +120,7 @@ public struct Attribute<Value> {
         identifier.mutateBody(as: type, invalidating: invalidating, body)
     }
 
-    public func breadthFirstSearch(options: OGSearchOptions = [], _ body: (AnyAttribute) -> Bool) -> Bool {
+    public func breadthFirstSearch(options: SearchOptions = [], _ body: (AnyAttribute) -> Bool) -> Bool {
         identifier.breadthFirstSearch(options: options, body)
     }
     

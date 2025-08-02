@@ -61,7 +61,7 @@ extension AnyAttribute {
         }
     }
     
-    public func breadthFirstSearch(options _: OGSearchOptions = [], _: (AnyAttribute) -> Bool) -> Bool {
+    public func breadthFirstSearch(options _: SearchOptions = [], _: (AnyAttribute) -> Bool) -> Bool {
         fatalError("TODO")
     }
     
