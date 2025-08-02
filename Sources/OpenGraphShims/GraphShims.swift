@@ -11,7 +11,6 @@ public typealias OGChangedValueFlags = AGChangedValueFlags
 public typealias OGCounterQueryType = AGCounterQueryType
 public typealias OGDebugServer = AGDebugServer
 public typealias OGInputOptions = AGInputOptions
-public typealias OGSearchOptions = AGSearchOptions
 public typealias OGTypeApplyOptions = AGTypeApplyOptions
 public typealias OGUniqueID = AGUniqueID
 public typealias OGValue = AGValue
