@@ -1,9 +1,6 @@
 //
 //  AttributeType.hpp
-//
-//
-//  Created by Kyle on 2024/2/17.
-//
+//  OpenGraphCxx
 
 #ifndef AttributeType_hpp
 #define AttributeType_hpp
@@ -16,4 +13,4 @@ struct AttributeType {
     OGAttributeType storage;
 };
 }
-#endif /* AttributeType_2_hpp */
+#endif /* AttributeType_hpp */

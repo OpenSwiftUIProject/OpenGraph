@@ -3,7 +3,7 @@
 //  OpenGraphCxx
 
 #include "OGComparison.h"
-#include "OGComparisonPrivate.h"
+#include <OpenGraphCxx/Private/OGComparisonPrivate.h>
 
 const void *OGComparisonStateGetDestination(OGComparisonState state) {
     return ((const OGComparisonStateStorage *)state)->destination;

@@ -9,7 +9,7 @@
 #include "OGBase.h"
 #include "OGGraph.h"
 #include "OGUniqueID.h"
-#include "../Private/CFRuntime.h"
+#include <OpenGraphCxx/Private/CFRuntime.h>
 #include "../Data/ClosureFunction.hpp"
 
 OG_ASSUME_NONNULL_BEGIN

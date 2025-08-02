@@ -1,8 +1,5 @@
 //
 //  AttributeID.cpp
-//  
-//
-//  Created by Kyle on 2024/2/16.
-//
+//  OpenGraphCxx
 
-#include "AttributeID.hpp"
+#include <OpenGraphCxx/Internal/AttributeID.hpp>
