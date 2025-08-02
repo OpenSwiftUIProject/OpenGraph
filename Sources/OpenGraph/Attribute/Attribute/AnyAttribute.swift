@@ -95,10 +95,3 @@ extension AnyAttribute {
         body: (UnsafeMutableRawPointer) -> Void
     )
 }
-
-extension [AnyAttribute] {
-    @_transparent
-    public var anyInputsChanged: Bool {
-        __OGGraphAnyInputsChanged(self, count)
-    }
-}
