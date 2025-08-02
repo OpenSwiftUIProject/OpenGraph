@@ -107,7 +107,7 @@ if swiftToolchainSupported {
 // MARK: - [env] OPENGRAPH_TARGET_RELEASE
 
 let releaseVersion = Context.environment["OPENGRAPH_TARGET_RELEASE"].flatMap { Int($0) } ?? 2024
-sharedCSettings.append(.define("OPENGRAPH_RELEASE", to: "\(releaseVersion)"))
+//sharedCSettings.append(.define("OPENGRAPH_RELEASE", to: "\(releaseVersion)"))
 sharedSwiftSettings.append(.define("OPENGRAPH_RELEASE_\(releaseVersion)"))
 if releaseVersion >= 2021 {
     for year in 2021 ... releaseVersion {

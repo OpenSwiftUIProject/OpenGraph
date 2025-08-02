@@ -1,9 +1,6 @@
 //
 //  Subgraph.hpp
-//
-//
-//  Created by Kyle on 2024/2/15.
-//
+//  OpenGraphCxx
 
 #ifndef Subgraph_hpp
 #define Subgraph_hpp

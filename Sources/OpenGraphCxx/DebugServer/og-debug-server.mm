@@ -1,8 +1,7 @@
 //
 //  og-debug-server.mm
-//  OpenGraph
+//  OpenGraphCxx
 //
-//  Created by Kyle on 2024/1/11.
 //  Audited for 2021 Release
 
 #include <OpenGraphCxx/DebugServer/og-debug-server.hpp>

@@ -1,9 +1,6 @@
 //
 //  OGAttribute.cpp
-//  
-//
-//  Created by Kyle on 2024/2/16.
-//
+//  OpenGraphCxx
 
 #include <OpenGraph/OGAttribute.h>
 #include <OpenGraphCxx/Attribute/AttributeID.hpp>

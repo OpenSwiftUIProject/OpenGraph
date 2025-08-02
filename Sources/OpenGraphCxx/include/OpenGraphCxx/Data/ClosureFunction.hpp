@@ -1,9 +1,6 @@
 //
 //  ClosureFunction.hpp
-//  
-//
-//  Created by Kyle on 2024/3/6.
-//
+//  OpenGraphCxx
 
 #ifndef ClosureFunction_hpp
 #define ClosureFunction_hpp

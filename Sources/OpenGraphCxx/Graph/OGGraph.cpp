@@ -1,9 +1,6 @@
 //
 //  OGGraph.cpp
-//
-//
-//  Created by Kyle on 2024/2/15.
-//
+//  OpenGraphCxx
 
 #include <OpenGraph/OGGraph.h>
 #include <OpenGraphCxx/Graph/Graph.hpp>

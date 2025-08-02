@@ -1,9 +1,6 @@
 //
 //  env.hpp
-//  
-//
-//  Created by Kyle on 2024/4/4.
-//
+//  OpenGraphCxx
 
 #ifndef env_hpp
 #define env_hpp

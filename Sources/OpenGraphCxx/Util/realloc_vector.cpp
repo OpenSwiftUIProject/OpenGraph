@@ -1,9 +1,6 @@
 //
 //  realloc_vector.cpp
-//  
-//
-//  Created by Kyle on 2024/1/17.
-//
+//  OpenGraphCxx
 
 #include <OpenGraphCxx/Util/realloc_vector.hpp>
 #include <OpenGraphCxx/Util/assert.hpp>

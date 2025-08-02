@@ -1,8 +1,5 @@
 //
 //  ClosureFunction.cpp
-//  
-//
-//  Created by Kyle on 2024/3/6.
-//
+//  OpenGraphCxx
 
 #include <OpenGraphCxx/Data/ClosureFunction.hpp>

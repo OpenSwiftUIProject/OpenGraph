@@ -1,9 +1,6 @@
 //
 //  OGDebugServer.cpp
-//  
-//
-//  Created by Kyle on 2024/2/17.
-//
+//  OpenGraphCxx
 
 #include <OpenGraph/OGDebugServer.h>
 #include <OpenGraphCxx/DebugServer/og-debug-server.hpp>

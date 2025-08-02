@@ -1,8 +1,5 @@
-@_exported public import OpenGraphCxx
+//
+//  Export.swift
+//  OpenGraph
 
-// Align the constant define behavior
-#if OPENGRAPH_RELEASE_2024
-public let OPENGRAPH_RELEASE: Int32 = 2024
-#elseif OPENGRAPH_RELEASE_2021
-public let OPENGRAPH_RELEASE: Int32 = 2021
-#endif
+@_exported public import OpenGraphCxx

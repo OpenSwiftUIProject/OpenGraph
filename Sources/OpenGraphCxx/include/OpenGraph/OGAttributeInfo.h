@@ -1,9 +1,6 @@
 //
 //  OGAttributeInfo.h
-//  
-//
-//  Created by Kyle on 2024/2/17.
-//
+//  OpenGraphCxx
 
 #ifndef OGAttributeInfo_h
 #define OGAttributeInfo_h
