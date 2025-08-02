@@ -14,7 +14,7 @@ OG_EXTERN_C_BEGIN
 typedef struct OGClosureStorage {
     const void *thunk;
     const void *_Nullable context;
-} OGClosureStorage;
+} OGClosureStorage OG_SWIFT_NAME(_OGClosureStorage);
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
