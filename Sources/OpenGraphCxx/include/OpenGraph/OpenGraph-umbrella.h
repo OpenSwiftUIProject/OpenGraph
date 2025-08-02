@@ -25,6 +25,7 @@
 #include <OpenGraph/OGValueState.h>
 #include <OpenGraph/OGVersion.h>
 #include <OpenGraph/OGWeakAttribute.h>
+#include <OpenGraph/OGWeakValue.h>
 
 OG_EXPORT double OpenGraphVersionNumber;
 OG_EXPORT const unsigned char OpenGraphVersionString[];
