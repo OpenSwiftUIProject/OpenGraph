@@ -8,7 +8,7 @@ import Testing
 struct GraphDescriptionCompatibilityTests {
     @Test
     func format() {
-        #expect(Graph.descriptionFormat as String == "format")
+        #expect(DescriptionOption.format.rawValue as String == "format")
     }
 }
 #endif
