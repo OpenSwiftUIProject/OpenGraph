@@ -112,8 +112,8 @@ extension Graph {
     public func archiveJSON(name: String?) {
         #if canImport(Darwin)
         let options: NSDictionary = [
-            Graph.descriptionFormat: "graph/dict",
-            Graph.descriptionIncludeValues: true,
+            DescriptionOption.format: "graph/dict",
+            DescriptionOption.includeValues: true,
         ]
         guard let description = Graph.description(self, options: options) as? [String: Any] else {
             return
