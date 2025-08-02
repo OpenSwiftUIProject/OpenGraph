@@ -97,6 +97,13 @@ extension Graph {
     public static func setOutputValue<Value>(_ value: UnsafePointer<Value>)
 }
 
+extension Graph {
+    @_transparent
+    public static func anyInputsChanged(excluding excludedInputs: [AnyAttribute]) -> Bool {
+        return __OGGraphAnyInputsChanged(excludedInputs, excludedInputs.count)
+    }
+}
+
 #if canImport(Darwin)
 import Foundation
 #endif

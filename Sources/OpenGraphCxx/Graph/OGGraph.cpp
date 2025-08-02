@@ -205,7 +205,7 @@ void OGGraphSetNeedsUpdate(OGGraphRef graph) {
     // graph->context->set_needs_update();
 }
 
-bool OGGraphAnyInputsChanged(const OGAttribute *inputs, size_t count) {
+bool OGGraphAnyInputsChanged(const OGAttribute *excluded_inputs, size_t count) {
     // TODO
     return false;
 }

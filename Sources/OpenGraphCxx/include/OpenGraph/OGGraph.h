@@ -104,14 +104,14 @@ void OGGraphSetNeedsUpdate(OGGraphRef graph) OG_SWIFT_NAME(OGGraphRef.setNeedsUp
 #if OG_TARGET_OS_DARWIN
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-bool OGGraphAnyInputsChanged(const OGAttribute *inputs OG_COUNTED_BY(count), size_t count);
+bool OGGraphAnyInputsChanged(const OGAttribute *excluded_inputs OG_COUNTED_BY(count), size_t count);
 #else
 // __counted_by__ is supported with Swift 6.1+ toolchain's clang on Linux.
 // But it required the count to be declared first which is not required on Apple clang.
 // See https://github.com/OpenSwiftUIProject/OpenGraph/issues/130
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-bool OGGraphAnyInputsChanged(const OGAttribute *inputs, size_t count);
+bool OGGraphAnyInputsChanged(const OGAttribute *excluded_inputs, size_t count);
 #endif
 
 OG_EXTERN_C_END
