@@ -96,10 +96,3 @@ extension AnyAttribute: Swift.CustomStringConvertible {
 }
 
 public typealias AttributeUpdateBlock = () -> (UnsafeMutableRawPointer, AnyAttribute) -> Void
-
-extension [AnyAttribute] {
-    @_transparent
-    public var anyInputsChanged: Bool {
-        __OGGraphAnyInputsChanged(self, count)
-    }
-}
