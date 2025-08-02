@@ -12,7 +12,7 @@ extension Graph {
         ctx: GraphContext,
         body: _AttributeBody.Type,
         valueType: Metadata,
-        flags: OGAttributeTypeFlags,
+        flags: AttributeType.Flags,
         update: AttributeUpdateBlock
     ) -> Int {
         // TODO: __AGGraphInternAttributeType
@@ -48,7 +48,7 @@ extension Graph {
 extension Graph {
     @_transparent
     @inline(__always)
-    public var mainUpdates: Int { numericCast(counter(for: ._10)) }
+    public var mainUpdates: Int { numericCast(counter(for: .mainThreadUpdateCount)) }
 }
 
 extension Graph {

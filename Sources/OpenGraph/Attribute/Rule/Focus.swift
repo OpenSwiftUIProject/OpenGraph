@@ -17,7 +17,7 @@ public struct Focus<Root, Value>: Rule, CustomStringConvertible {
 
     public var value: Value { root.value[keyPath: keyPath] }
 
-    public static var flags: OGAttributeTypeFlags { [] }
+    public static var flags: AttributeType.Flags { [] }
 
     public var description: String { "• \(Metadata(Value.self).description)" }
 }

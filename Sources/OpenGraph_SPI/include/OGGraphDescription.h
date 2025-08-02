@@ -22,6 +22,12 @@ const CFStringRef OGDescriptionFormat OG_SWIFT_NAME(OGGraphRef.descriptionFormat
 OG_EXPORT
 const CFStringRef OGDescriptionIncludeValues OG_SWIFT_NAME(OGGraphRef.descriptionIncludeValues);
 
+OG_EXPORT
+const CFStringRef OGDescriptionTruncationLimit OG_SWIFT_NAME(OGGraphRef.descriptionTruncationLimit);
+
+OG_EXPORT
+const CFStringRef OGDescriptionMaxFrames OG_SWIFT_NAME(OGGraphRef.descriptionMaxFrames);
+
 static const CFStringRef OGDescriptionFormatDot OG_SWIFT_NAME(OGGraphRef.descriptionFormatDot) = CFSTR("graph/dot");
 
 static const CFStringRef OGDescriptionFormatDictionary OG_SWIFT_NAME(OGGraphRef.descriptionFormatDictionary) = CFSTR("graph/dict");
