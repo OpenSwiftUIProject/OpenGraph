@@ -22,8 +22,30 @@ gen_interface() {
 }
 
 gen_header() {
-  # TODO: Implement header generation
-  echo "Generated template header successfully"
+  mkdir -p .ag_template/Headers
+  
+  cp -r Sources/OpenGraphCxx/include/OpenGraph/* .ag_template/Headers/
+  
+  # Rename files from OGxx to AGxx and OpenGraphxx to AttributeGraphxx
+  find .ag_template/Headers -name "OG*" -type f | while read file; do
+    new_name=$(echo "$file" | sed 's/OG/AG/g')
+    mv "$file" "$new_name"
+  done
+  
+  find .ag_template/Headers -name "OpenGraph*" -type f | while read file; do
+    new_name=$(echo "$file" | sed 's/OpenGraph/AttributeGraph/g')
+    mv "$file" "$new_name"
+  done
+  
+  # Update content in all header files
+  find .ag_template/Headers -name "*.h" -type f | while read file; do
+    sed -i '' 's/OpenGraphCxx/AttributeGraph/g' "$file"
+    sed -i '' 's/OpenGraph/AttributeGraph/g' "$file"
+    sed -i '' 's/OPENGRAPH/ATTRIBUTEGRAPH/g' "$file"
+    sed -i '' 's/OG/AG/g' "$file"
+  done
+  
+  echo "Generated template headers successfully"
 }
 
 OPENGRAPH_ROOT="$(dirname $(dirname $(filepath $0)))"
