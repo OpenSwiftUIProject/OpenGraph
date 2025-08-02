@@ -16,6 +16,8 @@
 
 OG_ASSUME_NONNULL_BEGIN
 
+OG_IMPLICIT_BRIDGING_ENABLED
+
 namespace OG {
 struct OGDebugServerMessageHeader {
     uint32_t token;
@@ -61,6 +63,7 @@ typedef struct OGDebugServerStorage {
     OG::DebugServer debugServer;
 } OGDebugServerStorage;
 
+OG_IMPLICIT_BRIDGING_DISABLED
 
 OG_ASSUME_NONNULL_END
 
