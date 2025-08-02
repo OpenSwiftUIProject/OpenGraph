@@ -1,0 +1,4 @@
+PRODUCT_BUNDLE_IDENTIFIER = org.OpenSwiftUIProject.OpenGraph
+
+MODULEMAP_FILE = Sources/OpenGraphCxx/include/module.modulemap
+MODULEMAP_PRIVATE_FILE = Sources/OpenGraphCxx/include/module.private.modulemap
