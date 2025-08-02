@@ -1,9 +1,6 @@
 //
 //  AttributeID.hpp
-//  
-//
-//  Created by Kyle on 2024/2/16.
-//
+//  OpenGraphCxx
 
 #ifndef AttributeID_hpp
 #define AttributeID_hpp

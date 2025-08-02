@@ -1,9 +1,6 @@
 //
 //  realloc_vector.hpp
-//  
-//
-//  Created by Kyle on 2024/1/17.
-//
+//  OpenGraphCxx
 
 #ifndef realloc_vector_hpp
 #define realloc_vector_hpp

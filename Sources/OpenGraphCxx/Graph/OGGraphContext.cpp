@@ -1,9 +1,6 @@
 //
 //  OGGraphContext.cpp
-//  
-//
-//  Created by Kyle on 2024/2/16.
-//
+//  OpenGraphCxx
 
 #include <OpenGraph/OGGraphContext.h>
 #include <OpenGraph/Private/CFRuntime.h>

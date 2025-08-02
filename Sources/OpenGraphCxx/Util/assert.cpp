@@ -1,9 +1,6 @@
 //
 //  assert.cpp
-//  
-//
-//  Created by Kyle on 2024/1/21.
-//
+//  OpenGraphCxx
 
 #include <OpenGraphCxx/Util/assert.hpp>
 #include <OpenGraphCxx/Util/log.hpp>

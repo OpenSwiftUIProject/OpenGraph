@@ -1,8 +1,7 @@
 //
 //  log.hpp
+//  OpenGraphCxx
 //
-//
-//  Created by Kyle on 2024/1/12.
 //  Audited for 2021 Release
 
 #ifndef log_hpp
