@@ -7,6 +7,8 @@
 
 #include <OpenGraph/OGBase.h>
 
+#define OPENGRAPH_RELEASE 2024
+
 #define OPENGRAPH_RELEASE_2021 2021
 #define OPENGRAPH_RELEASE_2024 2024
 
