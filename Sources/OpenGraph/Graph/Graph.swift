@@ -20,43 +20,68 @@ extension Graph {
     }
 }
 
-extension Graph {
-    @_silgen_name("OGGraphStartProfiling")
-    public static func startProfiling(_ graph: Graph? = nil)
+@_silgen_name("OGGraphSetInvalidationCallback")
+private func OGGraphSetInvalidationCallback(
+    graph: Graph,
+    _ callback: @escaping (AnyAttribute) -> Void
+)
 
-    @_silgen_name("OGGraphStopProfiling")
-    public static func stopProfiling(_ graph: Graph? = nil)
+@_silgen_name("OGGraphSetUpdateCallback")
+private func OGGraphSetUpdateCallback(
+    graph: Graph,
+    _ callback: @escaping () -> Void
+)
+
+extension Graph {
+    public static func withoutUpdate<V>(_ body: () -> V) -> V {
+        let update = clearUpdate()
+        defer { setUpdate(update) }
+        return body()
+    }
+
+    public func withoutSubgraphInvalidation<V>(_ body: () -> V) -> V {
+        preconditionFailure("TODO")
+    }
+
+    public func withDeadline<V>(
+        _: UInt64,
+        _: () -> V
+    ) -> V {
+        preconditionFailure("TODO")
+    }
+
+    public func onInvalidation(_ callback: @escaping (AnyAttribute) -> Void) {
+        OGGraphSetInvalidationCallback(graph: self, callback)
+    }
+
+    public func onUpdate(_ callback: @escaping () -> Void) {
+        OGGraphSetUpdateCallback(graph: self, callback)
+    }
+
+    public func withMainThreadHandler(_: (() -> Void) -> Void, do: () -> Void) {
+        // TODO: OGGraphWithMainThreadHandler
+        preconditionFailure("TODO")
+    }
 }
 
-// FIXME: migrate to use @_extern(c, "xx") in Swift 6
-// > Also similar to @_silgen_name, but a function declared with @_extern(c) is assumed to use the C ABI, while @_silgen_name assumes the Swift ABI.
-//extension OGGraph {
-//    @_silgen_name("OGGGraphSetInvalidationCallback") // Use Swift ABI(self: x20) ❌, we need C ABI here(self: x0).
-//    public func setInvalidationCallback(_ callback: ((AnyAttribute) -> Void)?)
-//
-//    @_silgen_name("OGGGraphSetUpdateCallback")
-//    public func setUpdateCallback(_ callback: (() -> Void)?)
-//}
 extension Graph {
-    @_silgen_name("OGGraphSetInvalidationCallback")
-    public static func setInvalidationCallback(_ graph: Graph, callback: ((AnyAttribute) -> Void)?)
+    public static func startProfiling() {
+        __OGGraphStartProfiling(nil)
+    }
 
-    @_silgen_name("OGGraphSetUpdateCallback")
-    public static func setUpdateCallback(_ graph: Graph, callback: (() -> Void)?)
+    public static func stopProfiling() {
+        __OGGraphStopProfiling(nil)
+    }
+
+    public static func resetProfile() {
+        __OGGraphResetProfile(nil)
+    }
 }
 
 extension Graph {
     @_transparent
     @inline(__always)
     public var mainUpdates: Int { numericCast(counter(for: ._10)) }
-}
-
-extension Graph {
-    public static func withoutUpdate<Value>(_ body: () -> Value) -> Value {
-        let update = clearUpdate()
-        defer { setUpdate(update) }
-        return body()
-    }
 }
 
 extension Graph {

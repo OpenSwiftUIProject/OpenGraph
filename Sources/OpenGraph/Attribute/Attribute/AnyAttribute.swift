@@ -7,6 +7,14 @@
 
 public import OpenGraphCxx
 
+@_silgen_name("OGGraphMutateAttribute")
+private func OGGraphMutateAttribute(
+    _ attribute: AnyAttribute,
+    type: Metadata,
+    invalidating: Bool,
+    body: (UnsafeMutableRawPointer) -> Void
+)
+
 extension AnyAttribute {
     public typealias Flags = OGAttributeTypeFlags
 
@@ -46,7 +54,11 @@ extension AnyAttribute {
     }
 
     public func mutateBody<Value>(as type: Value.Type, invalidating: Bool, _ body: (inout Value) -> Void) {
-        AnyAttribute.mutateAttribute(self, type: Metadata(type), invalidating: invalidating) { value in
+        OGGraphMutateAttribute(
+            self,
+            type: Metadata(type),
+            invalidating: invalidating
+        ) { value in
             body(&value.assumingMemoryBound(to: Value.self).pointee)
         }
     }
@@ -86,17 +98,6 @@ extension AnyAttribute: Swift.CustomStringConvertible {
 }
 
 public typealias AttributeUpdateBlock = () -> (UnsafeMutableRawPointer, AnyAttribute) -> Void
-
-// FIXME: migrate to use @_extern(c, "xx") in Swift 6
-extension AnyAttribute {
-    @_silgen_name("OGGraphMutateAttribute")
-    private static func mutateAttribute(
-        _ attribute: AnyAttribute,
-        type: Metadata,
-        invalidating: Bool,
-        body: (UnsafeMutableRawPointer) -> Void
-    )
-}
 
 extension [AnyAttribute] {
     @_transparent
