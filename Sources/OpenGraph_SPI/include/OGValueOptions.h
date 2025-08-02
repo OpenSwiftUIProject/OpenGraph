@@ -9,6 +9,8 @@
 
 typedef OG_OPTIONS(uint32_t, OGValueOptions) {
     OGValueOptionsNone = 0,
+    AGValueOptionsInputOptionsUnprefetched = 1 << 0,
+    AGValueOptionsInputOptionsSyncMainRef = 1 << 1,
     OGValueOptionsInputOptionsMask = 0x03,
 
     OGValueOptionsIncrementGraphVersion = 1 << 2, // AsTopLevelOutput
