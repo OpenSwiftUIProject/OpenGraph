@@ -160,7 +160,7 @@ struct MetadataCompatibilityTests {
     
     @Test(.disabled(if: !compatibilityTestEnabled, "Metadata is not implemented"))
     func forEachField() throws {
-        for options in [OGTypeApplyOptions._1] {
+        for options in [OGTypeApplyOptions.enumerateClassFields] {
             let result = Metadata(T1.self).forEachField(options: options) { name, offset, type in
                 if offset == 16 {
                     #expect(type is Int.Type)
@@ -176,7 +176,7 @@ struct MetadataCompatibilityTests {
             }
             #expect(result == true)
         }
-        for options in [OGTypeApplyOptions._2, ._4, []] {
+        for options in [OGTypeApplyOptions.continueAfterUnknownField, .enumerateEnumCases, []] {
             let result = Metadata(T1.self).forEachField(options: options) { name, offset, type in
                 if offset == 16 {
                     #expect(type is Int.Type)
@@ -192,7 +192,7 @@ struct MetadataCompatibilityTests {
             }
             #expect(result == false)
         }
-        for options in [OGTypeApplyOptions._2, []] {
+        for options in [OGTypeApplyOptions.continueAfterUnknownField, []] {
             let result = Metadata(T2.self).forEachField(options: options) { name, offset, type in
                 if offset == 0 {
                     #expect(type is Int.Type)
@@ -206,7 +206,7 @@ struct MetadataCompatibilityTests {
             }
             #expect(result == true)
         }
-        for options in [OGTypeApplyOptions._1, ._4] {
+        for options in [OGTypeApplyOptions.enumerateClassFields, .enumerateEnumCases] {
             let result = Metadata(T2.self).forEachField(options: options) { name, offset, type in
                 if offset == 0 {
                     #expect(type is Int.Type)
@@ -222,7 +222,7 @@ struct MetadataCompatibilityTests {
             }
             #expect(result == false)
         }
-        for options in [OGTypeApplyOptions._1, ._2, ._4, []] {
+        for options in [OGTypeApplyOptions.enumerateClassFields, .continueAfterUnknownField, .enumerateEnumCases, []] {
             let result = Metadata(T3.self).forEachField(options: options) { _, _, _ in
                 true
             }
