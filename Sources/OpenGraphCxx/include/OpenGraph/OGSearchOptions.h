@@ -11,6 +11,6 @@ typedef OG_OPTIONS(uint32_t, OGSearchOptions) {
     OGSearchOptionsSearchInputs = 1 << 0,
     OGSearchOptionsSearchOutputs = 1 << 1,
     OGSearchOptionsTraverseGraphContexts = 1 << 2,
-};
+} OG_SWIFT_NAME(SearchOptions);
 
 #endif /* Header_h */
