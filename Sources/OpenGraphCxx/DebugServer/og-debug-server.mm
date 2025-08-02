@@ -126,11 +126,18 @@ OG::DebugServer::DebugServer(unsigned int mode) {
     
     // log
     os_log_info(misc_log(), "debug server graph://%s:%d/?token=%u", address, port, token);
-    fprintf(stderr, "debug server graph://%s:%d/?token=%u\\n", address, port, token);
+    fprintf(stderr, "debug server graph://%s:%d/?token=%u\n", address, port, token);
 }
 
-// TODO: To be implemented
-OG::DebugServer::~DebugServer() {}
+OG::DebugServer::~DebugServer() {
+    shutdown();
+    for (auto &connection : connections) {
+        connection.reset();
+    }
+    if (connections.data()) {
+        free(connections.data());
+    }
+}
 
 // TODO: select will fail here
 void OG::DebugServer::run(int timeout) {
