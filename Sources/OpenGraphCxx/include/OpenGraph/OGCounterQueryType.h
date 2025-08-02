@@ -8,20 +8,20 @@
 #include <OpenGraph/OGBase.h>
 
 typedef OG_ENUM(uint32_t, OGCounterQueryType) {
-    OGCounterQueryTypeNodeCount,
-    OGCounterQueryTypeTransactionCount,
-    OGCounterQueryTypeUpdateCount,
-    OGCounterQueryTypeChangeCount,
+    OGCounterQueryTypeNodes,
+    OGCounterQueryTypeTransactions,
+    OGCounterQueryTypeUpdates,
+    OGCounterQueryTypeChanges,
     OGCounterQueryTypeContextID,
     OGCounterQueryTypeGraphID,
     OGCounterQueryTypeContextThreadUpdating,
     OGCounterQueryTypeThreadUpdating,
     OGCounterQueryTypeContextNeedsUpdate,
     OGCounterQueryTypeNeedsUpdate,
-    OGCounterQueryTypeMainThreadUpdateCount,
-    OGCounterQueryTypeNodeTotalCount,
-    OGCounterQueryTypeSubgraphCount,
-    OGCounterQueryTypeSubgraphTotalCount,
-};
+    OGCounterQueryTypeMainThreadUpdates,
+    OGCounterQueryTypeCreatedNodes,
+    OGCounterQueryTypeSubgraphs,
+    OGCounterQueryTypeCreatedSubgraphs,
+} OG_SWIFT_NAME(OGGraphRef.CounterQueryType);
 
 #endif /* OGCounterQueryType_h */

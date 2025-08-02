@@ -81,7 +81,7 @@ extension Graph {
 extension Graph {
     @_transparent
     @inline(__always)
-    public var mainUpdates: Int { numericCast(counter(for: .mainThreadUpdateCount)) }
+    public var mainUpdates: Int { numericCast(counter(for: .mainThreadUpdates)) }
 }
 
 extension Graph {
