@@ -151,8 +151,29 @@ struct UnsafeMutableTupleCompatibilityTests {
     }
     
     @Test
-    func buffer() {
+    func stackBuffer() {
+        // size <= 0x1000
         withUnsafeTuple(of: TupleType([T1.self, T2.self]), count: 1) { mutableTuple in
+            let ref = T1()
+            ref.a = 1
+            mutableTuple.initialize(at: 0, to: ref)
+            mutableTuple.initialize(at: 1, to: T2(a: 2))
+            
+            let tuple = UnsafeTuple(type: mutableTuple.type, value: mutableTuple.value)
+            let t1 = tuple[0] as T1
+            let t2 = tuple[1] as T2
+            
+            #expect(t1 === ref)
+            #expect(t1.a == 1)
+            #expect(t2.a == 2)
+        }
+
+    }
+
+    @Test
+    func heapBuffer() {
+        // size > 0x1000
+        withUnsafeTuple(of: TupleType([T1.self, T2.self]), count: 512) { mutableTuple in
             let ref = T1()
             ref.a = 1
             mutableTuple.initialize(at: 0, to: ref)
