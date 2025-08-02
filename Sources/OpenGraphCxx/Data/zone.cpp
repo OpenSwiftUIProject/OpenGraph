@@ -3,7 +3,7 @@
 //  OpenGraphCxx
 
 #include "zone.hpp"
-#include <OpenGraphCxx/table.hpp>
+#include <OpenGraphCxx/Internal/table.hpp>
 #include "page.hpp"
 #include "../Util/assert.hpp"
 #if OG_TARGET_OS_DARWIN

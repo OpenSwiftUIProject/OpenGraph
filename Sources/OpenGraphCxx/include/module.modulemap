@@ -4,8 +4,8 @@ module OpenGraphCxx {
 }
 
 // TODO: Change to module OpenGraphCxx and OpenGraphCxx.Internal
-module OpenGraphCxx.Cxx {
+module OpenGraphCxx.Internal {
     requires cplusplus
-    umbrella "OpenGraphCxx"
+    umbrella "OpenGraphCxx/Internal"
     export *
 }
