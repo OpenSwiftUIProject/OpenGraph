@@ -10,7 +10,7 @@
 
 #include "OGBase.h"
 #include "Graph.hpp"
-#include <OpenGraphCxx/Internal/AttributeID.hpp>
+#include <OpenGraphCxx/Attribute/AttributeID.hpp>
 #include "../Data/ClosureFunction.hpp"
 #include "../Runtime/metadata.hpp"
 #include <pthread.h>

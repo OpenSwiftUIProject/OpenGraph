@@ -6,7 +6,7 @@
 //
 
 #include "OGAttribute.h"
-#include <OpenGraphCxx/Internal/AttributeID.hpp>
+#include <OpenGraphCxx/Attribute/AttributeID.hpp>
 #include "../Util/assert.hpp"
 #include <optional>
 

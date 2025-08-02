@@ -6,7 +6,7 @@
 #define OGGraph_h
 
 #include "OGBase.h"
-#include <OpenGraphCxx/Private/CFRuntime.h>
+#include "../Private/CFRuntime.h"
 #include "OGCounterQueryType.h"
 
 // Note: Place all structure declaration in a single place to avoid header cycle dependency

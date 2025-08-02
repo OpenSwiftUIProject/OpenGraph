@@ -1,0 +1,21 @@
+module OpenGraphCxx_Private {
+    export *
+}
+
+module OpenGraphCxx_Private.Attribute {
+    requires cplusplus
+    umbrella "OpenGraphCxx/Attribute"
+    export *
+}
+
+module OpenGraphCxx_Private.Data {
+    requires cplusplus
+    umbrella "OpenGraphCxx/Data"
+    export *
+}
+
+module OpenGraphCxx_Private.Comparison {
+    requires cplusplus
+    umbrella "OpenGraphCxx/Comparison"
+    export *
+}

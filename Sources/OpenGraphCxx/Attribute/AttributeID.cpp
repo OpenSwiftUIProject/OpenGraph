@@ -2,4 +2,4 @@
 //  AttributeID.cpp
 //  OpenGraphCxx
 
-#include <OpenGraphCxx/Internal/AttributeID.hpp>
+#include <OpenGraphCxx/Attribute/AttributeID.hpp>

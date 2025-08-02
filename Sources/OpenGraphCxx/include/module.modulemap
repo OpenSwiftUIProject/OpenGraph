@@ -2,15 +2,3 @@ module OpenGraphCxx {
     header "OpenGraph-umbrella.h"
     export *
 }
-
-module OpenGraphCxx.Internal {
-    requires cplusplus
-    umbrella "OpenGraphCxx/Internal"
-    export *
-}
-
-module OpenGraphCxx.Private {
-    requires cplusplus
-    umbrella "OpenGraphCxx/Private"
-    export *
-}

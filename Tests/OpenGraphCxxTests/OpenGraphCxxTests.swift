@@ -2,7 +2,7 @@
 //  OpenGraphCxxTests.swift
 //  OpenGraphCxxTests
 
-import OpenGraphCxx.Internal
+import OpenGraphCxx_Private
 import Testing
 
 struct OpenGraphCxxTests {

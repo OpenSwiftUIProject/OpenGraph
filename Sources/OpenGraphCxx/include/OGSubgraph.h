@@ -10,7 +10,7 @@
 #include "OGBase.h"
 #include "OGGraph.h"
 #include "OGUniqueID.h"
-#include <OpenGraphCxx/Private/CFRuntime.h>
+#include "../Private/CFRuntime.h"
 
 OG_ASSUME_NONNULL_BEGIN
 

@@ -6,7 +6,7 @@
 //
 
 #include "OGGraphContext.h"
-#include <OpenGraphCxx/Private/CFRuntime.h>
+#include "../Private/CFRuntime.h"
 
 OGGraphRef OGGraphContextGetGraph(OGGraphContextRef context) {
     return reinterpret_cast<OGGraphRef>(reinterpret_cast<uintptr_t>(context) - sizeof(CFRuntimeBase));
