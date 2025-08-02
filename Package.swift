@@ -178,8 +178,7 @@ let openGraphSPITestTarget = Target.testTarget(
     cSettings: sharedCSettings + [
         .headerSearchPath("../../Sources/OpenGraph_SPI"),
     ],
-    swiftSettings: sharedSwiftSettings,
-    linkerSettings: [.linkedFramework("XCTest")]
+    swiftSettings: sharedSwiftSettings + [.interoperabilityMode(.Cxx)]
 )
 let openGraphShimsTestTarget = Target.testTarget(
     name: "OpenGraphShimsTests",
