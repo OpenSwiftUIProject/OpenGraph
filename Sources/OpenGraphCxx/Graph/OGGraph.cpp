@@ -92,6 +92,10 @@ void OGGraphStopProfiling(_Nullable OGGraphRef graph) {
     graph->context.get_graph().stop_profiling();
 }
 
+void OGGraphResetProfile(_Nullable OGGraphRef graph) {
+    // TODO
+}
+
 const void * _Nullable OGGraphGetContext(OGGraphRef graph) {
     if (graph->context.isInvalid()) {
         OG::precondition_failure("invalidated graph");

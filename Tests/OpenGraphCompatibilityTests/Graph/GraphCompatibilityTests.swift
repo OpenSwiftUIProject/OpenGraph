@@ -70,12 +70,10 @@ struct GraphCompatibilityTests {
     @Test
     func graphCallback() {
         let graph = Graph()
-        Graph.setUpdateCallback(graph, callback: nil)
-        Graph.setUpdateCallback(graph) {
+        graph.onUpdate {
             print("Update")
         }
-        Graph.setInvalidationCallback(graph, callback: nil)
-        Graph.setInvalidationCallback(graph) { attr in
+        graph.onInvalidation { attr in
             print("Invalidate \(attr)")
         }
     }
