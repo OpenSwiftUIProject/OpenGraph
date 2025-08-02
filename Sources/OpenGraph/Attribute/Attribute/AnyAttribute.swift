@@ -5,7 +5,7 @@
 //  Audited for RELEASE_2021
 //  Status: API complete
 
-public import OpenGraph_SPI
+public import OpenGraphCxx
 
 extension AnyAttribute {
     public typealias Flags = OGAttributeTypeFlags

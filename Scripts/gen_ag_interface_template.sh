@@ -14,8 +14,8 @@ swift build -c release -Xswiftc -emit-module-interface -Xswiftc -enable-library-
 cp .build/release/Modules/OpenGraph.swiftinterface ./template.swiftinterface
 
 sed -i '' '1,4d' ./template.swiftinterface
-sed -i '' 's/@_exported public import OpenGraph_SPI/@_exported public import AttributeGraph/g' ./template.swiftinterface
-sed -i '' 's/OpenGraph_SPI\.//g' ./template.swiftinterface
+sed -i '' 's/@_exported public import OpenGraphCxx/@_exported public import AttributeGraph/g' ./template.swiftinterface
+sed -i '' 's/OpenGraphCxx\.//g' ./template.swiftinterface
 sed -i '' 's/OpenGraph/AttributeGraph/g' ./template.swiftinterface
 sed -i '' 's/OG/AG/g' ./template.swiftinterface
 

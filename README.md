@@ -31,7 +31,7 @@ The current suggested toolchain to build the project is Swift 6.1 / Xcode 16.3.
 
 ## Credits
 
-OpenGraph_SPI's Data, Graph, Vector and more is modified based on [Compute](https://github.com/jcmosc/Compute)'s implementations.
+OpenGraphCxx's Data, Graph, Vector and more is modified based on [Compute](https://github.com/jcmosc/Compute)'s implementations.
 
 ## License
 

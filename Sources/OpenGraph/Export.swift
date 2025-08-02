@@ -1,4 +1,4 @@
-@_exported public import OpenGraph_SPI
+@_exported public import OpenGraphCxx
 
 // Align the constant define behavior
 #if OPENGRAPH_RELEASE_2024

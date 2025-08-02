@@ -1,0 +1,11 @@
+module OpenGraphCxx {
+    header "OpenGraph-umbrella.h"
+    export *
+}
+
+// TODO: Change to module OpenGraphCxx and OpenGraphCxx.Internal
+module OpenGraphCxx.Cxx {
+    requires cplusplus
+    umbrella "OpenGraphCxx"
+    export *
+}
