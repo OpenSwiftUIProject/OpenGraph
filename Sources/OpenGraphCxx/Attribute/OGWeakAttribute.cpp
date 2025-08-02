@@ -5,7 +5,7 @@
 //  Created by Kyle on 2024/2/27.
 //
 
-#include "OGWeakAttribute.h"
+#include <OpenGraphC/OGWeakAttribute.h>
 
 OGWeakAttribute OGCreateWeakAttribute(OGAttribute attribute) {
     // TODO

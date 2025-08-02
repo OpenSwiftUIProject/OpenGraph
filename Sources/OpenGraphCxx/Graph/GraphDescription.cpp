@@ -2,8 +2,8 @@
 //  GraphDescription.cpp
 //  OpenGraphCxx
 
-#include "OGGraphDescription.h"
-#include "OGGraph.h"
+#include <OpenGraphC/OGGraphDescription.h>
+#include <OpenGraphC/OGGraph.h>
 #include <OpenGraphCxx/Graph/Graph.hpp>
 #include <OpenGraphCxx/Util/assert.hpp>
 

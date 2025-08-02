@@ -5,16 +5,16 @@
 #ifndef OGAttribute_h
 #define OGAttribute_h
 
-#include "OGBase.h"
-#include "OGAttributeInfo.h"
-#include "OGAttributeFlags.h"
-#include "OGCachedValueOptions.h"
-#include "OGGraph.h"
-#include "OGInputOptions.h"
-#include "OGTypeID.h"
-#include "OGValue.h"
-#include "OGValueOptions.h"
-#include "OGValueState.h"
+#include <OpenGraphC/OGBase.h>
+#include <OpenGraphC/OGAttributeInfo.h>
+#include <OpenGraphC/OGAttributeFlags.h>
+#include <OpenGraphC/OGCachedValueOptions.h>
+#include <OpenGraphC/OGGraph.h>
+#include <OpenGraphC/OGInputOptions.h>
+#include <OpenGraphC/OGTypeID.h>
+#include <OpenGraphC/OGValue.h>
+#include <OpenGraphC/OGValueOptions.h>
+#include <OpenGraphC/OGValueState.h>
 
 OG_ASSUME_NONNULL_BEGIN
 

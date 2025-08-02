@@ -5,8 +5,8 @@
 #ifndef OGWeakAttribute_hpp
 #define OGWeakAttribute_hpp
 
-#include "OGBase.h"
-#include "OGAttribute.h"
+#include <OpenGraphC/OGBase.h>
+#include <OpenGraphC/OGAttribute.h>
 
 OG_ASSUME_NONNULL_BEGIN
 

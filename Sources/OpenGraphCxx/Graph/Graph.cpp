@@ -4,7 +4,7 @@
 
 #include <OpenGraphCxx/Graph/Graph.hpp>
 #include <OpenGraphCxx/Graph/Subgraph.hpp>
-#include "OGGraphDescription.h"
+#include <OpenGraphC/OGGraphDescription.h>
 
 #if !OG_TARGET_OS_WASI
 #include <dispatch/dispatch.h>

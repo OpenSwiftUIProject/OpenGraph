@@ -5,7 +5,7 @@
 #ifndef zone_hpp
 #define zone_hpp
 
-#include "OGBase.h"
+#include <OpenGraphC/OGBase.h>
 #include <OpenGraphCxx/Data/ptr.hpp>
 
 namespace OG {

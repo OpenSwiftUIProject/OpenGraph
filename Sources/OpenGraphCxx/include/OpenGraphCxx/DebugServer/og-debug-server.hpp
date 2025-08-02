@@ -8,9 +8,9 @@
 #ifndef og_debug_server_hpp
 #define og_debug_server_hpp
 
-#include "OGBase.h"
+#include <OpenGraphC/OGBase.h>
 #if OG_TARGET_OS_DARWIN
-#include "OGDebugServer.h"
+#include <OpenGraphC/OGDebugServer.h>
 #include <OpenGraphCxx/Vector/vector.hpp>
 #include <dispatch/dispatch.h>
 #include <memory>

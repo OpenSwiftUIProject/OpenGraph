@@ -5,7 +5,7 @@
 #ifndef OGVersion_h
 #define OGVersion_h
 
-#include "OGBase.h"
+#include <OpenGraphC/OGBase.h>
 
 #define OPENGRAPH_RELEASE_2021 2021
 #define OPENGRAPH_RELEASE_2024 2024

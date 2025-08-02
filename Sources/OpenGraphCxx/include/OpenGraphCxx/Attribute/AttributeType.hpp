@@ -5,8 +5,8 @@
 #ifndef AttributeType_hpp
 #define AttributeType_hpp
 
-#include "OGBase.h"
-#include "OGAttributeType.h"
+#include <OpenGraphC/OGBase.h>
+#include <OpenGraphC/OGAttributeType.h>
 
 namespace OG {
 struct AttributeType {

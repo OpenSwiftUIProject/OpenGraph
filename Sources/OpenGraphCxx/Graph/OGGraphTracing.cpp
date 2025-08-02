@@ -2,7 +2,7 @@
 //  OGGraphTracing.mm
 //  OpenGraphCxx
 
-#include "OGGraphTracing.h"
+#include <OpenGraphC/OGGraphTracing.h>
 
 void OGGraphStartTracing(_Nullable OGGraphRef graph, OGGraphTraceFlags options) {
     OGGraphStartTracing2(graph, options, NULL);

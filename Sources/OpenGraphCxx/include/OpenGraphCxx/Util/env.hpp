@@ -8,7 +8,7 @@
 #ifndef env_hpp
 #define env_hpp
 
-#include "OGBase.h"
+#include <OpenGraphC/OGBase.h>
 
 namespace OG {
 OG_INLINE

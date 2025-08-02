@@ -5,7 +5,7 @@
 #ifndef page_const_hpp
 #define page_const_hpp
 
-#include "OGBase.h"
+#include <OpenGraphC/OGBase.h>
 
 namespace OG {
 namespace data {

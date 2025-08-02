@@ -8,7 +8,7 @@
 #ifndef ptr_hpp
 #define ptr_hpp
 
-#include "OGBase.h"
+#include <OpenGraphC/OGBase.h>
 #include <OpenGraphCxx/Data/table.hpp>
 #include <bitset>
 #include <OpenGraphCxx/Data/page_const.hpp>

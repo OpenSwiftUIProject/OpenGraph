@@ -8,7 +8,7 @@
 #ifndef log_hpp
 #define log_hpp
 
-#include "OGBase.h"
+#include <OpenGraphC/OGBase.h>
 
 #if OG_TARGET_OS_DARWIN
 

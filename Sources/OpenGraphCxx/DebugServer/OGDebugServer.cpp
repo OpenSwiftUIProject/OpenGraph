@@ -5,7 +5,7 @@
 //  Created by Kyle on 2024/2/17.
 //
 
-#include "OGDebugServer.h"
+#include <OpenGraphC/OGDebugServer.h>
 #include <OpenGraphCxx/DebugServer/og-debug-server.hpp>
 
 #if OG_TARGET_OS_DARWIN

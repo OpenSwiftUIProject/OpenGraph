@@ -5,8 +5,8 @@
 #ifndef OGGraphTracing_hpp
 #define OGGraphTracing_hpp
 
-#include "OGBase.h"
-#include "OGGraph.h"
+#include <OpenGraphC/OGBase.h>
+#include <OpenGraphC/OGGraph.h>
 
 typedef OG_OPTIONS(uint32_t, OGGraphTraceFlags) {
     OGGraphTraceFlags_0 = 0,

@@ -8,7 +8,7 @@
 #include <OpenGraphCxx/DebugServer/og-debug-server.hpp>
 #if OG_TARGET_OS_DARWIN
 
-#include "OGGraphDescription.h"
+#include <OpenGraphC/OGGraphDescription.h>
 #include <OpenGraphCxx/Util/log.hpp>
 #include <OpenGraphCxx/Util/assert.hpp>
 #include <OpenGraphCxx/Graph/Graph.hpp>

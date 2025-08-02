@@ -1,4 +1,8 @@
 module OpenGraphCxx {
-    header "OpenGraph-umbrella.h"
+    export *
+}
+
+module OpenGraphCxx.C {
+    umbrella header "OpenGraphC/OpenGraph-umbrella.h"
     export *
 }

@@ -8,8 +8,8 @@
 #ifndef AttributeID_hpp
 #define AttributeID_hpp
 
-#include "OGBase.h"
-#include "OGAttribute.h"
+#include <OpenGraphC/OGBase.h>
+#include <OpenGraphC/OGAttribute.h>
 #include <OpenGraphCxx/Util/assert.hpp>
 
 namespace OG {

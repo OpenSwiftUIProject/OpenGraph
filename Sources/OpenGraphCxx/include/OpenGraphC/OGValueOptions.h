@@ -5,7 +5,7 @@
 #ifndef OGValueOptions_h
 #define OGValueOptions_h
 
-#include "OGBase.h"
+#include <OpenGraphC/OGBase.h>
 
 typedef OG_OPTIONS(uint32_t, OGValueOptions) {
     OGValueOptions_0 = 0,

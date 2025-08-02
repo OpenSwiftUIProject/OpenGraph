@@ -5,7 +5,7 @@
 #ifndef OGCounterQueryType_h
 #define OGCounterQueryType_h
 
-#include "OGBase.h"
+#include <OpenGraphC/OGBase.h>
 
 typedef OG_ENUM(uint32_t, OGCounterQueryType) {
     OGCounterQueryType_0,
