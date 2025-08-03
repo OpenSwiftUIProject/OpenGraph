@@ -3,7 +3,7 @@
 //  OpenGraphCxx
 //
 //  Status: Complete
-//  Modified from https://github.com/jcmosc/Compute/blob/00dfebc2c5852144ac5aada8ebe896b78e5f622a/Sources/ComputeCxx/Vector/Vector.tpp [MIT Lisence]
+//  Modified based Compute code
 
 #include <OpenGraphCxx/Vector/vector.hpp>
 #include <OpenGraphCxx/Util/assert.hpp>

@@ -2,9 +2,9 @@
 //  table.cpp
 //  OpenGraphCxx
 //
-//  Audited for iOS 18.0
+//  Audited for 6.5.4
 //  Status: WIP
-//  Modified from https://github.com/jcmosc/Compute/blob/0a6b21a4cdeb9bbdd95e7e914c4e18bed37a2456/Sources/ComputeCxx/Data/Table.cpp [MIT License]
+//  Modified based Compute code
 
 #include <OpenGraphCxx/Data/table.hpp>
 #include <OpenGraphCxx/Data/page.hpp>
