@@ -79,11 +79,12 @@ public:
     /// @return true if a shared server is active, false otherwise
     static OG_INLINE bool has_shared_server() { return _shared_server != nullptr; }
 
-    /// Starts a new shared debug server on the specified port.
+    /// Starts a new shared debug server with the specified mode.
     ///
-    /// @param port The TCP port number to bind the server to
+    /// @param mode Configuration flags controlling server behavior.
+    ///             Must include OGDebugServerModeValid for basic operation.
     /// @return Pointer to the started server, or nullptr if startup failed
-    static DebugServer *_Nullable start(unsigned int port);
+    static DebugServer *_Nullable start(OGDebugServerMode mode);
     
     /// Stops the shared debug server and releases all resources.
     /// This will close all client connections and shut down the server.
