@@ -22,7 +22,7 @@ typedef const OGDebugServerStorage *OGDebugServer OG_SWIFT_STRUCT;
 OG_EXTERN_C_BEGIN
 
 OG_EXPORT
-OGDebugServer _Nullable OGDebugServerStart(unsigned int mode) OG_SWIFT_NAME(OGDebugServer.start(mode:));
+OGDebugServer _Nullable OGDebugServerStart(uint32_t mode) OG_SWIFT_NAME(OGDebugServer.start(mode:));
 
 OG_EXPORT
 void OGDebugServerStop(void) OG_SWIFT_NAME(OGDebugServer.stop());

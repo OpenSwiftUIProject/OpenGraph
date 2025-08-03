@@ -1,11 +1,11 @@
 //
-//  og-debug-server.hpp
+//  DebugServer.hpp
 //  OpenGraphCxx
 //
 //  Audited for 2021 Release
 
-#ifndef og_debug_server_hpp
-#define og_debug_server_hpp
+#ifndef OPENGRAPH_CXX_DEBUGSERVER_DEBUGSERVER_HPP
+#define OPENGRAPH_CXX_DEBUGSERVER_DEBUGSERVER_HPP
 
 #include <OpenGraph/OGBase.h>
 #if OG_TARGET_OS_DARWIN
@@ -44,8 +44,10 @@ private:
     uint32_t token;
     _Nullable dispatch_source_t source;
     OG::vector<std::unique_ptr<Connection>, 0, unsigned long> connections;
-public:
     static DebugServer *_Nullable _shared_server;
+public:
+    static OG_INLINE DebugServer *shared_server() { return _shared_server; }
+    static OG_INLINE bool has_shared_server() { return _shared_server != nullptr; }
     static DebugServer *_Nullable start(unsigned int port);
     static void stop();
     DebugServer(unsigned int port);
@@ -68,4 +70,4 @@ OG_IMPLICIT_BRIDGING_DISABLED
 OG_ASSUME_NONNULL_END
 
 #endif /* OG_TARGET_OS_DARWIN */
-#endif /* og_debug_server_hpp */
+#endif /* OPENGRAPH_CXX_DEBUGSERVER_DEBUGSERVER_HPP */

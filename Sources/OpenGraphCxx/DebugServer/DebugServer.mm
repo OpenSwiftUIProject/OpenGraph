@@ -1,10 +1,10 @@
 //
-//  og-debug-server.mm
+//  DebugServer.mm
 //  OpenGraphCxx
 //
 //  Audited for 2021 Release
 
-#include <OpenGraphCxx/DebugServer/og-debug-server.hpp>
+#include <OpenGraphCxx/DebugServer/DebugServer.hpp>
 #if OG_TARGET_OS_DARWIN
 
 #include <OpenGraph/OGGraphDescription.h>

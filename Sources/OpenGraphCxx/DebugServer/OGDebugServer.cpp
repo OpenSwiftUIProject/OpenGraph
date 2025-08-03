@@ -3,13 +3,13 @@
 //  OpenGraphCxx
 
 #include <OpenGraph/OGDebugServer.h>
-#include <OpenGraphCxx/DebugServer/og-debug-server.hpp>
+#include <OpenGraphCxx/DebugServer/DebugServer.hpp>
 
 #if OG_TARGET_OS_DARWIN
 
 // MARK: - Exported C functions
 
-OGDebugServer _Nullable OGDebugServerStart(unsigned int port) {
+OGDebugServer _Nullable OGDebugServerStart(uint32_t port) {
     return (OGDebugServer)OG::DebugServer::start(port);
 }
 
@@ -18,17 +18,17 @@ void OGDebugServerStop() {
 }
 
 CFURLRef _Nullable OGDebugServerCopyURL() {
-    if (OG::DebugServer::_shared_server == nullptr) {
+    if (!OG::DebugServer::has_shared_server()) {
         return nullptr;
     }
-    return OG::DebugServer::_shared_server->copy_url();
+    return OG::DebugServer::shared_server()->copy_url();
 }
 
 void OGDebugServerRun(int timeout) {
-    if (OG::DebugServer::_shared_server == nullptr) {
+    if (!OG::DebugServer::has_shared_server()) {
         return;
     }
-    OG::DebugServer::_shared_server->run(timeout);
+    OG::DebugServer::shared_server()->run(timeout);
 }
 
 #endif
