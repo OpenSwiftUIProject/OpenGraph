@@ -359,25 +359,25 @@ CFDataRef _Nullable OG::DebugServer::receive(Connection *, OGDebugServerMessageH
                 }
             } else if ([command isEqual:@"profiler/start"]) {
                 // FIXME: Simply return the command str for now
-                CFStringRef string = CFSTR("start");
+                CFStringRef string = CFSTR("profiler/start");
                 CFDataRef data = CFDataCreate(kCFAllocatorDefault, (const UInt8 *)CFStringGetCStringPtr(string, kCFStringEncodingUTF8), CFStringGetLength(string));
                 CFRelease(string);
                 return data;
             } else if ([command isEqual:@"profiler/stop"]) {
                 // FIXME: Simply return the command str for now
-                CFStringRef string = CFSTR("stop");
+                CFStringRef string = CFSTR("profiler/stop");
                 CFDataRef data = CFDataCreate(kCFAllocatorDefault, (const UInt8 *)CFStringGetCStringPtr(string, kCFStringEncodingUTF8), CFStringGetLength(string));
                 CFRelease(string);
                 return data;
             } else if ([command isEqual:@"profiler/reset"]) {
                 // FIXME: Simply return the command str for now
-                CFStringRef string = CFSTR("reset");
+                CFStringRef string = CFSTR("profiler/reset");
                 CFDataRef data = CFDataCreate(kCFAllocatorDefault, (const UInt8 *)CFStringGetCStringPtr(string, kCFStringEncodingUTF8), CFStringGetLength(string));
                 CFRelease(string);
                 return data;
             } else if ([command isEqual:@"profiler/mark"]) {
                 // FIXME: Simply return the command str for now
-                CFStringRef string = CFSTR("mark");
+                CFStringRef string = CFSTR("profiler/mark");
                 CFDataRef data = CFDataCreate(kCFAllocatorDefault, (const UInt8 *)CFStringGetCStringPtr(string, kCFStringEncodingUTF8), CFStringGetLength(string));
                 CFRelease(string);
                 return data;

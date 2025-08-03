@@ -19,21 +19,21 @@ OG_ASSUME_NONNULL_BEGIN
 
 OG_IMPLICIT_BRIDGING_ENABLED
 
-namespace OG {
-struct OGDebugServerMessageHeader {
+typedef struct OG_SWIFT_NAME(DebugServerMessageHeader) OGDebugServerMessageHeader {
     uint32_t token;
     uint32_t unknown;
     uint32_t length;
     uint32_t unknown2;
-}; /* OGDebugServerMessageHeader */
+} OGDebugServerMessageHeader; /* OGDebugServerMessageHeader */
 
+namespace OG {
 class DebugServer {
 public:
     DebugServer(OGDebugServerMode mode);
     ~DebugServer();
 
     CFURLRef _Nullable copy_url() const;
-    void run(int descriptor);
+    void run(int timeout) const;
 
     static OG_INLINE DebugServer *shared_server() { return _shared_server; }
     static OG_INLINE bool has_shared_server() { return _shared_server != nullptr; }
