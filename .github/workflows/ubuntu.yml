@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        swift_version: ["6.1"]
+        swift_version: ["6.1.2"]
     runs-on: ubuntu-22.04
     env:
       OPENGRAPH_WERROR: 1
