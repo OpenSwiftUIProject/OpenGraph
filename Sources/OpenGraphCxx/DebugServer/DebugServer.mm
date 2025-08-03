@@ -107,7 +107,7 @@ OG::DebugServer::DebugServer(OGDebugServerMode mode) {
     char address[32];
     uint32_t converted_ip = htonl(ip);
     inet_ntop(AF_INET, &converted_ip, address, sizeof(address));
-    os_log_info(misc_log(), "debug server graph://%s:%d/?token=%u", address, port, token);
+    os_log(misc_log(), "debug server graph://%s:%d/?token=%u", address, port, token);
     fprintf(stderr, "debug server graph://%s:%d/?token=%u\n", address, port, token);
 }
 
