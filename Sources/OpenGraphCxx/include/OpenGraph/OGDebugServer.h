@@ -13,7 +13,7 @@ OG_ASSUME_NONNULL_BEGIN
 
 OG_IMPLICIT_BRIDGING_ENABLED
 
-typedef struct OG_BRIDGED_TYPE(id) OGDebugServerStorage * OGDebugServerRef OG_SWIFT_NAME(DebugServer);
+typedef struct OGDebugServerStorage *OGDebugServerRef OG_SWIFT_STRUCT OG_SWIFT_NAME(DebugServer);
 
 typedef OG_OPTIONS(uint32_t, OGDebugServerMode) {
     OGDebugServerModeNone = 0,

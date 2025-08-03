@@ -27,8 +27,9 @@
 OG::DebugServer* _Nullable OG::DebugServer::_shared_server = nullptr;
 
 OG::DebugServer* _Nullable OG::DebugServer::start(OGDebugServerMode mode) {
-    if (OG::DebugServer::_shared_server == nullptr
-        && (mode & OGDebugServerModeValid)
+    if (
+        (mode & OGDebugServerModeValid)
+        && !OG::DebugServer::has_shared_server()
         /*&& os_variant_has_internal_diagnostics("com.apple.AttributeGraph")*/
     ) {
         _shared_server = new DebugServer(mode);
@@ -37,7 +38,7 @@ OG::DebugServer* _Nullable OG::DebugServer::start(OGDebugServerMode mode) {
 }
 
 void OG::DebugServer::stop() {
-    if (OG::DebugServer::_shared_server == nullptr) {
+    if (!OG::DebugServer::has_shared_server()) {
         return;
     }
     _shared_server->~DebugServer();
