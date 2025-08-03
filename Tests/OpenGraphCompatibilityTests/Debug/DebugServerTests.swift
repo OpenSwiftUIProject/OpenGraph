@@ -27,7 +27,8 @@ struct DebugServerTests {
         let _ = try #require(DebugServer.start(mode: [.valid]))
         let url = try #require(DebugServer.copyURL()) as URL
         #expect(url.scheme == "graph")
-        #expect(url.host() == "127.0.0.1")
+        let host = try #require(url.host())
+        #expect(host == "127.0.0.1")
         DebugServer.run(timeout: 1)
         DebugServer.stop()
     }
@@ -39,14 +40,9 @@ struct DebugServerTests {
         let _ = try #require(DebugServer.start(mode: [.valid, .networkInterface]))
         let url = try #require(DebugServer.copyURL()) as URL
         #expect(url.scheme == "graph")
-        #expect(url.host() != "127.0.0.1")
-        // FIXME
-        // OG:
-        // print: graph://198.19.249.3:58088/?token=1502822185
-        // url: graph://198.19.249.3:58088/?token=1502822185
-        // AG:
-        // print: debug server graph://192.168.8.211:49691/?token=3662216201
-        // url: graph://192.168.8.211:49694/?token=1022379324
+        let host = try #require(url.host())
+        #expect(host != "127.0.0.1")
+        #expect(host.hasPrefix("192.168"))
         DebugServer.run(timeout: 1)
         DebugServer.stop()
     }

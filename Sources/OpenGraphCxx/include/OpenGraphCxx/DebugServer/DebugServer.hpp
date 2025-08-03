@@ -29,7 +29,7 @@ struct OGDebugServerMessageHeader {
 
 class DebugServer {
 public:
-    DebugServer(unsigned int port);
+    DebugServer(OGDebugServerMode mode);
     ~DebugServer();
 
     CFURLRef _Nullable copy_url() const;

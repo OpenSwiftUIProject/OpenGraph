@@ -81,6 +81,7 @@ OG::DebugServer::DebugServer(OGDebugServerMode mode) {
                     uint32_t ip_data = ntohl(ifa_addr->sin_addr.s_addr);
                     if (ip_data != INADDR_LOOPBACK) {
                         ip = ip_data;
+                        break;  // Take first non-loopback interface
                     }
                 }
                 current_iaddrs = current_iaddrs->ifa_next;
