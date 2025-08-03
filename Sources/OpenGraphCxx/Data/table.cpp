@@ -2,7 +2,7 @@
 //  table.cpp
 //  OpenGraphCxx
 //
-//  Audited for 6.5.4
+//  Audited for 6.5.1
 //  Status: WIP
 //  Modified based Compute code
 
@@ -10,7 +10,7 @@
 #include <OpenGraphCxx/Data/page.hpp>
 #include <OpenGraphCxx/Data/page_const.hpp>
 #include <OpenGraphCxx/Data/zone.hpp>
-#include <OpenGraphCxx/Util/assert.hpp>
+#include <OpenGraphCxx/Misc/assert.hpp>
 #include <sys/mman.h>
 #include <dispatch/dispatch.h>
 #if OG_TARGET_OS_DARWIN
@@ -29,7 +29,7 @@ namespace OG {
 namespace data {
 
 #if OG_TARGET_OS_DARWIN
-malloc_zone_t *_Nullable _malloc_zone;
+malloc_zone_t *table::_malloc_zone = nullptr;
 #endif
 
 table &table::ensure_shared() {
@@ -242,9 +242,9 @@ void table::dealloc_page_locked(ptr<page> page) OG_NOEXCEPT {
     }
 }
 
-// TO BE AUDITED
-uint64_t table::raw_page_seed(ptr<page> page) OG_NOEXCEPT {
-    page.assert_valid(_data_capacity);
+OG_CONSTEXPR
+uint64_t table::raw_page_seed(ptr<page> page) const OG_NOEXCEPT {
+    assert_valid(page);
     lock();
     uint32_t page_index = page.page_index();
     uint32_t map_index = page_index / pages_per_map;
@@ -255,8 +255,8 @@ uint64_t table::raw_page_seed(ptr<page> page) OG_NOEXCEPT {
     if (map_index < _page_metadata_maps.size() && _page_metadata_maps[map_index].test(page_index % page_size)) {
         auto info = page->zone->info();
         // FIXME
-        w22 = info.to_raw_value() & 0xffffff00;
-        w21 = info.to_raw_value() & 0x000000ff;
+        w22 = info.value() & 0xffffff00;
+        w21 = info.value() & 0x000000ff;
         result = uint64_t(1) << 32;
     }
     unlock();
@@ -267,9 +267,9 @@ void table::print() const OG_NOEXCEPT {
     lock();
     fprintf(stderr, "data::table %p:\n  %.2fKB allocated, %.2fKB used, %.2fKB reusable.\n",
             this,
-            double(_region_capacity - page_size) / 1024.0,
+            double(region_capacity() - page_size) / 1024.0,
             double(this->used_pages_num()) / 1024.0,
-            double(_reusable_pages_num) / 1024.0);
+            double(reusable_pages_num()) / 1024.0);
     unlock();
 }
 

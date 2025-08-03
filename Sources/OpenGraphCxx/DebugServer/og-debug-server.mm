@@ -8,8 +8,8 @@
 #if OG_TARGET_OS_DARWIN
 
 #include <OpenGraph/OGGraphDescription.h>
-#include <OpenGraphCxx/Util/log.hpp>
-#include <OpenGraphCxx/Util/assert.hpp>
+#include <OpenGraphCxx/Misc/log.hpp>
+#include <OpenGraphCxx/Misc/assert.hpp>
 #include <OpenGraphCxx/Graph/Graph.hpp>
 
 #include <iostream>

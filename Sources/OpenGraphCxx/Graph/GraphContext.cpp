@@ -4,7 +4,7 @@
 
 #include <OpenGraphCxx/Graph/Graph.hpp>
 #include <OpenGraph/OGGraph.h>
-#include <OpenGraphCxx/Util/assert.hpp>
+#include <OpenGraphCxx/Misc/assert.hpp>
 
 OG::Graph::Context &OG::Graph::Context::from_cf(OGGraphRef storage) OG_NOEXCEPT {
     if (storage->context.isInvalid()) {

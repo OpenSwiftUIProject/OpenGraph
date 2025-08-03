@@ -25,22 +25,11 @@ public:
     using element_type = T;
     using difference_type = uint32_t;
 
-private:
-    difference_type _offset;
-
-    template <typename U> friend class ptr;
-
 public:
     OG_INLINE OG_CONSTEXPR ptr(difference_type offset = 0) : _offset(offset){};
     OG_INLINE OG_CONSTEXPR ptr(std::nullptr_t){};
 
-    OG_INLINE
-    void assert_valid(uint32_t capacity = shared_table().data_capacity()) const {
-        if (capacity <= _offset) {
-            precondition_failure("invalid data offset: %u", _offset);
-        }
-    }
-
+    // FIXME: this should be put into table API
     OG_INLINE
     element_type *_Nonnull get(vm_address_t base = shared_table().data_base()) const OG_NOEXCEPT {
         assert(_offset != 0);
@@ -100,6 +89,11 @@ public:
     difference_type operator-(const ptr<U> &other) const OG_NOEXCEPT {
         return _offset - other._offset;
     };
+private:
+    difference_type _offset;
+    
+    template <typename U> friend class ptr;
+    friend class table;
 }; /* ptr */
 
 } /* data */

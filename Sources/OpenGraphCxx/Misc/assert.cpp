@@ -2,8 +2,8 @@
 //  assert.cpp
 //  OpenGraphCxx
 
-#include <OpenGraphCxx/Util/assert.hpp>
-#include <OpenGraphCxx/Util/log.hpp>
+#include <OpenGraphCxx/Misc/assert.hpp>
+#include <OpenGraphCxx/Misc/log.hpp>
 
 #include <stdio.h>
 #include <stdlib.h>

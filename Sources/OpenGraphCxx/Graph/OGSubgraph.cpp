@@ -6,8 +6,8 @@
 #include <OpenGraph/OGGraph.h>
 #include <OpenGraphCxx/Graph/Subgraph.hpp>
 #include <OpenGraph/OGGraphContext.h>
-#include <OpenGraphCxx/Util/assert.hpp>
-#include <OpenGraphCxx/Util/env.hpp>
+#include <OpenGraphCxx/Misc/assert.hpp>
+#include <OpenGraphCxx/Misc/env.hpp>
 #include <pthread.h>
 #if !OG_TARGET_OS_WASI
 #include <dispatch/dispatch.h>

@@ -4,7 +4,7 @@
 //
 //  Audited for 2021 Release
 
-#include <OpenGraphCxx/Util/log.hpp>
+#include <OpenGraphCxx/Misc/log.hpp>
 
 #if OG_TARGET_OS_DARWIN
 
