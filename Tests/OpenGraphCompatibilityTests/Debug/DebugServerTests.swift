@@ -27,7 +27,7 @@ struct DebugServerTests {
         let _ = try #require(DebugServer.start(mode: [.valid]))
         let url = try #require(DebugServer.copyURL()) as URL
         #expect(url.scheme == "graph")
-        let host = try #require(url.host())
+        let host = try #require(url.host)
         #expect(host == "127.0.0.1")
         DebugServer.run(timeout: 1)
         DebugServer.stop()
@@ -40,7 +40,7 @@ struct DebugServerTests {
         let _ = try #require(DebugServer.start(mode: [.valid, .networkInterface]))
         let url = try #require(DebugServer.copyURL()) as URL
         #expect(url.scheme == "graph")
-        let host = try #require(url.host())
+        let host = try #require(url.host)
         #expect(host != "127.0.0.1")
         #expect(host.hasPrefix("192.168"))
         DebugServer.run(timeout: 1)
