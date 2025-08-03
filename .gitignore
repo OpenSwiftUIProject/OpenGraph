@@ -9,3 +9,4 @@ DerivedData/
 coverage.txt
 TODO.md
 .ag_template/
+build/
