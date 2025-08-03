@@ -42,8 +42,8 @@ struct DebugServerTests {
         #expect(url.host() != "127.0.0.1")
         // FIXME
         // OG:
-        // print: debug server graph://0.0.0.0:49656/?token=3615753632
-        // url: graph://198.19.249.3:49656/?token=3615753632
+        // print: graph://198.19.249.3:58088/?token=1502822185
+        // url: graph://198.19.249.3:58088/?token=1502822185
         // AG:
         // print: debug server graph://192.168.8.211:49691/?token=3662216201
         // url: graph://192.168.8.211:49694/?token=1022379324

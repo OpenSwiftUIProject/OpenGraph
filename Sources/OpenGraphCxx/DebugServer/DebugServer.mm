@@ -33,40 +33,44 @@ OG::DebugServer::DebugServer(OGDebugServerMode mode) {
     source = nullptr;
     connections = OG::vector<std::unique_ptr<Connection>, 0, u_long>();
 
-    // socket
+    // Create socket
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd < 0) {
         perror("OGDebugServer: socket");
         return;
     }
 
-    // fcntl
-    fcntl(sockfd, F_SETFD, O_WRONLY);
+    // Set socket options
+    fcntl(sockfd, F_SETFD, FD_CLOEXEC);
 
     // setsockopt
-    const int value = 1;
-    setsockopt(sockfd, SOL_SOCKET, SO_NOSIGPIPE, &value, 4);
+    int value = 1;
+    setsockopt(sockfd, SOL_SOCKET, SO_NOSIGPIPE, (void *)&value, sizeof(value));
 
-    // bind
-    sockaddr_in addr = sockaddr_in();
+    // Prepare address structure
+    sockaddr_in addr;
     addr.sin_family = AF_INET;
-    addr.sin_port = 0;
-    addr.sin_addr.s_addr = (mode & OGDebugServerModeNetworkInterface) ? 0 : htonl(INADDR_LOOPBACK);
-    socklen_t slen = sizeof(sockaddr_in);
-    if (bind(sockfd, (const sockaddr *)&addr, slen)) {
+    addr.sin_port = 0; // Let system assign port
+    addr.sin_addr.s_addr = (mode & OGDebugServerModeNetworkInterface) ? INADDR_ANY : htonl(INADDR_LOOPBACK);
+
+    // Bind socket
+    if (bind(sockfd, (const sockaddr *)&addr, sizeof(addr))) {
         perror("OGDebugServer: bind");
         shutdown();
         return;
     }
 
-    // getsockname
+    // Get assigned address and port
+    socklen_t slen = sizeof(addr);
     if (getsockname(sockfd, (sockaddr *)&addr, &slen)) {
         perror("OGDebugServer: getsockname");
         shutdown();
         return;
     }
     ip = ntohl(addr.sin_addr.s_addr);
-    port = ntohl(addr.sin_port) >> 16;
+    port = ntohs(addr.sin_port);
+
+    // If network interface mode, find external IP
     if (mode & OGDebugServerModeNetworkInterface) {
         ifaddrs *iaddrs = nullptr;
         if (getifaddrs(&iaddrs) == 0) {
@@ -86,24 +90,22 @@ OG::DebugServer::DebugServer(OGDebugServerMode mode) {
     }
 
     // listen
-    int max_connection_count = 5;
-    if (listen(sockfd, max_connection_count)) {
+    if (listen(sockfd, 5)) {
         perror("OGDebugServer: listen");
         shutdown();
         return;
     }
 
-    // Dispatch
+    // Set up dispatch source for incoming connections
     source = dispatch_source_create(DISPATCH_SOURCE_TYPE_READ, sockfd, 0, dispatch_get_main_queue());
     dispatch_set_context(source, this);
     dispatch_source_set_event_handler_f(source, &accept_handler);
     dispatch_resume(source);
 
-    // inet_ntop
-    char address[32] = {0};
-    inet_ntop(AF_INET, (const void *)(&addr.sin_addr.s_addr), address, 32);
-
-    // log
+    // Log server information
+    char address[32];
+    uint32_t converted_ip = htonl(ip);
+    inet_ntop(AF_INET, &converted_ip, address, sizeof(address));
     os_log_info(misc_log(), "debug server graph://%s:%d/?token=%u", address, port, token);
     fprintf(stderr, "debug server graph://%s:%d/?token=%u\n", address, port, token);
 }
@@ -127,26 +129,96 @@ CFURLRef _Nullable OG::DebugServer::copy_url() const {
     return CFURLCreateWithBytes(NULL, (const UInt8 *)url, strlen(url), kCFStringEncodingUTF8, nullptr);
 }
 
-// TODO: select will fail here
-void OG::DebugServer::run(int timeout) {
+// NOTE: Copilot implementation
+void OG::DebugServer::run(int timeout) const {
     bool accepted_connection = false;
+    
     while (true) {
+        // Early exit condition check
+        if (accepted_connection && connections.size() == 0) {
+            break;
+        }
+        
+        // Initialize the fd_set for write operations
         fd_set writefds;
         FD_ZERO(&writefds);
-        FD_SET(sockfd, &writefds);
-        timeval tv = timeval { timeout, 0 };
-
-        if (select(sockfd+1, nullptr, &writefds, nullptr, &tv) <= 0) {
-            if (errno == EAGAIN) {
-                continue;
-            } else {
-                perror("OGDebugServer: select");
+        
+        // Add the server socket to the fd_set
+        int server_fd = sockfd;
+        if (__darwin_check_fd_set_overflow(server_fd, &writefds, 0)) {
+            FD_SET(server_fd, &writefds);
+        }
+        
+        // Find the maximum file descriptor and add all connection sockets
+        int max_fd = server_fd;
+        size_t connection_count = connections.size();
+        
+        if (connection_count > 0) {
+            auto connection_data = connections.data();
+            for (size_t i = 0; i < connection_count; ++i) {
+                int conn_fd = connection_data[i]->sockfd;
+                if (__darwin_check_fd_set_overflow(conn_fd, &writefds, 0)) {
+                    FD_SET(conn_fd, &writefds);
+                }
+                if (max_fd < conn_fd) {
+                    max_fd = conn_fd;
+                }
+            }
+        }
+        
+        // Set up timeout
+        timeval tv = {timeout, 0};
+        
+        // Call select with write file descriptors
+        int select_result = select(max_fd + 1, nullptr, &writefds, nullptr, &tv);
+        
+        if (select_result <= 0) {
+            if (*__error() != EAGAIN) {
+                perror("AGDebugServer: select");
                 return;
+            }
+            // Continue the loop on EAGAIN
+            continue;
+        }
+        
+        // Check if server socket is ready for new connections
+        if (__darwin_check_fd_set_overflow(server_fd, &writefds, 0) && 
+            FD_ISSET(server_fd, &writefds)) {
+            accept_handler((void *)this);
+            accepted_connection = true;
+        }
+        
+        // Process ready connection sockets
+        if (connections.size() > 0) {
+            size_t i = 0;
+            while (i < connections.size()) {
+                auto connection = connections.data()[i].get();
+                int conn_fd = connection->sockfd;
+                
+                if (__darwin_check_fd_set_overflow(conn_fd, &writefds, 0) && 
+                    FD_ISSET(conn_fd, &writefds)) {
+                    
+                    // Clear the FD from the set before processing
+                    FD_CLR(conn_fd, &writefds);
+                    
+                    // Handle the connection
+                    Connection::handler(connection);
+                    
+                    // Reset index to 0 after handling a connection
+                    // (connection might have been removed)
+                    i = 0;
+                } else {
+                    i++;
+                }
+                
+                // Break if no more connections
+                if (connections.size() == 0) {
+                    break;
+                }
             }
         }
     }
 }
-
 OG::DebugServer* _Nullable OG::DebugServer::start(OGDebugServerMode mode) {
     if (
         (mode & OGDebugServerModeValid)
@@ -162,7 +234,6 @@ void OG::DebugServer::stop() {
     if (!OG::DebugServer::has_shared_server()) {
         return;
     }
-    _shared_server->~DebugServer();
     delete _shared_server;
     _shared_server = nullptr;
 }
@@ -320,12 +391,12 @@ void OG::DebugServer::close_connection(OG::DebugServer::Connection *target) {
     if (size == 0) {
         return;
     }
-    
-    for (auto &connection: connections) {
-        auto conn = connection.get();
+    auto data = connections.data();
+    for (size_t i = 0; i < size; ++i) {
+        auto conn = data[i].get();
         if (conn == target) {
-            connection = std::move(connections[size-1]);
-            connections[size-1] = std::move(connection); // VR
+            // FIXME
+            data[i] = std::move(data[size - 1]);
             connections.pop_back();
             return;
         }
