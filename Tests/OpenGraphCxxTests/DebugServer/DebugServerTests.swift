@@ -28,8 +28,7 @@ struct DebugServerTests {
         let url = try #require(debugServer.copy_url()) as URL
         let components = try #require(URLComponents(url: url, resolvingAgainstBaseURL: false))
         let token = try #require(components.queryItems?.first { $0.name == "token" }?.value.flatMap { UInt32($0) })
-
-        debugServer.run(3)
+        debugServer.run(1)
         let client = DebugClient()
         try await client.connect(to: url)
 

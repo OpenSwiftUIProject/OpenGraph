@@ -168,14 +168,13 @@ void OG::DebugServer::run(int timeout) const {
         
         // Call select with write file descriptors
         int select_result = select(max_fd + 1, nullptr, &writefds, nullptr, &tv);
-        
         if (select_result <= 0) {
-            if (*__error() != EAGAIN) {
-                perror("AGDebugServer: select");
-                return;
+            if (errno == EAGAIN) {
+                // Continue the loop on EAGAIN
+                continue;
             }
-            // Continue the loop on EAGAIN
-            continue;
+            perror("OGDebugServer: select");
+            return;
         }
 
         // Check if server socket is ready for new connections
