@@ -25,6 +25,26 @@ The project is for the following purposes:
 
 Currently, this project is in early development.
 
+## Usage
+
+### Via Swift Package Manager
+
+Add OpenGraph as a dependency in your `Package.swift`:
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/OpenSwiftUIProject/OpenGraph.git", from: "0.2.0")
+]
+```
+
+> [!NOTE]
+> - You may need to configure the Swift toolchain header for proper integration of OpenGraph
+> - By default, OpenGraphShims will use the private AttributeGraph as its implementation on Apple platforms
+
+### Via Prebuilt XCFramework
+
+For a simpler setup, you can use the prebuilt XCFramework available on the [releases page](https://github.com/OpenSwiftUIProject/OpenGraph/releases).
+
 ## Build
 
 The current suggested toolchain to build the project is Swift 6.1.2 / Xcode 16.4.
