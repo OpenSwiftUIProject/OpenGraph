@@ -2,7 +2,8 @@
 //  DebugServer.mm
 //  OpenGraphCxx
 //
-//  Audited for 2021 Release
+//  Audited for 6.5.1
+//  Status: Blocked by profile command
 
 #include <OpenGraphCxx/DebugServer/DebugServer.hpp>
 #if OG_TARGET_OS_DARWIN
@@ -22,29 +23,7 @@
 #include <errno.h>
 #include <assert.h>
 
-// MARK: DebugServer Implementation
-
-OG::DebugServer* _Nullable OG::DebugServer::_shared_server = nullptr;
-
-OG::DebugServer* _Nullable OG::DebugServer::start(OGDebugServerMode mode) {
-    if (
-        (mode & OGDebugServerModeValid)
-        && !OG::DebugServer::has_shared_server()
-        /*&& os_variant_has_internal_diagnostics("com.apple.AttributeGraph")*/
-    ) {
-        _shared_server = new DebugServer(mode);
-    }
-    return OG::DebugServer::_shared_server;
-}
-
-void OG::DebugServer::stop() {
-    if (!OG::DebugServer::has_shared_server()) {
-        return;
-    }
-    _shared_server->~DebugServer();
-    delete _shared_server;
-    _shared_server = nullptr;
-}
+// MARK: DebugServer public API Implementation
 
 OG::DebugServer::DebugServer(OGDebugServerMode mode) {
     sockfd = -1;
@@ -53,21 +32,21 @@ OG::DebugServer::DebugServer(OGDebugServerMode mode) {
     token = arc4random();
     source = nullptr;
     connections = OG::vector<std::unique_ptr<Connection>, 0, unsigned long>();
-    
+
     // socket
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd < 0) {
         perror("OGDebugServer: socket");
         return;
     }
-    
+
     // fcntl
     fcntl(sockfd, F_SETFD, O_WRONLY);
-    
+
     // setsockopt
     const int value = 1;
     setsockopt(sockfd, SOL_SOCKET, SO_NOSIGPIPE, &value, 4);
-    
+
     // bind
     sockaddr_in addr = sockaddr_in();
     addr.sin_family = AF_INET;
@@ -79,7 +58,7 @@ OG::DebugServer::DebugServer(OGDebugServerMode mode) {
         shutdown();
         return;
     }
-    
+
     // getsockname
     if (getsockname(sockfd, (sockaddr *)&addr, &slen)) {
         perror("OGDebugServer: getsockname");
@@ -105,7 +84,7 @@ OG::DebugServer::DebugServer(OGDebugServerMode mode) {
             freeifaddrs(iaddrs);
         }
     }
-    
+
     // listen
     int max_connection_count = 5;
     if (listen(sockfd, max_connection_count)) {
@@ -113,17 +92,17 @@ OG::DebugServer::DebugServer(OGDebugServerMode mode) {
         shutdown();
         return;
     }
-    
+
     // Dispatch
     source = dispatch_source_create(DISPATCH_SOURCE_TYPE_READ, sockfd, 0, dispatch_get_main_queue());
     dispatch_set_context(source, this);
     dispatch_source_set_event_handler_f(source, &accept_handler);
     dispatch_resume(source);
-    
+
     // inet_ntop
     char address[32] = {0};
     inet_ntop(AF_INET, (const void *)(&addr.sin_addr.s_addr), address, 32);
-    
+
     // log
     os_log_info(misc_log(), "debug server graph://%s:%d/?token=%u", address, port, token);
     fprintf(stderr, "debug server graph://%s:%d/?token=%u\n", address, port, token);
@@ -139,16 +118,27 @@ OG::DebugServer::~DebugServer() {
     }
 }
 
+CFURLRef _Nullable OG::DebugServer::copy_url() const {
+    if (sockfd < 0) {
+        return nullptr;
+    }
+    uint32_t converted_ip = htonl(ip);
+    char address[32];
+    inet_ntop(AF_INET, &converted_ip, address, 32);
+    char url[100];
+    snprintf_l(url, 0x100, nullptr, "graph://%s:%d/?token=%u", address, port, token);
+    return CFURLCreateWithBytes(NULL, (const UInt8 *)url, strlen(url), kCFStringEncodingUTF8, nullptr);
+}
+
 // TODO: select will fail here
 void OG::DebugServer::run(int timeout) {
     bool accepted_connection = false;
-    
     while (true) {
         fd_set writefds;
         FD_ZERO(&writefds);
         FD_SET(sockfd, &writefds);
         timeval tv = timeval { timeout, 0 };
-        
+
         if (select(sockfd+1, nullptr, &writefds, nullptr, &tv) <= 0) {
             if (errno == EAGAIN) {
                 continue;
@@ -160,83 +150,24 @@ void OG::DebugServer::run(int timeout) {
     }
 }
 
-void OG::DebugServer::accept_handler(void *_Nullable context) {
-    DebugServer *server = (DebugServer *)context;
-    sockaddr address;
-    socklen_t address_len = 16;
-    
-    int sockfd = accept(server->sockfd, &address, &address_len);
-    if (sockfd) {
-        perror("OGDebugServer: accept");
+OG::DebugServer* _Nullable OG::DebugServer::start(OGDebugServerMode mode) {
+    if (
+        (mode & OGDebugServerModeValid)
+        && !OG::DebugServer::has_shared_server()
+        /*&& os_variant_has_internal_diagnostics("com.apple.AttributeGraph")*/
+    ) {
+        _shared_server = new DebugServer(mode);
+    }
+    return OG::DebugServer::_shared_server;
+}
+
+void OG::DebugServer::stop() {
+    if (!OG::DebugServer::has_shared_server()) {
         return;
     }
-    fcntl(server->sockfd, F_SETFD, O_WRONLY);
-    // FIXME: Link issue about vector
-    // server->connections.push_back(std::unique_ptr<Connection>(new Connection(server, sockfd)));
-}
-
-CFURLRef _Nullable OG::DebugServer::copy_url() const {
-    if (sockfd < 0) {
-        return nullptr;
-    }
-    uint32_t converted_ip = htonl(ip);
-    char address[32] = {0};
-    inet_ntop(AF_INET, &converted_ip, address, 32);
-    char url[100] = {0};
-    snprintf_l(url, 0x100, nullptr, "graph://%s:%d/?token=%u", address, port, token);
-    return CFURLCreateWithBytes(kCFAllocatorDefault, (const UInt8 *)url, strlen(url), kCFStringEncodingUTF8, nullptr);
-}
-
-void OG::DebugServer::shutdown() {
-    if (source != nullptr) {
-        dispatch_source_set_event_handler_f(source, nullptr);
-        dispatch_set_context(source, nullptr);
-        source = nullptr;
-    }
-    if (sockfd >= 0) {
-        close(sockfd);
-        sockfd = -1;
-    }
-}
-
-// TODO: part implemented
-CFDataRef _Nullable OG::DebugServer::receive(Connection *, OGDebugServerMessageHeader &, CFDataRef data) {
-    @autoreleasepool {
-        id object = [NSJSONSerialization JSONObjectWithData:(__bridge NSData *)data options:0 error:NULL];
-        if (object && [object isKindOfClass:NSDictionary.class]) {
-            NSDictionary *dic = (NSDictionary *)object;
-            NSString *command = dic[@"command"];
-            if ([command isEqual:@"graph/description"]) {
-                NSMutableDictionary *mutableDic = [NSMutableDictionary dictionaryWithDictionary:dic];
-                mutableDic[(__bridge NSString *)OGDescriptionFormat] = (__bridge NSString *)OGDescriptionFormatDictionary;
-                CFTypeRef description = OG::Graph::description(nullptr, mutableDic);
-                if (description) {
-                    NSData *descriptionData = [NSJSONSerialization dataWithJSONObject:(__bridge id)description options:0 error:NULL];
-                    return (__bridge CFDataRef)descriptionData;
-                }
-            } else if ([command isEqual:@"profiler/start"]) {
-                // TODO
-            } else if ([command isEqual:@"profiler/stop"]) {
-                // TODO
-            } else if ([command isEqual:@"profiler/reset"]) {
-                // TODO
-            } else if ([command isEqual:@"profiler/mark"]) {
-                // TODO
-            }
-        }
-        return nullptr;
-    }
-}
-
-void OG::DebugServer::close_connection(OG::DebugServer::Connection *connection) {
-    auto it = connections.begin();
-    for (; it != connections.end(); it++) {
-        if (it->get() == connection) {
-            // FIXME: Link issue about vector
-            // connections.pop_back();
-            return;
-        }
-    }
+    _shared_server->~DebugServer();
+    delete _shared_server;
+    _shared_server = nullptr;
 }
 
 // MARK: Blocking operation
@@ -339,5 +270,92 @@ void OG::DebugServer::Connection::handler(void *_Nullable context) {
     }
     return;
 }
+
+// MARK: DebugServer private API Implementation
+
+// TODO: part implemented
+CFDataRef _Nullable OG::DebugServer::receive(Connection *, OGDebugServerMessageHeader &, CFDataRef data) {
+    @autoreleasepool {
+        id object = [NSJSONSerialization JSONObjectWithData:(__bridge NSData *)data options:0 error:NULL];
+        if (object && [object isKindOfClass:NSDictionary.class]) {
+            NSDictionary *dic = (NSDictionary *)object;
+            NSString *command = dic[@"command"];
+            if ([command isEqual:@"graph/description"]) {
+                NSMutableDictionary *mutableDic = [NSMutableDictionary dictionaryWithDictionary:dic];
+                mutableDic[(__bridge NSString *)OGDescriptionFormat] = (__bridge NSString *)OGDescriptionFormatDictionary;
+                CFTypeRef description = OG::Graph::description(nullptr, mutableDic);
+                if (description) {
+                    NSData *descriptionData = [NSJSONSerialization dataWithJSONObject:(__bridge id)description options:0 error:NULL];
+                    return (__bridge CFDataRef)descriptionData;
+                }
+            } else if ([command isEqual:@"profiler/start"]) {
+                // FIXME: Simply return the command str for now
+                CFStringRef string = CFSTR("start");
+                CFDataRef data = CFDataCreate(kCFAllocatorDefault, (const UInt8 *)CFStringGetCStringPtr(string, kCFStringEncodingUTF8), CFStringGetLength(string));
+                CFRelease(string);
+                return data;
+            } else if ([command isEqual:@"profiler/stop"]) {
+                // FIXME: Simply return the command str for now
+                CFStringRef string = CFSTR("stop");
+                CFDataRef data = CFDataCreate(kCFAllocatorDefault, (const UInt8 *)CFStringGetCStringPtr(string, kCFStringEncodingUTF8), CFStringGetLength(string));
+                CFRelease(string);
+                return data;
+            } else if ([command isEqual:@"profiler/reset"]) {
+                // FIXME: Simply return the command str for now
+                CFStringRef string = CFSTR("reset");
+                CFDataRef data = CFDataCreate(kCFAllocatorDefault, (const UInt8 *)CFStringGetCStringPtr(string, kCFStringEncodingUTF8), CFStringGetLength(string));
+                CFRelease(string);
+                return data;
+            } else if ([command isEqual:@"profiler/mark"]) {
+                // FIXME: Simply return the command str for now
+                CFStringRef string = CFSTR("mark");
+                CFDataRef data = CFDataCreate(kCFAllocatorDefault, (const UInt8 *)CFStringGetCStringPtr(string, kCFStringEncodingUTF8), CFStringGetLength(string));
+                CFRelease(string);
+                return data;
+            }
+        }
+        return nullptr;
+    }
+}
+
+void OG::DebugServer::close_connection(OG::DebugServer::Connection *connection) {
+    auto it = connections.begin();
+    for (; it != connections.end(); it++) {
+        if (it->get() == connection) {
+            // FIXME: Link issue about vector
+            // connections.pop_back();
+            return;
+        }
+    }
+}
+
+void OG::DebugServer::shutdown() {
+    if (source != nullptr) {
+        dispatch_source_set_event_handler_f(source, nullptr);
+        dispatch_set_context(source, nullptr);
+        source = nullptr;
+    }
+    if (sockfd >= 0) {
+        close(sockfd);
+        sockfd = -1;
+    }
+}
+
+void OG::DebugServer::accept_handler(void *_Nullable context) {
+    DebugServer *server = (DebugServer *)context;
+    sockaddr address;
+    socklen_t address_len = 16;
+
+    int sockfd = accept(server->sockfd, &address, &address_len);
+    if (sockfd) {
+        perror("OGDebugServer: accept");
+        return;
+    }
+    fcntl(server->sockfd, F_SETFD, O_WRONLY);
+    // FIXME: Link issue about vector
+    // server->connections.push_back(std::unique_ptr<Connection>(new Connection(server, sockfd)));
+}
+
+OG::DebugServer* _Nullable OG::DebugServer::_shared_server = nullptr;
 
 #endif /* OG_TARGET_OS_DARWIN */

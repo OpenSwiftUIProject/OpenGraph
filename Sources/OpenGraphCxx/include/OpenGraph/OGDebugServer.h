@@ -1,6 +1,9 @@
 //
 //  OGDebugServer.h
 //  OpenGraphCxx
+//
+//  Audited for 6.5.1
+//  Status: Complete
 
 #ifndef OGDebugServer_h
 #define OGDebugServer_h
