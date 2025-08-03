@@ -224,8 +224,8 @@ class vector<std::unique_ptr<T>, 0, size_type> {
     void clear();
 
     void push_back(const std::unique_ptr<T> &value) = delete;
-    void push_back(std::unique_ptr<T> &&value);
-    void pop_back();
+    OG_INLINE void push_back(std::unique_ptr<T> &&value);
+    OG_INLINE void pop_back();
 
     void resize(size_type count);
     void resize(size_type count, const value_type &value);

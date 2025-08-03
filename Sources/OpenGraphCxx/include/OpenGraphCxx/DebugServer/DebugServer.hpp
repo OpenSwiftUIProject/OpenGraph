@@ -67,7 +67,7 @@ private:
     uint32_t port;
     uint32_t token;
     _Nullable dispatch_source_t source;
-    OG::vector<std::unique_ptr<Connection>, 0, unsigned long> connections;
+    OG::vector<std::unique_ptr<Connection>, 0, u_long> connections;
 
     static DebugServer *_Nullable _shared_server;
 }; /* DebugServer */

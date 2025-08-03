@@ -31,7 +31,7 @@ OG::DebugServer::DebugServer(OGDebugServerMode mode) {
     port = 0;
     token = arc4random();
     source = nullptr;
-    connections = OG::vector<std::unique_ptr<Connection>, 0, unsigned long>();
+    connections = OG::vector<std::unique_ptr<Connection>, 0, u_long>();
 
     // socket
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -112,9 +112,6 @@ OG::DebugServer::~DebugServer() {
     shutdown();
     for (auto &connection : connections) {
         connection.reset();
-    }
-    if (connections.data()) {
-        free(connections.data());
     }
 }
 
@@ -318,12 +315,18 @@ CFDataRef _Nullable OG::DebugServer::receive(Connection *, OGDebugServerMessageH
     }
 }
 
-void OG::DebugServer::close_connection(OG::DebugServer::Connection *connection) {
-    auto it = connections.begin();
-    for (; it != connections.end(); it++) {
-        if (it->get() == connection) {
-            // FIXME: Link issue about vector
-            // connections.pop_back();
+void OG::DebugServer::close_connection(OG::DebugServer::Connection *target) {
+    auto size = connections.size();
+    if (size == 0) {
+        return;
+    }
+    
+    for (auto &connection: connections) {
+        auto conn = connection.get();
+        if (conn == target) {
+            connection = std::move(connections[size-1]);
+            connections[size-1] = std::move(connection); // VR
+            connections.pop_back();
             return;
         }
     }
@@ -345,15 +348,13 @@ void OG::DebugServer::accept_handler(void *_Nullable context) {
     DebugServer *server = (DebugServer *)context;
     sockaddr address;
     socklen_t address_len = 16;
-
     int sockfd = accept(server->sockfd, &address, &address_len);
-    if (sockfd) {
+    if (sockfd < 0) {
         perror("OGDebugServer: accept");
         return;
     }
     fcntl(server->sockfd, F_SETFD, O_WRONLY);
-    // FIXME: Link issue about vector
-    // server->connections.push_back(std::unique_ptr<Connection>(new Connection(server, sockfd)));
+    server->connections.push_back(std::unique_ptr<Connection>(new Connection(server, sockfd)));
 }
 
 OG::DebugServer* _Nullable OG::DebugServer::_shared_server = nullptr;
