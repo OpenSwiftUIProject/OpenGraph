@@ -44,6 +44,13 @@ module OpenGraphCxx_Private.Runtime {
     export *
 }
 
+module OpenGraphCxx_Private.Util {
+    requires cplusplus
+    umbrella "OpenGraphCxx/Util"
+    export *
+    module * { export * }
+}
+
 module OpenGraphCxx_Private.Vector {
     requires cplusplus
     umbrella "OpenGraphCxx/Vector"
