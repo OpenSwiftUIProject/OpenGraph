@@ -43,7 +43,7 @@ public:
             return info(zone_id(), deleted);
         }
     private:
-        enum {
+        enum : uint32_t {
             zone_id_mask = 0x7fffffff,
             deleted = 0x80000000,
         };
