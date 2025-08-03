@@ -32,7 +32,9 @@ class table {
 public:
     class malloc_zone_deleter {
         void operator()(void* ptr) const {
+            #if OG_TARGET_OS_DARWIN
             malloc_zone_free(_malloc_zone, ptr);
+            #endif
         }
     };
 

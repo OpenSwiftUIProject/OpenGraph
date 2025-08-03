@@ -5,7 +5,7 @@
 #include <OpenGraph/OGGraphDescription.h>
 #include <OpenGraph/OGGraph.h>
 #include <OpenGraphCxx/Graph/Graph.hpp>
-#include <OpenGraphCxx/Util/assert.hpp>
+#include <OpenGraphCxx/Misc/assert.hpp>
 
 CFTypeRef OGGraphDescription(OGGraphRef graph, CFDictionaryRef options) {
     #if OG_OBJC_FOUNDATION

@@ -3,7 +3,7 @@
 //  OpenGraphCxxTests
 
 #if canImport(Darwin) // table() is not implemented on Linux yet.
-import OpenGraphCxx_Private
+import OpenGraphCxx_Private.Data
 import Testing
 
 struct TableTests {

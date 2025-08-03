@@ -4,7 +4,7 @@
 
 #include <OpenGraph/OGAttribute.h>
 #include <OpenGraphCxx/Attribute/AttributeID.hpp>
-#include <OpenGraphCxx/Util/assert.hpp>
+#include <OpenGraphCxx/Misc/assert.hpp>
 #include <optional>
 
 const OGAttribute OGAttributeNil = OGAttribute(OG::AttributeID::Kind::Null);

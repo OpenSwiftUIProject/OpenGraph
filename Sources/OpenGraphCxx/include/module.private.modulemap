@@ -8,14 +8,44 @@ module OpenGraphCxx_Private.Attribute {
     export *
 }
 
+module OpenGraphCxx_Private.Comparison {
+    requires cplusplus
+    umbrella "OpenGraphCxx/Comparison"
+    export *
+}
+
 module OpenGraphCxx_Private.Data {
     requires cplusplus
     umbrella "OpenGraphCxx/Data"
     export *
 }
 
-module OpenGraphCxx_Private.Comparison {
+module OpenGraphCxx_Private.DebugServer {
     requires cplusplus
-    umbrella "OpenGraphCxx/Comparison"
+    umbrella "OpenGraphCxx/DebugServer"
+    export *
+}
+
+module OpenGraphCxx_Private.Graph {
+    requires cplusplus
+    umbrella "OpenGraphCxx/Graph"
+    export *
+}
+
+module OpenGraphCxx_Private.Misc {
+    requires cplusplus
+    umbrella "OpenGraphCxx/Misc"
+    export *
+}
+
+module OpenGraphCxx_Private.Runtime {
+    requires cplusplus
+    umbrella "OpenGraphCxx/Runtime"
+    export *
+}
+
+module OpenGraphCxx_Private.Vector {
+    requires cplusplus
+    umbrella "OpenGraphCxx/Vector"
     export *
 }

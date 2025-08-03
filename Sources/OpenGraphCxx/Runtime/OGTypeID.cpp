@@ -7,7 +7,7 @@
 
 #include <OpenGraph/OGTypeID.h>
 #include <OpenGraphCxx/Runtime/metadata.hpp>
-#include <OpenGraphCxx/Util/assert.hpp>
+#include <OpenGraphCxx/Misc/assert.hpp>
 
 #ifdef OPENGRAPH_SWIFT_TOOLCHAIN_SUPPORTED
 #include <swift/Runtime/Metadata.h>

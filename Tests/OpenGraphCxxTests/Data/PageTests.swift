@@ -2,10 +2,10 @@
 //  PageTests.swift
 //  OpenGraphCxxTests
 
-import OpenGraphCxx_Private
+#if canImport(Darwin)
+import OpenGraphCxx_Private.Data
 import Testing
 
-#if canImport(Darwin) // table() is not implemented on Linux yet.
 struct PageTests {
 
 }

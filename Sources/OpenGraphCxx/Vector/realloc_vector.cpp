@@ -2,8 +2,8 @@
 //  realloc_vector.cpp
 //  OpenGraphCxx
 
-#include <OpenGraphCxx/Util/realloc_vector.hpp>
-#include <OpenGraphCxx/Util/assert.hpp>
+#include <OpenGraphCxx/Vector/realloc_vector.hpp>
+#include <OpenGraphCxx/Misc/assert.hpp>
 
 #if OG_TARGET_OS_DARWIN
 #include <malloc/malloc.h>

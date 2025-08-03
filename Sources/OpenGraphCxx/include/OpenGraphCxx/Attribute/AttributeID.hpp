@@ -7,7 +7,7 @@
 
 #include <OpenGraph/OGBase.h>
 #include <OpenGraph/OGAttribute.h>
-#include <OpenGraphCxx/Util/assert.hpp>
+#include <OpenGraphCxx/Misc/assert.hpp>
 
 namespace OG {
 class AttributeID final {

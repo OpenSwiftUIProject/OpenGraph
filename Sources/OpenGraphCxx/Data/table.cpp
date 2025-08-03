@@ -10,7 +10,7 @@
 #include <OpenGraphCxx/Data/page.hpp>
 #include <OpenGraphCxx/Data/page_const.hpp>
 #include <OpenGraphCxx/Data/zone.hpp>
-#include <OpenGraphCxx/Util/assert.hpp>
+#include <OpenGraphCxx/Misc/assert.hpp>
 #include <sys/mman.h>
 #include <dispatch/dispatch.h>
 #if OG_TARGET_OS_DARWIN

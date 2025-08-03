@@ -4,7 +4,7 @@
 
 #include <OpenGraph/OGGraph.h>
 #include <OpenGraphCxx/Graph/Graph.hpp>
-#include <OpenGraphCxx/Util/assert.hpp>
+#include <OpenGraphCxx/Misc/assert.hpp>
 #include <OpenGraphCxx/Data/ClosureFunction.hpp>
 #include <pthread.h>
 

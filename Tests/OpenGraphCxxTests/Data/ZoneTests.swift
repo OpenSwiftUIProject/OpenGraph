@@ -3,7 +3,7 @@
 //  OpenGraphCxxTests
 
 #if canImport(Darwin)
-import OpenGraphCxx_Private
+import OpenGraphCxx_Private.Data
 import Testing
 
 struct ZoneTests {

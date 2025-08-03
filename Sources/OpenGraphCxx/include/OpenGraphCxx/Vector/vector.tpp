@@ -6,7 +6,7 @@
 //  Modified based Compute code
 
 #include <OpenGraphCxx/Vector/vector.hpp>
-#include <OpenGraphCxx/Util/assert.hpp>
+#include <OpenGraphCxx/Misc/assert.hpp>
 
 #include <algorithm>
 #if OG_TARGET_OS_DARWIN
