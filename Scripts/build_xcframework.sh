@@ -21,12 +21,32 @@ framework module OpenGraph {
 }
 EOF
 
-PACKAGE_NAME=$1
+# Parse arguments
+DEBUG_INFO=false
+PACKAGE_NAME=""
+
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --debug-info)
+            DEBUG_INFO=true
+            shift
+            ;;
+        *)
+            if [ -z "$PACKAGE_NAME" ]; then
+                PACKAGE_NAME="$1"
+            fi
+            shift
+            ;;
+    esac
+done
+
 if [ -z "$PACKAGE_NAME" ]; then
     echo "No package name provided. Using the first scheme found in the Package.swift."
     PACKAGE_NAME=$(xcodebuild -list | awk 'schemes && NF>0 { print $1; exit } /Schemes:$/ { schemes = 1 }')
     echo "Using: $PACKAGE_NAME"
 fi
+
+echo "Building xcframework for package: $PACKAGE_NAME contains debug info: $DEBUG_INFO"
 
 build_framework() {
     local sdk="$1"
@@ -97,10 +117,21 @@ echo "Builds completed successfully."
 cd $PROJECT_BUILD_DIR
 
 rm -rf "$PACKAGE_NAME.xcframework"
-xcodebuild -create-xcframework  \
-    -framework $PACKAGE_NAME-iphonesimulator.xcarchive/Products/Library/Frameworks/$PACKAGE_NAME.framework \
-    -framework $PACKAGE_NAME-iphoneos.xcarchive/Products/Library/Frameworks/$PACKAGE_NAME.framework \
-    -framework $PACKAGE_NAME-macosx.xcarchive/Products/Library/Frameworks/$PACKAGE_NAME.framework \
-    -output $PACKAGE_NAME.xcframework
 
-cp -r $PACKAGE_NAME-iphonesimulator.xcarchive/dSYMs $PACKAGE_NAME.xcframework/ios-arm64_x86_64-simulator
+if [ "$DEBUG_INFO" = true ]; then
+    echo "Creating xcframework with debug symbols..."
+    xcodebuild -create-xcframework  \
+        -framework $PACKAGE_NAME-iphonesimulator.xcarchive/Products/Library/Frameworks/$PACKAGE_NAME.framework \
+        -debug-symbols "$(realpath $PACKAGE_NAME-iphonesimulator.xcarchive/dSYMs/$PACKAGE_NAME.framework.dSYM)" \
+        -framework $PACKAGE_NAME-iphoneos.xcarchive/Products/Library/Frameworks/$PACKAGE_NAME.framework \
+        -debug-symbols "$(realpath $PACKAGE_NAME-iphoneos.xcarchive/dSYMs/$PACKAGE_NAME.framework.dSYM)" \
+        -framework $PACKAGE_NAME-macosx.xcarchive/Products/Library/Frameworks/$PACKAGE_NAME.framework \
+        -debug-symbols "$(realpath $PACKAGE_NAME-macosx.xcarchive/dSYMs/$PACKAGE_NAME.framework.dSYM)" \
+        -output $PACKAGE_NAME.xcframework
+else
+    xcodebuild -create-xcframework  \
+        -framework $PACKAGE_NAME-iphonesimulator.xcarchive/Products/Library/Frameworks/$PACKAGE_NAME.framework \
+        -framework $PACKAGE_NAME-iphoneos.xcarchive/Products/Library/Frameworks/$PACKAGE_NAME.framework \
+        -framework $PACKAGE_NAME-macosx.xcarchive/Products/Library/Frameworks/$PACKAGE_NAME.framework \
+        -output $PACKAGE_NAME.xcframework
+fi
