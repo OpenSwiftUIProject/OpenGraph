@@ -146,9 +146,7 @@ void OG::DebugServer::run(int timeout) const {
         
         // Add the server socket to the fd_set
         int server_fd = sockfd;
-        if (__darwin_check_fd_set_overflow(server_fd, &writefds, 0)) {
-            FD_SET(server_fd, &writefds);
-        }
+        FD_SET(server_fd, &writefds);
         
         // Find the maximum file descriptor and add all connection sockets
         int max_fd = server_fd;
@@ -158,9 +156,7 @@ void OG::DebugServer::run(int timeout) const {
             auto connection_data = connections.data();
             for (size_t i = 0; i < connection_count; ++i) {
                 int conn_fd = connection_data[i]->sockfd;
-                if (__darwin_check_fd_set_overflow(conn_fd, &writefds, 0)) {
-                    FD_SET(conn_fd, &writefds);
-                }
+                FD_SET(conn_fd, &writefds);
                 if (max_fd < conn_fd) {
                     max_fd = conn_fd;
                 }
@@ -181,10 +177,9 @@ void OG::DebugServer::run(int timeout) const {
             // Continue the loop on EAGAIN
             continue;
         }
-        
+
         // Check if server socket is ready for new connections
-        if (__darwin_check_fd_set_overflow(server_fd, &writefds, 0) && 
-            FD_ISSET(server_fd, &writefds)) {
+        if (FD_ISSET(server_fd, &writefds)) {
             accept_handler((void *)this);
             accepted_connection = true;
         }
@@ -196,8 +191,7 @@ void OG::DebugServer::run(int timeout) const {
                 auto connection = connections.data()[i].get();
                 int conn_fd = connection->sockfd;
                 
-                if (__darwin_check_fd_set_overflow(conn_fd, &writefds, 0) && 
-                    FD_ISSET(conn_fd, &writefds)) {
+                if (FD_ISSET(conn_fd, &writefds)) {
                     
                     // Clear the FD from the set before processing
                     FD_CLR(conn_fd, &writefds);
