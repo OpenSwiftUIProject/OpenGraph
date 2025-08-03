@@ -7,6 +7,7 @@
 
 #include <OpenGraph/OGBase.h>
 #include <OpenGraphCxx/Vector/vector.hpp>
+
 #if OG_TARGET_OS_DARWIN
 #include <mach/vm_types.h>
 #else
@@ -19,6 +20,8 @@ typedef vm_offset_t             vm_address_t;
 #include <os/lock.h>
 #endif
 
+OG_ASSUME_NONNULL_BEGIN
+
 namespace OG {
 namespace data {
 class zone;
@@ -28,7 +31,14 @@ template <typename T> class ptr;
 class table {
 public:
     class malloc_zone_deleter {
+        void operator()(void* ptr) const {
+            malloc_zone_free(_malloc_zone, ptr);
+        }
     };
+
+    #if OG_TARGET_OS_DARWIN
+    static malloc_zone_t *_malloc_zone;
+    #endif
 
 public:
     static table &ensure_shared();
@@ -77,6 +87,14 @@ public:
         return _zones_num;
     }
 
+    template <typename T>
+    OG_INLINE
+    void assert_valid(const ptr<T>& p) const {
+        if (data_capacity() <= p._offset) {
+            precondition_failure("invalid data offset: %u", p._offset);
+        }
+    }
+
     table();
 
     void grow_region() OG_NOEXCEPT;
@@ -87,7 +105,8 @@ public:
 
     void dealloc_page_locked(ptr<page> page) OG_NOEXCEPT;
 
-    uint64_t raw_page_seed(ptr<page> page) OG_NOEXCEPT;
+    OG_INLINE OG_CONSTEXPR
+    uint64_t raw_page_seed(ptr<page> page) const OG_NOEXCEPT;
 
     void print() const OG_NOEXCEPT;
 private:
@@ -132,5 +151,7 @@ static table &shared_table() {
 
 } /* data */
 } /* OG */
+
+OG_ASSUME_NONNULL_END
 
 #endif /* table_hpp */

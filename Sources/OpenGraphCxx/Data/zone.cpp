@@ -15,7 +15,17 @@
 namespace OG {
 namespace data {
 
-void zone::clear() OG_NOEXCEPT {
+//zone::zone() : _info(info(shared_table().make_zone_id())) {}
+
+//zone::~zone() {
+//    clear();
+//
+//}
+
+void zone::clear() {
+//    for (auto &element : malloc_buffers()) {
+//        element.reset();
+//    }
     shared_table().lock();
     while (last_page()) {
         auto page = last_page();
@@ -121,7 +131,7 @@ void zone::print() const OG_NOEXCEPT {
     );
 }
 
-void zone::print_header() OG_NOEXCEPT {
+void zone::print_header() const OG_NOEXCEPT {
     fprintf(stderr, "Zones\n%-16s %6s %8s %8s    %6s %6s     %6s %8s\n",
             "zone ptr", "pages", "total", "in-use", "free", "bytes", "malloc", "total");
 }
