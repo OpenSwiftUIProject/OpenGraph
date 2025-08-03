@@ -9,8 +9,8 @@
 
 // MARK: - Exported C functions
 
-OGDebugServer _Nullable OGDebugServerStart(uint32_t port) {
-    return (OGDebugServer)OG::DebugServer::start(port);
+OGDebugServerRef _Nullable OGDebugServerStart(OGDebugServerMode port) {
+    return (OGDebugServerRef)OG::DebugServer::start(port);
 }
 
 void OGDebugServerStop() {

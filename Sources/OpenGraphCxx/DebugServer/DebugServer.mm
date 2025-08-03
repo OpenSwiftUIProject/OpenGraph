@@ -26,10 +26,9 @@
 
 OG::DebugServer* _Nullable OG::DebugServer::_shared_server = nullptr;
 
-OG::DebugServer* _Nullable OG::DebugServer::start(unsigned int mode) {
-    bool validPort = mode & 1;
+OG::DebugServer* _Nullable OG::DebugServer::start(OGDebugServerMode mode) {
     if (OG::DebugServer::_shared_server == nullptr
-        && validPort
+        && (mode & OGDebugServerModeValid)
         /*&& os_variant_has_internal_diagnostics("com.apple.AttributeGraph")*/
     ) {
         _shared_server = new DebugServer(mode);
@@ -46,7 +45,7 @@ void OG::DebugServer::stop() {
     _shared_server = nullptr;
 }
 
-OG::DebugServer::DebugServer(unsigned int mode) {
+OG::DebugServer::DebugServer(OGDebugServerMode mode) {
     sockfd = -1;
     ip = 0;
     port = 0;
@@ -72,7 +71,7 @@ OG::DebugServer::DebugServer(unsigned int mode) {
     sockaddr_in addr = sockaddr_in();
     addr.sin_family = AF_INET;
     addr.sin_port = 0;
-    addr.sin_addr.s_addr = ((mode & 2) == 0) ? htonl(INADDR_LOOPBACK) : 0;
+    addr.sin_addr.s_addr = (mode & OGDebugServerModeNetworkInterface) ? 0 : htonl(INADDR_LOOPBACK);
     socklen_t slen = sizeof(sockaddr_in);
     if (bind(sockfd, (const sockaddr *)&addr, slen)) {
         perror("OGDebugServer: bind");
@@ -88,7 +87,7 @@ OG::DebugServer::DebugServer(unsigned int mode) {
     }
     ip = ntohl(addr.sin_addr.s_addr);
     port = ntohl(addr.sin_port) >> 16;
-    if (mode & 2) {
+    if (mode & OGDebugServerModeNetworkInterface) {
         ifaddrs *iaddrs = nullptr;
         if (getifaddrs(&iaddrs) == 0) {
             ifaddrs *current_iaddrs = iaddrs;

@@ -13,25 +13,29 @@ OG_ASSUME_NONNULL_BEGIN
 
 OG_IMPLICIT_BRIDGING_ENABLED
 
-typedef struct OGDebugServerStorage OGDebugServerStorage;
+typedef struct OG_BRIDGED_TYPE(id) OGDebugServerStorage * OGDebugServerRef OG_SWIFT_NAME(DebugServer);
 
-typedef const OGDebugServerStorage *OGDebugServer OG_SWIFT_STRUCT;
+typedef OG_OPTIONS(uint32_t, OGDebugServerMode) {
+    OGDebugServerModeNone = 0,
+    OGDebugServerModeValid = 1 << 0,
+    OGDebugServerModeNetworkInterface = 1 << 1,
+} OG_SWIFT_NAME(OGDebugServerRef.Mode);
 
 // MARK: - Exported C functions
 
 OG_EXTERN_C_BEGIN
 
 OG_EXPORT
-OGDebugServer _Nullable OGDebugServerStart(uint32_t mode) OG_SWIFT_NAME(OGDebugServer.start(mode:));
+OGDebugServerRef _Nullable OGDebugServerStart(OGDebugServerMode mode) OG_SWIFT_NAME(OGDebugServerRef.start(mode:));
 
 OG_EXPORT
-void OGDebugServerStop(void) OG_SWIFT_NAME(OGDebugServer.stop());
+void OGDebugServerStop(void) OG_SWIFT_NAME(OGDebugServerRef.stop());
 
 OG_EXPORT
-CFURLRef _Nullable OGDebugServerCopyURL(void) OG_SWIFT_NAME(OGDebugServer.copyURL());
+CFURLRef _Nullable OGDebugServerCopyURL(void) OG_SWIFT_NAME(OGDebugServerRef.copyURL());
 
 OG_EXPORT
-void OGDebugServerRun(int timeout) OG_SWIFT_NAME(OGDebugServer.run(timeout:));
+void OGDebugServerRun(int timeout) OG_SWIFT_NAME(OGDebugServerRef.run(timeout:));
 
 OG_EXTERN_C_END
 
