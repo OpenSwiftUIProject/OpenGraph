@@ -3,7 +3,7 @@
 //  OpenGraphCxx
 //
 //  Status: Complete
-//  Modified from https://github.com/jcmosc/Compute/blob/00dfebc2c5852144ac5aada8ebe896b78e5f622a/Sources/ComputeCxx/Vector/Vector.h [MIT License]
+//  Modified based Compute code
 
 #ifndef vector_hpp
 #define vector_hpp

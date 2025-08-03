@@ -29,10 +29,10 @@ Currently, this project is in early development.
 
 The current suggested toolchain to build the project is Swift 6.1 / Xcode 16.3.
 
-## Credits
-
-OpenGraphCxx's Data, Graph, Vector and more is modified based on [Compute](https://github.com/jcmosc/Compute)'s implementations.
-
 ## License
 
 See LICENSE file - MIT
+
+## Credits
+
+See [CREDITS.md](CREDITS.md) for third-party licenses and acknowledgements.

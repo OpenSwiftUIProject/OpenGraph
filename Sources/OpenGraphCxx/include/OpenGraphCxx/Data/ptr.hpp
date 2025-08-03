@@ -3,15 +3,15 @@
 //  OpenGraphCxx
 //
 //  Status: Complete
-//  Modified from https://github.com/jcmosc/Compute/blob/0a6b21a4cdeb9bbdd95e7e914c4e18bed37a2456/Sources/ComputeCxx/Data/Pointer.h [MIT License]
+//  Modified based Compute code
 
 #ifndef ptr_hpp
 #define ptr_hpp
 
 #include <OpenGraph/OGBase.h>
 #include <OpenGraphCxx/Data/table.hpp>
-#include <bitset>
 #include <OpenGraphCxx/Data/page_const.hpp>
+#include <bitset>
 
 OG_ASSUME_NONNULL_BEGIN
 
