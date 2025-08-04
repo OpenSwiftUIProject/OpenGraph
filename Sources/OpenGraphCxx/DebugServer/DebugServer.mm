@@ -5,6 +5,11 @@
 //  Audited for 6.5.1
 //  Status: Blocked by profile command
 
+// TODO:
+// 1. select will both fail on AG and OG with different error.
+// 2. run(timeout)'s purpose? And update documentation for hpp and h
+// 3. Implement profile commands.
+
 #include <OpenGraphCxx/DebugServer/DebugServer.hpp>
 #if OG_TARGET_OS_DARWIN
 
@@ -109,6 +114,44 @@ OG::DebugServer::DebugServer(OGDebugServerMode mode) {
     inet_ntop(AF_INET, &converted_ip, address, sizeof(address));
     os_log(misc_log(), "debug server graph://%s:%d/?token=%u", address, port, token);
     fprintf(stderr, "debug server graph://%s:%d/?token=%u\n", address, port, token);
+}
+
+OG::DebugServer::DebugServer(DebugServer&& other) OG_NOEXCEPT
+    : sockfd(other.sockfd)
+    , ip(other.ip)
+    , port(other.port)
+    , token(other.token)
+    , source(other.source)
+    , connections(std::move(other.connections))
+{
+    other.sockfd = -1;
+    other.ip = 0;
+    other.port = 0;
+    other.token = 0;
+    other.source = nullptr;
+}
+
+OG::DebugServer& OG::DebugServer::operator=(DebugServer&& other) OG_NOEXCEPT {
+    if (this != &other) {
+        shutdown();
+        for (auto &connection : connections) {
+            connection.reset();
+        }
+
+        sockfd = other.sockfd;
+        ip = other.ip;
+        port = other.port;
+        token = other.token;
+        source = other.source;
+        connections = std::move(other.connections);
+
+        other.sockfd = -1;
+        other.ip = 0;
+        other.port = 0;
+        other.token = 0;
+        other.source = nullptr;
+    }
+    return *this;
 }
 
 OG::DebugServer::~DebugServer() {
