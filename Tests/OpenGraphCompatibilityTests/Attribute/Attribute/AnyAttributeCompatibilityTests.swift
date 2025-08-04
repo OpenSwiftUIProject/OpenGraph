@@ -8,7 +8,8 @@ import Testing
 // swift-testing framework will crash here on Linux
 // Report to upstream for investigation when we bump to 5.10
 #if canImport(Darwin)
-@Suite(.disabled(if: !compatibilityTestEnabled, "Attribute is not implemented"))
+//@Suite(.disabled(if: !compatibilityTestEnabled, "Attribute is not implemented"))
+@Suite(.disabled("Skip flaky CI tests after #154 temporary, See more info on #157"))
 final class AnyAttributeCompatibilityTests: AttributeTestBase {
     @Test
     func constantValue() throws {
