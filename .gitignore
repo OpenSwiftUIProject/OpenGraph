@@ -10,3 +10,5 @@ coverage.txt
 TODO.md
 .ag_template/
 build/
+.ag_repo/
+.og_repo/
