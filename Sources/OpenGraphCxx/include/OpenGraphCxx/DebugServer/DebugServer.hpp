@@ -14,6 +14,7 @@
 #include <OpenGraphCxx/Vector/vector.hpp>
 #include <dispatch/dispatch.h>
 #include <memory>
+#include <swift/bridging>
 
 OG_ASSUME_NONNULL_BEGIN
 
@@ -49,6 +50,23 @@ public:
     /// @param mode The operating mode for the debug server
     DebugServer(OGDebugServerMode mode);
     
+    /// Move constructor for transferring ownership of server resources.
+    ///
+    /// @param other The DebugServer instance to move from
+    DebugServer(DebugServer&& other) OG_NOEXCEPT;
+    
+    /// Move assignment operator for transferring ownership of server resources.
+    ///
+    /// @param other The DebugServer instance to move from
+    /// @return Reference to this instance after the move
+    DebugServer& operator=(DebugServer&& other) OG_NOEXCEPT;
+    
+    /// Deleted copy constructor to prevent accidental copying.
+    DebugServer(const DebugServer&) = delete;
+    
+    /// Deleted copy assignment operator to prevent accidental copying.
+    DebugServer& operator=(const DebugServer&) = delete;
+
     /// Destroys the debug server and cleans up all resources.
     /// Automatically closes all active connections and stops the server.
     ~DebugServer();
@@ -57,7 +75,7 @@ public:
     ///
     /// @return A CFURLRef containing the server URL, or nullptr if not running.
     ///         The caller is responsible for releasing the returned URL.
-    CFURLRef _Nullable copy_url() const;
+    CFURLRef _Nullable copy_url() const SWIFT_RETURNS_INDEPENDENT_VALUE;
 
     /// Shuts down the debug server and closes all connections.
     /// Called internally during destruction or explicit stop.

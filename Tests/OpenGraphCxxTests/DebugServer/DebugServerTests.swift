@@ -25,7 +25,8 @@ struct DebugServerTests {
     @Test
     func commandTest() async throws {
         let debugServer = OG.DebugServer([.valid])
-        let url = try #require(debugServer.copy_url()) as URL
+        let cfURL = debugServer.copy_url()
+        let url = try #require(cfURL) as URL
         let components = try #require(URLComponents(url: url, resolvingAgainstBaseURL: false))
         let token = try #require(components.queryItems?.first { $0.name == "token" }?.value.flatMap { UInt32($0) })
         debugServer.run(1)
