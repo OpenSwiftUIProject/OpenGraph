@@ -6,10 +6,6 @@
 public import Foundation
 public import Network
 
-#if canImport(OpenGraphCxx_Private)
-public import OpenGraphCxx_Private.DebugServer
-#endif
-
 public struct ConnectionUpdates: AsyncSequence {
     public typealias Element = NWConnection.State
     
