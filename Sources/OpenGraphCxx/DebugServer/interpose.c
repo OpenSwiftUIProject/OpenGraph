@@ -15,6 +15,8 @@ extern bool os_variant_has_internal_diagnostics(const char *subsystem);
 bool og_variant_has_internal_diagnostics(const char *subsystem) {
     if (strcmp(subsystem, "org.OpenSwiftUIProject.OpenGraph") == 0) {
         return true;
+    } else if (strcmp(subsystem, "com.apple.AttributeGraph") == 0) {
+        return true;
     } else {
         return os_variant_has_internal_diagnostics(subsystem);
     }
