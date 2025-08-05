@@ -9,13 +9,7 @@ import Testing
 
 @MainActor
 struct DebugServerTests {
-    private enum Command: String, CaseIterable, Hashable {
-        case graphDescription = "graph/description"
-        case profilerStart = "profiler/start"
-        case profilerStop = "profiler/stop"
-        case profilerReset = "profiler/reset"
-        case profilerMark = "profiler/mark"
-    }
+    typealias Command = DebugClient.Command
 
     private func data(for command: Command) throws -> Data{
         let command = ["command": command.rawValue]

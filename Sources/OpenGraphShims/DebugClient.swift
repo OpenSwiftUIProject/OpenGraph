@@ -26,8 +26,18 @@ public struct ConnectionUpdates: AsyncSequence {
 
 @_spi(Debug)
 public final class DebugClient {
+    public enum Command: String, CaseIterable, Hashable {
+        case graphDescription = "graph/description"
+        case profilerStart = "profiler/start"
+        case profilerStop = "profiler/stop"
+        case profilerReset = "profiler/reset"
+        case profilerMark = "profiler/mark"
+    }
+
     private var connection: NWConnection?
     private let queue = DispatchQueue(label: "org.openswiftuiproject.opengraph.debugclient")
+
+    public init() {}
 
     public func connect(to url: URL) -> ConnectionUpdates {
         guard let host = url.host, let port = url.port else {
