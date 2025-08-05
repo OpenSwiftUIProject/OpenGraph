@@ -12,7 +12,7 @@
 
 extern bool os_variant_has_internal_diagnostics(const char *subsystem);
 
-bool os_variant_has_internal_diagnostics_og_hook(const char *subsystem) {
+bool og_variant_has_internal_diagnostics(const char *subsystem) {
     if (strcmp(subsystem, "org.OpenSwiftUIProject.OpenGraph") == 0) {
         return true;
     } else {
@@ -20,4 +20,4 @@ bool os_variant_has_internal_diagnostics_og_hook(const char *subsystem) {
     }
 }
 
-DYLD_INTERPOSE(os_variant_has_internal_diagnostics_og_hook, os_variant_has_internal_diagnostics)
+DYLD_INTERPOSE(og_variant_has_internal_diagnostics, os_variant_has_internal_diagnostics)
