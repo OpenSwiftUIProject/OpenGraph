@@ -28,6 +28,10 @@
 #include <errno.h>
 #include <assert.h>
 
+OG_EXTERN_C_BEGIN
+bool os_variant_has_internal_diagnostics(const char *subsystem);
+OG_EXTERN_C_END
+
 // MARK: DebugServer public API Implementation
 
 OG::DebugServer::DebugServer(OGDebugServerMode mode) {
@@ -260,7 +264,7 @@ OG::DebugServer* _Nullable OG::DebugServer::start(OGDebugServerMode mode) {
     if (
         (mode & OGDebugServerModeValid)
         && !OG::DebugServer::has_shared_server()
-        /*&& os_variant_has_internal_diagnostics("com.apple.AttributeGraph")*/
+//        && os_variant_has_internal_diagnostics("org.OpenSwiftUIProject.OpenGraph")
     ) {
         _shared_server = new DebugServer(mode);
     }
