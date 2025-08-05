@@ -24,26 +24,37 @@ struct DebugServerTests {
 
     @Test
     func commandTest() async throws {
-        let debugServer = OG.DebugServer([.valid])
+        var debugServer = OG.DebugServer([.valid])
         let cfURL = debugServer.copy_url()
         let url = try #require(cfURL) as URL
         let components = try #require(URLComponents(url: url, resolvingAgainstBaseURL: false))
         let token = try #require(components.queryItems?.first { $0.name == "token" }?.value.flatMap { UInt32($0) })
         debugServer.run(1)
         let client = DebugClient()
-        try await client.connect(to: url)
-
-        for command in Command.allCases {
-            if command == .graphDescription {
-                continue
+        let updates = client.connect(to: url)
+        try await confirmation { confirm in
+            for try await update in updates {
+                switch update {
+                case .ready:
+                    confirm()
+                    for command in Command.allCases {
+                        if command == .graphDescription {
+                            continue
+                        }
+                        try await client.sendMessage(
+                            token: token,
+                            data: data(for: command)
+                        )
+                        let (_, responseData) = try await client.receiveMessage()
+                        let response = try #require(String(data: responseData, encoding: .utf8))
+                        #expect(response == command.rawValue)
+                    }
+                    debugServer.shutdown()
+                    // TODO: The shutdown should close the connection, but it does not for OGDebugServer currently.
+                default:
+                    break
+                }
             }
-            try await client.sendMessage(
-                token: token,
-                data: data(for: command)
-            )
-            let (_, responseData) = try await client.receiveMessage()
-            let response = try #require(String(data: responseData, encoding: .utf8))
-            #expect(response == command.rawValue)
         }
     }
 }

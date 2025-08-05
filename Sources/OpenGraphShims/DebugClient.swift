@@ -4,42 +4,51 @@
 
 #if canImport(Darwin)
 public import Foundation
-import Network
+public import Network
 
 #if canImport(OpenGraphCxx_Private)
 public import OpenGraphCxx_Private.DebugServer
 #endif
 
+public struct ConnectionUpdates: AsyncSequence {
+    public typealias Element = NWConnection.State
+    
+    private let stream: AsyncStream<NWConnection.State>
+    
+    fileprivate init(stream: AsyncStream<NWConnection.State>) {
+        self.stream = stream
+    }
+    
+    public func makeAsyncIterator() -> AsyncStream<NWConnection.State>.AsyncIterator {
+        stream.makeAsyncIterator()
+    }
+}
+
 @_spi(Debug)
 public final class DebugClient {
     private var connection: NWConnection?
-    private let queue = DispatchQueue(label: "opengraph.debugserver.client.queue")
+    private let queue = DispatchQueue(label: "org.openswiftuiproject.opengraph.debugclient")
 
-    public func connect(to url: URL) async throws {
+    public func connect(to url: URL) -> ConnectionUpdates {
         guard let host = url.host, let port = url.port else {
-            throw ClientError.invalidURL
+            return ConnectionUpdates(stream: AsyncStream { continuation in
+                continuation.yield(.failed(NWError.posix(.EINVAL)))
+                continuation.finish()
+            })
         }
-
         let nwHost = NWEndpoint.Host(host)
         let nwPort = NWEndpoint.Port(integerLiteral: UInt16(port))
-
         connection = NWConnection(host: nwHost, port: nwPort, using: .tcp)
-
-        return try await withCheckedThrowingContinuation { continuation in
+        let stream = AsyncStream<NWConnection.State> { continuation in
             connection?.stateUpdateHandler = { state in
-                switch state {
-                case .ready:
-                    continuation.resume()
-                case let .failed(error):
-                    continuation.resume(throwing: error)
-                case .cancelled:
-                    continuation.resume(throwing: ClientError.connectionCancelled)
-                default:
-                    break
+                continuation.yield(state)
+                if case .cancelled = state {
+                    continuation.finish()
                 }
             }
             connection?.start(queue: queue)
         }
+        return ConnectionUpdates(stream: stream)
     }
 
     public func sendMessage(token: UInt32, data: Data) async throws {
