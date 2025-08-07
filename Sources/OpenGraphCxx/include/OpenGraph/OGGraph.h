@@ -7,7 +7,7 @@
 
 #include <OpenGraph/OGBase.h>
 #include <OpenGraph/Private/CFRuntime.h>
-#include <OpenGraph/OGCounterQueryType.h>
+#include <OpenGraph/OGGraphCounterQueryType.h>
 
 // Note: Place all structure declaration in a single place to avoid header cycle dependency
 
@@ -87,7 +87,7 @@ void OGGraphSetUpdateCallback(OGGraphRef graph,
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-uint64_t OGGraphGetCounter(OGGraphRef graph, OGCounterQueryType query) OG_SWIFT_NAME(OGGraphRef.counter(self:for:));
+uint64_t OGGraphGetCounter(OGGraphRef graph, OGGraphCounterQueryType query) OG_SWIFT_NAME(OGGraphRef.counter(self:for:));
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT

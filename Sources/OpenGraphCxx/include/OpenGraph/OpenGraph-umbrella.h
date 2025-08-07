@@ -8,10 +8,10 @@
 #include <OpenGraph/OGChangedValueFlags.h>
 #include <OpenGraph/OGClosure.h>
 #include <OpenGraph/OGComparison.h>
-#include <OpenGraph/OGCounterQueryType.h>
 #include <OpenGraph/OGDebugServer.h>
 #include <OpenGraph/OGGraph.h>
 #include <OpenGraph/OGGraphContext.h>
+#include <OpenGraph/OGGraphCounterQueryType.h>
 #include <OpenGraph/OGGraphDescription.h>
 #include <OpenGraph/OGGraphTracing.h>
 #include <OpenGraph/OGInputOptions.h>
