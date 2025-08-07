@@ -10,7 +10,7 @@ import Foundation
 extension Graph {
     public var dict: [String: Any]? {
         let options = [
-            Graph.descriptionFormat: Graph.descriptionFormatDictionary
+            DescriptionOption.format: Graph.descriptionFormatDictionary
         ] as NSDictionary
         guard let description = Graph.description(nil, options: options) else {
             return nil
@@ -28,7 +28,7 @@ extension Graph {
     // - red: is_changed
     public var dot: String? {
         let options = [
-            Graph.descriptionFormat: Graph.descriptionFormatDot
+            DescriptionOption.format: Graph.descriptionFormatDot
         ] as NSDictionary
         guard let description = Graph.description(self, options: options)
         else {

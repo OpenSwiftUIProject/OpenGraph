@@ -16,8 +16,6 @@ private func OGGraphMutateAttribute(
 )
 
 extension AnyAttribute {
-    public typealias Flags = OGAttributeTypeFlags
-
     public init<Value>(_ attribute: Attribute<Value>) {
         self = attribute.identifier
     }
@@ -35,7 +33,7 @@ extension AnyAttribute {
         create(offset: offset)
     }
 
-    public func setFlags(_ newFlags: OGAttributeFlags, mask: OGAttributeFlags) {
+    public func setFlags(_ newFlags: Subgraph.Flags, mask: Subgraph.Flags) {
         flags = flags.subtracting(mask).union(newFlags.intersection(mask))
     }
 
@@ -49,7 +47,7 @@ extension AnyAttribute {
     
     // FIXME: Use AttributeType instead
     public func visitBody<Body: AttributeBodyVisitor>(_ visitor: inout Body) {
-        let bodyType = info.type.advanced(by: 1).pointee.typeID.type as! _AttributeBody.Type
+        let bodyType = info.type.advanced(by: 1).pointee.self_id.type as! _AttributeBody.Type
         bodyType._visitBody(&visitor, info.body)
     }
 
@@ -63,12 +61,12 @@ extension AnyAttribute {
         }
     }
     
-    public func breadthFirstSearch(options _: OGSearchOptions = [], _: (AnyAttribute) -> Bool) -> Bool {
+    public func breadthFirstSearch(options _: SearchOptions = [], _: (AnyAttribute) -> Bool) -> Bool {
         fatalError("TODO")
     }
     
     public var _bodyType: Any.Type {
-        info.type.pointee.typeID.type
+        info.type.pointee.self_id.type
     }
 
     public var _bodyPointer: UnsafeRawPointer {
@@ -76,7 +74,7 @@ extension AnyAttribute {
     }
 
     public var valueType: Any.Type {
-        info.type.pointee.valueTypeID.type
+        info.type.pointee.value_id.type
     }
 
     public var indirectDependency: AnyAttribute? {
@@ -98,10 +96,3 @@ extension AnyAttribute: Swift.CustomStringConvertible {
 }
 
 public typealias AttributeUpdateBlock = () -> (UnsafeMutableRawPointer, AnyAttribute) -> Void
-
-extension [AnyAttribute] {
-    @_transparent
-    public var anyInputsChanged: Bool {
-        __OGGraphAnyInputsChanged(self, count)
-    }
-}

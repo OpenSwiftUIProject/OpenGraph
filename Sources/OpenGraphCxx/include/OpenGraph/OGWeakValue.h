@@ -1,20 +1,20 @@
 //
-//  OGValue.h
+//  OGWeakValue.h
 //  OpenGraphCxx
 
-#ifndef OGValue_h
-#define OGValue_h
+#ifndef OGWeakValue_h
+#define OGWeakValue_h
 
 #include <OpenGraph/OGBase.h>
 #include <OpenGraph/OGChangedValueFlags.h>
 
 OG_ASSUME_NONNULL_BEGIN
 
-typedef struct OGValue {
-    const void *value;
+typedef struct OGWeakValue {
+    const void * _Nullable value;
     OGChangedValueFlags flags;
-} OGValue;
+} OGWeakValue;
 
 OG_ASSUME_NONNULL_END
 
-#endif /* OGValue_h */
+#endif /* OGWeakValue_h */
