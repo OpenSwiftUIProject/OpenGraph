@@ -152,7 +152,7 @@ public struct Attribute<Value> {
         nonmutating set { _ = setValue(newValue) }
     }
     
-    public var valueState: OGValueState { identifier.valueState }
+    public var valueState: ValueState { identifier.valueState }
     
     public func valueAndFlags(options: OGValueOptions = []) -> (value: Value, flags: OGChangedValueFlags) {
         let value = OGGraphGetValue(identifier, options: options, type: Value.self)

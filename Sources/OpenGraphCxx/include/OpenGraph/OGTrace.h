@@ -15,7 +15,7 @@ typedef OG_ENUM(uint64_t, OGTraceEvents) {
     OGTraceEventsNamed = 2,
     OGTraceEventsDeadline = 3,
     OGTraceEventsCompareFailed = 4,
-};
+} OG_SWIFT_NAME(TraceEvents);
 
 typedef struct OGTrace {
     OGTraceEvents events;
@@ -76,7 +76,7 @@ typedef struct OGTrace {
     void (*_Nullable passed_deadline)(void *_Nullable context);
 
     void (*_Nullable compare_failed)(void *_Nullable context, OGAttribute attribute, OGComparisonState comparisonState);
-} OGTrace;
+} OGTrace OG_SWIFT_NAME(Trace);
 
 OG_ASSUME_NONNULL_END
 

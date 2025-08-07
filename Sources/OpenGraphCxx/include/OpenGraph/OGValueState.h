@@ -19,7 +19,7 @@ typedef OG_OPTIONS(uint8_t, OGValueState) {
     OGValueStateMainRef = 1 << 5,
     OGValueStateRequiresMainThread = 1 << 6,
     OGValueStateSelfModified = 1 << 7,
-};
+} OG_SWIFT_NAME(ValueState);
 
 OG_ASSUME_NONNULL_END
 
