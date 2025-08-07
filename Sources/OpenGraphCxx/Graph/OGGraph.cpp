@@ -152,33 +152,33 @@ void OGGraphSetUpdateCallback(OGGraphRef graph,
     graph->context.set_update_callback(OG::ClosureFunction<void>(function, context));
 }
 
-uint64_t OGGraphGetCounter(OGGraphRef graph, OGCounterQueryType query) {
+uint64_t OGGraphGetCounter(OGGraphRef graph, OGGraphCounterQueryType query) {
     if (graph->context.isInvalid()) {
         OG::precondition_failure("invalidated graph");
     }
     OG::Graph::Context& context = graph->context;
     switch (query) {
-        case OGCounterQueryTypeNodes:
+        case OGGraphCounterQueryTypeNodes:
             return context.get_graph().get_counter_0();
-        case OGCounterQueryTypeTransactions:
+        case OGGraphCounterQueryTypeTransactions:
             return context.get_graph().get_counter_1();
-        case OGCounterQueryTypeUpdates:
+        case OGGraphCounterQueryTypeUpdates:
             return context.get_graph().get_counter_2();
-        case OGCounterQueryTypeChanges:
+        case OGGraphCounterQueryTypeChanges:
             return context.get_graph().get_counter_3();
-        case OGCounterQueryTypeContextID:
+        case OGGraphCounterQueryTypeContextID:
             return context.get_graph().get_counter_4();
-        case OGCounterQueryTypeGraphID:
+        case OGGraphCounterQueryTypeGraphID:
             return context.get_graph().get_counter_5();
-        case OGCounterQueryTypeContextThreadUpdating:
+        case OGGraphCounterQueryTypeContextThreadUpdating:
             return context.thread_is_updating();
-        case OGCounterQueryTypeThreadUpdating:
+        case OGGraphCounterQueryTypeThreadUpdating:
             return context.get_graph().thread_is_updating();
-        case OGCounterQueryTypeContextNeedsUpdate:
+        case OGGraphCounterQueryTypeContextNeedsUpdate:
             return context.get_graph().get_counter_8();
-        case OGCounterQueryTypeNeedsUpdate:
+        case OGGraphCounterQueryTypeNeedsUpdate:
             return context.get_graph().get_counter_9();
-        case OGCounterQueryTypeMainThreadUpdates:
+        case OGGraphCounterQueryTypeMainThreadUpdates:
             return context.get_graph().get_counter_10();
         default:
             return 0;
