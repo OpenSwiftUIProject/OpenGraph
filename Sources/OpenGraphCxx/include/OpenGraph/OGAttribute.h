@@ -77,11 +77,11 @@ void OGGraphSetIndirectDependency(OGAttribute attribute1, OGAttribute attribute2
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-OGAttribute OGGraphGetIndirectAttribute(OGAttribute attribute) OG_SWIFT_NAME(getter:OGAttribute.indirectSource(self:));
+OGAttribute OGGraphGetIndirectAttribute(OGAttribute attribute) OG_SWIFT_NAME(getter:OGAttribute.source(self:));
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-void OGGraphSetIndirectAttribute(OGAttribute attribute1, OGAttribute attribute2) OG_SWIFT_NAME(setter:OGAttribute.indirectSource(self:_:));
+void OGGraphSetIndirectAttribute(OGAttribute attribute1, OGAttribute attribute2) OG_SWIFT_NAME(setter:OGAttribute.source(self:_:));
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT

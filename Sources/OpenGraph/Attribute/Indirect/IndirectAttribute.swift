@@ -16,8 +16,8 @@ public struct IndirectAttribute<Value> {
     }
     
     public var source: Attribute<Value> {
-        get { Attribute(identifier: identifier.indirectSource) }
-        nonmutating set { identifier.indirectSource = newValue.identifier }
+        get { Attribute(identifier: identifier.source) }
+        nonmutating set { identifier.source = newValue.identifier }
     }
     
     public var dependency: AnyAttribute? {
