@@ -38,10 +38,12 @@ let development = envEnable("OPENGRAPH_DEVELOPMENT", default: false)
 let swiftBinPath = Context.environment["_"] ?? "/usr/bin/swift"
 let swiftBinURL = URL(fileURLWithPath: swiftBinPath)
 let SDKPath = swiftBinURL.deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent().path
-let includePath = SDKPath.appending("/usr/lib/swift")
+let swiftIncludePath = SDKPath.appending("/usr/lib/swift")
+let includePath = SDKPath.appending("/usr/include")
 
 var sharedCSettings: [CSetting] = [
-    .unsafeFlags(["-I", includePath], .when(platforms: .nonDarwinPlatforms)),
+    .unsafeFlags(["-I", swiftIncludePath], .when(platforms: .nonDarwinPlatforms)), // NOTE: For CoreFoundation include
+    .unsafeFlags(["-I", includePath], .when(platforms: .nonDarwinPlatforms)), // NOTE: somehow <swift/briding> is missing on non-Darwin SDK,
     .define("NDEBUG", .when(configuration: .release)),
 ]
 
