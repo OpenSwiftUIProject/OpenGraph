@@ -108,7 +108,7 @@ void UntypedTable::create_buckets() {
 
     size_t num_buckets = (1 << initial_bucket_mask_width);
     _buckets = _heap->alloc<Bucket>(num_buckets);
-    std::memset(_buckets, 0, sizeof(Bucket) * num_buckets);
+    memset(_buckets, 0, sizeof(Bucket) * num_buckets);
 }
 
 void UntypedTable::grow_buckets() {
@@ -131,7 +131,7 @@ void UntypedTable::grow_buckets() {
         }
         new_buckets = _heap->alloc<Bucket>(num_buckets);
     }
-    std::memset(new_buckets, 0, sizeof(Bucket) * num_buckets);
+    memset(new_buckets, 0, sizeof(Bucket) * num_buckets);
 
     // redistribute old buckets into new
     if (new_buckets) {
