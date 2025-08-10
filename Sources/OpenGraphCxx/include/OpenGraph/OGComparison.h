@@ -17,10 +17,10 @@ OG_IMPLICIT_BRIDGING_ENABLED
 
 OG_EXTERN_C_BEGIN
 
-typedef struct OGFieldRange {
+typedef struct OG_SWIFT_NAME(FieldRange) OGFieldRange {
     size_t offset;
     size_t size;
-} OGFieldRange OG_SWIFT_STRUCT OG_SWIFT_NAME(FieldRange);
+} OGFieldRange;
 
 typedef const void *OGComparisonState OG_SWIFT_STRUCT OG_SWIFT_NAME(ComparisonState);
 
@@ -56,7 +56,7 @@ typedef OG_OPTIONS(uint32_t, OGComparisonOptions) {
 
     OGComparisonOptionsCopyOnWrite = 1 << 8,
     OGComparisonOptionsFetchLayoutsSynchronously = 1 << 9,
-    OGComparisonOptionsReportFailures = 1ul << 31, // -1 signed int
+    OGComparisonOptionsTraceCompareFailed = 1ul << 31, // -1 signed int
 } OG_SWIFT_NAME(ComparisonOptions);
 
 OG_EXPORT

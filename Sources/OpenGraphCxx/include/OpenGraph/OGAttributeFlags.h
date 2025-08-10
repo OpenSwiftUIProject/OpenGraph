@@ -9,14 +9,11 @@
 #define OGAttributeFlags_h
 
 #include <OpenGraph/OGBase.h>
+#include <OpenGraph/OGGraph.h>
 
-typedef OG_OPTIONS(uint32_t, OGAttributeFlags) {
-    OGAttributeFlagsDefault = 0,
-    OGAttributeFlagsActive = 1 << 0,
-    OGAttributeFlagsRemovable = 1 << 1,
-    OGAttributeFlagsInvalidatable = 1 << 2,
-    
-    OGAttributeFlagsMask = 0xFF,
-};
+typedef OG_OPTIONS(uint8_t, OGAttributeFlags) {
+    OGAttributeFlagsNone = 0,
+    OGAttributeFlagsAll = 0xFF,
+} OG_SWIFT_NAME(OGSubgraphRef.Flags);
 
 #endif /* OGAttributeFlags_h */

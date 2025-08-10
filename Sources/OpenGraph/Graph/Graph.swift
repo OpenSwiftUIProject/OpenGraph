@@ -12,7 +12,7 @@ extension Graph {
         ctx: GraphContext,
         body: _AttributeBody.Type,
         valueType: Metadata,
-        flags: OGAttributeTypeFlags,
+        flags: _AttributeType.Flags,
         update: AttributeUpdateBlock
     ) -> Int {
         // TODO: __AGGraphInternAttributeType
@@ -81,7 +81,7 @@ extension Graph {
 extension Graph {
     @_transparent
     @inline(__always)
-    public var mainUpdates: Int { numericCast(counter(for: ._10)) }
+    public var mainUpdates: Int { numericCast(counter(for: .mainThreadUpdates)) }
 }
 
 extension Graph {
@@ -97,6 +97,13 @@ extension Graph {
     public static func setOutputValue<Value>(_ value: UnsafePointer<Value>)
 }
 
+extension Graph {
+    @_transparent
+    public static func anyInputsChanged(excluding excludedInputs: [AnyAttribute]) -> Bool {
+        return __OGGraphAnyInputsChanged(excludedInputs, excludedInputs.count)
+    }
+}
+
 #if canImport(Darwin)
 import Foundation
 #endif
@@ -105,8 +112,8 @@ extension Graph {
     public func archiveJSON(name: String?) {
         #if canImport(Darwin)
         let options: NSDictionary = [
-            Graph.descriptionFormat: "graph/dict",
-            Graph.descriptionIncludeValues: true,
+            DescriptionOption.format: "graph/dict",
+            DescriptionOption.includeValues: true,
         ]
         guard let description = Graph.description(self, options: options) as? [String: Any] else {
             return

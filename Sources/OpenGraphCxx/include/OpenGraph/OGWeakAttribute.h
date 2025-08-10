@@ -7,13 +7,16 @@
 
 #include <OpenGraph/OGBase.h>
 #include <OpenGraph/OGAttribute.h>
+#include <OpenGraph/OGWeakValue.h>
 
 OG_ASSUME_NONNULL_BEGIN
 
 typedef struct OGWeakAttribute {
-    const OGAttribute raw_attribute;
-    const uint32_t subgraph_id;
-} OGWeakAttribute;
+    struct {
+        OGAttribute identifier;
+        uint32_t seed;
+    } _details;
+} OGWeakAttribute OG_SWIFT_NAME(AnyWeakAttribute);
 
 OG_EXTERN_C_BEGIN
 
@@ -27,7 +30,7 @@ OGAttribute OGWeakAttributeGetAttribute(OGWeakAttribute weakAttribute);
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-OGValue OGGraphGetWeakValue(OGWeakAttribute weakAttribute, OGValueOptions options, OGTypeID type);
+OGWeakValue OGGraphGetWeakValue(OGWeakAttribute weakAttribute, OGValueOptions options, OGTypeID type);
 
 OG_EXTERN_C_END
 

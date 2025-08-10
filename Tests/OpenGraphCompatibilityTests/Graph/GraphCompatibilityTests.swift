@@ -43,7 +43,7 @@ struct GraphCompatibilityTests {
         let description = try #require(Graph.description(
             nil,
             options: [
-                Graph.descriptionFormat: Graph.descriptionFormatDictionary
+                DescriptionOption.format: Graph.descriptionFormatDictionary
             ] as NSDictionary
         ))
         let dic = description as! Dictionary<String, AnyHashable>
@@ -54,7 +54,7 @@ struct GraphCompatibilityTests {
     @Test(.disabled(if: !compatibilityTestEnabled, "Not implemented on OG"))
     func graphDescriptionDot() throws {
         let options = NSMutableDictionary()
-        options[Graph.descriptionFormat] = Graph.descriptionFormatDot
+        options[DescriptionOption.format] = Graph.descriptionFormatDot
         #expect(Graph.description(nil, options: options) == nil)
         let graph = Graph()
         let description = try #require(Graph.description(graph, options: options))

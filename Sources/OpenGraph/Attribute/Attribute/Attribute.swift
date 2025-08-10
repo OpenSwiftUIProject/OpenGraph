@@ -19,7 +19,7 @@ public struct Attribute<Value> {
     public init(value: Value) {
         self = withUnsafePointer(to: value) { valuePointer in
             withUnsafePointer(to: External<Value>()) { bodyPointer in
-                Attribute(body: bodyPointer, value: valuePointer, flags: ._16) {
+                Attribute(body: bodyPointer, value: valuePointer, flags: .external) {
                     External<Value>._update
                 }
             }
@@ -28,7 +28,7 @@ public struct Attribute<Value> {
     
     public init(type _: Value.Type) {
         self = withUnsafePointer(to: External<Value>()) { bodyPointer in
-            Attribute(body: bodyPointer, value: nil, flags: ._16) {
+            Attribute(body: bodyPointer, value: nil, flags: .external) {
                 External<Value>._update
             }
         }
@@ -37,7 +37,7 @@ public struct Attribute<Value> {
     public init<Body: _AttributeBody>(
         body: UnsafePointer<Body>,
         value: UnsafePointer<Value>?,
-        flags: OGAttributeTypeFlags = [],
+        flags: _AttributeType.Flags = [],
         update: AttributeUpdateBlock
     ) {
         #if os(WASI)
@@ -120,7 +120,7 @@ public struct Attribute<Value> {
         identifier.mutateBody(as: type, invalidating: invalidating, body)
     }
 
-    public func breadthFirstSearch(options: OGSearchOptions = [], _ body: (AnyAttribute) -> Bool) -> Bool {
+    public func breadthFirstSearch(options: SearchOptions = [], _ body: (AnyAttribute) -> Bool) -> Bool {
         identifier.breadthFirstSearch(options: options, body)
     }
     
@@ -152,13 +152,13 @@ public struct Attribute<Value> {
         nonmutating set { _ = setValue(newValue) }
     }
     
-    public var valueState: OGValueState { identifier.valueState }
+    public var valueState: ValueState { identifier.valueState }
     
     public func valueAndFlags(options: OGValueOptions = []) -> (value: Value, flags: OGChangedValueFlags) {
         let value = OGGraphGetValue(identifier, options: options, type: Value.self)
         return (
             value.value.assumingMemoryBound(to: Value.self).pointee,
-            value.changed ? ._1 : []
+            value.flags
         )
     }
     
@@ -166,7 +166,7 @@ public struct Attribute<Value> {
         let value = OGGraphGetValue(identifier, options: options, type: Value.self)
         return (
             value.value.assumingMemoryBound(to: Value.self).pointee,
-            value.changed
+            value.flags.contains(.changed)
         )
     }
     
@@ -194,12 +194,12 @@ public struct Attribute<Value> {
     
     // MARK: - Flags
 
-    public var flags: OGAttributeFlags {
+    public var flags: Subgraph.Flags {
         get { identifier.flags }
         nonmutating set { identifier.flags = newValue }
     }
     
-    public func setFlags(_ newFlags: OGAttributeFlags, mask: OGAttributeFlags) {
+    public func setFlags(_ newFlags: Subgraph.Flags, mask: Subgraph.Flags) {
         identifier.setFlags(newFlags, mask: mask)
     }
 }
@@ -226,12 +226,6 @@ extension Attribute {
             Attribute(body: pointer, value: nil) { R._update }
         }
     }
-}
-
-// TODO:
-private struct AttributeType {
-    var graphType: OGAttributeType
-    var type: _AttributeBody.Type
 }
 
 @_silgen_name("OGGraphCreateAttribute")

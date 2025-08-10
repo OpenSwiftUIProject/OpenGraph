@@ -49,7 +49,7 @@ public struct AnyRuleContext: Equatable {
         let value = OGGraphGetInputValue(attribute, input: input.identifier, options: options, type: V.self)
         return (
             value.value.assumingMemoryBound(to: V.self).pointee,
-            value.changed ? ._1 : []
+            value.flags
         )
     }
     
@@ -57,7 +57,7 @@ public struct AnyRuleContext: Equatable {
         let value = OGGraphGetInputValue(attribute, input: input.identifier, options: options, type: V.self)
         return (
             value.value.assumingMemoryBound(to: V.self).pointee,
-            value.changed
+            value.flags.contains(.changed)
         )
     }
     

@@ -152,33 +152,33 @@ void OGGraphSetUpdateCallback(OGGraphRef graph,
     graph->context.set_update_callback(OG::ClosureFunction<void>(function, context));
 }
 
-uint64_t OGGraphGetCounter(OGGraphRef graph, OGCounterQueryType query) {
+uint64_t OGGraphGetCounter(OGGraphRef graph, OGGraphCounterQueryType query) {
     if (graph->context.isInvalid()) {
         OG::precondition_failure("invalidated graph");
     }
     OG::Graph::Context& context = graph->context;
     switch (query) {
-        case OGCounterQueryType_0:
+        case OGGraphCounterQueryTypeNodes:
             return context.get_graph().get_counter_0();
-        case OGCounterQueryType_1:
+        case OGGraphCounterQueryTypeTransactions:
             return context.get_graph().get_counter_1();
-        case OGCounterQueryType_2:
+        case OGGraphCounterQueryTypeUpdates:
             return context.get_graph().get_counter_2();
-        case OGCounterQueryType_3:
+        case OGGraphCounterQueryTypeChanges:
             return context.get_graph().get_counter_3();
-        case OGCounterQueryType_4:
+        case OGGraphCounterQueryTypeContextID:
             return context.get_graph().get_counter_4();
-        case OGCounterQueryType_5:
+        case OGGraphCounterQueryTypeGraphID:
             return context.get_graph().get_counter_5();
-        case OGCounterQueryType_6:
+        case OGGraphCounterQueryTypeContextThreadUpdating:
             return context.thread_is_updating();
-        case OGCounterQueryType_7:
+        case OGGraphCounterQueryTypeThreadUpdating:
             return context.get_graph().thread_is_updating();
-        case OGCounterQueryType_8:
+        case OGGraphCounterQueryTypeContextNeedsUpdate:
             return context.get_graph().get_counter_8();
-        case OGCounterQueryType_9:
+        case OGGraphCounterQueryTypeNeedsUpdate:
             return context.get_graph().get_counter_9();
-        case OGCounterQueryType_10:
+        case OGGraphCounterQueryTypeMainThreadUpdates:
             return context.get_graph().get_counter_10();
         default:
             return 0;
@@ -205,7 +205,7 @@ void OGGraphSetNeedsUpdate(OGGraphRef graph) {
     // graph->context->set_needs_update();
 }
 
-bool OGGraphAnyInputsChanged(const OGAttribute *inputs, size_t count) {
+bool OGGraphAnyInputsChanged(const OGAttribute *excluded_inputs, size_t count) {
     // TODO
     return false;
 }

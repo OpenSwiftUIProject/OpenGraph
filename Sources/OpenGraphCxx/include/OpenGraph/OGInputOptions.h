@@ -8,8 +8,9 @@
 #include <OpenGraph/OGBase.h>
 
 typedef OG_OPTIONS(uint32_t, OGInputOptions) {
-    OGInputOptions_0 = 0,
-    OGInputOptions_1 = 1,
+    OGInputOptionsNone = 0,
+    OGInputOptionsUnprefetched = 1 << 0,
+    OGInputOptionsSyncMainRef = 1 << 1,
 };
 
 #endif /* OGInputOptions_h */
