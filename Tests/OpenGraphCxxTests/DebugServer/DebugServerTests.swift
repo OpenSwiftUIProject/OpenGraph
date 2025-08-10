@@ -43,8 +43,8 @@ struct DebugServerTests {
                         let response = try #require(String(data: responseData, encoding: .utf8))
                         #expect(response == command.rawValue)
                     }
-                    debugServer.shutdown()
-                    // TODO: The shutdown should close the connection, but it does not for OGDebugServer currently.
+                    debugServer.shutdown() // TODO: The shutdown should close the connection, but it does not for OGDebugServer currently.
+                    client.disconnect()
                 default:
                     break
                 }
