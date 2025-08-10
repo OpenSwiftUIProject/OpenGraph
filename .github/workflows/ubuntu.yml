@@ -27,6 +27,7 @@ jobs:
       - name: Building and running tests in debug mode with coverage
         run: |
           swift test \
+            -v \
             -c debug \
             --enable-code-coverage \
             --build-path .build-test-debug
