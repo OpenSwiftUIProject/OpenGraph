@@ -14,16 +14,16 @@ OG_ASSUME_NONNULL_BEGIN
 
 typedef struct OGAttributeType OGAttributeType;
 
-typedef struct OGAttributeVTable {
+typedef struct OG_SWIFT_NAME(_AttributeVTable) OGAttributeVTable {
     unsigned long version;
     void (*_Nullable type_destroy)(OGAttributeType *);
     void (*_Nullable self_destroy)(const OGAttributeType *, void *);
     CFStringRef _Nullable (*_Nullable self_description)(const OGAttributeType *, const void *);
     CFStringRef _Nullable (*_Nullable value_description)(const OGAttributeType *, const void *);
     void (*_Nullable update_default)(const OGAttributeType *, void *);
-} OGAttributeVTable OG_SWIFT_NAME(_AttributeVTable);
+} OGAttributeVTable;
 
-typedef struct OGAttributeType {
+typedef struct OG_SWIFT_NAME(_AttributeType) OGAttributeType {
     OGTypeID self_id;
     OGTypeID value_id;
     OGClosureStorage update;
@@ -37,7 +37,7 @@ typedef struct OGAttributeType {
         OGTypeID type_id;
         const void *witness_table;
     } body_conformance;
-} OGAttributeType OG_SWIFT_NAME(_AttributeType);
+} OGAttributeType;
 
 OG_ASSUME_NONNULL_END
 

@@ -37,7 +37,7 @@ public struct Attribute<Value> {
     public init<Body: _AttributeBody>(
         body: UnsafePointer<Body>,
         value: UnsafePointer<Value>?,
-        flags: Flags = [],
+        flags: _AttributeType.Flags = [],
         update: AttributeUpdateBlock
     ) {
         #if os(WASI)
