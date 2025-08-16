@@ -9,14 +9,14 @@
 #include <OpenGraph/OGGraph.h>
 #include <OpenGraph/OGUniqueID.h>
 
-typedef OG_OPTIONS(uint32_t, OGGraphTraceFlags) {
-    OGGraphTraceFlagsEnabled = 1 << 0,
-    OGGraphTraceFlagsFull = 1 << 1,
-    OGGraphTraceFlagsBacktrace = 1 << 2,
-    OGGraphTraceFlagsPrepare = 1 << 3,
-    OGGraphTraceFlagsCustom = 1 << 4,
-    OGGraphTraceFlagsAll = 1 << 5,
-} OG_SWIFT_NAME(OGGraphRef.TraceFlags);
+typedef OG_OPTIONS(uint32_t, OGGraphTraceOptions) {
+    OGGraphTraceOptionsEnabled = 1 << 0,
+    OGGraphTraceOptionsFull = 1 << 1,
+    OGGraphTraceOptionsBacktrace = 1 << 2,
+    OGGraphTraceOptionsPrepare = 1 << 3,
+    OGGraphTraceOptionsCustom = 1 << 4,
+    OGGraphTraceOptionsAll = 1 << 5,
+} OG_SWIFT_NAME(OGGraphRef.TraceOptions);
 
 typedef struct OGTrace *OGTraceRef;
 
@@ -28,11 +28,11 @@ OG_EXTERN_C_BEGIN
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-void OGGraphStartTracing(_Nullable OGGraphRef graph, OGGraphTraceFlags flags) OG_SWIFT_NAME(OGGraphRef.startTracing(_:flags:));
+void OGGraphStartTracing(_Nullable OGGraphRef graph, OGGraphTraceOptions options) OG_SWIFT_NAME(OGGraphRef.startTracing(_:options:));
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-void OGGraphStartTracing2(_Nullable OGGraphRef graph, OGGraphTraceFlags flags, _Nullable CFArrayRef subsystems) OG_SWIFT_NAME(OGGraphRef.startTracing(_:flags:subsystems:));
+void OGGraphStartTracing2(_Nullable OGGraphRef graph, OGGraphTraceOptions options, _Nullable CFArrayRef subsystems) OG_SWIFT_NAME(OGGraphRef.startTracing(_:flags:subsystems:));
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT

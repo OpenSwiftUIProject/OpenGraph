@@ -65,6 +65,21 @@ extension Graph {
 }
 
 extension Graph {
+    @_transparent
+    public func startProfiling() {
+        __OGGraphStartProfiling(self)
+    }
+
+    @_transparent
+    public func stopProfiling() {
+        __OGGraphStopProfiling(self)
+    }
+
+    @_transparent
+    public func resetProfile() {
+        __OGGraphResetProfile(self)
+    }
+
     public static func startProfiling() {
         __OGGraphStartProfiling(nil)
     }
@@ -80,7 +95,6 @@ extension Graph {
 
 extension Graph {
     @_transparent
-    @inline(__always)
     public var mainUpdates: Int { numericCast(counter(for: .mainThreadUpdates)) }
 }
 

@@ -8,19 +8,19 @@ struct GraphTracingCompatibilityTests {
     @Test
     func tracing() {
         let graph = Graph()
-        Graph.startTracing(graph, flags: [])
+        Graph.startTracing(graph, options: [])
         Graph.stopTracing(graph)
     }
 
     @Test
     func tracingAll() {
-        Graph.startTracing(nil, flags: [])
+        Graph.startTracing(nil, options: [])
         Graph.stopTracing(nil)
     }
 
     @Test
     func options() {
-        let option = Graph.TraceFlags(rawValue: 1)
+        let option = Graph.TraceOptions(rawValue: 1)
         #expect(option == .enabled)
     }
 }
