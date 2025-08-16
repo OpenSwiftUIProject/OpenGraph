@@ -30,7 +30,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Setup Xcode
-        uses: maxim-lobanov/setup-xcode@v1
+        uses: OpenSwiftUIProject/OpenSwiftUI/.github/actions/setup-xcode@main
         with:
           xcode-version: ${{ matrix.xcode-version }}
       - name: Swift version
