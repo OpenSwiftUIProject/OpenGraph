@@ -46,34 +46,36 @@ final class AnyAttributeCompatibilityTests: AttributeTestBase {
     
     @Test
     func setFlags() throws {
+        typealias Flags = AnyAttribute.Flags
+
         let attribute = AnyAttribute(Attribute(value: 0))
         #expect(attribute.flags == [])
         
         // Test mask = []
         attribute.flags = []
         
-        attribute.setFlags([Subgraph.Flags(rawValue: 1)], mask: [])
+        attribute.setFlags([Flags(rawValue: 1)], mask: [])
         #expect(attribute.flags == [])
         
-        attribute.setFlags([Subgraph.Flags(rawValue: 2)], mask: [])
+        attribute.setFlags([Flags(rawValue: 2)], mask: [])
         #expect(attribute.flags == [])
         
-        attribute.setFlags([Subgraph.Flags(rawValue: 1), Subgraph.Flags(rawValue: 4)], mask: [])
+        attribute.setFlags([Flags(rawValue: 1), Flags(rawValue: 4)], mask: [])
         #expect(attribute.flags == [])
     
         // Test mask
         attribute.flags = []
-        attribute.setFlags([Subgraph.Flags(rawValue: 1)], mask: [Subgraph.Flags(rawValue: 1)])
-        #expect(attribute.flags == [Subgraph.Flags(rawValue: 1)])
+        attribute.setFlags([Flags(rawValue: 1)], mask: [Flags(rawValue: 1)])
+        #expect(attribute.flags == [Flags(rawValue: 1)])
         
-        attribute.setFlags([Subgraph.Flags(rawValue: 2)], mask: [Subgraph.Flags(rawValue: 2)])
-        #expect(attribute.flags == [Subgraph.Flags(rawValue: 1), Subgraph.Flags(rawValue: 2)])
+        attribute.setFlags([Flags(rawValue: 2)], mask: [Flags(rawValue: 2)])
+        #expect(attribute.flags == [Flags(rawValue: 1), Flags(rawValue: 2)])
         
-        attribute.setFlags([Subgraph.Flags(rawValue: 4)], mask: [Subgraph.Flags(rawValue: 1)])
-        #expect(attribute.flags == [Subgraph.Flags(rawValue: 2)])
+        attribute.setFlags([Flags(rawValue: 4)], mask: [Flags(rawValue: 1)])
+        #expect(attribute.flags == [Flags(rawValue: 2)])
         
-        attribute.setFlags([Subgraph.Flags(rawValue: 1), Subgraph.Flags(rawValue: 4)], mask: [Subgraph.Flags(rawValue: 1), Subgraph.Flags(rawValue: 2), Subgraph.Flags(rawValue: 4)])
-        #expect(attribute.flags == [Subgraph.Flags(rawValue: 1), Subgraph.Flags(rawValue: 4)])
+        attribute.setFlags([Flags(rawValue: 1), Flags(rawValue: 4)], mask: [Flags(rawValue: 1), Flags(rawValue: 2), Flags(rawValue: 4)])
+        #expect(attribute.flags == [Flags(rawValue: 1), Flags(rawValue: 4)])
     }
     
     @Test

@@ -33,7 +33,7 @@ extension AnyAttribute {
         create(offset: offset)
     }
 
-    public func setFlags(_ newFlags: Subgraph.Flags, mask: Subgraph.Flags) {
+    public func setFlags(_ newFlags: Flags, mask: Flags) {
         flags = flags.subtracting(mask).union(newFlags.intersection(mask))
     }
 

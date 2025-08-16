@@ -5,6 +5,7 @@
 import Testing
 import Foundation
 
+@MainActor
 struct GraphCompatibilityTests {
     @Test
     func graphCreate() throws {

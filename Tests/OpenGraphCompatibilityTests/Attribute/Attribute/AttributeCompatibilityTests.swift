@@ -75,8 +75,8 @@ final class AttributeCompatibilityTests: AttributeTestBase {
     @Test
     func flagSetter() {
         let attribute = Attribute(value: ())
-        attribute.flags = Subgraph.Flags(rawValue: 1)
-        #expect(attribute.flags == Subgraph.Flags(rawValue: 1))
+        attribute.flags = .init(rawValue: 1)
+        #expect(attribute.flags == .init(rawValue: 1))
     }
 }
 #endif
