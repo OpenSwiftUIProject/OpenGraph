@@ -8,6 +8,13 @@
 public import OpenGraphCxx
 
 extension Subgraph {
+    public typealias Flags = AnyAttribute.Flags
+
+    // FIXME
+    public typealias ChildFlags = AnyAttribute.Flags
+}
+
+extension Subgraph {
     public func addObserver(_ observer: () -> Void) -> Int {
         Subgraph.addObserver(self, observer: observer)
     }

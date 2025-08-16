@@ -4,11 +4,11 @@
 
 #include <OpenGraph/OGGraphTracing.h>
 
-void OGGraphStartTracing(_Nullable OGGraphRef graph, OGGraphTraceFlags options) {
+void OGGraphStartTracing(_Nullable OGGraphRef graph, OGGraphTraceOptions options) {
     OGGraphStartTracing2(graph, options, NULL);
 }
 
-void OGGraphStartTracing2(_Nullable OGGraphRef graph, OGGraphTraceFlags options, _Nullable CFArrayRef array) {
+void OGGraphStartTracing2(_Nullable OGGraphRef graph, OGGraphTraceOptions options, _Nullable CFArrayRef array) {
     // TODO
 }
 

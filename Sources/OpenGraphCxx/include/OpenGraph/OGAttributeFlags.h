@@ -14,6 +14,6 @@
 typedef OG_OPTIONS(uint8_t, OGAttributeFlags) {
     OGAttributeFlagsNone = 0,
     OGAttributeFlagsAll = 0xFF,
-} OG_SWIFT_NAME(OGSubgraphRef.Flags);
+} OG_SWIFT_NAME(OGAttribute.Flags);
 
 #endif /* OGAttributeFlags_h */
