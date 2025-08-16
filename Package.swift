@@ -28,6 +28,7 @@ let buildForDarwinPlatform = envEnable("OPENSWIFTUI_BUILD_FOR_DARWIN_PLATFORM")
 // https://github.com/SwiftPackageIndex/SwiftPackageIndex-Server/issues/3061#issuecomment-2118821061
 // By-pass https://github.com/swiftlang/swift-package-manager/issues/7580
 let isSPIDocGenerationBuild = envEnable("SPI_GENERATE_DOCS", default: false)
+let isSPIBuild = envEnable("SPI_BUILD")
 
 // MARK: - Env and Config
 
@@ -242,7 +243,7 @@ extension Target {
 
 let useLocalDeps = envEnable("OPENGRAPH_USE_LOCAL_DEPS")
 
-let attributeGraphCondition = envEnable("OPENGRAPH_ATTRIBUTEGRAPH", default: buildForDarwinPlatform && !isSPIDocGenerationBuild)
+let attributeGraphCondition = envEnable("OPENGRAPH_ATTRIBUTEGRAPH", default: buildForDarwinPlatform && !isSPIBuild)
 
 if attributeGraphCondition {
     let privateFrameworkRepo: Package.Dependency
