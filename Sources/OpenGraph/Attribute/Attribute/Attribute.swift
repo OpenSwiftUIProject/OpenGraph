@@ -194,12 +194,14 @@ public struct Attribute<Value> {
     
     // MARK: - Flags
 
-    public var flags: Subgraph.Flags {
+    public typealias Flags = AnyAttribute.Flags
+
+    public var flags: Flags {
         get { identifier.flags }
         nonmutating set { identifier.flags = newValue }
     }
     
-    public func setFlags(_ newFlags: Subgraph.Flags, mask: Subgraph.Flags) {
+    public func setFlags(_ newFlags: Flags, mask: Flags) {
         identifier.setFlags(newFlags, mask: mask)
     }
 }
