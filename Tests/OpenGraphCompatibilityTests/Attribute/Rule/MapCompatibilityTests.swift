@@ -3,9 +3,11 @@
 //  OpenGraphCompatibilityTests
 
 import Testing
+import OpenGraphTestsSupport
 
-@Suite(.disabled(if: !compatibilityTestEnabled))
-final class MapCompatibilityTests: AttributeTestBase {
+@MainActor
+@Suite(.disabled(if: !compatibilityTestEnabled), .graphScope)
+struct MapCompatibilityTests {
     @Test
     func description() throws {
         let map = Map(.init(value: 2)) { $0.description }

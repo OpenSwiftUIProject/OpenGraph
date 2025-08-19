@@ -3,10 +3,12 @@
 //  OpenGraphCompatibilityTests
 
 import Testing
+import OpenGraphTestsSupport
 
 #if canImport(Darwin)
-@Suite(.enabled(if: compatibilityTestEnabled))
-final class WeakAttributeCompatibilityTests: AttributeTestBase {
+@MainActor
+@Suite(.enabled(if: compatibilityTestEnabled), .graphScope)
+struct WeakAttributeCompatibilityTests {
     @Test
     func initTest() {
         let _ = WeakAttribute<Int>()

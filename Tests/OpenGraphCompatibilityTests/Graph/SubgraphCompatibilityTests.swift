@@ -4,7 +4,8 @@
 
 import Testing
 
-@Suite(.enabled(if: compatibilityTestEnabled))
+@MainActor
+@Suite(.enabled(if: compatibilityTestEnabled), .graphScope)
 struct SubgraphCompatibilityTests {
     @Test
     func shouldRecordTree() {

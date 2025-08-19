@@ -3,6 +3,7 @@
 //  OpenGraphCompatibilityTests
 
 import Testing
+import OpenGraphTestsSupport
 
 #if canImport(Darwin)
 @MainActor

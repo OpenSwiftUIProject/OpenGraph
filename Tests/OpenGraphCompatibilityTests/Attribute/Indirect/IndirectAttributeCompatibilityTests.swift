@@ -3,10 +3,12 @@
 //  OpenGraphCompatibilityTests
 
 import Testing
+import OpenGraphTestsSupport
 
 #if canImport(Darwin)
-@Suite(.disabled(if: !compatibilityTestEnabled, "IndirectAttribute is not implemented"))
-final class IndirectAttributeCompatibilityTests: AttributeTestBase {
+@MainActor
+@Suite(.disabled(if: !compatibilityTestEnabled, "IndirectAttribute is not implemented"), .graphScope)
+struct IndirectAttributeCompatibilityTests {
     @Test
     func basic() {
         let source = Attribute(value: 0)

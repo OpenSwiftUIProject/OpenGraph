@@ -158,38 +158,47 @@ let openGraphShimsTarget = Target.target(
     cSettings: sharedCSettings,
     swiftSettings: sharedSwiftSettings
 )
+let openGraphTestsSupportTarget = Target.target(
+    name: "OpenGraphTestsSupport",
+    cSettings: sharedCSettings,
+    swiftSettings: sharedSwiftSettings
+)
 
 // MARK: - Test Targets
 
-let openGraphTestTarget = Target.testTarget(
+let openGraphTestsTarget = Target.testTarget(
     name: "OpenGraphTests",
     dependencies: [
         "OpenGraph",
+        "OpenGraphTestsSupport",
     ],
     exclude: ["README.md"],
     cSettings: sharedCSettings,
     swiftSettings: sharedSwiftSettings
 )
-let openGraphSPITestTarget = Target.testTarget(
+let openGraphCxxTestsTarget = Target.testTarget(
     name: "OpenGraphCxxTests",
     dependencies: [
         "OpenGraphCxx",
+        "OpenGraphTestsSupport",
     ],
     exclude: ["README.md"],
     swiftSettings: sharedSwiftSettings + [.interoperabilityMode(.Cxx)]
 )
-let openGraphShimsTestTarget = Target.testTarget(
+let openGraphShimsTestsTarget = Target.testTarget(
     name: "OpenGraphShimsTests",
     dependencies: [
         "OpenGraphShims",
+        "OpenGraphTestsSupport",
     ],
     exclude: ["README.md"],
     cSettings: sharedCSettings,
     swiftSettings: sharedSwiftSettings
 )
-let openGraphCompatibilityTestTarget = Target.testTarget(
+let openGraphCompatibilityTestsTarget = Target.testTarget(
     name: "OpenGraphCompatibilityTests",
     dependencies: [
+        "OpenGraphTestsSupport",
         .product(name: "Numerics", package: "swift-numerics"),
     ],
     exclude: ["README.md"],
@@ -212,11 +221,12 @@ let package = Package(
         openGraphTarget,
         openGraphSPITarget,
         openGraphShimsTarget,
-        
-        openGraphTestTarget,
-        openGraphSPITestTarget,
-        openGraphShimsTestTarget,
-        openGraphCompatibilityTestTarget,
+        openGraphTestsSupportTarget,
+
+        openGraphTestsTarget,
+        openGraphCxxTestsTarget,
+        openGraphShimsTestsTarget,
+        openGraphCompatibilityTestsTarget,
     ],
     cxxLanguageStandard: .cxx20
 )
@@ -268,9 +278,11 @@ if attributeGraphCondition {
 
 let compatibilityTestCondition = envEnable("OPENGRAPH_COMPATIBILITY_TEST")
 if compatibilityTestCondition && attributeGraphCondition {
-    openGraphCompatibilityTestTarget.addCompatibilitySettings()
+    openGraphTestsSupportTarget.addCompatibilitySettings()
+    openGraphCompatibilityTestsTarget.addCompatibilitySettings()
 } else {
-    openGraphCompatibilityTestTarget.dependencies.append("OpenGraph")
+    openGraphTestsSupportTarget.dependencies.append("OpenGraph")
+    openGraphCompatibilityTestsTarget.dependencies.append("OpenGraph")
 }
 
 extension [Platform] {
