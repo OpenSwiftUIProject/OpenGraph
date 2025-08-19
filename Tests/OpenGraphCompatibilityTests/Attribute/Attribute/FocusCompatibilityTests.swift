@@ -5,8 +5,9 @@
 import Testing
 
 #if canImport(Darwin)
-@Suite(.disabled(if: !compatibilityTestEnabled, "Attribute is not implemented"))
-final class FocusCompatibilityTests: AttributeTestBase {
+@MainActor
+@Suite(.disabled(if: !compatibilityTestEnabled, "Attribute is not implemented"), .graphScope)
+struct FocusCompatibilityTests {
     struct Demo {
         var a: Int
         var b: Double

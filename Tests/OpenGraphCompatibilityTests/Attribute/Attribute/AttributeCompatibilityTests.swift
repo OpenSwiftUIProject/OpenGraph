@@ -5,8 +5,9 @@
 import Testing
 
 #if canImport(Darwin)
-@Suite(.disabled(if: !compatibilityTestEnabled, "Attribute is not implemented"))
-final class AttributeCompatibilityTests: AttributeTestBase {
+@MainActor
+@Suite(.disabled(if: !compatibilityTestEnabled, "Attribute is not implemented"), .graphScope)
+struct AttributeCompatibilityTests {
     @Test
     func initWithValue() {
         let intAttribute = Attribute(value: 0)

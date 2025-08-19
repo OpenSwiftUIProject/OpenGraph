@@ -161,7 +161,7 @@ let openGraphShimsTarget = Target.target(
 
 // MARK: - Test Targets
 
-let openGraphTestTarget = Target.testTarget(
+let openGraphTestsTarget = Target.testTarget(
     name: "OpenGraphTests",
     dependencies: [
         "OpenGraph",
@@ -170,7 +170,7 @@ let openGraphTestTarget = Target.testTarget(
     cSettings: sharedCSettings,
     swiftSettings: sharedSwiftSettings
 )
-let openGraphSPITestTarget = Target.testTarget(
+let openGraphCxxTestsTarget = Target.testTarget(
     name: "OpenGraphCxxTests",
     dependencies: [
         "OpenGraphCxx",
@@ -178,7 +178,7 @@ let openGraphSPITestTarget = Target.testTarget(
     exclude: ["README.md"],
     swiftSettings: sharedSwiftSettings + [.interoperabilityMode(.Cxx)]
 )
-let openGraphShimsTestTarget = Target.testTarget(
+let openGraphShimsTestsTarget = Target.testTarget(
     name: "OpenGraphShimsTests",
     dependencies: [
         "OpenGraphShims",
@@ -187,7 +187,7 @@ let openGraphShimsTestTarget = Target.testTarget(
     cSettings: sharedCSettings,
     swiftSettings: sharedSwiftSettings
 )
-let openGraphCompatibilityTestTarget = Target.testTarget(
+let openGraphCompatibilityTestsTarget = Target.testTarget(
     name: "OpenGraphCompatibilityTests",
     dependencies: [
         .product(name: "Numerics", package: "swift-numerics"),
@@ -212,11 +212,11 @@ let package = Package(
         openGraphTarget,
         openGraphSPITarget,
         openGraphShimsTarget,
-        
-        openGraphTestTarget,
-        openGraphSPITestTarget,
-        openGraphShimsTestTarget,
-        openGraphCompatibilityTestTarget,
+
+        openGraphTestsTarget,
+        openGraphCxxTestsTarget,
+        openGraphShimsTestsTarget,
+        openGraphCompatibilityTestsTarget,
     ],
     cxxLanguageStandard: .cxx20
 )
@@ -268,9 +268,9 @@ if attributeGraphCondition {
 
 let compatibilityTestCondition = envEnable("OPENGRAPH_COMPATIBILITY_TEST")
 if compatibilityTestCondition && attributeGraphCondition {
-    openGraphCompatibilityTestTarget.addCompatibilitySettings()
+    openGraphCompatibilityTestsTarget.addCompatibilitySettings()
 } else {
-    openGraphCompatibilityTestTarget.dependencies.append("OpenGraph")
+    openGraphCompatibilityTestsTarget.dependencies.append("OpenGraph")
 }
 
 extension [Platform] {

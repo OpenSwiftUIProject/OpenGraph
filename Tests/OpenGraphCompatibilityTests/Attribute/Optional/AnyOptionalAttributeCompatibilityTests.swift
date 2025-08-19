@@ -5,8 +5,9 @@
 import Testing
 
 #if canImport(Darwin)
-@Suite(.disabled(if: !compatibilityTestEnabled, "AnyOptionalAttribute is not implemented"))
-final class AnyOptionalAttributeCompatibilityTests: AttributeTestBase {
+@MainActor
+@Suite(.disabled(if: !compatibilityTestEnabled, "AnyOptionalAttribute is not implemented"), .graphScope)
+struct AnyOptionalAttributeCompatibilityTests {
     @Test
     func basicInit() {
         let o1 = AnyOptionalAttribute()

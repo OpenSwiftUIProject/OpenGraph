@@ -8,8 +8,9 @@ import Testing
 // swift-testing framework will crash here on Linux
 // Report to upstream for investigation when we bump to 5.10
 #if canImport(Darwin)
-@Suite(.disabled(if: !compatibilityTestEnabled, "Attribute is not implemented"))
-final class ExternalCompatibilityTests: AttributeTestBase {
+@MainActor
+@Suite(.disabled(if: !compatibilityTestEnabled, "Attribute is not implemented"), .graphScope)
+struct ExternalCompatibilityTests {
     @Test
     func example() throws {
         let type = External<Int>.self

@@ -5,9 +5,9 @@
 import Testing
 
 #if canImport(Darwin)
-
-@Suite(.enabled(if: compatibilityTestEnabled))
-final class AnyWeakAttributeCompatibilityTests: AttributeTestBase {
+@MainActor
+@Suite(.enabled(if: compatibilityTestEnabled), .graphScope)
+struct AnyWeakAttributeCompatibilityTests {
     @Test
     func basic() {
         let w1 = AnyWeakAttribute(nil)
