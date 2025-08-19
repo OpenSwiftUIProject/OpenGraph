@@ -2,6 +2,8 @@
 //  Attribute+Debug.swift
 //  OpenGraphShims
 
+#if canImport(Darwin) && DEBUG // Compiler crash for Darwin + release and non-Darwin build
+
 // Use 4 spaces instead of \t for bettern test case expect
 private let tab = "    "
 
@@ -86,3 +88,4 @@ extension AnyAttribute: Swift.CustomDebugStringConvertible {
         return "\(nextTabs)\(bodyValueString)"
     }
 }
+#endif

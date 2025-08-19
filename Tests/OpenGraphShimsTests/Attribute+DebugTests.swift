@@ -2,6 +2,8 @@
 //  Attribute+DebugTests.swift
 //  OpenGraphShimsTests
 
+#if canImport(Darwin) && DEBUG
+
 import Testing
 import OpenGraphShims
 
@@ -48,3 +50,4 @@ struct Attribute_DebugTests {
         """#)
     }
 }
+#endif
