@@ -4,12 +4,6 @@
 
 public import Testing
 
-#if OPENGRAPH_COMPATIBILITY_TEST
-@_exported public import AttributeGraph
-#else
-@_exported import OpenGraph
-#endif
-
 public struct GraphEnvironmentTrait: TestTrait, TestScoping, SuiteTrait {
     private static let sharedGraph = Graph()
     private static let semaphore = AsyncSemaphore(value: 1)

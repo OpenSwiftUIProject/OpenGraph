@@ -3,7 +3,6 @@
 //  OpenGraphCompatibilityTests
 
 import Testing
-import OpenGraphTestsSupport
 
 @MainActor
 @Suite(.disabled(if: !compatibilityTestEnabled), .graphScope)

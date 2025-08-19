@@ -3,7 +3,6 @@
 //  OpenGraphCompatibilityTests
 
 import Testing
-import OpenGraphTestsSupport
 
 // *** Program crashed: Bad pointer dereference at 0x0000000ffff9400a ***
 // swift-testing framework will crash here on Linux

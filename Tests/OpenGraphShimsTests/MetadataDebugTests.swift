@@ -1,6 +1,6 @@
 //
 //  MetadataDebugTests.swift
-//  OpenGraphTests
+//  OpenGraphShimsTests
 
 @_spi(Debug) import OpenGraphShims
 import Testing

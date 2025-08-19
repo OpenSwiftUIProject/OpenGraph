@@ -4,7 +4,6 @@
 
 import RealModule
 import Testing
-import OpenGraphTestsSupport
 
 struct PointerOffsetCompatibilityTests {
     @Test

@@ -158,11 +158,6 @@ let openGraphShimsTarget = Target.target(
     cSettings: sharedCSettings,
     swiftSettings: sharedSwiftSettings
 )
-let openGraphTestsSupportTarget = Target.target(
-    name: "OpenGraphTestsSupport",
-    cSettings: sharedCSettings,
-    swiftSettings: sharedSwiftSettings
-)
 
 // MARK: - Test Targets
 
@@ -170,7 +165,6 @@ let openGraphTestsTarget = Target.testTarget(
     name: "OpenGraphTests",
     dependencies: [
         "OpenGraph",
-        "OpenGraphTestsSupport",
     ],
     exclude: ["README.md"],
     cSettings: sharedCSettings,
@@ -180,7 +174,6 @@ let openGraphCxxTestsTarget = Target.testTarget(
     name: "OpenGraphCxxTests",
     dependencies: [
         "OpenGraphCxx",
-        "OpenGraphTestsSupport",
     ],
     exclude: ["README.md"],
     swiftSettings: sharedSwiftSettings + [.interoperabilityMode(.Cxx)]
@@ -189,7 +182,6 @@ let openGraphShimsTestsTarget = Target.testTarget(
     name: "OpenGraphShimsTests",
     dependencies: [
         "OpenGraphShims",
-        "OpenGraphTestsSupport",
     ],
     exclude: ["README.md"],
     cSettings: sharedCSettings,
@@ -198,7 +190,6 @@ let openGraphShimsTestsTarget = Target.testTarget(
 let openGraphCompatibilityTestsTarget = Target.testTarget(
     name: "OpenGraphCompatibilityTests",
     dependencies: [
-        "OpenGraphTestsSupport",
         .product(name: "Numerics", package: "swift-numerics"),
     ],
     exclude: ["README.md"],
@@ -221,7 +212,6 @@ let package = Package(
         openGraphTarget,
         openGraphSPITarget,
         openGraphShimsTarget,
-        openGraphTestsSupportTarget,
 
         openGraphTestsTarget,
         openGraphCxxTestsTarget,
@@ -278,10 +268,8 @@ if attributeGraphCondition {
 
 let compatibilityTestCondition = envEnable("OPENGRAPH_COMPATIBILITY_TEST")
 if compatibilityTestCondition && attributeGraphCondition {
-    openGraphTestsSupportTarget.addCompatibilitySettings()
     openGraphCompatibilityTestsTarget.addCompatibilitySettings()
 } else {
-    openGraphTestsSupportTarget.dependencies.append("OpenGraph")
     openGraphCompatibilityTestsTarget.dependencies.append("OpenGraph")
 }
 
