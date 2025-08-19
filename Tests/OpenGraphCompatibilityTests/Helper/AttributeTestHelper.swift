@@ -1,8 +1,6 @@
 //
 //  AttributeTestHelper.swift
-//
-//
-//
+//  OpenGraphCompatibilityTests
 
 struct Tuple<A, B> {
     var first: A
