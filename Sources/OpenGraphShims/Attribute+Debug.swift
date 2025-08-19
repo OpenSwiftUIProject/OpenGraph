@@ -2,13 +2,16 @@
 //  Attribute+Debug.swift
 //  OpenGraphShims
 
+// Use 4 spaces instead of \t for bettern test case expect
+private let tab = "    "
+
 extension Attribute: Swift.CustomDebugStringConvertible {
     public var debugDescription: String {
         _debugDescription(indent: 0)
     }
     
     func _debugDescription(indent: Int) -> String {
-        let tabs = String(repeating: "\t", count: indent)
+        let tabs = String(repeating: tab, count: indent)
         return #"""
         \#(tabs)Attribute<\#(Value.self)> {
         \#(identifier._debugDescription(indent: indent + 1))
@@ -23,8 +26,8 @@ extension AnyAttribute: Swift.CustomDebugStringConvertible {
     }
     
     func _debugDescription(indent: Int) -> String {
-        let tabs = String(repeating: "\t", count: indent)
-        
+        let tabs = String(repeating: tab, count: indent)
+
         guard self != .nil else {
             return "\(tabs)AnyAttribute.nil"
         }
@@ -69,8 +72,8 @@ extension AnyAttribute: Swift.CustomDebugStringConvertible {
     
     private func _formatBodyValue(_ bodyValue: Any, indent: Int) -> String {
         let bodyValueString = String(describing: bodyValue)
-        let nextTabs = String(repeating: "\t", count: indent + 1)
-        
+        let nextTabs = String(repeating: tab, count: indent + 1)
+
         // Check if the body value contains attributes
         if bodyValueString.contains("Attribute<") {
             // Split lines and add proper indentation
