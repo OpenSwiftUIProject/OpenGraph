@@ -97,8 +97,10 @@ public:
     explicit operator bool() const OG_NOEXCEPT { return _storage != nullptr; }
 }; /* class cf_ptr */
 
+#ifdef SWIFT_TESTING
 using cf_data_ptr = cf_ptr<CFDataRef>;
 using cf_mutable_data_ptr = cf_ptr<CFMutableDataRef>;
+#endif /* SWIFT_TESTING */
 
 } /* namespace util */
 
