@@ -70,6 +70,26 @@ void OGSubgraphRemoveChild(OGSubgraphRef parent, OGSubgraphRef child) OG_SWIFT_N
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
+OGSubgraphRef OGSubgraphGetChild(OGSubgraphRef cf_subgraph, uint32_t index, uint8_t *_Nullable tag_out) OG_SWIFT_NAME(OGSubgraphRef.child(self:at:tag:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+uint32_t OGSubgraphGetChildCount(OGSubgraphRef cf_subgraph) OG_SWIFT_NAME(getter:OGSubgraphRef.childCount(self:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+OGSubgraphRef OGSubgraphGetParent(OGSubgraphRef cf_subgraph, int64_t index) OG_SWIFT_NAME(OGSubgraphRef.parent(self:at:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+uint64_t OGSubgraphGetParentCount(OGSubgraphRef cf_subgraph) OG_SWIFT_NAME(getter:OGSubgraphRef.parentCount(self:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+bool OGSubgraphIsAncestor(OGSubgraphRef cf_subgraph, OGSubgraphRef other) OG_SWIFT_NAME(OGSubgraphRef.isAncestor(self:of:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
 bool OGSubgraphIntersects(OGSubgraphRef subgraph, OGAttributeFlags flags) OG_SWIFT_NAME(OGSubgraphRef.intersects(self:flags:));
 
 OG_EXPORT
