@@ -23,6 +23,15 @@ public func OGTypeApplyFields2(
     body: (UnsafePointer<Int8>, Int, Any.Type) -> Bool
 ) -> Bool
 
+@inlinable
+@inline(__always)
+public func forEachField(
+    _ type: Any.Type,
+    do body: (UnsafePointer<Int8>, Int, Any.Type) -> Void
+) {
+    OGTypeApplyFields(type, body: body)
+}
+
 extension Metadata: Swift.Hashable, Swift.CustomStringConvertible {
     @inlinable
     @inline(__always)
