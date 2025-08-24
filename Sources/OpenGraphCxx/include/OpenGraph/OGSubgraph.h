@@ -22,7 +22,7 @@ OG_EXTERN_C_BEGIN
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-CFTypeID OGSubgraphGetTypeID() OG_SWIFT_NAME(getter:OGSubgraphRef.typeID());
+CFTypeID OGSubgraphGetTypeID(void) OG_SWIFT_NAME(getter:OGSubgraphRef.typeID());
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
