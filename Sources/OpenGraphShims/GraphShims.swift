@@ -8,7 +8,6 @@ public typealias OGAttributeInfo = AGAttributeInfo
 public typealias OGCachedValueOptions = AGCachedValueOptions
 public typealias OGChangedValueFlags = AGChangedValueFlags
 public typealias OGInputOptions = AGInputOptions
-public typealias OGTypeApplyOptions = AGTypeApplyOptions
 public typealias OGUniqueID = AGUniqueID
 public typealias OGValue = AGValue
 public typealias OGValueOptions = AGValueOptions
