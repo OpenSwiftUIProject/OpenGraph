@@ -64,6 +64,11 @@ public:
             _context = context;
         }
         
+        OG_INLINE OG_CONSTEXPR
+        OGUniqueID get_id() OG_NOEXCEPT {
+            return _id;
+        }
+        
         OG_INLINE
         void set_invalidation_callback(ClosureFunction<void, OGAttribute> invalidation_callback) OG_NOEXCEPT {
             _invalidation_callback = invalidation_callback;
@@ -181,7 +186,7 @@ struct OGGraphStorage {
 };
 
 struct OGGraphContextStorage {
-    OG::Graph::Context context;
+    OG::Graph graph;
 };
 
 OG_ASSUME_NONNULL_END

@@ -23,9 +23,8 @@ void OG::Subgraph::apply(OGAttributeFlags flags, OG::ClosureFunction<void, OGAtt
     // TODO
 }
 
-OG::Subgraph::Subgraph(OG::SubgraphObject* cf_subgraph, OG::Graph::Context& context, OG::AttributeID):
-_cf_subgraph((OGSubgraphRef)cf_subgraph), // FIXME
-_context((OGGraphContextStorage &)context){
+OG::Subgraph::Subgraph(OG::SubgraphObject* object, OG::Graph::Context& context, OG::AttributeID):
+_object(object), _graph(context.get_graph()), _graph_context_id(context.get_id()) {
     // TODO
 }
 

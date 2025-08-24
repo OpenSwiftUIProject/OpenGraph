@@ -12,6 +12,8 @@
 #include <OpenGraphCxx/Runtime/metadata.hpp>
 #include <pthread.h>
 
+OG_ASSUME_NONNULL_BEGIN
+
 typedef struct OG_BRIDGED_TYPE(id) OGSubgraphStorage * OGSubgraphRef;
 
 namespace OG {
@@ -19,18 +21,19 @@ class SubgraphObject;
 
 class Subgraph final {
 private:
-    OGSubgraphRef _cf_subgraph;
-    OGGraphContextStorage& _context;
+    SubgraphObject *_Nullable _object;
+    Graph& _graph;
+    OGUniqueID _graph_context_id;
     // TODO
     bool _isInvalid;
     static pthread_key_t _current_subgraph_key;
 public:
     // MARK: - CF related
     
-    static Subgraph *from_cf(OGSubgraphRef cf_subgraph) OG_NOEXCEPT;
+    static Subgraph *_Nullable from_cf(OGSubgraphRef cf_subgraph) OG_NOEXCEPT;
     
-    OGSubgraphRef to_cf() const OG_NOEXCEPT {
-        return _cf_subgraph;
+    _Nullable OGSubgraphRef to_cf() const OG_NOEXCEPT {
+        return reinterpret_cast<OGSubgraphRef>(_object);
     }
     
     // MARK: - pthread related
@@ -46,12 +49,12 @@ public:
     }
     
     OG_INLINE OG_CONSTEXPR
-    static Subgraph *get_current() OG_NOEXCEPT {
+    static Subgraph *_Nullable get_current() OG_NOEXCEPT {
         return (OG::Subgraph*)pthread_getspecific(OG::Subgraph::current_key());
     }
     
     OG_INLINE OG_CONSTEXPR
-    static int set_current(Subgraph *subgraph) OG_NOEXCEPT {
+    static int set_current(Subgraph *_Nullable subgraph) OG_NOEXCEPT {
         return pthread_setspecific(OG::Subgraph::current_key(), subgraph);
     }
     
@@ -74,13 +77,13 @@ public:
     // MARK: - Getter and setter
     
     OG_INLINE OG_CONSTEXPR
-    const OGGraphContextRef get_context() const OG_NOEXCEPT {
-        return &_context;
+    const OG::Graph &get_graph() const OG_NOEXCEPT {
+        return _graph;
     }
-    
+
     OG_INLINE OG_CONSTEXPR
-    OGGraphContextRef get_context() OG_NOEXCEPT {
-        return &_context;
+    OG::Graph &get_graph() OG_NOEXCEPT {
+        return _graph;
     }
     
     OG_INLINE OG_CONSTEXPR
@@ -97,7 +100,7 @@ public:
 
 struct OGSubgraphStorage {
     CFRuntimeBase base;
-    OG::Subgraph *subgraph;
+    OG::Subgraph *_Nullable subgraph;
 };
 
 namespace OG {
@@ -107,3 +110,5 @@ class SubgraphObject final {
 }
 
 #endif /* Subgraph_hpp */
+
+OG_ASSUME_NONNULL_END

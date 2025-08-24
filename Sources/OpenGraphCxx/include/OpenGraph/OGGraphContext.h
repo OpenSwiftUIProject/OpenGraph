@@ -18,7 +18,7 @@ OG_EXTERN_C_BEGIN
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-OGGraphRef OGGraphContextGetGraph(OGGraphContextRef context) OG_SWIFT_NAME(getter:OGGraphContextRef.graph(self:));
+OGGraphRef OGGraphContextGetGraph(void *context);
 
 OG_EXTERN_C_END
 
