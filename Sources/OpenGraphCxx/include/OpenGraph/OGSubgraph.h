@@ -22,7 +22,7 @@ OG_EXTERN_C_BEGIN
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-CFTypeID OGSubgraphGetTypeID();
+CFTypeID OGSubgraphGetTypeID(void) OG_SWIFT_NAME(getter:OGSubgraphRef.typeID());
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
@@ -70,6 +70,26 @@ void OGSubgraphRemoveChild(OGSubgraphRef parent, OGSubgraphRef child) OG_SWIFT_N
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
+OGSubgraphRef OGSubgraphGetChild(OGSubgraphRef cf_subgraph, uint32_t index, uint8_t *_Nullable tag_out) OG_SWIFT_NAME(OGSubgraphRef.child(self:at:tag:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+uint32_t OGSubgraphGetChildCount(OGSubgraphRef cf_subgraph) OG_SWIFT_NAME(getter:OGSubgraphRef.childCount(self:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+OGSubgraphRef OGSubgraphGetParent(OGSubgraphRef cf_subgraph, int64_t index) OG_SWIFT_NAME(OGSubgraphRef.parent(self:at:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+uint64_t OGSubgraphGetParentCount(OGSubgraphRef cf_subgraph) OG_SWIFT_NAME(getter:OGSubgraphRef.parentCount(self:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+bool OGSubgraphIsAncestor(OGSubgraphRef cf_subgraph, OGSubgraphRef other) OG_SWIFT_NAME(OGSubgraphRef.isAncestor(self:of:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
 bool OGSubgraphIntersects(OGSubgraphRef subgraph, OGAttributeFlags flags) OG_SWIFT_NAME(OGSubgraphRef.intersects(self:flags:));
 
 OG_EXPORT
@@ -92,6 +112,10 @@ OG_REFINED_FOR_SWIFT
 OGUniqueID OGSubgraphAddObserver(OGSubgraphRef cf_subgraph,
                            const void (*function)(const void * _Nullable context OG_SWIFT_CONTEXT) OG_SWIFT_CC(swift),
                            const void * _Nullable context);
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGSubgraphRemoveObserver(OGSubgraphRef cf_subgraph, OGUniqueID observer_id) OG_SWIFT_NAME(OGSubgraphRef.removeObserver(self:observerID:));
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT

@@ -136,6 +136,31 @@ void OGSubgraphRemoveChild(OGSubgraphRef parent, OGSubgraphRef child) {
     // TODO
 }
 
+OGSubgraphRef OGSubgraphGetChild(OGSubgraphRef cf_subgraph, uint32_t index, uint8_t *_Nullable tag_out) {
+    // TODO
+    return nullptr;
+}
+
+uint32_t OGSubgraphGetChildCount(OGSubgraphRef cf_subgraph) {
+    // TODO
+    return 0;
+}
+
+OGSubgraphRef OGSubgraphGetParent(OGSubgraphRef cf_subgraph, int64_t index) {
+    // TODO
+    return nullptr;
+}
+
+uint64_t OGSubgraphGetParentCount(OGSubgraphRef cf_subgraph) {
+    // TODO
+    return 0;
+}
+
+bool OGSubgraphIsAncestor(OGSubgraphRef cf_subgraph, OGSubgraphRef other) {
+    // TODO
+    return false;
+}
+
 void OGSubgraphApply(OGSubgraphRef cf_subgraph,
                      OGAttributeFlags flags,
                      const void (*function)(const void * _Nullable context OG_SWIFT_CONTEXT, OGAttribute attribute) OG_SWIFT_CC(swift),
@@ -171,6 +196,10 @@ OGUniqueID OGSubgraphAddObserver(OGSubgraphRef cf_subgraph,
         OG::precondition_failure("accessing invalidated subgraph");
     }
     return subgraph->add_observer(OG::ClosureFunction<void>(function, context));
+}
+
+void OGSubgraphRemoveObserver(OGSubgraphRef cf_subgraph, OGUniqueID observer_id) {
+    // TODO
 }
 
 #if !OG_TARGET_OS_WASI

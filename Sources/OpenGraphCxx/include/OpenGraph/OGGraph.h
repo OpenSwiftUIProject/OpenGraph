@@ -114,6 +114,14 @@ OG_REFINED_FOR_SWIFT
 bool OGGraphAnyInputsChanged(const OGAttribute *excluded_inputs, size_t count);
 #endif
 
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+bool OGGraphBeginDeferringSubgraphInvalidation(OGGraphRef graph) OG_SWIFT_NAME(OGGraphRef.beginDeferringSubgraphInvalidation(self:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGGraphEndDeferringSubgraphInvalidation(OGGraphRef graph, bool was_deferring) OG_SWIFT_NAME(OGGraphRef.endDeferringSubgraphInvalidation(self:wasDeferring:));
+
 OG_EXTERN_C_END
 
 OG_IMPLICIT_BRIDGING_DISABLED

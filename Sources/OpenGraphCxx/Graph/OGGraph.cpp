@@ -209,3 +209,12 @@ bool OGGraphAnyInputsChanged(const OGAttribute *excluded_inputs, size_t count) {
     // TODO
     return false;
 }
+
+bool OGGraphBeginDeferringSubgraphInvalidation(OGGraphRef graph) {
+    // TODO
+    return false;
+}
+
+void OGGraphEndDeferringSubgraphInvalidation(OGGraphRef graph, bool was_deferring) {
+    // TODO
+}
