@@ -37,7 +37,7 @@ typedef OG_OPTIONS(uint32_t, OGTypeApplyOptions) {
     OGTypeApplyOptionsEnumerateClassFields = 1 << 0,
     OGTypeApplyOptionsContinueAfterUnknownField = 1 << 1,
     OGTypeApplyOptionsEnumerateEnumCases = 1 << 2,
-};
+} OG_SWIFT_NAME(Metadata.ApplyOptions);
 
 #if OPENGRAPH_RELEASE >= OPENGRAPH_RELEASE_2024
 

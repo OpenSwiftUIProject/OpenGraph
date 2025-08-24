@@ -157,10 +157,11 @@ struct MetadataCompatibilityTests {
         #expect(Metadata(T2.self).description == "MetadataCompatibilityTests.T2")
         #expect(Metadata(T3.self).description == "MetadataCompatibilityTests.T3")
     }
-    
+
+    @available(*, deprecated, message: "To be removed")
     @Test(.disabled(if: !compatibilityTestEnabled, "Metadata is not implemented"))
-    func forEachField() throws {
-        for options in [OGTypeApplyOptions.enumerateClassFields] {
+    func legacyForEachField() throws {
+        for options in [Metadata.ApplyOptions.enumerateClassFields] {
             let result = Metadata(T1.self).forEachField(options: options) { name, offset, type in
                 if offset == 16 {
                     #expect(type is Int.Type)
@@ -176,7 +177,7 @@ struct MetadataCompatibilityTests {
             }
             #expect(result == true)
         }
-        for options in [OGTypeApplyOptions.continueAfterUnknownField, .enumerateEnumCases, []] {
+        for options in [Metadata.ApplyOptions.continueAfterUnknownField, .enumerateEnumCases, []] {
             let result = Metadata(T1.self).forEachField(options: options) { name, offset, type in
                 if offset == 16 {
                     #expect(type is Int.Type)
@@ -192,7 +193,7 @@ struct MetadataCompatibilityTests {
             }
             #expect(result == false)
         }
-        for options in [OGTypeApplyOptions.continueAfterUnknownField, []] {
+        for options in [Metadata.ApplyOptions.continueAfterUnknownField, []] {
             let result = Metadata(T2.self).forEachField(options: options) { name, offset, type in
                 if offset == 0 {
                     #expect(type is Int.Type)
@@ -206,7 +207,7 @@ struct MetadataCompatibilityTests {
             }
             #expect(result == true)
         }
-        for options in [OGTypeApplyOptions.enumerateClassFields, .enumerateEnumCases] {
+        for options in [Metadata.ApplyOptions.enumerateClassFields, .enumerateEnumCases] {
             let result = Metadata(T2.self).forEachField(options: options) { name, offset, type in
                 if offset == 0 {
                     #expect(type is Int.Type)
@@ -222,11 +223,52 @@ struct MetadataCompatibilityTests {
             }
             #expect(result == false)
         }
-        for options in [OGTypeApplyOptions.enumerateClassFields, .continueAfterUnknownField, .enumerateEnumCases, []] {
+        for options in [Metadata.ApplyOptions.enumerateClassFields, .continueAfterUnknownField, .enumerateEnumCases, []] {
             let result = Metadata(T3.self).forEachField(options: options) { _, _, _ in
                 true
             }
             #expect(result == false)
         }
     }
+
+    @Test(.disabled(if: !compatibilityTestEnabled, "Metadata is not implemented"))
+    func globalForEachField() async throws {
+        forEachField(of: T1.self) { _, _, _ in
+            Issue.record()
+        }
+        await confirmation(expectedCount: 2) { confirmation in
+            var count = 0
+            forEachField(of: T2.self) { ptr, offset, type in
+                let name = String(cString: ptr)
+                if count == 0 {
+                    #expect(name == "a")
+                    #expect(offset == 0x0)
+                    #expect(type == Int.self)
+                } else if count == 1 {
+                    #expect(name == "b")
+                    #expect(offset == 0x8)
+                    #expect(type == Double.self)
+                } else {
+                    Issue.record()
+                }
+                count += 1
+                confirmation()
+            }
+            #expect(count == 2)
+        }
+        forEachField(of: T3.self) { _, _, _ in
+            Issue.record()
+        }
+        forEachField(of: T4.self) { _, _, _ in
+            Issue.record()
+        }
+    }
+
+    #if OPENGRAPH_SUPPORT_2024_API
+    @Test(.disabled(if: !compatibilityTestEnabled, "Metadata is not implemented"))
+    func signature() {
+        #expect(Metadata(T1.self).signature != Metadata(T2.self).signature)
+        #expect(Metadata(T1.self).signature == Metadata(T1.self).signature)
+    }
+    #endif
 }
