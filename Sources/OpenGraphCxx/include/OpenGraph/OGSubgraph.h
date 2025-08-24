@@ -115,6 +115,10 @@ OGUniqueID OGSubgraphAddObserver(OGSubgraphRef cf_subgraph,
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
+void OGSubgraphRemoveObserver(OGSubgraphRef cf_subgraph, OGUniqueID observer_id) OG_SWIFT_NAME(OGSubgraphRef.removeObserver(self:observerID:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
 bool OGSubgraphShouldRecordTree(void) OG_SWIFT_NAME(getter:OGSubgraphRef.shouldRecordTree());
 
 OG_EXPORT

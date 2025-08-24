@@ -198,6 +198,10 @@ OGUniqueID OGSubgraphAddObserver(OGSubgraphRef cf_subgraph,
     return subgraph->add_observer(OG::ClosureFunction<void>(function, context));
 }
 
+void OGSubgraphRemoveObserver(OGSubgraphRef cf_subgraph, OGUniqueID observer_id) {
+    // TODO
+}
+
 #if !OG_TARGET_OS_WASI
 static bool should_record_tree;
 static dispatch_once_t should_record_tree_once;
