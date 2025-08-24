@@ -55,7 +55,7 @@ extension Metadata: Swift.Hashable, Swift.CustomStringConvertible {
     }
 }
 
-extension Signature: Equatable {
+extension Signature: Swift.Equatable {
     public static func == (_ lhs: Signature, _ rhs: Signature) -> Bool {
         return lhs.bytes.0 == rhs.bytes.0 && lhs.bytes.1 == rhs.bytes.1
             && lhs.bytes.2 == rhs.bytes.2 && lhs.bytes.3 == rhs.bytes.3
