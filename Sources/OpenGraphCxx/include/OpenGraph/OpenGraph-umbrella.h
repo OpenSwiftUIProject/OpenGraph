@@ -18,6 +18,8 @@
 #include <OpenGraph/OGSearchOptions.h>
 #include <OpenGraph/OGSubgraph.h>
 #include <OpenGraph/OGTrace.h>
+#include <OpenGraph/OGTreeElement.h>
+#include <OpenGraph/OGTreeValue.h>
 #include <OpenGraph/OGTupleType.h>
 #include <OpenGraph/OGTypeID.h>
 #include <OpenGraph/OGUniqueID.h>
