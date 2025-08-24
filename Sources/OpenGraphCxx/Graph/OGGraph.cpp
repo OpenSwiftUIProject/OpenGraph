@@ -110,11 +110,11 @@ void OGGraphSetContext(OGGraphRef graph, const void * _Nullable context) {
     graph->context.set_context(context);
 }
 
-OGGraphContextRef OGGraphGetGraphContext(OGGraphRef graph) {
+OGUnownedGraphContextRef OGGraphGetGraphContext(OGGraphRef graph) {
     if (graph->context.isInvalid()) {
         OG::precondition_failure("invalidated graph");
     }
-    return reinterpret_cast<OGGraphContextRef>(reinterpret_cast<uintptr_t>(graph) + sizeof(CFRuntimeBase));
+    return reinterpret_cast<OGUnownedGraphContextRef>(&graph->context.get_graph());
 }
 
 void OGGraphInvalidate(OGGraphRef graph) {

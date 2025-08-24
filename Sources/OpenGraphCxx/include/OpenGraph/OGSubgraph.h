@@ -42,7 +42,7 @@ void OGSubgraphSetCurrent(_Nullable OGSubgraphRef cf_subgraph) OG_SWIFT_NAME(set
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-_Nullable OGGraphContextRef OGSubgraphGetCurrentGraphContext(void) OG_SWIFT_NAME(getter:OGSubgraphRef.currentGraphContext());
+_Nullable OGUnownedGraphContextRef OGSubgraphGetCurrentGraphContext(void) OG_SWIFT_NAME(getter:OGSubgraphRef.currentGraphContext());
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT

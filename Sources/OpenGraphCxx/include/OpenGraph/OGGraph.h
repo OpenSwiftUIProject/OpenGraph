@@ -13,11 +13,11 @@
 
 typedef struct OG_BRIDGED_TYPE(id) OGGraphStorage * OGGraphRef OG_SWIFT_NAME(Graph);
 typedef struct OG_BRIDGED_TYPE(id) OGSubgraphStorage * OGSubgraphRef OG_SWIFT_NAME(Subgraph);
-typedef struct OG_BRIDGED_TYPE(id) OGGraphContextStorage * OGGraphContextRef OG_SWIFT_NAME(GraphContext);
+typedef struct OGGraphContextStorage * OGUnownedGraphContextRef OG_SWIFT_STRUCT OG_SWIFT_NAME(UnownedGraphContext);
 
 struct OGGraphStorage;
-struct OGGraphContextStorage;
 struct OGSubgraphStorage;
+struct OGGraphContextStorage;
 
 typedef uint32_t OGAttribute OG_SWIFT_STRUCT OG_SWIFT_NAME(AnyAttribute);
 
@@ -63,7 +63,7 @@ void OGGraphSetContext(OGGraphRef graph, const void * _Nullable context) OG_SWIF
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-OGGraphContextRef OGGraphGetGraphContext(OGGraphRef graph) OG_SWIFT_NAME(getter:OGGraphRef.graphContext(self:));
+OGUnownedGraphContextRef OGGraphGetGraphContext(OGGraphRef graph) OG_SWIFT_NAME(getter:OGGraphRef.graphContext(self:));
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT

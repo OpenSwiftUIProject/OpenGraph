@@ -95,12 +95,13 @@ void OGSubgraphSetCurrent(_Nullable OGSubgraphRef cf_subgraph) {
     }
 }
 
-OGGraphContextRef OGSubgraphGetCurrentGraphContext() {
+OGUnownedGraphContextRef OGSubgraphGetCurrentGraphContext() {
     OG::Subgraph *subgraph = OG::Subgraph::get_current();
     if (subgraph == nullptr) {
         return nullptr;
     }
-    return subgraph->get_context();
+    OG::Graph &graph = subgraph->get_graph();
+    return reinterpret_cast<OGUnownedGraphContextRef>(&graph);
 }
 
 void OGSubgraphInvalidate(OGSubgraphRef cf_subgraph) {
@@ -121,7 +122,8 @@ OGGraphRef OGSubgraphGetGraph(OGSubgraphRef cf_subgraph) {
     if (cf_subgraph->subgraph == nullptr) {
         OG::precondition_failure("accessing invalidated subgraph");
     }
-    return OGGraphContextGetGraph(cf_subgraph->subgraph->get_context());
+    // TODO
+    return nullptr;
 }
 
 void OGSubgraphAddChild(OGSubgraphRef parent, OGSubgraphRef child) {
