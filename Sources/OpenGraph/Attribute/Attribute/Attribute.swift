@@ -223,9 +223,25 @@ extension Attribute {
         }
     }
     
+    public init<R: Rule>(_ rule: R, initialValue: Value) where R.Value == Value {
+        self = withUnsafePointer(to: rule) { pointer in
+            withUnsafePointer(to: initialValue) { initialValuePointer in
+                Attribute(body: pointer, value: initialValuePointer) { R._update }
+            }
+        }
+    }
+    
     public init<R: StatefulRule>(_ rule: R) where R.Value == Value {
         self = withUnsafePointer(to: rule) { pointer in
             Attribute(body: pointer, value: nil) { R._update }
+        }
+    }
+    
+    public init<R: StatefulRule>(_ rule: R, initialValue: Value) where R.Value == Value {
+        self = withUnsafePointer(to: rule) { pointer in
+            withUnsafePointer(to: initialValue) { initialValuePointer in
+                Attribute(body: pointer, value: initialValuePointer) { R._update }
+            }
         }
     }
 }
