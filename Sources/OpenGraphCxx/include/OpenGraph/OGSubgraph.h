@@ -9,6 +9,7 @@
 #include <OpenGraph/OGAttributeFlags.h>
 #include <OpenGraph/OGBase.h>
 #include <OpenGraph/OGGraph.h>
+#include <OpenGraph/OGTreeElement.h>
 #include <OpenGraph/OGUniqueID.h>
 #include <OpenGraph/Private/CFRuntime.h>
 
@@ -112,6 +113,10 @@ void OGSubgraphAddTreeValue(OGAttribute attribute, OGTypeID type, const char * k
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
 void OGSubgraphEndTreeElement(OGAttribute attribute);
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+OGTreeElement OGSubgraphGetTreeRoot(OGSubgraphRef cf_subgraph) OG_SWIFT_NAME(getter:OGSubgraphRef.treeRoot(self:));
 
 OG_EXTERN_C_END
 

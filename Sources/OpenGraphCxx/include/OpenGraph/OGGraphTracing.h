@@ -40,12 +40,43 @@ void OGGraphStopTracing(_Nullable OGGraphRef graph) OG_SWIFT_NAME(OGGraphRef.sto
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
-OGUniqueID OGGraphAddTrace(OGGraphRef graph, const OGTraceRef trace, void *_Nullable context)
-OG_SWIFT_NAME(OGGraphRef.addTrace(self:_:context:));
+void OGGraphSyncTracing(_Nullable OGGraphRef graph) OG_SWIFT_NAME(OGGraphRef.syncTracing(_:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+CFStringRef OGGraphCopyTracePath(_Nullable OGGraphRef graph) OG_SWIFT_NAME(OGGraphRef.tracePath(_:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+OGUniqueID OGGraphAddTrace(OGGraphRef graph, const OGTraceRef trace, void *_Nullable context) OG_SWIFT_NAME(OGGraphRef.addTrace(self:_:context:));
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
 void OGGraphRemoveTrace(OGGraphRef graph, OGUniqueID trace_id) OG_SWIFT_NAME(OGGraphRef.removeTrace(self:traceID:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGGraphSetTrace(OGGraphRef graph, const OGTraceRef trace, void *_Nullable context) OG_SWIFT_NAME(OGGraphRef.setTrace(self:_:context:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+void OGGraphResetTrace(OGGraphRef graph) OG_SWIFT_NAME(OGGraphRef.resetTrace(self:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+bool OGGraphIsTracingActive(OGGraphRef graph) OG_SWIFT_NAME(getter:OGGraphRef.isTracingActive(self:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+const char *_Nullable OGGraphGetTraceEventName(uint32_t event_id) OG_SWIFT_NAME(OGGraphRef.traceEventName(for:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+const char *_Nullable OGGraphGetTraceEventSubsystem(uint32_t event_id) OG_SWIFT_NAME(OGGraphRef.traceEventSubsystem(for:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+uint32_t OGGraphRegisterNamedTraceEvent(const char *event_name, const char *event_subsystem) OG_SWIFT_NAME(OGGraphRef.registerNamedTraceEvent(name:subsystem:));
 
 OG_EXTERN_C_END
 
