@@ -125,6 +125,13 @@ void OGGraphInvalidate(OGGraphRef graph) {
     graph->context.setInvalid(true);
 }
 
+uint32_t OGGraphInternAttributeType(OGUnownedGraphContextRef graph, OGTypeID type,
+                                    const OGAttributeType *(*make_attribute_type)(const void *context OG_SWIFT_CONTEXT) OG_SWIFT_CC(swift),
+                                    const void *context) {
+    // TODO
+    return 0;
+}
+
 void OGGraphInvalidateAllValues(OGGraphRef graph) {
     if (graph->context.isInvalid()) {
         OG::precondition_failure("invalidated graph");

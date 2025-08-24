@@ -8,16 +8,12 @@
 public import OpenGraphCxx
 
 extension Graph {
+    @_silgen_name("OGGraphInternAttributeType")
     public static func typeIndex(
         ctx: UnownedGraphContext,
-        body: _AttributeBody.Type,
-        valueType: Metadata,
-        flags: _AttributeType.Flags,
-        update: AttributeUpdateBlock
-    ) -> Int {
-        // TODO: __AGGraphInternAttributeType
-        0
-    }
+        body: Metadata,
+        makeAttributeType: () -> UnsafePointer<_AttributeType>
+    ) -> Int
 }
 
 @_silgen_name("OGGraphSetInvalidationCallback")

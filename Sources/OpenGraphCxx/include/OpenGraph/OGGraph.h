@@ -8,6 +8,7 @@
 #include <OpenGraph/OGBase.h>
 #include <OpenGraph/Private/CFRuntime.h>
 #include <OpenGraph/OGGraphCounterQueryType.h>
+#include <OpenGraph/OGAttributeType.h>
 
 // Note: Place all structure declaration in a single place to avoid header cycle dependency
 
@@ -68,6 +69,12 @@ OGUnownedGraphContextRef OGGraphGetGraphContext(OGGraphRef graph) OG_SWIFT_NAME(
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
 void OGGraphInvalidate(OGGraphRef graph) OG_SWIFT_NAME(OGGraphRef.invalidate(self:));
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
+uint32_t OGGraphInternAttributeType(OGUnownedGraphContextRef graph, OGTypeID type,
+                                    const OGAttributeType * _Nonnull (* _Nonnull make_attribute_type)(const void * _Nullable context OG_SWIFT_CONTEXT) OG_SWIFT_CC(swift),
+                                    const void * _Nullable context);
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
