@@ -85,6 +85,10 @@ void OGGraphSetIndirectAttribute(OGAttribute attribute1, OGAttribute attribute2)
 
 OG_EXPORT
 OG_REFINED_FOR_SWIFT
+void OGGraphResetIndirectAttribute(OGAttribute attribute, bool non_nil);
+
+OG_EXPORT
+OG_REFINED_FOR_SWIFT
 OGAttribute OGGraphCreateAttribute(long index, const void *body, const void * _Nullable value);
 
 OG_EXPORT

@@ -98,6 +98,10 @@ void OGGraphSetIndirectAttribute(OGAttribute attribute1, OGAttribute attribute2)
     // TODO
 }
 
+void OGGraphResetIndirectAttribute(OGAttribute attribute, bool non_nil) {
+    // TODO
+}
+
 OGAttribute OGGraphCreateAttribute(long index, const void *body, const void * value) {
     // TODO
     return OGAttributeNil;

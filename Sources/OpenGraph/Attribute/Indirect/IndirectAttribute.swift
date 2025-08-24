@@ -15,9 +15,17 @@ public struct IndirectAttribute<Value> {
         identifier = source.identifier.createIndirect(size: UInt64(MemoryLayout<Value>.size))
     }
     
+    public var attribute: Attribute<Value> {
+        Attribute(identifier: identifier)
+    }
+    
     public var source: Attribute<Value> {
         get { Attribute(identifier: identifier.source) }
         nonmutating set { identifier.source = newValue.identifier }
+    }
+    
+    public func resetSource() {
+        __OGGraphResetIndirectAttribute(identifier, false)
     }
     
     public var dependency: AnyAttribute? {
